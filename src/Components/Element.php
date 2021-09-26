@@ -16,8 +16,8 @@ abstract class Element
     /**
      * Creates an element instance.
      *
-     * @param TValue $value
-     * @param array<string, string|int> $options
+     * @param  TValue  $value
+     * @param  array<string, string|int>  $options
      */
     final protected function __construct(protected mixed $value, protected array $options = [])
     {
@@ -27,7 +27,7 @@ abstract class Element
     /**
      * Creates an element instance with the given style.
      *
-     * @param  TValue $value
+     * @param  TValue  $value
      */
     final public static function fromStyles($value, string $styles): static
     {
@@ -145,7 +145,7 @@ abstract class Element
 
         return sprintf(
             '<%s>%s</>',
-            implode(';' ,$options),
+            implode(';', $options),
             $this->value,
         );
     }
@@ -153,7 +153,7 @@ abstract class Element
     /**
      * Adds the given options to the element.
      *
-     * @param array<string, int|string> $options
+     * @param  array<string, int|string>  $options
      */
     private function with(array $options): static
     {
