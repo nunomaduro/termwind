@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace NunoMaduro\TailCli\Components;
 
 use NunoMaduro\TailCli\Exceptions\StyleNotFound;
-use function _PHPStan_76800bfb5\RingCentral\Psr7\str;
 
 /**
  * @internal
