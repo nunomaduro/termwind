@@ -11,6 +11,7 @@
     ],
     "require": {
         "php": "^8.0"
+        "ext-mbstring": "*"
     },
     "require-dev": {
         "ergebnis/phpstan-rules": "^0.15.3",
