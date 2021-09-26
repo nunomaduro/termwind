@@ -44,4 +44,3 @@ test('truncate', function () {
     expect($truncated->toString())->toBe('st...');
     expect($line->toString())->toBe('st...');
 });
-
