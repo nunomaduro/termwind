@@ -44,3 +44,14 @@ test('truncate', function () {
     expect($truncated->toString())->toBe('st...');
     expect($line->toString())->toBe('st...');
 });
+
+test('width', function () {
+    $truncated = TailCli::line('string string');
+    $normal = TailCli::line('string');
+
+    $truncated = $truncated->width(10);
+    $line = $normal->width(10);
+
+    expect($truncated->toString())->toBe('string str');
+    expect($line->toString())->toBe('string    ');
+});

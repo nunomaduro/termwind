@@ -38,11 +38,9 @@
         "preferred-install": "dist"
     },
     "scripts": {
-        "lint": "styleci",
-        "test:types": "phpstan analyse --ansi --memory-limit=0",
+        "test:types": "phpstan analyse --ansi",
         "test:unit": "pest --colors=always",
         "test": [
-            "lint",
             "@test:types",
             "@test:unit"
         ]

@@ -109,13 +109,31 @@ abstract class Element
      */
     final public function truncate(int $limit, string $end = '...'): static
     {
-        $limit -= mb_strlen($end);
+        $limit -= mb_strwidth($end, 'UTF-8');
 
         if (mb_strwidth($this->value, 'UTF-8') <= $limit) {
             return new static($this->value, $this->options);
         }
 
         $value = rtrim(mb_strimwidth($this->value, 0, $limit, '', 'UTF-8')).$end;
+
+        return new static($value, $this->options);
+    }
+
+    /**
+     * Forces the width of the element.
+     */
+    final public function width(int $value): static
+    {
+        $length = mb_strlen($this->value, 'UTF-8');
+
+        if ($length <= $value) {
+            $value = $this->value . str_repeat(' ', $value - $length);
+
+            return new static($value, $this->options);
+        }
+
+        $value = rtrim(mb_strimwidth($this->value, 0, $value, '', 'UTF-8'));
 
         return new static($value, $this->options);
     }
