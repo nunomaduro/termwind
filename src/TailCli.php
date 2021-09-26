@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace NunoMaduro\TailCli;
 
-use NunoMaduro\TailCli\Components;
-
 final class TailCli
 {
     /**
