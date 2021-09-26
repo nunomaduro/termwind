@@ -128,7 +128,7 @@ abstract class Element
         $length = mb_strlen($this->value, 'UTF-8');
 
         if ($length <= $value) {
-            $value = $this->value . str_repeat(' ', $value - $length);
+            $value = $this->value.str_repeat(' ', $value - $length);
 
             return new static($value, $this->options);
         }
