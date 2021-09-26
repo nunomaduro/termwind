@@ -1,0 +1,50 @@
+{
+    "name": "nunomaduro/tailcli",
+    "description": "Its like Tailwind CSS, but for the console.",
+    "keywords": ["php", "cli", "package", "console", "css", "style"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nuno Maduro",
+            "email": "enunomaduro@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.0"
+    },
+    "require-dev": {
+        "ergebnis/phpstan-rules": "^0.15.3",
+        "pestphp/pest": "^1.1.0",
+        "phpstan/phpstan": "^0.12.99",
+        "phpstan/phpstan-strict-rules": "^0.12.11",
+        "styleci/cli": "^1.2",
+        "symfony/var-dumper": "^5.2.7",
+        "thecodingmachine/phpstan-strict-rules": "^0.12.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "NunoMaduro\\TailCli\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "preferred-install": "dist"
+    },
+    "scripts": {
+        "lint": "styleci",
+        "test:types": "phpstan analyse --ansi --memory-limit=0",
+        "test:unit": "pest --colors=always",
+        "test": [
+            "lint",
+            "@test:types",
+            "@test:unit"
+        ]
+    }
+}
