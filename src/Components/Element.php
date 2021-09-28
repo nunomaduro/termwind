@@ -91,7 +91,7 @@ abstract class Element
      */
     final public function pr(int $padding): static
     {
-        $value = sprintf('%s%s', str_repeat(' ', $padding), $this->value);
+        $value = sprintf('%s%s', $this->value, str_repeat(' ', $padding));
 
         return new static($value, $this->options);
     }

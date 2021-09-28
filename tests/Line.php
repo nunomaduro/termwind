@@ -15,7 +15,7 @@ test('padding right', function () {
 
     $line = $line->pr2();
 
-    expect($line->toString())->toBe('  string');
+    expect($line->toString())->toBe('string  ');
 });
 
 test('background color', function () {
