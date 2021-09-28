@@ -73,6 +73,14 @@ abstract class Element
     }
 
     /**
+     * Adds 1 margin left to the element.
+     */
+    final public function ml1(): static
+    {
+        return $this->ml(1);
+    }
+
+    /**
      * Adds the given margin left to the element.
      */
     final public function ml(int $margin): static
@@ -86,6 +94,14 @@ abstract class Element
     final public function mr2(): static
     {
         return $this->mr(2);
+    }
+
+    /**
+     * Adds 1 margin right to the element.
+     */
+    final public function mr1(): static
+    {
+        return $this->mr(1);
     }
 
     /**
@@ -105,6 +121,14 @@ abstract class Element
     }
 
     /**
+     * Adds 1 padding left to the element.
+     */
+    final public function pl1(): static
+    {
+        return $this->pl(1);
+    }
+
+    /**
      * Adds the given padding left to the element.
      */
     final public function pl(int $padding): static
@@ -120,6 +144,14 @@ abstract class Element
     final public function pr2(): static
     {
         return $this->pr(2);
+    }
+
+    /**
+     * Adds 1 padding right to the element.
+     */
+    final public function pr1(): static
+    {
+        return $this->pr(1);
     }
 
     /**
