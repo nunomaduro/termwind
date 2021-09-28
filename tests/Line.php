@@ -7,7 +7,7 @@ test('padding left', function () {
 
     $line = $line->pl2();
 
-    expect($line->toString())->toBe('  string');
+    expect($line->toString())->toBe('<>  string</>');
 });
 
 test('padding right', function () {
@@ -15,7 +15,7 @@ test('padding right', function () {
 
     $line = $line->pr2();
 
-    expect($line->toString())->toBe('string  ');
+    expect($line->toString())->toBe('<>string  </>');
 });
 
 test('background color', function () {
@@ -41,8 +41,8 @@ test('truncate', function () {
     $truncated = $truncated->truncate(5);
     $line = $normal->truncate(5);
 
-    expect($truncated->toString())->toBe('st...');
-    expect($line->toString())->toBe('st...');
+    expect($truncated->toString())->toBe('<>st...</>');
+    expect($line->toString())->toBe('<>st...</>');
 });
 
 test('width', function () {
@@ -52,6 +52,28 @@ test('width', function () {
     $truncated = $truncated->width(10);
     $line = $normal->width(10);
 
-    expect($truncated->toString())->toBe('string str');
-    expect($line->toString())->toBe('string    ');
+    expect($truncated->toString())->toBe('<>string str</>');
+    expect($line->toString())->toBe('<>string    </>');
+});
+
+test('margin left', function () {
+    $line = TailCli::line('string');
+    $lineWithBackground = TailCli::line('string')->bg('white');
+
+    $line = $line->ml2();
+    $lineWithBackground = $lineWithBackground->ml2();
+
+    expect($line->toString())->toBe('  <>string</>');
+    expect($lineWithBackground->toString())->toBe('  <bg=white>string</>');
+});
+
+test('margin right', function () {
+    $line = TailCli::line('string');
+    $lineWithBackground = TailCli::line('string')->bg('white');
+
+    $line = $line->mr2();
+    $lineWithBackground = $lineWithBackground->mr2();
+
+    expect($line->toString())->toBe('<>string</>  ');
+    expect($lineWithBackground->toString())->toBe('<bg=white>string</>  ');
 });

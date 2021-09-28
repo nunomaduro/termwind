@@ -61,6 +61,38 @@ abstract class Element
     }
 
     /**
+     * Adds 2 margin left to the element.
+     */
+    final public function ml2(): static
+    {
+        return $this->ml(2);
+    }
+
+    /**
+     * Adds the given margin left to the element.
+     */
+    final public function ml(int $margin): static
+    {
+        return $this->with(['ml' => $margin]);
+    }
+
+    /**
+     * Adds 2 margin right to the element.
+     */
+    final public function mr2(): static
+    {
+        return $this->mr(2);
+    }
+
+    /**
+     * Adds the given margin right to the element.
+     */
+    final public function mr(int $margin): static
+    {
+        return $this->with(['mr' => $margin]);
+    }
+
+    /**
      * Adds 2 padding left to the element.
      */
     final public function pl2(): static
@@ -151,20 +183,20 @@ abstract class Element
      */
     final public function __toString(): string
     {
-        if (count($this->options) === 0) {
-            return $this->value;
-        }
-
-        $options = [];
+        $style = [];
 
         foreach ($this->options as $option => $value) {
-            $options[] = "$option=$value";
+            if (in_array($option, ['fg', 'bg'], true)) {
+                $style[] = "$option=$value";
+            }
         }
 
         return sprintf(
-            '<%s>%s</>',
-            implode(';', $options),
+            '%s<%s>%s</>%s',
+            str_repeat(' ', $this->options['ml'] ?? 0),
+            implode(';', $style),
             $this->value,
+            str_repeat(' ', $this->options['mr'] ?? 0),
         );
     }
 
