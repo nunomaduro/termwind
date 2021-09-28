@@ -19,7 +19,11 @@ abstract class Element
      * @param  TValue  $value
      * @param  array<string, string|int>  $options
      */
-    final protected function __construct(protected mixed $value, protected array $options = [])
+    final protected function __construct(
+        protected mixed $value,
+        protected array $options = [
+            'bg' => 'default',
+        ])
     {
         // ..
     }

@@ -7,7 +7,7 @@ test('padding left', function () {
 
     $line = $line->pl2();
 
-    expect($line->toString())->toBe('<>  string</>');
+    expect($line->toString())->toBe('<bg=default>  string</>');
 });
 
 test('padding right', function () {
@@ -15,7 +15,7 @@ test('padding right', function () {
 
     $line = $line->pr2();
 
-    expect($line->toString())->toBe('<>string  </>');
+    expect($line->toString())->toBe('<bg=default>string  </>');
 });
 
 test('background color', function () {
@@ -31,7 +31,7 @@ test('text color', function () {
 
     $line = $line->textColor('red');
 
-    expect($line->toString())->toBe('<fg=red>string</>');
+    expect($line->toString())->toBe('<bg=default;fg=red>string</>');
 });
 
 test('truncate', function () {
@@ -41,8 +41,8 @@ test('truncate', function () {
     $truncated = $truncated->truncate(5);
     $line = $normal->truncate(5);
 
-    expect($truncated->toString())->toBe('<>st...</>');
-    expect($line->toString())->toBe('<>st...</>');
+    expect($truncated->toString())->toBe('<bg=default>st...</>');
+    expect($line->toString())->toBe('<bg=default>st...</>');
 });
 
 test('width', function () {
@@ -52,8 +52,8 @@ test('width', function () {
     $truncated = $truncated->width(10);
     $line = $normal->width(10);
 
-    expect($truncated->toString())->toBe('<>string str</>');
-    expect($line->toString())->toBe('<>string    </>');
+    expect($truncated->toString())->toBe('<bg=default>string str</>');
+    expect($line->toString())->toBe('<bg=default>string    </>');
 });
 
 test('margin left', function () {
@@ -63,7 +63,7 @@ test('margin left', function () {
     $line = $line->ml2();
     $lineWithBackground = $lineWithBackground->ml2();
 
-    expect($line->toString())->toBe('  <>string</>');
+    expect($line->toString())->toBe('  <bg=default>string</>');
     expect($lineWithBackground->toString())->toBe('  <bg=white>string</>');
 });
 
@@ -74,6 +74,6 @@ test('margin right', function () {
     $line = $line->mr2();
     $lineWithBackground = $lineWithBackground->mr2();
 
-    expect($line->toString())->toBe('<>string</>  ');
+    expect($line->toString())->toBe('<bg=default>string</>  ');
     expect($lineWithBackground->toString())->toBe('<bg=white>string</>  ');
 });
