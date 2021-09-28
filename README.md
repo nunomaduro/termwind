@@ -26,8 +26,8 @@ composer require nunomaduro/tailcli --dev
 use NunoMaduro\TailCli\TailCli;
 
 TailCli::line('foo', 'pl-2'); // '  foo';
-TailCli::line('foo')->pl2() // '  foo';
-TailCli::line('foo')->pl(2) // '  foo';
+TailCli::line('foo')->pl2(); // '  foo';
+TailCli::line('foo')->pl(2); // '  foo';
 ```
 
 Tailcli is an open-sourced software licensed under the **[MIT license](https://opensource.org/licenses/MIT)**.
