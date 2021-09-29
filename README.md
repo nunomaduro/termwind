@@ -9,7 +9,7 @@
 </p>
 
 ------
-**TailCli** allows building unique, beautiful command-line applications, using the tailwind API. It's like **[Tailwind CSS](https://tailwindcss.com/)**, but for the console.
+**TailCli** allows you to building unique and beautiful command-line applications, using the **[Tailwind CSS](https://tailwindcss.com/)** API. In short, it's like Tailwind CSS, but for the console.
 
 ## Installation & Usage
 
@@ -21,7 +21,7 @@ Require TailCli using [Composer](https://getcomposer.org):
 composer require nunomaduro/tailcli --dev
 ```
 
-### Examples
+### Get Started
 
 ```php
 use function TailCli\{line, render};
@@ -30,11 +30,11 @@ use function TailCli\{line, render};
 line('foo')->pl2()->fontBold()->textColor('red')->render();
 
 // Render multiple lines...
-render(
+render([
     line(),
     line()->ml(20)->bg('red'),
     line(),
-);
+]);
 ```
 
 TailCli is an open-sourced software licensed under the **[MIT license](https://opensource.org/licenses/MIT)**.
