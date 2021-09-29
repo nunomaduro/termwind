@@ -8,13 +8,13 @@
 </p>
 
 ------
-**Tailcli** allows building unique, beautiful command-line applications, using tailwind classes. It's like Tailwind CSS, but for the console.
+**TailCli** allows building unique, beautiful command-line applications, using tailwind classes. It's like Tailwind CSS, but for the console.
 
 ## Installation & Usage
 
 > **Requires [PHP 8.0+](https://php.net/releases/)**
 
-Require Tailcli using [Composer](https://getcomposer.org):
+Require TailCli using [Composer](https://getcomposer.org):
 
 ```bash
 composer require nunomaduro/tailcli --dev
@@ -30,4 +30,4 @@ TailCli::line('foo')->pl2(); // '  foo';
 TailCli::line('foo')->pl(2); // '  foo';
 ```
 
-Tailcli is an open-sourced software licensed under the **[MIT license](https://opensource.org/licenses/MIT)**.
+TailCli is an open-sourced software licensed under the **[MIT license](https://opensource.org/licenses/MIT)**.

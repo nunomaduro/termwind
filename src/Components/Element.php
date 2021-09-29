@@ -18,13 +18,16 @@ abstract class Element
      * Creates an element instance.
      *
      * @param  TValue  $value
-     * @param  array<string, string|int>  $options
+     * @param  array<string, array<int|string, int|string>>  $properties
      */
     final protected function __construct(
         protected OutputInterface $output,
         protected mixed $value,
-        protected array $options = [
-            'bg' => 'default',
+        protected array $properties = [
+            'colors' => [
+                'bg' => 'default',
+            ],
+            'options' => [],
         ])
     {
         // ..
@@ -63,7 +66,15 @@ abstract class Element
      */
     final public function bg(string $color): static
     {
-        return $this->with(['bg' => $color]);
+        return $this->with(['colors' => ['bg' => $color]]);
+    }
+
+    /**
+     * Adds a bold style to the element.
+     */
+    final public function fontBold(): static
+    {
+        return $this->with(['options' => ['bold']]);
     }
 
     /**
@@ -87,7 +98,9 @@ abstract class Element
      */
     final public function ml(int $margin): static
     {
-        return $this->with(['ml' => $margin]);
+        return $this->with(['styles' => [
+            'ml' => $margin
+        ]]);
     }
 
     /**
@@ -111,7 +124,9 @@ abstract class Element
      */
     final public function mr(int $margin): static
     {
-        return $this->with(['mr' => $margin]);
+        return $this->with(['styles' => [
+            'mr' => $margin
+        ]]);
     }
 
     /**
@@ -137,7 +152,7 @@ abstract class Element
     {
         $value = sprintf('%s%s', str_repeat(' ', $padding), $this->value);
 
-        return new static($this->output, $value, $this->options);
+        return new static($this->output, $value, $this->properties);
     }
 
     /**
@@ -163,7 +178,7 @@ abstract class Element
     {
         $value = sprintf('%s%s', $this->value, str_repeat(' ', $padding));
 
-        return new static($this->output, $value, $this->options);
+        return new static($this->output, $value, $this->properties);
     }
 
     /**
@@ -171,7 +186,9 @@ abstract class Element
      */
     final public function textColor(string $color): static
     {
-        return $this->with(['fg' => $color]);
+        return $this->with(['colors' => [
+            'fg' => $color
+        ]]);
     }
 
     /**
@@ -182,12 +199,12 @@ abstract class Element
         $limit -= mb_strwidth($end, 'UTF-8');
 
         if (mb_strwidth($this->value, 'UTF-8') <= $limit) {
-            return new static($this->output, $this->value, $this->options);
+            return new static($this->output, $this->value, $this->properties);
         }
 
         $value = rtrim(mb_strimwidth($this->value, 0, $limit, '', 'UTF-8')).$end;
 
-        return new static($this->output, $value, $this->options);
+        return new static($this->output, $value, $this->properties);
     }
 
     /**
@@ -200,12 +217,12 @@ abstract class Element
         if ($length <= $value) {
             $value = $this->value.str_repeat(' ', $value - $length);
 
-            return new static($this->output, $value, $this->options);
+            return new static($this->output, $value, $this->properties);
         }
 
         $value = rtrim(mb_strimwidth($this->value, 0, $value, '', 'UTF-8'));
 
-        return new static($this->output, $value, $this->options);
+        return new static($this->output, $value, $this->properties);
     }
 
     /**
@@ -229,20 +246,30 @@ abstract class Element
      */
     final public function toString(): string
     {
-        $style = [];
+        $colors = [];
 
-        foreach ($this->options as $option => $value) {
+        foreach ($this->properties['colors'] as $option => $value) {
             if (in_array($option, ['fg', 'bg'], true)) {
-                $style[] = "$option=$value";
+                // @phpstan-ignore-next-line
+                $value = is_array($value) ? array_pop($value) : $value;
+
+                $colors[] = "$option=$value";
             }
         }
 
+        $options = [];
+
+        foreach ($this->properties['options'] as $option) {
+            $options[] = $option;
+        }
+
         return sprintf(
-            '%s<%s>%s</>%s',
-            str_repeat(' ',  (int) ($this->options['ml'] ?? 0)),
-            implode(';', $style),
+            '%s<%s;options=%s>%s</>%s',
+            str_repeat(' ',  (int) ($this->properties['styles']['ml'] ?? 0)),
+            implode(';', $colors),
+            implode(',', $options),
             $this->value,
-            str_repeat(' ', (int) ($this->options['mr'] ?? 0)),
+            str_repeat(' ', (int) ($this->properties['styles']['mr'] ?? 0)),
         );
     }
 
@@ -255,16 +282,18 @@ abstract class Element
     }
 
     /**
-     * Adds the given options to the element.
+     * Adds the given properties to the element.
      *
-     * @param  array<string, int|string>  $options
+     * @param  array<string, array<int|string, int|string>>  $properties
      */
-    private function with(array $options): static
+    private function with(array $properties): static
     {
+        $properties = array_merge_recursive($this->properties, $properties);
+
         return new static(
             $this->output,
             $this->value,
-            array_merge($this->options, $options)
+            $properties,
         );
     }
 }

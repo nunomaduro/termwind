@@ -2,12 +2,20 @@
 
 use NunoMaduro\TailCli\TailCli;
 
+test('font bold', function () {
+    $line = TailCli::line('string');
+
+    $line = $line->fontBold();
+
+    expect($line->toString())->toBe('<bg=default;options=bold>string</>');
+});
+
 test('padding left', function () {
     $line = TailCli::line('string');
 
     $line = $line->pl2();
 
-    expect($line->toString())->toBe('<bg=default>  string</>');
+    expect($line->toString())->toBe('<bg=default;options=>  string</>');
 });
 
 test('padding right', function () {
@@ -15,7 +23,7 @@ test('padding right', function () {
 
     $line = $line->pr2();
 
-    expect($line->toString())->toBe('<bg=default>string  </>');
+    expect($line->toString())->toBe('<bg=default;options=>string  </>');
 });
 
 test('background color', function () {
@@ -23,7 +31,7 @@ test('background color', function () {
 
     $line = $line->bg('red');
 
-    expect($line->toString())->toBe('<bg=red>string</>');
+    expect($line->toString())->toBe('<bg=red;options=>string</>');
 });
 
 test('text color', function () {
@@ -31,7 +39,7 @@ test('text color', function () {
 
     $line = $line->textColor('red');
 
-    expect($line->toString())->toBe('<bg=default;fg=red>string</>');
+    expect($line->toString())->toBe('<bg=default;fg=red;options=>string</>');
 });
 
 test('truncate', function () {
@@ -41,8 +49,8 @@ test('truncate', function () {
     $truncated = $truncated->truncate(5);
     $line = $normal->truncate(5);
 
-    expect($truncated->toString())->toBe('<bg=default>st...</>');
-    expect($line->toString())->toBe('<bg=default>st...</>');
+    expect($truncated->toString())->toBe('<bg=default;options=>st...</>');
+    expect($line->toString())->toBe('<bg=default;options=>st...</>');
 });
 
 test('width', function () {
@@ -52,8 +60,8 @@ test('width', function () {
     $truncated = $truncated->width(10);
     $line = $normal->width(10);
 
-    expect($truncated->toString())->toBe('<bg=default>string str</>');
-    expect($line->toString())->toBe('<bg=default>string    </>');
+    expect($truncated->toString())->toBe('<bg=default;options=>string str</>');
+    expect($line->toString())->toBe('<bg=default;options=>string    </>');
 });
 
 test('margin left', function () {
@@ -63,8 +71,8 @@ test('margin left', function () {
     $line = $line->ml2();
     $lineWithBackground = $lineWithBackground->ml2();
 
-    expect($line->toString())->toBe('  <bg=default>string</>');
-    expect($lineWithBackground->toString())->toBe('  <bg=white>string</>');
+    expect($line->toString())->toBe('  <bg=default;options=>string</>');
+    expect($lineWithBackground->toString())->toBe('  <bg=white;options=>string</>');
 });
 
 test('margin right', function () {
@@ -74,6 +82,6 @@ test('margin right', function () {
     $line = $line->mr2();
     $lineWithBackground = $lineWithBackground->mr2();
 
-    expect($line->toString())->toBe('<bg=default>string</>  ');
-    expect($lineWithBackground->toString())->toBe('<bg=white>string</>  ');
+    expect($line->toString())->toBe('<bg=default;options=>string</>  ');
+    expect($lineWithBackground->toString())->toBe('<bg=white;options=>string</>  ');
 });

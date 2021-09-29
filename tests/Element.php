@@ -24,4 +24,3 @@ test('writes the element to the output and prints a new line', function () {
 
     expect($output->fetch())->toBe("string\n");
 });
-
