@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace NunoMaduro\TailCli;
+namespace TailCli;
 
-use NunoMaduro\TailCli\Components\Element;
+use TailCli\Components\Element;
 use Symfony\Component\Console\Output\OutputInterface;
 
 if (! function_exists('line')) {

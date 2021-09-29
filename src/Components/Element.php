@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace NunoMaduro\TailCli\Components;
+namespace TailCli\Components;
 
-use NunoMaduro\TailCli\Exceptions\StyleNotFound;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**

@@ -1,7 +1,7 @@
 <?php
 
 use Symfony\Component\Console\Output\BufferedOutput;
-use function NunoMaduro\TailCli\{
+use function TailCli\{
     line, render, renderUsing
 };
 

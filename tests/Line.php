@@ -1,6 +1,6 @@
 <?php
 
-use function NunoMaduro\TailCli\{line};
+use function TailCli\{line};
 
 it('adds font bold', function () {
     $line = line('string');

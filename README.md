@@ -23,7 +23,7 @@ composer require nunomaduro/tailcli --dev
 ### Examples
 
 ```php
-use function NunoMaduro\TailCli\{line, render};
+use function TailCli\{line, render};
 
 // Render one line...
 line('foo')->pl2()->fontBold()->textColor('red')->render();
