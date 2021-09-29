@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NunoMaduro\TailCli\Components;
 
 use NunoMaduro\TailCli\Exceptions\StyleNotFound;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @internal
@@ -20,6 +21,7 @@ abstract class Element
      * @param  array<string, string|int>  $options
      */
     final protected function __construct(
+        protected OutputInterface $output,
         protected mixed $value,
         protected array $options = [
             'bg' => 'default',
@@ -33,9 +35,9 @@ abstract class Element
      *
      * @param  TValue  $value
      */
-    final public static function fromStyles($value, string $styles): static
+    final public static function fromStyles(OutputInterface $output, $value, string $styles): static
     {
-        $element = new static($value);
+        $element = new static($output, $value);
 
         foreach (explode(' ', $styles) as $style) {
             $method = str_replace('-', ' ', $style);
@@ -135,7 +137,7 @@ abstract class Element
     {
         $value = sprintf('%s%s', str_repeat(' ', $padding), $this->value);
 
-        return new static($value, $this->options);
+        return new static($this->output, $value, $this->options);
     }
 
     /**
@@ -161,7 +163,7 @@ abstract class Element
     {
         $value = sprintf('%s%s', $this->value, str_repeat(' ', $padding));
 
-        return new static($value, $this->options);
+        return new static($this->output, $value, $this->options);
     }
 
     /**
@@ -180,12 +182,12 @@ abstract class Element
         $limit -= mb_strwidth($end, 'UTF-8');
 
         if (mb_strwidth($this->value, 'UTF-8') <= $limit) {
-            return new static($this->value, $this->options);
+            return new static($this->output, $this->value, $this->options);
         }
 
         $value = rtrim(mb_strimwidth($this->value, 0, $limit, '', 'UTF-8')).$end;
 
-        return new static($value, $this->options);
+        return new static($this->output, $value, $this->options);
     }
 
     /**
@@ -198,26 +200,34 @@ abstract class Element
         if ($length <= $value) {
             $value = $this->value.str_repeat(' ', $value - $length);
 
-            return new static($value, $this->options);
+            return new static($this->output, $value, $this->options);
         }
 
         $value = rtrim(mb_strimwidth($this->value, 0, $value, '', 'UTF-8'));
 
-        return new static($value, $this->options);
+        return new static($this->output, $value, $this->options);
+    }
+
+    /**
+     * Writes the string representation of the element on the output, and adds a new line.
+     */
+    final public function write(): void
+    {
+        $this->output->write($this->toString());
+    }
+
+    /**
+     * Writes the string representation of the element on the output.
+     */
+    final public function writeln(): void
+    {
+        $this->output->writeln($this->toString());
     }
 
     /**
      * Get the string representation of the element.
      */
     final public function toString(): string
-    {
-        return $this->__toString();
-    }
-
-    /**
-     * Get the string representation of the element.
-     */
-    final public function __toString(): string
     {
         $style = [];
 
@@ -229,11 +239,19 @@ abstract class Element
 
         return sprintf(
             '%s<%s>%s</>%s',
-            str_repeat(' ', $this->options['ml'] ?? 0),
+            str_repeat(' ',  (int) ($this->options['ml'] ?? 0)),
             implode(';', $style),
             $this->value,
-            str_repeat(' ', $this->options['mr'] ?? 0),
+            str_repeat(' ', (int) ($this->options['mr'] ?? 0)),
         );
+    }
+
+    /**
+     * Get the string representation of the element.
+     */
+    final public function __toString(): string
+    {
+        return $this->toString();
     }
 
     /**
@@ -244,6 +262,7 @@ abstract class Element
     private function with(array $options): static
     {
         return new static(
+            $this->output,
             $this->value,
             array_merge($this->options, $options)
         );
