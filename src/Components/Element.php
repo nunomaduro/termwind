@@ -195,6 +195,26 @@ abstract class Element
     }
 
     /**
+     * Makes the element's content uppercase.
+     */
+    final public function uppercase(): static
+    {
+        $value = mb_strtoupper($this->value, 'UTF-8');
+
+        return new static($this->output, $value, $this->properties);
+    }
+
+    /**
+     * Makes the element's content lowercase.
+     */
+    final public function lowercase(): static
+    {
+        $value = mb_strtolower($this->value, 'UTF-8');
+
+        return new static($this->output, $value, $this->properties);
+    }
+
+    /**
      * Renders the string representation of the element on the output.
      */
     final public function render(): void

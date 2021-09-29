@@ -85,3 +85,22 @@ it('adds margin right', function () {
     expect($line->toString())->toBe('<bg=default;options=>string</>  ');
     expect($lineWithBackground->toString())->toBe('<bg=white;options=>string</>  ');
 });
+
+it('sets the text uppercase', function () {
+    $line = line('string');
+
+    $line = $line->uppercase();
+
+    expect($line->toString())->toBe('<bg=default;options=>STRING</>');
+});
+
+it('sets the text lowercase', function () {
+    $line = line('STRing');
+
+    $line = $line->lowercase();
+
+    expect($line->toString())->toBe('<bg=default;options=>string</>');
+});
+
+
+
