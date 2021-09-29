@@ -2,7 +2,7 @@
 
 use NunoMaduro\TailCli\TailCli;
 
-test('font bold', function () {
+it('adds font bold', function () {
     $line = TailCli::line('string');
 
     $line = $line->fontBold();
@@ -10,7 +10,7 @@ test('font bold', function () {
     expect($line->toString())->toBe('<bg=default;options=bold>string</>');
 });
 
-test('padding left', function () {
+it('adds padding left', function () {
     $line = TailCli::line('string');
 
     $line = $line->pl2();
@@ -18,7 +18,7 @@ test('padding left', function () {
     expect($line->toString())->toBe('<bg=default;options=>  string</>');
 });
 
-test('padding right', function () {
+it('adds padding right', function () {
     $line = TailCli::line('string');
 
     $line = $line->pr2();
@@ -26,7 +26,7 @@ test('padding right', function () {
     expect($line->toString())->toBe('<bg=default;options=>string  </>');
 });
 
-test('background color', function () {
+it('adds background color', function () {
     $line = TailCli::line('string');
 
     $line = $line->bg('red');
@@ -34,7 +34,7 @@ test('background color', function () {
     expect($line->toString())->toBe('<bg=red;options=>string</>');
 });
 
-test('text color', function () {
+it('adds text color', function () {
     $line = TailCli::line('string');
 
     $line = $line->textColor('red');
@@ -42,7 +42,7 @@ test('text color', function () {
     expect($line->toString())->toBe('<bg=default;fg=red;options=>string</>');
 });
 
-test('truncate', function () {
+it('truncates', function () {
     $truncated = TailCli::line('string string');
     $normal = TailCli::line('string string');
 
@@ -53,7 +53,7 @@ test('truncate', function () {
     expect($line->toString())->toBe('<bg=default;options=>st...</>');
 });
 
-test('width', function () {
+it('adds width', function () {
     $truncated = TailCli::line('string string');
     $normal = TailCli::line('string');
 
@@ -64,7 +64,7 @@ test('width', function () {
     expect($line->toString())->toBe('<bg=default;options=>string    </>');
 });
 
-test('margin left', function () {
+it('adds margin left', function () {
     $line = TailCli::line('string');
     $lineWithBackground = TailCli::line('string')->bg('white');
 
@@ -75,7 +75,7 @@ test('margin left', function () {
     expect($lineWithBackground->toString())->toBe('  <bg=white;options=>string</>');
 });
 
-test('margin right', function () {
+it('adds margin right', function () {
     $line = TailCli::line('string');
     $lineWithBackground = TailCli::line('string')->bg('white');
 

@@ -198,17 +198,9 @@ abstract class Element
     }
 
     /**
-     * Writes the string representation of the element on the output, and adds a new line.
+     * Renders the string representation of the element on the output.
      */
-    final public function write(): void
-    {
-        $this->output->write($this->toString());
-    }
-
-    /**
-     * Writes the string representation of the element on the output.
-     */
-    final public function writeln(): void
+    final public function render(): void
     {
         $this->output->writeln($this->toString());
     }
