@@ -8,7 +8,7 @@
 </p>
 
 ------
-**TailCli** allows building unique, beautiful command-line applications, using tailwind classes. It's like Tailwind CSS, but for the console.
+**TailCli** allows building unique, beautiful command-line applications, using the tailwind API. It's like **[Tailwind CSS](https://tailwindcss.com/)**, but for the console.
 
 ## Installation & Usage
 
