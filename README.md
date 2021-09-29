@@ -1,4 +1,5 @@
 <p align="center">
+    <img src="https://raw.githubusercontent.com/nunomaduro/tailcli/master/art/example.png" alt="TailCli example" height="300">
     <p align="center">
         <a href="https://github.com/nunomaduro/tailcli/actions"><img alt="GitHub Workflow Status (master)" src="https://img.shields.io/github/workflow/status/nunomaduro/tailcli/Tests/master"></a>
         <a href="https://packagist.org/packages/nunomaduro/tailcli"><img alt="Total Downloads" src="https://img.shields.io/packagist/dt/nunomaduro/tailcli"></a>
