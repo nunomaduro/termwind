@@ -8,50 +8,51 @@ use NunoMaduro\TailCli\Components\Element;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @internal
+ */
 final class TailCli
 {
     /**
      * The implementation of the output.
      */
-    private static OutputInterface|null $output;
+    private static OutputInterface|null $renderer;
 
     /**
-     * Sets the output implementation.
+     * Sets the renderer implementation.
      */
-    public static function outputUsing(OutputInterface|null $output): void
+    public static function renderUsing(OutputInterface|null $renderer): void
     {
-        self::$output = $output;
+        self::$renderer = $renderer;
     }
 
     /**
      * Creates a line element instance with the given style.
      */
-    public static function line(string $value = '', string $styles = ''): Components\Line
+    public static function line(string $value = ''): Components\Line
     {
         return new Components\Line(
-            self::$output ?? new ConsoleOutput(), $value
+            self::$renderer ?? new ConsoleOutput(), $value
         );
     }
 
     /**
      * Renders the given elements.
      *
-     * @template TElement of Element
-     *
-     * @param array<int, TElement|array<int, TElement>> $elements
+     * @param array<int, Element|array<int, Element>> $elements
      */
     public static function render(array $elements): void
     {
-        $output = self::$output ?? new ConsoleOutput();
+        $renderer = self::$renderer ?? new ConsoleOutput();
 
         foreach ($elements as $element) {
             if (is_array($element)) {
-                $output->write(array_map(static fn ($element) => $element->toString(), $element), true);
+                $renderer->write(array_map(static fn ($element) => $element->toString(), $element), true);
 
                 continue;
             }
 
-            $output->writeln($element->toString());
+            $renderer->writeln($element->toString());
         }
     }
 }

@@ -9,15 +9,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @internal
- *
- * @template TValue
  */
 abstract class Element
 {
     /**
      * Creates an element instance.
      *
-     * @param  TValue  $value
+     * @param  string  $value
      * @param  array<string, array<int|string, int|string>>  $properties
      */
     final public function __construct(

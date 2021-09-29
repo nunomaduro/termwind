@@ -1,16 +1,14 @@
 <?php
 
-use NunoMaduro\TailCli\TailCli;
 use Symfony\Component\Console\Output\BufferedOutput;
+use function NunoMaduro\TailCli\{line, renderUsing};
 
-afterEach(fn () => TailCli::outputUsing(null));
+afterEach(fn () => renderUsing(null));
 
 it('renders', function () {
-    $output = new BufferedOutput();
+    renderUsing($output = new BufferedOutput());
 
-    TailCli::outputUsing($output);
-
-    TailCli::line('string')->textColor('red')->render();
+    line('string')->textColor('red')->render();
 
     expect($output->fetch())->toBe("string\n");
 });

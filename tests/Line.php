@@ -1,9 +1,9 @@
 <?php
 
-use NunoMaduro\TailCli\TailCli;
+use function NunoMaduro\TailCli\{line};
 
 it('adds font bold', function () {
-    $line = TailCli::line('string');
+    $line = line('string');
 
     $line = $line->fontBold();
 
@@ -11,7 +11,7 @@ it('adds font bold', function () {
 });
 
 it('adds padding left', function () {
-    $line = TailCli::line('string');
+    $line = line('string');
 
     $line = $line->pl2();
 
@@ -19,7 +19,7 @@ it('adds padding left', function () {
 });
 
 it('adds padding right', function () {
-    $line = TailCli::line('string');
+    $line = line('string');
 
     $line = $line->pr2();
 
@@ -27,7 +27,7 @@ it('adds padding right', function () {
 });
 
 it('adds background color', function () {
-    $line = TailCli::line('string');
+    $line = line('string');
 
     $line = $line->bg('red');
 
@@ -35,7 +35,7 @@ it('adds background color', function () {
 });
 
 it('adds text color', function () {
-    $line = TailCli::line('string');
+    $line = line('string');
 
     $line = $line->textColor('red');
 
@@ -43,8 +43,8 @@ it('adds text color', function () {
 });
 
 it('truncates', function () {
-    $truncated = TailCli::line('string string');
-    $normal = TailCli::line('string string');
+    $truncated = line('string string');
+    $normal = line('string string');
 
     $truncated = $truncated->truncate(5);
     $line = $normal->truncate(5);
@@ -54,8 +54,8 @@ it('truncates', function () {
 });
 
 it('adds width', function () {
-    $truncated = TailCli::line('string string');
-    $normal = TailCli::line('string');
+    $truncated = line('string string');
+    $normal = line('string');
 
     $truncated = $truncated->width(10);
     $line = $normal->width(10);
@@ -65,8 +65,8 @@ it('adds width', function () {
 });
 
 it('adds margin left', function () {
-    $line = TailCli::line('string');
-    $lineWithBackground = TailCli::line('string')->bg('white');
+    $line = line('string');
+    $lineWithBackground = line('string')->bg('white');
 
     $line = $line->ml2();
     $lineWithBackground = $lineWithBackground->ml2();
@@ -76,8 +76,8 @@ it('adds margin left', function () {
 });
 
 it('adds margin right', function () {
-    $line = TailCli::line('string');
-    $lineWithBackground = TailCli::line('string')->bg('white');
+    $line = line('string');
+    $lineWithBackground = line('string')->bg('white');
 
     $line = $line->mr2();
     $lineWithBackground = $lineWithBackground->mr2();

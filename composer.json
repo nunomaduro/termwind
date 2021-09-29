@@ -25,7 +25,10 @@
     "autoload": {
         "psr-4": {
             "NunoMaduro\\TailCli\\": "src/"
-        }
+        },
+        "files": [
+            "src/Functions.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
