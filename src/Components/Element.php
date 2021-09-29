@@ -20,7 +20,7 @@ abstract class Element
      * @param  TValue  $value
      * @param  array<string, array<int|string, int|string>>  $properties
      */
-    final protected function __construct(
+    final public function __construct(
         protected OutputInterface $output,
         protected mixed $value,
         protected array $properties = [
@@ -31,34 +31,6 @@ abstract class Element
         ])
     {
         // ..
-    }
-
-    /**
-     * Creates an element instance with the given style.
-     *
-     * @param  TValue  $value
-     */
-    final public static function fromStyles(OutputInterface $output, $value, string $styles): static
-    {
-        $element = new static($output, $value);
-
-        foreach (explode(' ', $styles) as $style) {
-            $method = str_replace('-', ' ', $style);
-            $method = ucwords($method);
-            $method = str_replace(' ', '', $method);
-
-            if ($style === '') {
-                continue;
-            }
-
-            if (! method_exists($element, $method)) {
-                StyleNotFound::style($style);
-            }
-
-            $element->$method();
-        }
-
-        return $element;
     }
 
     /**

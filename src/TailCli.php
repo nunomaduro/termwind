@@ -27,6 +27,8 @@ final class TailCli
      */
     public static function line(string $value = '', string $styles = ''): Components\Line
     {
-        return Components\Line::fromStyles(self::$output ?? new ConsoleOutput(), $value, $styles);
+        return new Components\Line(
+            self::$output ?? new ConsoleOutput(), $value
+        );
     }
 }
