@@ -47,7 +47,9 @@ final class TailCli
 
         foreach ($elements as $element) {
             if (is_array($element)) {
-                $renderer->write(array_map(static fn ($element) => $element->toString(), $element), true);
+                $renderer->write(array_map(static fn ($element) => $element->toString(), $element));
+
+                $renderer->writeln(['']);
 
                 continue;
             }

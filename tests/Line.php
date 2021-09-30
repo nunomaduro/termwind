@@ -103,4 +103,3 @@ it('sets the text lowercase', function () {
 });
 
 
-
