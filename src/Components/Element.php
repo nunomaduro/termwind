@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TermWind\Components;
+namespace Termwind\Components;
 
 use Symfony\Component\Console\Output\OutputInterface;
 

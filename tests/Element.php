@@ -1,8 +1,8 @@
 <?php
 
 use Symfony\Component\Console\Output\BufferedOutput;
-use function TermWind\line;
-use function TermWind\renderUsing;
+use function Termwind\line;
+use function Termwind\renderUsing;
 
 afterEach(fn () => renderUsing(null));
 

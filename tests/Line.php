@@ -1,6 +1,6 @@
 <?php
 
-use function TermWind\{line};
+use function Termwind\{line};
 
 it('adds font bold', function () {
     $line = line('string');

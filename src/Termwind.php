@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace TermWind;
+namespace Termwind;
 
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
-use TermWind\Components\Element;
+use Termwind\Components\Element;
 
 /**
  * @internal
  */
-final class TermWind
+final class Termwind
 {
     /**
      * The implementation of the output.

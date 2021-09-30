@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace TermWind;
+namespace Termwind;
 
 use Symfony\Component\Console\Output\OutputInterface;
-use TermWind\Components\Element;
+use Termwind\Components\Element;
 
 if (! function_exists('line')) {
     /**
@@ -13,7 +13,7 @@ if (! function_exists('line')) {
      */
     function line(string $value = ''): Components\Line
     {
-        return TermWind::line($value);
+        return Termwind::line($value);
     }
 }
 
@@ -23,7 +23,7 @@ if (! function_exists('renderUsing')) {
      */
     function renderUsing(OutputInterface|null $renderer): void
     {
-        TermWind::renderUsing($renderer);
+        Termwind::renderUsing($renderer);
     }
 }
 
@@ -35,6 +35,6 @@ if (! function_exists('render')) {
      */
     function render(array $elements): void
     {
-        TermWind::render($elements);
+        Termwind::render($elements);
     }
 }
