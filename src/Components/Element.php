@@ -215,6 +215,16 @@ abstract class Element
     }
 
     /**
+     * Makes the element's content in titlecase.
+     */
+    final public function titlecase(): static
+    {
+        $value = mb_convert_case($this->value, MB_CASE_TITLE, 'UTF-8');
+
+        return new static($this->output, $value, $this->properties);
+    }
+
+    /**
      * Renders the string representation of the element on the output.
      */
     final public function render(): void

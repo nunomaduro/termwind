@@ -101,3 +101,11 @@ it('sets the text lowercase', function () {
 
     expect($line->toString())->toBe('<bg=default;options=>string</>');
 });
+
+it('sets the text in titlecase', function () {
+    $line = line('STRING titlecase');
+
+    $line = $line->titlecase();
+
+    expect($line->toString())->toBe('<bg=default;options=>String Titlecase</>');
+});
