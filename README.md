@@ -1,5 +1,15 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/nunomaduro/termwind/master/art/example.png" alt="TermWind example" height="300">
+    <img width="150" height="150" alt="Termwind logo" src="/art/logo.png"/>
+</p>
+
+<h1 align="center" style="border:none !important">
+    <code>Termwind</code>
+    <br>
+    <br>
+</h1>
+
+<p align="center">
+    <img src="https://raw.githubusercontent.com/nunomaduro/tailcli/master/art/example.png" alt="TailCli example" height="300">
     <p align="center">
         <a href="https://github.com/nunomaduro/termwind/actions"><img alt="GitHub Workflow Status (master)" src="https://img.shields.io/github/workflow/status/nunomaduro/termwind/Tests/master"></a>
         <a href="https://packagist.org/packages/nunomaduro/termwind"><img alt="Total Downloads" src="https://img.shields.io/packagist/dt/nunomaduro/termwind"></a>
