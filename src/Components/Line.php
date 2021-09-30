@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TailCli\Components;
+namespace TermWind\Components;
 
 final class Line extends Element
 {

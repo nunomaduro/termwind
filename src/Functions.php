@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace TailCli;
+namespace TermWind;
 
 use Symfony\Component\Console\Output\OutputInterface;
-use TailCli\Components\Element;
+use TermWind\Components\Element;
 
 if (! function_exists('line')) {
     /**
@@ -13,7 +13,7 @@ if (! function_exists('line')) {
      */
     function line(string $value = ''): Components\Line
     {
-        return TailCli::line($value);
+        return TermWind::line($value);
     }
 }
 
@@ -23,7 +23,7 @@ if (! function_exists('renderUsing')) {
      */
     function renderUsing(OutputInterface|null $renderer): void
     {
-        TailCli::renderUsing($renderer);
+        TermWind::renderUsing($renderer);
     }
 }
 
@@ -35,6 +35,6 @@ if (! function_exists('render')) {
      */
     function render(array $elements): void
     {
-        TailCli::render($elements);
+        TermWind::render($elements);
     }
 }

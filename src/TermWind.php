@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace TailCli;
+namespace TermWind;
 
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
-use TailCli\Components\Element;
+use TermWind\Components\Element;
 
 /**
  * @internal
  */
-final class TailCli
+final class TermWind
 {
     /**
      * The implementation of the output.
