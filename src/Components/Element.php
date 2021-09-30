@@ -68,7 +68,7 @@ abstract class Element
     final public function ml(int $margin): static
     {
         return $this->with(['styles' => [
-            'ml' => $margin
+            'ml' => $margin,
         ]]);
     }
 
@@ -94,7 +94,7 @@ abstract class Element
     final public function mr(int $margin): static
     {
         return $this->with(['styles' => [
-            'mr' => $margin
+            'mr' => $margin,
         ]]);
     }
 
@@ -156,7 +156,7 @@ abstract class Element
     final public function textColor(string $color): static
     {
         return $this->with(['colors' => [
-            'fg' => $color
+            'fg' => $color,
         ]]);
     }
 
@@ -246,7 +246,7 @@ abstract class Element
 
         return sprintf(
             '%s<%s;options=%s>%s</>%s',
-            str_repeat(' ',  (int) ($this->properties['styles']['ml'] ?? 0)),
+            str_repeat(' ', (int) ($this->properties['styles']['ml'] ?? 0)),
             implode(';', $colors),
             implode(',', $options),
             $this->value,

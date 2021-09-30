@@ -1,11 +1,11 @@
 <?php
 
 use Symfony\Component\Console\Output\BufferedOutput;
-use function TailCli\{
-    line, render, renderUsing
-};
+use function TailCli\line;
+use function TailCli\render;
+use function TailCli\renderUsing;
 
-afterEach(fn() => renderUsing(null));
+afterEach(fn () => renderUsing(null));
 
 it('renders', function () {
     $output = new BufferedOutput();

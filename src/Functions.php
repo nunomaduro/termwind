@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace TailCli;
 
-use TailCli\Components\Element;
 use Symfony\Component\Console\Output\OutputInterface;
+use TailCli\Components\Element;
 
 if (! function_exists('line')) {
     /**
@@ -31,7 +31,7 @@ if (! function_exists('render')) {
     /**
      * Renders the given elements.
      *
-     * @param array<int, Element|array<int, Element>> $elements
+     * @param  array<int, Element|array<int, Element>>  $elements
      */
     function render(array $elements): void
     {
