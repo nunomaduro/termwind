@@ -94,6 +94,14 @@ it('adds margin right', function () {
     expect($lineWithBackground->toString())->toBe('<bg=white;options=>string</>  ');
 });
 
+it('adds position left', function () {
+    $line = line('string');
+
+    $line = $line->left(2);
+
+    expect($line->toString())->toBe('  <bg=default;options=>string</>');
+});
+
 it('sets the text uppercase', function () {
     $line = line('string');
 

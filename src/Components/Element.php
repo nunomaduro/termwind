@@ -203,6 +203,14 @@ abstract class Element
     }
 
     /**
+     * Adds the given left position to the element.
+     */
+    final public function left(int $px): static
+    {
+        return $this->ml($px);
+    }
+
+    /**
      * Makes the element's content uppercase.
      */
     final public function uppercase(): static
