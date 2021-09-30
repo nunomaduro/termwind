@@ -101,5 +101,3 @@ it('sets the text lowercase', function () {
 
     expect($line->toString())->toBe('<bg=default;options=>string</>');
 });
-
-

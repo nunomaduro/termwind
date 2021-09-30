@@ -1,7 +1,8 @@
 <?php
 
 use Symfony\Component\Console\Output\BufferedOutput;
-use function TailCli\{line, renderUsing};
+use function TailCli\line;
+use function TailCli\renderUsing;
 
 afterEach(fn () => renderUsing(null));
 
