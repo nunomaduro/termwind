@@ -10,10 +10,10 @@ it('adds font bold', function () {
     expect($line->toString())->toBe('<bg=default;options=bold>string</>');
 });
 
-it('adds underscore', function () {
+it('adds underline', function () {
     $line = line('string');
 
-    $line = $line->underscore();
+    $line = $line->underline();
 
     expect($line->toString())->toBe('<bg=default;options=underscore>string</>');
 });

@@ -47,9 +47,9 @@ abstract class Element
     }
 
     /**
-     * Adds an underscore style to the element.
+     * Adds an underline style to the element.
      */
-    final public function underscore(): static
+    final public function underline(): static
     {
         return $this->with(['options' => ['underscore']]);
     }
