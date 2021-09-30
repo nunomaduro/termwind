@@ -47,6 +47,14 @@ abstract class Element
     }
 
     /**
+     * Adds an underline style to the element.
+     */
+    final public function underline(): static
+    {
+        return $this->with(['options' => ['underscore']]);
+    }
+
+    /**
      * Adds 2 margin left to the element.
      */
     final public function ml2(): static

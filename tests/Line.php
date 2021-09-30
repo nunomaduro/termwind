@@ -10,6 +10,14 @@ it('adds font bold', function () {
     expect($line->toString())->toBe('<bg=default;options=bold>string</>');
 });
 
+it('adds underline', function () {
+    $line = line('string');
+
+    $line = $line->underline();
+
+    expect($line->toString())->toBe('<bg=default;options=underscore>string</>');
+});
+
 it('adds padding left', function () {
     $line = line('string');
 
