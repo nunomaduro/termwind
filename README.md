@@ -18,6 +18,7 @@
     </p>
 </p>
 
+------
 **Termwind** allows you to build unique and beautiful PHP command-line applications, using the **[Tailwind CSS](https://tailwindcss.com/)** API. In short, it's like Tailwind CSS, but for the PHP command-line applications.
 
 ## Installation & Usage
