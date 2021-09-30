@@ -47,7 +47,7 @@ final class Termwind
 
         foreach ($elements as $element) {
             if (is_array($element)) {
-                $renderer->write(array_map(static fn ($element) => $element->toString(), $element));
+                $renderer->write(array_map(static fn ($element) => (string) $element, $element));
 
                 $renderer->writeln(['']);
 
