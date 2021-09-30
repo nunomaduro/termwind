@@ -4,7 +4,6 @@ on: ['push', 'pull_request']
 
 jobs:
   ci:
-    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         php: ['8.0', '8.1']
