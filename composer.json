@@ -1,5 +1,5 @@
 {
-    "name": "nunomaduro/tailcli",
+    "name": "nunomaduro/termwind",
     "description": "Its like Tailwind CSS, but for the console.",
     "keywords": ["php", "cli", "package", "console", "css", "style"],
     "license": "MIT",
@@ -25,7 +25,7 @@
     },
     "autoload": {
         "psr-4": {
-            "TailCli\\": "src/"
+            "TermWind\\": "src/"
         },
         "files": [
             "src/Functions.php"

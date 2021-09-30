@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TailCli\Components;
+namespace TermWind\Components;
 
 use Symfony\Component\Console\Output\OutputInterface;
 

@@ -1,9 +1,9 @@
 <?php
 
 use Symfony\Component\Console\Output\BufferedOutput;
-use function TailCli\line;
-use function TailCli\render;
-use function TailCli\renderUsing;
+use function TermWind\line;
+use function TermWind\render;
+use function TermWind\renderUsing;
 
 afterEach(fn () => renderUsing(null));
 

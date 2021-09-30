@@ -1,6 +1,6 @@
 <?php
 
-use function TailCli\{line};
+use function TermWind\{line};
 
 it('adds font bold', function () {
     $line = line('string');
