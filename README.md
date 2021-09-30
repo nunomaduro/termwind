@@ -9,7 +9,7 @@
 </p>
 
 ------
-**TailCli** allows you to building unique and beautiful command-line applications, using the **[Tailwind CSS](https://tailwindcss.com/)** API. In short, it's like Tailwind CSS, but for the console.
+**TailCli** allows you to building unique and beautiful PHP command-line applications, using the **[Tailwind CSS](https://tailwindcss.com/)** API. In short, it's like Tailwind CSS, but for the PHP command-line applications.
 
 ## Installation & Usage
 
