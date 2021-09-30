@@ -27,12 +27,12 @@ composer require nunomaduro/tailcli --dev
 use function TailCli\{line, render};
 
 // Render one line...
-line('foo')->pl2()->fontBold()->textColor('red')->render();
+line($message)->uppercase()->pl2()->pr2()->fontBold()->textColor('white')->bgColor('blue')->render();
 
 // Render multiple lines...
 render([
     line(),
-    line()->ml(20)->bg('red'),
+    line()->width(20)->bg('red'),
     line(),
 ]);
 ```
