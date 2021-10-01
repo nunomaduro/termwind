@@ -107,6 +107,33 @@ abstract class Element
     }
 
     /**
+     * Adds 2 horizontal margin to the element.
+     */
+    final public function mx2(): static
+    {
+        return $this->mx(2);
+    }
+
+    /**
+     * Adds 1 horizontal margin to the element.
+     */
+    final public function mx1(): static
+    {
+        return $this->mx(1);
+    }
+
+    /**
+     * Adds the given horizontal margin to the element.
+     */
+    final public function mx(int $margin): static
+    {
+        return $this->with(['styles' => [
+            'ml' => $margin,
+            'mr' => $margin,
+        ]]);
+    }
+
+    /**
      * Adds 2 padding left to the element.
      */
     final public function pl2(): static
@@ -156,6 +183,30 @@ abstract class Element
         $value = sprintf('%s%s', $this->value, str_repeat(' ', $padding));
 
         return new static($this->output, $value, $this->properties);
+    }
+
+    /**
+     * Adds 2 horizontal padding to the element.
+     */
+    final public function px2(): static
+    {
+        return $this->px(2);
+    }
+
+    /**
+     * Adds 1 horizontal padding to the element.
+     */
+    final public function px1(): static
+    {
+        return $this->px(1);
+    }
+
+    /**
+     * Adds the given horizontal padding to the element.
+     */
+    final public function px(int $padding): static
+    {
+        return $this->pl($padding)->pr($padding);
     }
 
     /**

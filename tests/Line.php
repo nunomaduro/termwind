@@ -34,6 +34,14 @@ it('adds padding right', function () {
     expect($line->toString())->toBe('<bg=default;options=>string  </>');
 });
 
+it('adds horizontal padding', function () {
+    $line = line('string');
+
+    $line = $line->px2();
+
+    expect($line->toString())->toBe('<bg=default;options=>  string  </>');
+});
+
 it('adds background color', function () {
     $line = line('string');
 
@@ -92,6 +100,17 @@ it('adds margin right', function () {
 
     expect($line->toString())->toBe('<bg=default;options=>string</>  ');
     expect($lineWithBackground->toString())->toBe('<bg=white;options=>string</>  ');
+});
+
+it('adds horizontal margin', function () {
+    $line = line('string');
+    $lineWithBackground = line('string')->bg('white');
+
+    $line = $line->mx2();
+    $lineWithBackground = $lineWithBackground->mx2();
+
+    expect($line->toString())->toBe('  <bg=default;options=>string</>  ');
+    expect($lineWithBackground->toString())->toBe('  <bg=white;options=>string</>  ');
 });
 
 it('sets the text uppercase', function () {
