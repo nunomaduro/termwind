@@ -284,6 +284,19 @@ abstract class Element
     }
 
     /**
+     * Makes the element's content in snakecase.
+     */
+    final public function snakecase(): static
+    {
+        $value = mb_strtolower(
+            (string) preg_replace(['/([a-z\d])([A-Z])/', '/([^_])([A-Z][a-z])/'], '$1_$2', $this->value),
+            'UTF-8'
+        );
+
+        return new static($this->output, $value, $this->properties);
+    }
+
+    /**
      * Renders the string representation of the element on the output.
      */
     final public function render(): void
