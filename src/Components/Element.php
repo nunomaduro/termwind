@@ -11,6 +11,16 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 abstract class Element
 {
+
+    protected $elements = [
+        "pr",
+        "pl",
+        "mr",
+        "ml",
+        "m",
+        "p",
+    ];
+
     /**
      * Creates an element instance.
      *
@@ -25,9 +35,23 @@ abstract class Element
                 'bg' => 'default',
             ],
             'options' => [],
-        ])
-    {
+        ]
+    ) {
         // ..
+    }
+
+    /**
+     * @param string $method 
+     * @param array $arguments
+     */
+    public function __call(string $method, array  $arguments)
+    {
+        foreach ($this->elements as $element) {
+            if (preg_match("/^" . $element . "+[0-9]*$/", $method)) {
+                $value = (int) str_replace($element, "", $method);
+                return $this->{$element}($value);
+            }
+        }
     }
 
     /**
@@ -55,22 +79,6 @@ abstract class Element
     }
 
     /**
-     * Adds 2 margin left to the element.
-     */
-    final public function ml2(): static
-    {
-        return $this->ml(2);
-    }
-
-    /**
-     * Adds 1 margin left to the element.
-     */
-    final public function ml1(): static
-    {
-        return $this->ml(1);
-    }
-
-    /**
      * Adds the given margin left to the element.
      */
     final public function ml(int $margin): static
@@ -78,22 +86,6 @@ abstract class Element
         return $this->with(['styles' => [
             'ml' => $margin,
         ]]);
-    }
-
-    /**
-     * Adds 2 margin right to the element.
-     */
-    final public function mr2(): static
-    {
-        return $this->mr(2);
-    }
-
-    /**
-     * Adds 1 margin right to the element.
-     */
-    final public function mr1(): static
-    {
-        return $this->mr(1);
     }
 
     /**
@@ -107,22 +99,6 @@ abstract class Element
     }
 
     /**
-     * Adds 2 padding left to the element.
-     */
-    final public function pl2(): static
-    {
-        return $this->pl(2);
-    }
-
-    /**
-     * Adds 1 padding left to the element.
-     */
-    final public function pl1(): static
-    {
-        return $this->pl(1);
-    }
-
-    /**
      * Adds the given padding left to the element.
      */
     final public function pl(int $padding): static
@@ -130,22 +106,6 @@ abstract class Element
         $value = sprintf('%s%s', str_repeat(' ', $padding), $this->value);
 
         return new static($this->output, $value, $this->properties);
-    }
-
-    /**
-     * Adds 2 padding right to the element.
-     */
-    final public function pr2(): static
-    {
-        return $this->pr(2);
-    }
-
-    /**
-     * Adds 1 padding right to the element.
-     */
-    final public function pr1(): static
-    {
-        return $this->pr(1);
     }
 
     /**
@@ -179,7 +139,7 @@ abstract class Element
             return new static($this->output, $this->value, $this->properties);
         }
 
-        $value = rtrim(mb_strimwidth($this->value, 0, $limit, '', 'UTF-8')).$end;
+        $value = rtrim(mb_strimwidth($this->value, 0, $limit, '', 'UTF-8')) . $end;
 
         return new static($this->output, $value, $this->properties);
     }
@@ -192,7 +152,7 @@ abstract class Element
         $length = mb_strlen($this->value, 'UTF-8');
 
         if ($length <= $value) {
-            $value = $this->value.str_repeat(' ', $value - $length);
+            $value = $this->value . str_repeat(' ', $value - $length);
 
             return new static($this->output, $value, $this->properties);
         }
@@ -208,7 +168,6 @@ abstract class Element
     final public function uppercase(): static
     {
         $value = mb_strtoupper($this->value, 'UTF-8');
-
         return new static($this->output, $value, $this->properties);
     }
 
