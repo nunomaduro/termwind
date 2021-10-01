@@ -136,3 +136,11 @@ it('sets the text in titlecase', function () {
 
     expect($line->toString())->toBe('<bg=default;options=>String Titlecase</>');
 });
+
+it('sets the text in snakecase', function () {
+    $line = line('SnakeCase snakeCase snakeCASE SNAKECase');
+
+    $line = $line->snakecase();
+
+    expect($line->toString())->toBe('<bg=default;options=>snake_case snake_case snake_case snake_case</>');
+});
