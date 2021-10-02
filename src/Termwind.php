@@ -61,10 +61,6 @@ final class Termwind
      */
     private static function getRenderer(): OutputInterface
     {
-        if (self::$renderer === null) {
-            self::$renderer = new ConsoleOutput();
-        }
-
-        return self::$renderer;
+        return self::$renderer ??= new ConsoleOutput();
     }
 }
