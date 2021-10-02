@@ -57,13 +57,11 @@ final class Termwind
     }
 
     /**
-     * Get the current renderer instance.
-     *
-     * Create one if it does not exist.
+     * Gets the current renderer instance.
      */
     private static function getRenderer(): OutputInterface
     {
-        if (null === self::$renderer) {
+        if (self::$renderer === null) {
             self::$renderer = new ConsoleOutput();
         }
 
