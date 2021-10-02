@@ -1,7 +1,7 @@
 <?php
 
-use function Termwind\{line};
 use Termwind\Enums\Color;
+use function Termwind\{line};
 
 it('adds font bold', function () {
     $line = line('string');
