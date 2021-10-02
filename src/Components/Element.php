@@ -25,8 +25,8 @@ abstract class Element
                 'bg' => 'default',
             ],
             'options' => [],
-        ])
-    {
+        ]
+    ) {
         // ..
     }
 
