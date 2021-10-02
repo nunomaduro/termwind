@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Termwind;
 
+use Termwind\Components\Element;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
-use Termwind\Components\Element;
 
 /**
  * @internal
@@ -61,10 +61,6 @@ final class Termwind
      */
     private static function getRenderer(): OutputInterface
     {
-        if (self::$renderer === null) {
-            self::$renderer = new ConsoleOutput();
-        }
-
-        return self::$renderer;
+        return self::$renderer ??= new ConsoleOutput();
     }
 }
