@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Termwind;
 
-use Termwind\Components\Element;
 use Symfony\Component\Console\Output\OutputInterface;
+use Termwind\Components\Element;
 
 if (! function_exists('line')) {
     /**
