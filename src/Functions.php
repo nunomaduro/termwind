@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Termwind;
 
+use Closure;
 use Symfony\Component\Console\Output\OutputInterface;
 use Termwind\Components\Element;
 
@@ -36,5 +37,19 @@ if (! function_exists('render')) {
     function render(array $elements): void
     {
         Termwind::render($elements);
+    }
+}
+
+if (!function_exists('register_preset')) {
+    function register_preset(string $name,  Closure $style): void
+    {
+        Preset::register($name, $style);
+    }
+}
+
+if (!function_exists('render_preset')) {
+    function render_preset(string $message, string $preset): mixed
+    {
+        return Preset::design($message, $preset);
     }
 }
