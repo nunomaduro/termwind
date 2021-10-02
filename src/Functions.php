@@ -17,6 +17,16 @@ if (! function_exists('line')) {
     }
 }
 
+if (! function_exists('a')) {
+    /**
+     * Creates a line element instance with the given link.
+     */
+    function a(string $href = ''): Components\Line
+    {
+        return Termwind::line($href)->href($href);
+    }
+}
+
 if (! function_exists('renderUsing')) {
     /**
      * Sets the renderer implementation.

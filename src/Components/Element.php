@@ -299,10 +299,10 @@ abstract class Element
     /**
      * Adds a hyperlink to the element.
      */
-    final public function href(string $href = ''): static
+    final public function href(string $href): static
     {
         // @phpstan-ignore-next-line
-        return $this->with(['href' => $href === '' ? $this->value : $href]);
+        return $this->with(['href' => $href]);
     }
 
     /**
@@ -329,6 +329,9 @@ abstract class Element
             }
         }
 
+        /** @var string $href */
+        $href = $this->properties['href'] ?? '';
+
         $options = [];
 
         foreach ($this->properties['options'] as $option) {
@@ -338,8 +341,7 @@ abstract class Element
         return sprintf(
             '%s<%s%s;options=%s>%s</>%s',
             str_repeat(' ', (int) ($this->properties['styles']['ml'] ?? 0)),
-            // @phpstan-ignore-next-line
-            array_key_exists('href', $this->properties) ? sprintf('href=%s;', $this->properties['href']) : '',
+            $href === '' ? '' : sprintf('href=%s;', $href),
             implode(';', $colors),
             implode(',', $options),
             $this->value,

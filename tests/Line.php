@@ -1,7 +1,7 @@
 <?php
 
 use Termwind\Enums\Color;
-use function Termwind\{line};
+use function Termwind\{line,a};
 
 it('adds font bold', function () {
     $line = line('string');
@@ -164,11 +164,10 @@ it('sets the text in snakecase', function () {
 
 it('adds hyperlink', function () {
     $line = line('Termwind');
-    $hyperlink = line('https://github.com/nunomaduro/termwind');
+    $anchor = a('https://github.com/nunomaduro/termwind');
 
     $line = $line->href('https://github.com/nunomaduro/termwind');
-    $hyperlink = $hyperlink->href();
 
     expect($line->toString())->toBe('<href=https://github.com/nunomaduro/termwind;bg=default;options=>Termwind</>');
-    expect($hyperlink->toString())->toBe('<href=https://github.com/nunomaduro/termwind;bg=default;options=>https://github.com/nunomaduro/termwind</>');
+    expect($anchor->toString())->toBe('<href=https://github.com/nunomaduro/termwind;bg=default;options=>https://github.com/nunomaduro/termwind</>');
 });
