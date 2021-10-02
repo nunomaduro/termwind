@@ -23,7 +23,7 @@ final class Termwind
      */
     public static function renderUsing(OutputInterface|null $renderer): void
     {
-        self::$renderer = $renderer;
+        self::$renderer = $renderer ?? new ConsoleOutput();
     }
 
     /**
@@ -32,7 +32,7 @@ final class Termwind
     public static function line(string $value = ''): Components\Line
     {
         return new Components\Line(
-            self::$renderer ?? new ConsoleOutput(), $value
+            self::getRenderer(), $value
         );
     }
 
@@ -43,18 +43,28 @@ final class Termwind
      */
     public static function render(array $elements): void
     {
-        $renderer = self::$renderer ?? new ConsoleOutput();
-
         foreach ($elements as $element) {
             if (is_array($element)) {
-                $renderer->write(array_map(static fn ($element) => (string) $element, $element));
+                self::getRenderer()->write(array_map(static fn ($element) => (string) $element, $element));
 
-                $renderer->writeln(['']);
+                self::getRenderer()->writeln(['']);
 
                 continue;
             }
 
-            $renderer->writeln($element->toString());
+            self::getRenderer()->writeln($element->toString());
         }
+    }
+
+    /**
+     * Gets the current renderer instance.
+     */
+    private static function getRenderer(): OutputInterface
+    {
+        if (self::$renderer === null) {
+            self::$renderer = new ConsoleOutput();
+        }
+
+        return self::$renderer;
     }
 }
