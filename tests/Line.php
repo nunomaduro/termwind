@@ -1,6 +1,7 @@
 <?php
 
 use function Termwind\{line};
+use Termwind\Enums\Color;
 
 it('adds font bold', function () {
     $line = line('string');
@@ -50,12 +51,28 @@ it('adds background color', function () {
     expect($line->toString())->toBe('<bg=red;options=>string</>');
 });
 
+it('adds background color using color enum', function () {
+    $line = line('string');
+
+    $line = $line->bg(Color::RED_400);
+
+    expect($line->toString())->toBe('<bg=#f87171;options=>string</>');
+});
+
 it('adds text color', function () {
     $line = line('string');
 
     $line = $line->textColor('red');
 
     expect($line->toString())->toBe('<bg=default;fg=red;options=>string</>');
+});
+
+it('adds text color using color enum', function () {
+    $line = line('string');
+
+    $line = $line->textColor(Color::RED_400);
+
+    expect($line->toString())->toBe('<bg=default;fg=#f87171;options=>string</>');
 });
 
 it('truncates', function () {

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Termwind\Utils;
+namespace Termwind\Enums;
 
-class Color
+final class Color
 {
     public const BLACK = '#000';
 
