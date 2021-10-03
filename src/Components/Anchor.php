@@ -15,7 +15,7 @@ final class Anchor extends Element
             $this->output,
             $this->value,
             array_merge($this->properties, [
-                'href' => $href
+                'href' => $href,
             ])
         );
     }
