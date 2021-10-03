@@ -16,7 +16,7 @@ abstract class Element
      * Creates an element instance.
      *
      * @param  string  $value
-     * @param  array<string, array<int|string, int|string>>  $properties
+     * @param  array<string, mixed>  $properties
      */
     final public function __construct(
         protected OutputInterface $output,
@@ -236,7 +236,6 @@ abstract class Element
 
         foreach ($this->properties['colors'] as $option => $value) {
             if (in_array($option, ['fg', 'bg'], true)) {
-                // @phpstan-ignore-next-line
                 $value = is_array($value) ? array_pop($value) : $value;
 
                 $colors[] = "$option=$value";

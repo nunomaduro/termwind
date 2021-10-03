@@ -46,9 +46,9 @@ if (! function_exists('a')) {
     /**
      * Creates a line element instance with the given link.
      */
-    function a(string $value = ''): Components\Anchor
+    function a(string $value = '', string $styles = ''): Components\Anchor
     {
-        return Termwind::anchor($value);
+        return Termwind::anchor($value, $styles);
     }
 }
 

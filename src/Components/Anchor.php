@@ -11,7 +11,12 @@ final class Anchor extends Element
      */
     public function href(string $href): self
     {
-        // @phpstan-ignore-next-line
-        return new self($this->output, $this->value, array_merge($this->properties, ['href' => $href]));
+        return new self(
+            $this->output,
+            $this->value,
+            array_merge($this->properties, [
+                'href' => $href
+            ])
+        );
     }
 }
