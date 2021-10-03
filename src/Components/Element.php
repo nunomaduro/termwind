@@ -76,22 +76,6 @@ abstract class Element
     }
 
     /**
-     * Adds 2 margin left to the element.
-     */
-    final public function ml2(): static
-    {
-        return $this->ml(2);
-    }
-
-    /**
-     * Adds 1 margin left to the element.
-     */
-    final public function ml1(): static
-    {
-        return $this->ml(1);
-    }
-
-    /**
      * Adds the given margin left to the element.
      */
     final public function ml(int $margin): static
@@ -102,22 +86,6 @@ abstract class Element
     }
 
     /**
-     * Adds 2 margin right to the element.
-     */
-    final public function mr2(): static
-    {
-        return $this->mr(2);
-    }
-
-    /**
-     * Adds 1 margin right to the element.
-     */
-    final public function mr1(): static
-    {
-        return $this->mr(1);
-    }
-
-    /**
      * Adds the given margin right to the element.
      */
     final public function mr(int $margin): static
@@ -125,22 +93,6 @@ abstract class Element
         return $this->with(['styles' => [
             'mr' => $margin,
         ]]);
-    }
-
-    /**
-     * Adds 2 horizontal margin to the element.
-     */
-    final public function mx2(): static
-    {
-        return $this->mx(2);
-    }
-
-    /**
-     * Adds 1 horizontal margin to the element.
-     */
-    final public function mx1(): static
-    {
-        return $this->mx(1);
     }
 
     /**
@@ -155,22 +107,6 @@ abstract class Element
     }
 
     /**
-     * Adds 2 padding left to the element.
-     */
-    final public function pl2(): static
-    {
-        return $this->pl(2);
-    }
-
-    /**
-     * Adds 1 padding left to the element.
-     */
-    final public function pl1(): static
-    {
-        return $this->pl(1);
-    }
-
-    /**
      * Adds the given padding left to the element.
      */
     final public function pl(int $padding): static
@@ -181,22 +117,6 @@ abstract class Element
     }
 
     /**
-     * Adds 2 padding right to the element.
-     */
-    final public function pr2(): static
-    {
-        return $this->pr(2);
-    }
-
-    /**
-     * Adds 1 padding right to the element.
-     */
-    final public function pr1(): static
-    {
-        return $this->pr(1);
-    }
-
-    /**
      * Adds the given padding right to the element.
      */
     final public function pr(int $padding): static
@@ -204,22 +124,6 @@ abstract class Element
         $value = sprintf('%s%s', $this->value, str_repeat(' ', $padding));
 
         return new static($this->output, $value, $this->properties);
-    }
-
-    /**
-     * Adds 2 horizontal padding to the element.
-     */
-    final public function px2(): static
-    {
-        return $this->px(2);
-    }
-
-    /**
-     * Adds 1 horizontal padding to the element.
-     */
-    final public function px1(): static
-    {
-        return $this->px(1);
     }
 
     /**

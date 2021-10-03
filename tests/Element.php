@@ -17,7 +17,7 @@ it('renders', function () {
 it('can receive styles as strings', function () {
     renderUsing($output = new BufferedOutput());
 
-    $a = span('string', 'text-color-red bg-white pr-2')->pl2();
+    $a = span('string', 'text-color-red bg-white pr-2')->pl(2);
     $b = span('string', 'ml-3 font-bold');
 
     expect($a->toString())->toBe('<bg=white;fg=red;options=>  string  </>');
