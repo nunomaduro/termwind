@@ -47,6 +47,10 @@ render([
     span()->width(20)->bg('red'),
     span(),
 ]);
+
+// Render a button...
+style('btn')->apply('p-4 bg-blue text-color-white');
+span('Click me', 'btn')->render();
 ```
 
 ### TODO...

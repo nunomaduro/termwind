@@ -16,3 +16,4 @@ parameters:
         - '#is not allowed to extend#'
         - '#with default value.#'
         - '#Variable method call on#'
+        - '#as default value#'

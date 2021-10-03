@@ -38,17 +38,7 @@ abstract class Element
     {
         $element = new static($output, $value);
 
-        $styles = explode(' ', $styles);
-
-        $styles = array_filter($styles, static function ($style): bool {
-            return mb_strlen($style) > 0;
-        });
-
-        foreach ($styles as $style) {
-            $element = (new StyleToMethod($element, $style))->__invoke();
-        }
-
-        return $element;
+        return StyleToMethod::multiple($element, $styles);
     }
 
     /**
@@ -226,6 +216,14 @@ abstract class Element
      * Adds the given horizontal padding to the element.
      */
     final public function px(int $padding): static
+    {
+        return $this->p($padding);
+    }
+
+    /**
+     * Adds the given padding to the element.
+     */
+    final public function p(int $padding): static
     {
         return $this->pl($padding)->pr($padding);
     }

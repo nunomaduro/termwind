@@ -4,18 +4,11 @@ declare(strict_types=1);
 
 namespace Termwind;
 
+use Closure;
 use Symfony\Component\Console\Output\OutputInterface;
 use Termwind\Components\Element;
-
-if (! function_exists('span')) {
-    /**
-     * Creates a span element instance with the given style.
-     */
-    function span(string $value = '', string $styles = ''): Components\Span
-    {
-        return Termwind::span($value, $styles);
-    }
-}
+use Termwind\Repositories\Styles;
+use Termwind\ValueObjects\Style;
 
 if (! function_exists('renderUsing')) {
     /**
@@ -38,3 +31,29 @@ if (! function_exists('render')) {
         Termwind::render($elements);
     }
 }
+
+if (! function_exists('span')) {
+    /**
+     * Creates a span element instance with the given style.
+     */
+    function span(string $value = '', string $styles = ''): Components\Span
+    {
+        return Termwind::span($value, $styles);
+    }
+}
+
+if (! function_exists('style')) {
+    /**
+     * Creates a new style.
+     *
+     * @template TElement of Element
+     *
+     * @param (Closure(TElement $element, string|int ...$arguments): TElement)|null $callback
+     * @return Style<TElement>
+     */
+    function style(string $name, Closure $callback = null): Style
+    {
+        return Styles::create($name, $callback);
+    }
+}
+
