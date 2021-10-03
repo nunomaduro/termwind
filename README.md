@@ -54,6 +54,21 @@ render(
 );
 ```
 
+#### `a()`
+
+The `a()` function may be used to render an inline anchor container used to mark up a clickable hyperlink.
+
+```php
+use function Termwind\{render, a};
+
+a('https://github.com/nunomaduro/termwind', 'p-2 text-color-white bg-blue')->render();
+
+render(
+    a('https://github.com/nunomaduro/termwind', 'p-2 text-color-white bg-blue'),
+    a('Termwind', 'p-2 text-color-white bg-blue')->href('https://github.com/nunomaduro/termwind'),
+);
+```
+
 #### `style()`
 
 The `style()` function may be used to add own custom syles.
