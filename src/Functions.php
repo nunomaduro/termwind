@@ -11,9 +11,9 @@ if (! function_exists('line')) {
     /**
      * Creates a line element instance with the given style.
      */
-    function line(string $value = ''): Components\Line
+    function line(string $value = '', string $styles = ''): Components\Line
     {
-        return Termwind::line($value);
+        return Termwind::line($value, $styles);
     }
 }
 

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Termwind\Components;
 
 use Symfony\Component\Console\Output\OutputInterface;
+use Termwind\Actions\StyleToMethod;
+use Termwind\Exceptions\StyleNotFound;
 
 /**
  * @internal
@@ -19,7 +21,7 @@ abstract class Element
      */
     final public function __construct(
         protected OutputInterface $output,
-        protected mixed $value,
+        protected string $value,
         protected array $properties = [
             'colors' => [
                 'bg' => 'default',
@@ -28,6 +30,26 @@ abstract class Element
         ])
     {
         // ..
+    }
+
+    /**
+     * Creates an element instance with the given styles.
+     */
+    final public static function fromStyles(OutputInterface $output, string $value, string $styles): static
+    {
+        $element = new static($output, $value);
+
+        $styles = explode(' ', $styles);
+
+        $styles = array_filter($styles, static function ($style): bool {
+            return mb_strlen($style) > 0;
+        });
+
+        foreach ($styles as $style) {
+            $element = (new StyleToMethod($element, $style))->__invoke();
+        }
+
+        return $element;
     }
 
     /**

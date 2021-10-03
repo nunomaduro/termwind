@@ -29,10 +29,10 @@ final class Termwind
     /**
      * Creates a line element instance with the given style.
      */
-    public static function line(string $value = ''): Components\Line
+    public static function line(string $value = '', string $styles = ''): Components\Line
     {
-        return new Components\Line(
-            self::getRenderer(), $value
+        return Components\Line::fromStyles(
+            self::getRenderer(), $value, $styles,
         );
     }
 
