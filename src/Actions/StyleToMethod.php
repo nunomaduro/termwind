@@ -18,20 +18,20 @@ final class StyleToMethod
     /**
      * Creates a new action instance.
      *
-     * @param  TElement  $element
+     * @param Element $element
+     * @param string  $style
      */
-    public function __construct(
-        private Element $element,
-        private string $style,
-    ) {
+    public function __construct(private Element $element, private string $style) {
         // ..
     }
 
     /**
      * @template TStylesElement of Element
      *
-     * @param  TStylesElement  $element
-     * @return TStylesElement
+     * @param Element $element
+     * @param string  $styles
+     *
+     * @return Element
      */
     public static function multiple(Element $element, string $styles): Element
     {
@@ -51,15 +51,14 @@ final class StyleToMethod
     /**
      * Converts the given style to a method name.
      *
-     * @return TElement
+     * @param string|int ...$arguments
+     *
+     * @return Element
      */
     public function __invoke(string|int ...$arguments): Element
     {
         if (Styles::has($this->style)) {
-            /** @var TElement $element */
-            $element = Styles::get($this->style)($this->element, ...$arguments);
-
-            return $element;
+            return Styles::get($this->style)($this->element, ...$arguments);
         }
 
         $method = explode('-', $this->style);

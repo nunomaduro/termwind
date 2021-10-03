@@ -13,6 +13,8 @@ use Termwind\ValueObjects\Style;
 if (! function_exists('renderUsing')) {
     /**
      * Sets the renderer implementation.
+     *
+     * @param OutputInterface|null $renderer
      */
     function renderUsing(OutputInterface|null $renderer): void
     {
@@ -35,6 +37,11 @@ if (! function_exists('render')) {
 if (! function_exists('span')) {
     /**
      * Creates a span element instance with the given style.
+     *
+     * @param string $value
+     * @param string $styles
+     *
+     * @return Components\Span
      */
     function span(string $value = '', string $styles = ''): Components\Span
     {
@@ -48,7 +55,9 @@ if (! function_exists('style')) {
      *
      * @template TElement of Element
      *
-     * @param (Closure(TElement $element, string|int ...$arguments): TElement)|null $callback
+     * @param string       $name
+     * @param Closure|null $callback
+     *
      * @return Style<TElement>
      */
     function style(string $name, Closure $callback = null): Style

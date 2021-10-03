@@ -24,7 +24,9 @@ final class Styles
      *
      * @template TElement of Element
      *
-     * @param (Closure(TElement $element, string|int ...$arguments): TElement)|null $callback
+     * @param string       $name
+     * @param Closure|null $callback
+     *
      * @return Style<TElement>
      */
     public static function create(string $name, Closure $callback = null): Style
@@ -36,6 +38,10 @@ final class Styles
 
     /**
      * Checks a style with the given name exists.
+     *
+     * @param string $name
+     *
+     * @return bool
      */
     public static function has(string $name): bool
     {
@@ -45,7 +51,9 @@ final class Styles
     /**
      * Gets the style with the given name.
      *
-     * @return Style<Element>
+     * @param string $name
+     *
+     * @return Style
      */
     public static function get(string $name): Style
     {

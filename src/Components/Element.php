@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Termwind\Components;
 
+use JetBrains\PhpStorm\Pure;
 use Symfony\Component\Console\Output\OutputInterface;
 use Termwind\Actions\StyleToMethod;
 
@@ -15,8 +16,9 @@ abstract class Element
     /**
      * Creates an element instance.
      *
-     * @param  string  $value
-     * @param  array<string, array<int|string, int|string>>  $properties
+     * @param OutputInterface                              $output
+     * @param string                                       $value
+     * @param array<string, array<int|string, int|string>> $properties
      */
     final public function __construct(
         protected OutputInterface $output,
@@ -270,7 +272,9 @@ abstract class Element
     /**
      * Adds the given properties to the element.
      *
-     * @param  array<string, array<int|string, int|string>>  $properties
+     * @param array<string, array<int|string, int|string>> $properties
+     *
+     * @return Element
      */
     private function with(array $properties): static
     {

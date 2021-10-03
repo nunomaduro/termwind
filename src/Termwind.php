@@ -20,6 +20,8 @@ final class Termwind
 
     /**
      * Sets the renderer implementation.
+     *
+     * @param OutputInterface|null $renderer
      */
     public static function renderUsing(OutputInterface|null $renderer): void
     {
@@ -28,6 +30,11 @@ final class Termwind
 
     /**
      * Creates a span element instance with the given style.
+     *
+     * @param string $value
+     * @param string $styles
+     *
+     * @return Components\Span
      */
     public static function span(string $value = '', string $styles = ''): Components\Span
     {
@@ -39,7 +46,7 @@ final class Termwind
     /**
      * Renders the given elements.
      *
-     * @param  array<int, Element|array<int, Element>>  $elements
+     * @param array $elements
      */
     public static function render(array $elements): void
     {
@@ -58,6 +65,8 @@ final class Termwind
 
     /**
      * Gets the current renderer instance.
+     *
+     * @return OutputInterface
      */
     private static function getRenderer(): OutputInterface
     {

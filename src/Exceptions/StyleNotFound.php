@@ -13,6 +13,8 @@ final class StyleNotFound extends InvalidArgumentException
 {
     /**
      * Creates a new style not found instance.
+     *
+     * @param string $message
      */
     private function __construct(string $message)
     {
@@ -21,6 +23,10 @@ final class StyleNotFound extends InvalidArgumentException
 
     /**
      * Creates a new style not found instance from the given style.
+     *
+     * @param string $style
+     *
+     * @return static
      */
     public static function fromStyle(string $style): self
     {

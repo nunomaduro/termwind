@@ -27,6 +27,8 @@ final class Style
 
     /**
      * Apply the given set of styles to the element.
+     *
+     * @param string $styles
      */
     public function apply(string $styles): void
     {
@@ -43,8 +45,10 @@ final class Style
     /**
      * Styles the given element with this style.
      *
-     * @param  TElement  $element
-     * @return TElement
+     * @param Element    $element
+     * @param string|int ...$arguments
+     *
+     * @return Element
      */
     public function __invoke(Element $element, string|int ...$arguments): Element
     {
