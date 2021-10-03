@@ -17,7 +17,7 @@ final class StyleToMethod
     /**
      * Creates a new action instance.
      *
-     * @param TElement $element
+     * @param  TElement  $element
      */
     public function __construct(
         private Element $element,

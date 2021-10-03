@@ -6,7 +6,6 @@ namespace Termwind\Components;
 
 use Symfony\Component\Console\Output\OutputInterface;
 use Termwind\Actions\StyleToMethod;
-use Termwind\Exceptions\StyleNotFound;
 
 /**
  * @internal
