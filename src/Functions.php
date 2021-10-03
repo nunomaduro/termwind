@@ -56,4 +56,3 @@ if (! function_exists('style')) {
         return Styles::create($name, $callback);
     }
 }
-
