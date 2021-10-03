@@ -1,9 +1,9 @@
 <?php
 
 use Symfony\Component\Console\Output\BufferedOutput;
-use function Termwind\span;
 use function Termwind\render;
 use function Termwind\renderUsing;
+use function Termwind\span;
 
 afterEach(fn () => renderUsing(null));
 
