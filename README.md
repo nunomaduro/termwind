@@ -19,7 +19,7 @@
 </p>
 
 ------
-**Termwind** allows you to build unique and beautiful PHP command-line applications, using the **[Tailwind CSS](https://tailwindcss.com/)** API. In short, it's like Tailwind CSS, but for the PHP command-line applications.
+**Termwind** allows you to build unique and beautiful PHP command-span applications, using the **[Tailwind CSS](https://tailwindcss.com/)** API. In short, it's like Tailwind CSS, but for the PHP command-span applications.
 
 ## Installation & Usage
 
@@ -34,18 +34,18 @@ composer require nunomaduro/termwind --dev
 ### Get Started
 
 ```php
-use function Termwind\{line, render};
+use function Termwind\{span, render};
 
-// Render one line...
-line($message)->uppercase()->pl2()->pr2()->fontBold()->textColor('white')->bg('blue')->render();
-line($message, 'uppercase pl-2 pr-2 font-bold text-color-white bg-blue')->render();
+// Render one span...
+span($message)->uppercase()->pl2()->pr2()->fontBold()->textColor('white')->bg('blue')->render();
+span($message, 'uppercase pl-2 pr-2 font-bold text-color-white bg-blue')->render();
 
 
-// Render multiple lines...
+// Render multiple spans...
 render([
-    line(),
-    line()->width(20)->bg('red'),
-    line(),
+    span(),
+    span()->width(20)->bg('red'),
+    span(),
 ]);
 ```
 
