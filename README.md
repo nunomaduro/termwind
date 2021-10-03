@@ -38,6 +38,8 @@ use function Termwind\{line, render};
 
 // Render one line...
 line($message)->uppercase()->pl2()->pr2()->fontBold()->textColor('white')->bg('blue')->render();
+line($message, 'uppercase pl-2 pr-2 font-bold text-color-white bg-blue')->render();
+
 
 // Render multiple lines...
 render([
