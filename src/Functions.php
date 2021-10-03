@@ -7,13 +7,13 @@ namespace Termwind;
 use Symfony\Component\Console\Output\OutputInterface;
 use Termwind\Components\Element;
 
-if (! function_exists('line')) {
+if (! function_exists('span')) {
     /**
-     * Creates a line element instance with the given style.
+     * Creates a span element instance with the given style.
      */
-    function line(string $value = '', string $styles = ''): Components\Line
+    function span(string $value = '', string $styles = ''): Components\Span
     {
-        return Termwind::line($value, $styles);
+        return Termwind::span($value, $styles);
     }
 }
 

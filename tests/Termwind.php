@@ -1,7 +1,7 @@
 <?php
 
 use Symfony\Component\Console\Output\BufferedOutput;
-use function Termwind\line;
+use function Termwind\span;
 use function Termwind\render;
 use function Termwind\renderUsing;
 
@@ -13,8 +13,8 @@ it('renders', function () {
     renderUsing($output);
 
     render([
-        line(),
-        line('string')->pr1(),
+        span(),
+        span('string')->pr1(),
     ]);
 
     expect($output->fetch())->toBe("\nstring \n");

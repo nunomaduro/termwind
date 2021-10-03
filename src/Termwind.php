@@ -27,11 +27,11 @@ final class Termwind
     }
 
     /**
-     * Creates a line element instance with the given style.
+     * Creates a span element instance with the given style.
      */
-    public static function line(string $value = '', string $styles = ''): Components\Line
+    public static function span(string $value = '', string $styles = ''): Components\Span
     {
-        return Components\Line::fromStyles(
+        return Components\Span::fromStyles(
             self::getRenderer(), $value, $styles,
         );
     }

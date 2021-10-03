@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Termwind\Components;
 
-final class Line extends Element
+final class Span extends Element
 {
     // ..
 }
