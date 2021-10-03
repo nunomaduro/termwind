@@ -44,6 +44,7 @@ final class Styles
 
     /**
      * Gets the style with the given name.
+     *
      * @return Style<Element>
      */
     public static function get(string $name): Style

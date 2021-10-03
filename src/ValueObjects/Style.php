@@ -43,7 +43,7 @@ final class Style
     /**
      * Styles the given element with this style.
      *
-     * @param  TElement $element
+     * @param  TElement  $element
      * @return TElement
      */
     public function __invoke(Element $element, string|int ...$arguments): Element

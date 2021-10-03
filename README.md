@@ -34,25 +34,51 @@ composer require nunomaduro/termwind --dev
 ### Get Started
 
 ```php
-use function Termwind\{span, render};
+use function Termwind\{span};
 
-// Render one span...
-span($message)->uppercase()->pl2()->pr2()->fontBold()->textColor('white')->bg('blue')->render();
-span($message, 'uppercase pl-2 pr-2 font-bold text-color-white bg-blue')->render();
-
-
-// Render multiple spans...
-render([
-    span(),
-    span()->width(20)->bg('red'),
-    span(),
-]);
-
-// Render a button...
-style('btn')->apply('p-4 bg-blue text-color-white');
-span('Click me', 'btn')->render();
+span('Hello World', 'p-2 text-color-white bg-blue')->render();
 ```
 
-### TODO...
+#### `span()`
+
+The `span()` function may be used to render an inline container used to mark up a part of a text.
+
+```php
+use function Termwind\{render, span};
+
+span('Hello World', 'p-2 text-color-white bg-blue')->render();
+
+render(
+    span('Hello', 'p-2 text-color-white bg-blue'),
+    span('World', 'p-2 text-color-white bg-blue'),
+);
+```
+
+#### `a()`
+
+The `a()` function may be used to render an inline anchor container used to mark up a clickable hyperlink.
+
+```php
+use function Termwind\{render, a};
+
+a('https://github.com/nunomaduro/termwind', 'p-2 text-color-white bg-blue')->render();
+
+render(
+    a('https://github.com/nunomaduro/termwind', 'p-2 text-color-white bg-blue'),
+    a('Termwind', 'p-2 text-color-white bg-blue')->href('https://github.com/nunomaduro/termwind'),
+);
+```
+
+#### `style()`
+
+The `style()` function may be used to add own custom syles.
+
+```php
+use function Termwind\{style, span};
+
+style('btn')->apply('p-4 bg-blue text-color-white');
+
+span('Click me', 'btn')->render();
+```
 
 Termwind is an open-sourced software licensed under the **[MIT license](https://opensource.org/licenses/MIT)**.

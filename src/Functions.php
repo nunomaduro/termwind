@@ -42,6 +42,16 @@ if (! function_exists('span')) {
     }
 }
 
+if (! function_exists('a')) {
+    /**
+     * Creates a line element instance with the given link.
+     */
+    function a(string $value = ''): Components\Anchor
+    {
+        return Termwind::anchor($value);
+    }
+}
+
 if (! function_exists('style')) {
     /**
      * Creates a new style.
@@ -56,4 +66,3 @@ if (! function_exists('style')) {
         return Styles::create($name, $callback);
     }
 }
-

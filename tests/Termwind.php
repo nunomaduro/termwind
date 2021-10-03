@@ -14,7 +14,7 @@ it('renders', function () {
 
     render([
         span(),
-        span('string')->pr1(),
+        span('string')->pr(1),
     ]);
 
     expect($output->fetch())->toBe("\nstring \n");

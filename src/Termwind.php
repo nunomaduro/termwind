@@ -37,6 +37,16 @@ final class Termwind
     }
 
     /**
+     * Creates an anchor element instance with the given style.
+     */
+    public static function anchor(string $value = '', string $styles = ''): Components\Anchor
+    {
+        return Components\Anchor::fromStyles(
+            self::getRenderer(), $value, $styles,
+        )->href($value);
+    }
+
+    /**
      * Renders the given elements.
      *
      * @param  array<int, Element|array<int, Element>>  $elements

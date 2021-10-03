@@ -18,20 +18,19 @@ final class StyleToMethod
     /**
      * Creates a new action instance.
      *
-     * @param TElement $element
+     * @param  TElement  $element
      */
     public function __construct(
         private Element $element,
-        private string  $style,
-    )
-    {
+        private string $style,
+    ) {
         // ..
     }
 
     /**
      * @template TStylesElement of Element
      *
-     * @param TStylesElement $element
+     * @param  TStylesElement  $element
      * @return TStylesElement
      */
     public static function multiple(Element $element, string $styles): Element
@@ -76,10 +75,10 @@ final class StyleToMethod
             throw StyleNotFound::fromStyle($this->style);
         }
 
-        if (!method_exists($this->element, $methodName)) {
+        if (! method_exists($this->element, $methodName)) {
             $argument = array_pop($method);
 
-            $arguments[] = is_numeric($argument) ? (int)$argument : (string)$argument;
+            $arguments[] = is_numeric($argument) ? (int) $argument : (string) $argument;
 
             return $this->__invoke(...$arguments);
         }
