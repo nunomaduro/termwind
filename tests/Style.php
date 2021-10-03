@@ -1,4 +1,4 @@
-<?php /** @noinspection ALL */
+<?php
 
 use function Termwind\{span, style};
 
