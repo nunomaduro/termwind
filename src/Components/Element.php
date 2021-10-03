@@ -295,9 +295,9 @@ abstract class Element
     }
 
     /**
-     * Makes the element's content in titlecase.
+     * Makes the element's content capitalize.
      */
-    final public function titlecase(): static
+    final public function capitalize(): static
     {
         $value = mb_convert_case($this->value, MB_CASE_TITLE, 'UTF-8');
 
