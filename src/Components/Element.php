@@ -243,6 +243,9 @@ abstract class Element
             }
         }
 
+        /** @var string $href */
+        $href = $this->properties['href'] ?? '';
+
         $options = [];
 
         foreach ($this->properties['options'] as $option) {
@@ -250,8 +253,9 @@ abstract class Element
         }
 
         return sprintf(
-            '%s<%s;options=%s>%s</>%s',
+            '%s<%s%s;options=%s>%s</>%s',
             str_repeat(' ', (int) ($this->properties['styles']['ml'] ?? 0)),
+            $href === '' ? '' : sprintf('href=%s;', $href),
             implode(';', $colors),
             implode(',', $options),
             $this->value,
