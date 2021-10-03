@@ -37,7 +37,7 @@ composer require nunomaduro/termwind --dev
 use function Termwind\{span, render};
 
 // Render one span...
-span($message)->uppercase()->pl2()->pr2()->fontBold()->textColor('white')->bg('blue')->render();
+span($message)->uppercase()->pl(2)->pr(2)->fontBold()->textColor('white')->bg('blue')->render();
 span($message, 'uppercase pl-2 pr-2 font-bold text-color-white bg-blue')->render();
 
 

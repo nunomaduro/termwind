@@ -22,7 +22,7 @@ it('adds underspan', function () {
 it('adds padding left', function () {
     $span = span('string');
 
-    $span = $span->pl2();
+    $span = $span->pl(2);
 
     expect($span->toString())->toBe('<bg=default;options=>  string</>');
 });
@@ -30,7 +30,7 @@ it('adds padding left', function () {
 it('adds padding right', function () {
     $span = span('string');
 
-    $span = $span->pr2();
+    $span = $span->pr(2);
 
     expect($span->toString())->toBe('<bg=default;options=>string  </>');
 });
@@ -38,7 +38,7 @@ it('adds padding right', function () {
 it('adds horizontal padding', function () {
     $span = span('string');
 
-    $span = $span->px2();
+    $span = $span->px(2);
 
     expect($span->toString())->toBe('<bg=default;options=>  string  </>');
 });
@@ -101,8 +101,8 @@ it('adds margin left', function () {
     $span = span('string');
     $spanWithBackground = span('string')->bg('white');
 
-    $span = $span->ml2();
-    $spanWithBackground = $spanWithBackground->ml2();
+    $span = $span->ml(2);
+    $spanWithBackground = $spanWithBackground->ml(2);
 
     expect($span->toString())->toBe('  <bg=default;options=>string</>');
     expect($spanWithBackground->toString())->toBe('  <bg=white;options=>string</>');
@@ -112,8 +112,8 @@ it('adds margin right', function () {
     $span = span('string');
     $spanWithBackground = span('string')->bg('white');
 
-    $span = $span->mr2();
-    $spanWithBackground = $spanWithBackground->mr2();
+    $span = $span->mr(2);
+    $spanWithBackground = $spanWithBackground->mr(2);
 
     expect($span->toString())->toBe('<bg=default;options=>string</>  ');
     expect($spanWithBackground->toString())->toBe('<bg=white;options=>string</>  ');
@@ -123,8 +123,8 @@ it('adds horizontal margin', function () {
     $span = span('string');
     $spanWithBackground = span('string')->bg('white');
 
-    $span = $span->mx2();
-    $spanWithBackground = $spanWithBackground->mx2();
+    $span = $span->mx(2);
+    $spanWithBackground = $spanWithBackground->mx(2);
 
     expect($span->toString())->toBe('  <bg=default;options=>string</>  ');
     expect($spanWithBackground->toString())->toBe('  <bg=white;options=>string</>  ');
