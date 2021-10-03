@@ -146,12 +146,12 @@ it('sets the text lowercase', function () {
     expect($span->toString())->toBe('<bg=default;options=>string</>');
 });
 
-it('sets the text in titlecase', function () {
-    $span = span('STRING titlecase');
+it('sets the text capitalize', function () {
+    $span = span('STRING capitalized');
 
-    $span = $span->titlecase();
+    $span = $span->capitalize();
 
-    expect($span->toString())->toBe('<bg=default;options=>String Titlecase</>');
+    expect($span->toString())->toBe('<bg=default;options=>String Capitalized</>');
 });
 
 it('sets the text in snakecase', function () {
