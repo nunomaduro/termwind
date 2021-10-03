@@ -220,6 +220,16 @@ abstract class Element
     }
 
     /**
+     * Makes the element's content capitalize.
+     */
+    final public function lineThrough(): static
+    {
+        $value = sprintf("\e[9m%s\e[0m", $this->value);
+
+        return new static($this->output, $value, $this->properties);
+    }
+
+    /**
      * Renders the string representation of the element on the output.
      */
     final public function render(): void
