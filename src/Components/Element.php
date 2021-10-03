@@ -220,7 +220,7 @@ abstract class Element
     }
 
     /**
-     * Makes the element's content capitalize.
+     * Makes the element's content with a line through.
      */
     final public function lineThrough(): static
     {
