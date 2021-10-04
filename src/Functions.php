@@ -42,7 +42,27 @@ if (! function_exists('span')) {
     }
 }
 
+if (! function_exists('line')) {
+    /**
+     * Creates a span element instance with the given style.
+     */
+    function line(string $value = '', string $styles = ''): Components\Span
+    {
+        return Termwind::span($value, $styles);
+    }
+}
+
 if (! function_exists('a')) {
+    /**
+     * Creates a line element instance with the given link.
+     */
+    function a(string $value = '', string $styles = ''): Components\Anchor
+    {
+        return Termwind::anchor($value, $styles);
+    }
+}
+
+if (! function_exists('link')) {
     /**
      * Creates a line element instance with the given link.
      */
