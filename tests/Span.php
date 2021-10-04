@@ -11,7 +11,7 @@ it('adds font bold', function () {
     expect($span->toString())->toBe('<bg=default;options=bold>string</>');
 });
 
-it('adds underspan', function () {
+it('adds underline', function () {
     $span = span('string');
 
     $span = $span->underline();
