@@ -66,7 +66,7 @@ if (! function_exists('link')) {
     /**
      * Creates a line element instance with the given link.
      */
-    function a(string $value = '', string $styles = ''): Components\Anchor
+    function link(string $value = '', string $styles = ''): Components\Anchor
     {
         return Termwind::anchor($value, $styles);
     }
