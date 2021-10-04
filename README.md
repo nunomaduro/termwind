@@ -48,10 +48,10 @@ use function Termwind\{render, span};
 
 span('Hello World', 'p-2 text-color-white bg-blue')->render();
 
-render(
+render([
     span('Hello', 'p-2 text-color-white bg-blue'),
     span('World', 'p-2 text-color-white bg-blue'),
-);
+]);
 ```
 
 #### `a()`
@@ -63,10 +63,10 @@ use function Termwind\{render, a};
 
 a('https://github.com/nunomaduro/termwind', 'p-2 text-color-white bg-blue')->render();
 
-render(
+render([
     a('https://github.com/nunomaduro/termwind', 'p-2 text-color-white bg-blue'),
     a('Termwind', 'p-2 text-color-white bg-blue')->href('https://github.com/nunomaduro/termwind'),
-);
+]);
 ```
 
 #### `style()`
