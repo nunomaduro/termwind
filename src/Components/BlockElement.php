@@ -12,6 +12,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 abstract class BlockElement
 {
     /**
+     * Renders the string representation of the block element on the output.
+     */
+    final public function render(): void
+    {
+        $this->output->writeln($this->toString());
+    }
+
+    /**
      * Creates a block element instance.
      *
      * @param  array<int, Element>  $elements
