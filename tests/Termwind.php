@@ -1,6 +1,7 @@
 <?php
 
 use Symfony\Component\Console\Output\BufferedOutput;
+use function Termwind\div;
 use function Termwind\render;
 use function Termwind\renderUsing;
 use function Termwind\span;
@@ -15,7 +16,11 @@ it('renders', function () {
     render([
         span(),
         span('string')->pr(1),
+        div([
+            span('a')->pr(1),
+            span('b'),
+        ]),
     ]);
 
-    expect($output->fetch())->toBe("\nstring \n");
+    expect($output->fetch())->toBe("\nstring \na b\n");
 });

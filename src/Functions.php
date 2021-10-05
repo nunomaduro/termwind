@@ -32,6 +32,18 @@ if (! function_exists('render')) {
     }
 }
 
+if (! function_exists('div')) {
+    /**
+     * Creates a div element instance.
+     *
+     * @param  array<int, Element>  $value
+     */
+    function div(array $value = []): Components\Div
+    {
+        return Termwind::div($value);
+    }
+}
+
 if (! function_exists('span')) {
     /**
      * Creates a span element instance with the given style.

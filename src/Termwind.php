@@ -27,6 +27,18 @@ final class Termwind
     }
 
     /**
+     * Creates a div element instance.
+     *
+     * @param  array<int, Element>  $value
+     */
+    public static function div(array $value = []): Components\Div
+    {
+        return new Components\Div(
+            self::getRenderer(), $value,
+        );
+    }
+
+    /**
      * Creates a span element instance with the given style.
      */
     public static function span(string $value = '', string $styles = ''): Components\Span
