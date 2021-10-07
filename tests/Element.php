@@ -11,5 +11,5 @@ it('renders', function () {
 
     span('string')->textColor('red')->render();
 
-    expect($output->fetch())->toBe("string\n");
+    expect($output->fetch())->toBe("string");
 });
