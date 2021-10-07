@@ -1,5 +1,6 @@
 <?php
 
+use Termwind\Enums\Color;
 use function Termwind\a;
 use function Termwind\div;
 
