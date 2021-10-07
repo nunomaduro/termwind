@@ -38,7 +38,7 @@ if (! function_exists('div')) {
      */
     function div(array|string $content = [], string $styles = ''): Components\Div
     {
-        return Termwind::div($content);
+        return Termwind::div($content, $styles);
     }
 }
 

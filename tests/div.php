@@ -11,7 +11,7 @@ it('accepts multiple elements', function () {
         'string',
     ], 'ml-2 bg-white');
 
-    expect($div->toString())->toBe('<bg=default;options=>  <href=foo;bg=default;options=>foo</><bg=default;options=>  <href=foo;bg=default;options=>foo</></>string</>');
+    expect($div->toString())->toBe('  <bg=white;options=>  <href=foo;bg=default;options=>foo</><bg=default;options=>  <href=foo;bg=default;options=>foo</></>string</>');
 });
 
 it('adds font bold', function () {
