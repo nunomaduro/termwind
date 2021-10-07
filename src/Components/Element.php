@@ -37,7 +37,7 @@ abstract class Element implements Renderable
     /**
      * Creates an element instance with the given styles.
      *
-     * @param TState $state
+     * @param  TState  $state
      */
     public static function fromStyles(OutputInterface $output, $state, string $styles): static
     {

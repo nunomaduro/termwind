@@ -30,7 +30,7 @@ final class StyleToMethod
      *
      * @template TRenderable of Renderable
      *
-     * @param  TRenderable $renderable
+     * @param  TRenderable  $renderable
      * @return TRenderable
      */
     public static function multiple(Renderable $renderable, string $styles): Renderable
