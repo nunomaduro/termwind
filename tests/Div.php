@@ -7,7 +7,7 @@ it('accepts multiple elements', function () {
     $div = div([
         a('foo', 'ml-2'),
         div([a('foo', 'ml-2')]),
-        'string'
+        'string',
     ], 'ml-2 bg-white');
 
     expect($div->toString())->toBe('<bg=default;options=>  <href=foo;bg=default;options=>foo</><bg=default;options=>  <href=foo;bg=default;options=>foo</></>string</>');
@@ -211,5 +211,3 @@ it('sets the text with line-through', function () {
 
     expect($div->toString())->toBe("<bg=default;options=>\e[9mstring\e[0m</>");
 });
-
-

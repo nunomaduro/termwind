@@ -13,7 +13,6 @@ it('renders an anchor', function () {
     expect($anchorWithValue->toString())->toBe('<href=https://github.com/nunomaduro/termwind;bg=default;options=>  Termwind  </>');
 });
 
-
 it('adds font bold', function () {
     $a = a('string');
 
@@ -196,4 +195,3 @@ it('sets the text with line-through', function () {
 
     expect($a->toString())->toBe("<href=string;bg=default;options=>\e[9mstring\e[0m</>");
 });
-
