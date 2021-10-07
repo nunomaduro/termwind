@@ -36,7 +36,7 @@ if (! function_exists('div')) {
      *
      * @param  array<int, Element>|string  $content
      */
-    function div(array|string $content = []): Components\Div
+    function div(array|string $content = [], string $styles = ''): Components\Div
     {
         return Termwind::div($content);
     }

@@ -195,9 +195,9 @@ it('sets the text in snakecase', function () {
 });
 
 it('sets the text with line-through', function () {
-    $span = span('line');
+    $span = span('string');
 
     $span = $span->lineThrough();
 
-    expect($span->toString())->toBe("<bg=default;options=>\e[9mline\e[0m</>");
+    expect($span->toString())->toBe("<bg=default;options=>\e[9mstring\e[0m</>");
 });
