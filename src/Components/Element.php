@@ -272,7 +272,7 @@ abstract class Element
      */
     final public function render(): void
     {
-        $this->output->write($this->toString());
+        $this->output->writeln($this->toString());
     }
 
     /**
