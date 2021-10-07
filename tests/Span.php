@@ -130,6 +130,38 @@ it('adds horizontal margin', function () {
     expect($spanWithBackground->toString())->toBe('  <bg=white;options=>string</>  ');
 });
 
+it('adds margin top', function () {
+    $span = span('string');
+
+    $span = $span->mt(2);
+
+    expect($span->toString())->toBe("\n\n<bg=default;options=>string</>");
+});
+
+it('adds margin bottom', function () {
+    $span = span('string');
+
+    $span = $span->mb(2);
+
+    expect($span->toString())->toBe("<bg=default;options=>string</>\n\n");
+});
+
+it('adds vertical margin', function () {
+    $span = span('string');
+
+    $span = $span->my(2);
+
+    expect($span->toString())->toBe("\n\n<bg=default;options=>string</>\n\n");
+});
+
+it('adds margin', function () {
+    $span = span('string');
+
+    $span = $span->m(2);
+
+    expect($span->toString())->toBe("\n\n  <bg=default;options=>string</>  \n\n");
+});
+
 it('sets the text uppercase', function () {
     $span = span('string');
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Termwind\Repositories;
 
 use Closure;
-use Termwind\Contracts\Renderable;
+use Termwind\Components\Element;
 use Termwind\Exceptions\StyleNotFound;
 use Termwind\ValueObjects\Style;
 
@@ -22,12 +22,12 @@ final class Styles
     /**
      * Creates a new style from the given arguments.
      *
-     * @param (Closure(Renderable $renderable, string|int ...$arguments): Renderable)|null $callback
+     * @param (Closure(Element $element, string|int ...$arguments): Element)|null $callback
      * @return Style
      */
     public static function create(string $name, Closure $callback = null): Style
     {
-        self::$storage[$name] = $style = new Style($callback ?? static fn (Renderable $renderable) => $renderable);
+        self::$storage[$name] = $style = new Style($callback ?? static fn (Element $element) => $element);
 
         return $style;
     }

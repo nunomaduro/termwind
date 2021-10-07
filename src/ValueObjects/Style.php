@@ -6,7 +6,7 @@ namespace Termwind\ValueObjects;
 
 use Closure;
 use Termwind\Actions\StyleToMethod;
-use Termwind\Contracts\Renderable;
+use Termwind\Components\Element;
 
 /**
  * @internal
@@ -16,7 +16,7 @@ final class Style
     /**
      * Creates a new value object instance.
      *
-     * @param Closure(Renderable $renderable, string|int ...$argument): Renderable  $callback
+     * @param Closure(Element $element, string|int ...$argument): Element  $callback
      */
     public function __construct(private Closure $callback)
     {
@@ -24,27 +24,27 @@ final class Style
     }
 
     /**
-     * Apply the given set of styles to the renderable.
+     * Apply the given set of styles to the element.
      */
     public function apply(string $styles): void
     {
         $callback = clone $this->callback;
 
-        $this->callback = static function (Renderable $renderable, string|int ...$arguments) use ($callback, $styles): Renderable {
-            $renderable = $callback($renderable, ...$arguments);
+        $this->callback = static function (Element $element, string|int ...$arguments) use ($callback, $styles): Element {
+            $element = $callback($element, ...$arguments);
 
-            return StyleToMethod::multiple($renderable, $styles);
+            return StyleToMethod::multiple($element, $styles);
         };
     }
 
     /**
-     * Styles the given renderable with this style.
+     * Styles the given element with this style.
      *
-     * @param  Renderable  $renderable
-     * @return Renderable
+     * @param  Element  $element
+     * @return Element
      */
-    public function __invoke(Renderable $renderable, string|int ...$arguments): Renderable
+    public function __invoke(Element $element, string|int ...$arguments): Element
     {
-        return ($this->callback)($renderable, ...$arguments);
+        return ($this->callback)($element, ...$arguments);
     }
 }

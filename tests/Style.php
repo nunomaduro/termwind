@@ -1,7 +1,5 @@
 <?php
 
-/** @noinspection ALL */
-
 use function Termwind\span;
 use function Termwind\style;
 

@@ -6,7 +6,7 @@ namespace Termwind;
 
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
-use Termwind\Contracts\Renderable;
+use Termwind\Components\Element;
 
 /**
  * @internal
@@ -29,55 +29,47 @@ final class Termwind
     /**
      * Creates a div element instance.
      *
-     * @param  array<int, Renderable>|string  $value
+     * @param  array<int, Element>|string  $content
      */
-    public static function div(array|string $value = '', string $styles = ''): Components\Div
+    public static function div(array|string $content = '', string $styles = ''): Components\Div
     {
-        $elements = is_array($value) ? $value : [span($value)];
+        $content = implode('', array_map(
+            fn ($element) => (string) $element, is_array($content) ? $content : [$content]
+        ));
 
         return Components\Div::fromStyles(
-            self::getRenderer(), $elements, $styles
+            self::getRenderer(), $content, $styles
         );
     }
 
     /**
      * Creates a span element instance with the given style.
      */
-    public static function span(string $value = '', string $styles = ''): Components\Span
+    public static function span(string $content = '', string $styles = ''): Components\Span
     {
         return Components\Span::fromStyles(
-            self::getRenderer(), $value, $styles,
+            self::getRenderer(), $content, $styles,
         );
     }
 
     /**
      * Creates an anchor element instance with the given style.
      */
-    public static function anchor(string $value = '', string $styles = ''): Components\Anchor
+    public static function anchor(string $content = '', string $styles = ''): Components\Anchor
     {
         return Components\Anchor::fromStyles(
-            self::getRenderer(), $value, $styles,
-        )->href($value);
+            self::getRenderer(), $content, $styles,
+        )->href($content);
     }
 
     /**
-     * Renders the given renderables.
-     *
-     * @param  array<int, Renderable|array<int, Renderable>>  $renderables
+     * Creates an break line element instance.
      */
-    public static function render(array $renderables): void
+    public static function breakLine(): Components\BreakLine
     {
-        foreach ($renderables as $element) {
-            if (is_array($element)) {
-                self::getRenderer()->write(array_map(static fn (Renderable $element) => (string) $element, $element));
-
-                self::getRenderer()->writeln(['']);
-
-                continue;
-            }
-
-            self::getRenderer()->writeln($element->toString());
-        }
+        return Components\BreakLine::fromStyles(
+            self::getRenderer(), '', '',
+        );
     }
 
     /**
