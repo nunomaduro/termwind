@@ -30,7 +30,7 @@ final class StyleToMethod
      *
      * @template TElement of Element
      *
-     * @param  TElement $element
+     * @param  TElement  $element
      * @return TElement
      */
     public static function multiple(Element $element, string $styles): Element
