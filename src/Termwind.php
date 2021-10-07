@@ -6,7 +6,7 @@ namespace Termwind;
 
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
-use Termwind\Components\Element;
+use Termwind\Contracts\Renderable;
 
 /**
  * @internal
@@ -29,12 +29,14 @@ final class Termwind
     /**
      * Creates a div element instance.
      *
-     * @param  array<int, Element>  $value
+     * @param  array<int, Renderable>|string  $value
      */
-    public static function div(array $value = []): Components\Div
+    public static function div(array|string $value = '', string $styles = ''): Components\Div
     {
-        return new Components\Div(
-            self::getRenderer(), $value,
+        $elements = is_array($value) ? $value : [span($value)];
+
+        return Components\Div::fromStyles(
+            self::getRenderer(), $elements, $styles
         );
     }
 
@@ -59,15 +61,15 @@ final class Termwind
     }
 
     /**
-     * Renders the given elements.
+     * Renders the given renderables.
      *
-     * @param  array<int, Element|array<int, Element>>  $elements
+     * @param  array<int, Renderable|array<int, Renderable>>  $renderables
      */
-    public static function render(array $elements): void
+    public static function render(array $renderables): void
     {
-        foreach ($elements as $element) {
+        foreach ($renderables as $element) {
             if (is_array($element)) {
-                self::getRenderer()->write(array_map(static fn ($element) => (string) $element, $element));
+                self::getRenderer()->write(array_map(static fn (Renderable $element) => (string) $element, $element));
 
                 self::getRenderer()->writeln(['']);
 

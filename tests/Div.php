@@ -17,5 +17,5 @@ it('renders a div element with childs', function () {
         a('link label', 'ml-1 text-color-green')->href('https://github.com'),
     ]);
 
-    expect($div->toString())->toBe('<bg=default;fg=white;options=>first</> <bg=default;fg=red;options=>second</> <href=https://github.com;bg=default;fg=green;options=>link label</>');
+    expect($div->toString())->toBe('<bg=default;options=><bg=default;fg=white;options=>first</> <bg=default;fg=red;options=>second</> <href=https://github.com;bg=default;fg=green;options=>link label</></>');
 });

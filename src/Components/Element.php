@@ -6,21 +6,24 @@ namespace Termwind\Components;
 
 use Symfony\Component\Console\Output\OutputInterface;
 use Termwind\Actions\StyleToMethod;
+use Termwind\Contracts\Renderable;
 
 /**
+ * @template TState
+ *
  * @internal
  */
-abstract class Element
+abstract class Element implements Renderable
 {
     /**
      * Creates an element instance.
      *
-     * @param  string  $value
+     * @param  TState  $state
      * @param  array<string, mixed>  $properties
      */
     final public function __construct(
         protected OutputInterface $output,
-        protected string $value,
+        protected $state,
         protected array $properties = [
             'colors' => [
                 'bg' => 'default',
@@ -33,10 +36,12 @@ abstract class Element
 
     /**
      * Creates an element instance with the given styles.
+     *
+     * @param TState $state
      */
-    final public static function fromStyles(OutputInterface $output, string $value, string $styles): static
+    public static function fromStyles(OutputInterface $output, $state, string $styles): static
     {
-        $element = new static($output, $value);
+        $element = new static($output, $state);
 
         return StyleToMethod::multiple($element, $styles);
     }
@@ -101,9 +106,9 @@ abstract class Element
      */
     final public function pl(int $padding): static
     {
-        $value = sprintf('%s%s', str_repeat(' ', $padding), $this->value);
+        $state = sprintf('%s%s', str_repeat(' ', $padding), $this->state);
 
-        return new static($this->output, $value, $this->properties);
+        return new static($this->output, $state, $this->properties);
     }
 
     /**
@@ -111,9 +116,9 @@ abstract class Element
      */
     final public function pr(int $padding): static
     {
-        $value = sprintf('%s%s', $this->value, str_repeat(' ', $padding));
+        $state = sprintf('%s%s', $this->state, str_repeat(' ', $padding));
 
-        return new static($this->output, $value, $this->properties);
+        return new static($this->output, $state, $this->properties);
     }
 
     /**
@@ -149,31 +154,31 @@ abstract class Element
     {
         $limit -= mb_strwidth($end, 'UTF-8');
 
-        if (mb_strwidth($this->value, 'UTF-8') <= $limit) {
-            return new static($this->output, $this->value, $this->properties);
+        if (mb_strwidth($this->state, 'UTF-8') <= $limit) {
+            return new static($this->output, $this->state, $this->properties);
         }
 
-        $value = rtrim(mb_strimwidth($this->value, 0, $limit, '', 'UTF-8')).$end;
+        $state = rtrim(mb_strimwidth($this->state, 0, $limit, '', 'UTF-8')).$end;
 
-        return new static($this->output, $value, $this->properties);
+        return new static($this->output, $state, $this->properties);
     }
 
     /**
      * Forces the width of the element.
      */
-    final public function width(int $value): static
+    final public function width(int $state): static
     {
-        $length = mb_strlen($this->value, 'UTF-8');
+        $length = mb_strlen($this->state, 'UTF-8');
 
-        if ($length <= $value) {
-            $value = $this->value.str_repeat(' ', $value - $length);
+        if ($length <= $state) {
+            $state = $this->state.str_repeat(' ', $state - $length);
 
-            return new static($this->output, $value, $this->properties);
+            return new static($this->output, $state, $this->properties);
         }
 
-        $value = rtrim(mb_strimwidth($this->value, 0, $value, '', 'UTF-8'));
+        $state = rtrim(mb_strimwidth($this->state, 0, $state, '', 'UTF-8'));
 
-        return new static($this->output, $value, $this->properties);
+        return new static($this->output, $state, $this->properties);
     }
 
     /**
@@ -181,9 +186,9 @@ abstract class Element
      */
     final public function uppercase(): static
     {
-        $value = mb_strtoupper($this->value, 'UTF-8');
+        $state = mb_strtoupper($this->state, 'UTF-8');
 
-        return new static($this->output, $value, $this->properties);
+        return new static($this->output, $state, $this->properties);
     }
 
     /**
@@ -191,9 +196,9 @@ abstract class Element
      */
     final public function lowercase(): static
     {
-        $value = mb_strtolower($this->value, 'UTF-8');
+        $state = mb_strtolower($this->state, 'UTF-8');
 
-        return new static($this->output, $value, $this->properties);
+        return new static($this->output, $state, $this->properties);
     }
 
     /**
@@ -201,9 +206,9 @@ abstract class Element
      */
     final public function capitalize(): static
     {
-        $value = mb_convert_case($this->value, MB_CASE_TITLE, 'UTF-8');
+        $state = mb_convert_case($this->state, MB_CASE_TITLE, 'UTF-8');
 
-        return new static($this->output, $value, $this->properties);
+        return new static($this->output, $state, $this->properties);
     }
 
     /**
@@ -211,12 +216,12 @@ abstract class Element
      */
     final public function snakecase(): static
     {
-        $value = mb_strtolower(
-            (string) preg_replace(['/([a-z\d])([A-Z])/', '/([^_])([A-Z][a-z])/'], '$1_$2', $this->value),
+        $state = mb_strtolower(
+            (string) preg_replace(['/([a-z\d])([A-Z])/', '/([^_])([A-Z][a-z])/'], '$1_$2', $this->state),
             'UTF-8'
         );
 
-        return new static($this->output, $value, $this->properties);
+        return new static($this->output, $state, $this->properties);
     }
 
     /**
@@ -224,15 +229,15 @@ abstract class Element
      */
     final public function lineThrough(): static
     {
-        $value = sprintf("\e[9m%s\e[0m", $this->value);
+        $state = sprintf("\e[9m%s\e[0m", $this->state);
 
-        return new static($this->output, $value, $this->properties);
+        return new static($this->output, $state, $this->properties);
     }
 
     /**
      * Renders the string representation of the element on the output.
      */
-    final public function render(): void
+    public function render(): void
     {
         $this->output->write($this->toString());
     }
@@ -240,15 +245,15 @@ abstract class Element
     /**
      * Get the string representation of the element.
      */
-    final public function toString(): string
+    public function toString(): string
     {
         $colors = [];
 
-        foreach ($this->properties['colors'] as $option => $value) {
+        foreach ($this->properties['colors'] as $option => $state) {
             if (in_array($option, ['fg', 'bg'], true)) {
-                $value = is_array($value) ? array_pop($value) : $value;
+                $state = is_array($state) ? array_pop($state) : $state;
 
-                $colors[] = "$option=$value";
+                $colors[] = "$option=$state";
             }
         }
 
@@ -267,7 +272,7 @@ abstract class Element
             $href === '' ? '' : sprintf('href=%s;', $href),
             implode(';', $colors),
             implode(',', $options),
-            $this->value,
+            $this->state,
             str_repeat(' ', (int) ($this->properties['styles']['mr'] ?? 0)),
         );
     }
@@ -291,7 +296,7 @@ abstract class Element
 
         return new static(
             $this->output,
-            $this->value,
+            $this->state,
             $properties,
         );
     }

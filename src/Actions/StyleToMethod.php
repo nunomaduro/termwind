@@ -4,36 +4,36 @@ declare(strict_types=1);
 
 namespace Termwind\Actions;
 
-use Termwind\Components\Element;
+use Termwind\Contracts\Renderable;
 use Termwind\Exceptions\StyleNotFound;
 use Termwind\Repositories\Styles;
 
 /**
  * @internal
- *
- * @template TElement of Element
  */
 final class StyleToMethod
 {
     /**
      * Creates a new action instance.
      *
-     * @param  TElement  $element
+     * @param  Renderable  $renderable
      */
     public function __construct(
-        private Element $element,
+        private Renderable $renderable,
         private string $style,
     ) {
         // ..
     }
 
     /**
-     * @template TStylesElement of Element
+     * Applies multiple styles to the given renderable.
      *
-     * @param  TStylesElement  $element
-     * @return TStylesElement
+     * @template TRenderable of Renderable
+     *
+     * @param  TRenderable $renderable
+     * @return TRenderable
      */
-    public static function multiple(Element $element, string $styles): Element
+    public static function multiple(Renderable $renderable, string $styles): Renderable
     {
         $styles = explode(' ', $styles);
 
@@ -42,24 +42,24 @@ final class StyleToMethod
         });
 
         foreach ($styles as $style) {
-            $element = (new self($element, $style))->__invoke();
+            $renderable = (new self($renderable, $style))->__invoke();
         }
 
-        return $element;
+        /** @var TRenderable $renderable */
+        return $renderable;
     }
 
     /**
      * Converts the given style to a method name.
      *
-     * @return TElement
+     * @return Renderable
      */
-    public function __invoke(string|int ...$arguments): Element
+    public function __invoke(string|int ...$arguments): Renderable
     {
         if (Styles::has($this->style)) {
-            /** @var TElement $element */
-            $element = Styles::get($this->style)($this->element, ...$arguments);
+            $renderable = Styles::get($this->style)($this->renderable, ...$arguments);
 
-            return $element;
+            return $renderable;
         }
 
         $method = explode('-', $this->style);
@@ -75,7 +75,7 @@ final class StyleToMethod
             throw StyleNotFound::fromStyle($this->style);
         }
 
-        if (! method_exists($this->element, $methodName)) {
+        if (! method_exists($this->renderable, $methodName)) {
             $argument = array_pop($method);
 
             $arguments[] = is_numeric($argument) ? (int) $argument : (string) $argument;
@@ -83,6 +83,6 @@ final class StyleToMethod
             return $this->__invoke(...$arguments);
         }
 
-        return $this->element->$methodName(...$arguments);
+        return $this->renderable->$methodName(...$arguments);
     }
 }

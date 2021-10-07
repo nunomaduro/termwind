@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Termwind\Components;
 
+/**
+ * @extends Element<string>
+ */
 final class Anchor extends Element
 {
     /**
@@ -13,7 +16,7 @@ final class Anchor extends Element
     {
         return new self(
             $this->output,
-            $this->value,
+            $this->state,
             array_merge($this->properties, [
                 'href' => $href,
             ])

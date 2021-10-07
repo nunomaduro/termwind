@@ -6,7 +6,7 @@ namespace Termwind;
 
 use Closure;
 use Symfony\Component\Console\Output\OutputInterface;
-use Termwind\Components\Element;
+use Termwind\Contracts\Renderable;
 use Termwind\Repositories\Styles;
 use Termwind\ValueObjects\Style;
 
@@ -22,13 +22,13 @@ if (! function_exists('renderUsing')) {
 
 if (! function_exists('render')) {
     /**
-     * Renders the given elements.
+     * Renders the given renderables.
      *
-     * @param  array<int, Element|array<int, Element>>  $elements
+     * @param  array<int, Renderable|array<int, Renderable>>  $renderables
      */
-    function render(array $elements): void
+    function render(array $renderables): void
     {
-        Termwind::render($elements);
+        Termwind::render($renderables);
     }
 }
 
@@ -36,7 +36,7 @@ if (! function_exists('div')) {
     /**
      * Creates a div element instance.
      *
-     * @param  array<int, Element>  $value
+     * @param  array<int, Renderable>  $value
      */
     function div(array $value = []): Components\Div
     {
@@ -68,10 +68,7 @@ if (! function_exists('style')) {
     /**
      * Creates a new style.
      *
-     * @template TElement of Element
-     *
-     * @param (Closure(TElement $element, string|int ...$arguments): TElement)|null $callback
-     * @return Style<TElement>
+     * @param (Closure(Renderable $renderable, string|int ...$arguments): Renderable)|null $callback
      */
     function style(string $name, Closure $callback = null): Style
     {

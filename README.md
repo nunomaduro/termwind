@@ -44,7 +44,7 @@ span('Hello World', 'p-2 text-color-white bg-blue')->render();
 The `span()` function may be used to render an inline container used to mark up a part of a text.
 
 ```php
-use function Termwind\{render, span};
+use function Termwind\{div, a, span};
 
 span('Hello World', 'p-2 text-color-white bg-blue')->render();
 
