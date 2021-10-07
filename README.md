@@ -34,9 +34,17 @@ composer require nunomaduro/termwind --dev
 ### Get Started
 
 ```php
-use function Termwind\{span};
-
-span('Hello World', 'p-2 text-color-white bg-blue')->render();
+div([
+    div([
+        a('pestphp.com', 'ml-2 mb-1 text-color-magenta font-bold')->href('https://pestphp.com'),
+        span('PASS', 'mt-1 ml-2 px-1 text-color-gray font-bold bg-green'),
+        span('Tests\Feature\ExampleTest.php', ' mx-1 text-color-white'),
+    ]),
+    div([
+        span('✓', 'ml-2 text-color-green'),
+        span('basic test', 'mx-1 text-color-gray'),
+    ], 'mt-1'),
+], 'my-1')->render();
 ```
 
 #### `span()`
@@ -48,10 +56,10 @@ use function Termwind\{div, a, span};
 
 span('Hello World', 'p-2 text-color-white bg-blue')->render();
 
-render([
+div([
     span('Hello', 'p-2 text-color-white bg-blue'),
     span('World', 'p-2 text-color-white bg-blue'),
-]);
+])->render();
 ```
 
 #### `a()`
@@ -63,10 +71,10 @@ use function Termwind\{render, a};
 
 a('https://github.com/nunomaduro/termwind', 'p-2 text-color-white bg-blue')->render();
 
-render([
+div([
     a('https://github.com/nunomaduro/termwind', 'p-2 text-color-white bg-blue'),
     a('Termwind', 'p-2 text-color-white bg-blue')->href('https://github.com/nunomaduro/termwind'),
-]);
+])->render();
 ```
 
 #### `style()`
