@@ -20,11 +20,11 @@ final class HtmlRenderer
         $dom = new DOMDocument();
 
         // The XML declaration here is required to load UTF-8 HTML
-        $html = "<?xml encoding=\"UTF-8\">{$html}";
+        $html = '<?xml encoding="UTF-8">'.$html;
         $dom->loadHTML($html, LIBXML_COMPACT | LIBXML_HTML_NODEFDTD | LIBXML_NOBLANKS | LIBXML_NOXMLDECL);
 
         /** @var DOMNode $body */
-        $body = $dom->getElementsByTagName("body")->item(0);
+        $body = $dom->getElementsByTagName('body')->item(0);
 
         $el = $this->convert($body);
 
@@ -36,9 +36,9 @@ final class HtmlRenderer
     }
 
     /**
-     * Convert a tree of DOM nodes to a tree of termwind elements
+     * Convert a tree of DOM nodes to a tree of termwind elements.
      *
-     * @param DOMNode $node
+     * @param  DOMNode  $node
      */
     private function convert(DOMNode $node): Components\Element|string
     {
@@ -52,10 +52,10 @@ final class HtmlRenderer
     }
 
     /**
-     * Convert a given DOM node to it's termwind element equivalent
+     * Convert a given DOM node to it's termwind element equivalent.
      *
-     * @param DOMNode $node
-     * @param (Components\Element|string)[] $children
+     * @param  DOMNode  $node
+     * @param  (Components\Element|string)[]  $children
      */
     private function toElement(DOMNode $node, array $children): Components\Element|string
     {
@@ -64,29 +64,29 @@ final class HtmlRenderer
         }
 
         /** @var \DOMElement $node */
-        $styles = $node->getAttribute("class");
+        $styles = $node->getAttribute('class');
 
-        if ($node->nodeName === "body") {
+        if ($node->nodeName === 'body') {
             // Pick only the first element from the body node
             return $children[0];
         }
 
-        if ($node->nodeName === "div") {
+        if ($node->nodeName === 'div') {
             return Termwind::div($children, $styles);
         }
 
-        if ($node->nodeName === "span") {
+        if ($node->nodeName === 'span') {
             return Termwind::div($children, $styles);
         }
 
-        if ($node->nodeName === "br") {
+        if ($node->nodeName === 'br') {
             return Termwind::breakLine();
         }
 
-        if ($node->nodeName === "a") {
-            $href = $node->getAttribute("href");
+        if ($node->nodeName === 'a') {
+            $href = $node->getAttribute('href');
 
-            if ($href === "") {
+            if ($href === '') {
                 $href = $node->textContent;
             }
 

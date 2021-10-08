@@ -1,6 +1,8 @@
 <?php
 
-use function Termwind\{a, div, render};
+use function Termwind\a;
+use function Termwind\div;
+use function Termwind\render;
 
 it('can render from an html string', function () {
     $html = render('<div>string</div>');
