@@ -224,3 +224,11 @@ it('can receive text-color class names as string', function () {
 
     expect($div->toString())->toBe('<bg=default;fg=#86efac;options=>with color</>');
 });
+
+it('hides the text', function () {
+    $div = div('string');
+
+    $div = $div->hidden();
+
+    expect($div->toString())->toBe("<bg=default;options=>\e[8mstring\e[0m</>");
+});

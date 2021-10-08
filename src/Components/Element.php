@@ -278,6 +278,16 @@ abstract class Element
     }
 
     /**
+     * Makes the element's content invisible.
+     */
+    final public function hidden(): static
+    {
+        $content = sprintf("\e[8m%s\e[0m", $this->content);
+
+        return new static($this->output, $content, $this->properties);
+    }
+
+    /**
      * Renders the string representation of the element on the output.
      */
     final public function render(): void
