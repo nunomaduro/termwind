@@ -6,6 +6,8 @@ namespace Termwind\Components;
 
 use Symfony\Component\Console\Output\OutputInterface;
 use Termwind\Actions\StyleToMethod;
+use Termwind\Enums\Color;
+use Termwind\Exceptions\ColorNotFound;
 
 /**
  * @internal
@@ -43,8 +45,12 @@ abstract class Element
     /**
      * Adds a background color to the element.
      */
-    final public function bg(string $color): static
+    final public function bg(string $color, int $variant = 0): static
     {
+        if ($variant > 0) {
+            $color = $this->getColorVariant($color, $variant);
+        }
+
         return $this->with(['colors' => ['bg' => $color]]);
     }
 
@@ -173,8 +179,12 @@ abstract class Element
     /**
      * Adds a text color to the element.
      */
-    final public function textColor(string $color): static
+    final public function textColor(string $color, int $variant = 0): static
     {
+        if ($variant > 0) {
+            $color = $this->getColorVariant($color, $variant);
+        }
+
         return $this->with(['colors' => [
             'fg' => $color,
         ]]);
@@ -334,5 +344,19 @@ abstract class Element
             $this->content,
             $properties,
         );
+    }
+
+    /**
+     * Get the constant variant color from Color class.
+     */
+    private function getColorVariant(string $color, int $variant): string
+    {
+        $colorConstant = mb_strtoupper($color.'_'.$variant, 'UTF-8');
+
+        if (! defined(Color::class."::$colorConstant")) {
+            throw new ColorNotFound($colorConstant);
+        }
+
+        return constant(Color::class."::$colorConstant");
     }
 }
