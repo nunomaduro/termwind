@@ -17,6 +17,14 @@ final class HtmlRenderer
 
     public function render(string $html): Components\Element
     {
+        $el = $this->parse($html);
+        $el->render();
+
+        return $el;
+    }
+
+    private function parse(string $html): Components\Element
+    {
         $dom = new DOMDocument();
 
         // The XML declaration here is required to load UTF-8 HTML

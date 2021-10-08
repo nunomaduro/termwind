@@ -1,8 +1,22 @@
 <?php
 
+use Symfony\Component\Console\Output\BufferedOutput;
+
 use function Termwind\a;
 use function Termwind\div;
 use function Termwind\render;
+use function Termwind\renderUsing;
+
+beforeEach(fn () => renderUsing($this->output = new BufferedOutput()));
+afterEach(fn () => renderUsing(null));
+
+it('renders "div" elements', function () {
+    $html = '<div class="ml-2">string</div>';
+
+    render($html);
+
+    expect($this->output->fetch())->toBe("  string\n");
+});
 
 it('can render from an html string', function () {
     $html = render('<div>string</div>');
