@@ -1,6 +1,7 @@
 <?php
 
 use Termwind\Enums\Color;
+use Termwind\Exceptions\ColorNotFound;
 use function Termwind\{span};
 
 it('adds font bold', function () {
@@ -200,4 +201,28 @@ it('sets the text with line-through', function () {
     $span = $span->lineThrough();
 
     expect($span->toString())->toBe("<bg=default;options=>\e[9mstring\e[0m</>");
+});
+
+it('can receive bg-color class names as string', function () {
+    $span = span('with color', 'bg-green-300');
+
+    expect($span->toString())->toBe('<bg=#86efac;options=>with color</>');
+});
+
+it('can receive text-color class names as string', function () {
+    $span = span('with color', 'text-color-green-300');
+
+    expect($span->toString())->toBe('<bg=default;fg=#86efac;options=>with color</>');
+});
+
+it('throws if bg-color class names as string received is not found', function () {
+    expect(
+        fn () => span('with color', 'bg-invalidColor-300')
+    )->toThrow(ColorNotFound::class);
+});
+
+it('throws if text-color class names as string received is not found', function () {
+    expect(
+        fn () => span('with color', 'text-color-invalidColor-300')
+    )->toThrow(ColorNotFound::class);
 });

@@ -212,3 +212,15 @@ it('sets the text with line-through', function () {
 
     expect($div->toString())->toBe("<bg=default;options=>\e[9mstring\e[0m</>");
 });
+
+it('can receive bg-color class names as string', function () {
+    $div = div('with color', 'bg-green-300');
+
+    expect($div->toString())->toBe('<bg=#86efac;options=>with color</>');
+});
+
+it('can receive text-color class names as string', function () {
+    $div = div('with color', 'text-color-green-300');
+
+    expect($div->toString())->toBe('<bg=default;fg=#86efac;options=>with color</>');
+});

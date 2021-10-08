@@ -83,6 +83,6 @@ final class StyleToMethod
             return $this->__invoke(...$arguments);
         }
 
-        return $this->element->$methodName(...$arguments);
+        return $this->element->$methodName(...array_reverse($arguments));
     }
 }

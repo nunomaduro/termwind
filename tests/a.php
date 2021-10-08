@@ -195,3 +195,15 @@ it('sets the text with line-through', function () {
 
     expect($a->toString())->toBe("<href=string;bg=default;options=>\e[9mstring\e[0m</>");
 });
+
+it('can receive bg-color class names as string', function () {
+    $a = a('with color', 'bg-green-300');
+
+    expect($a->toString())->toBe('<href=with color;bg=#86efac;options=>with color</>');
+});
+
+it('can receive text-color class names as string', function () {
+    $a = a('with color', 'text-color-green-300');
+
+    expect($a->toString())->toBe('<href=with color;bg=default;fg=#86efac;options=>with color</>');
+});
