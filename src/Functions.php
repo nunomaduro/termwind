@@ -82,6 +82,6 @@ if (! function_exists('render')) {
      */
     function render(string $html): Components\Element
     {
-        return HtmlRenderer::create()->render($html);
+        return (new HtmlRenderer)->render($html);
     }
 }

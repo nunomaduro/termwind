@@ -8,26 +8,27 @@ use DOMDocument;
 use DOMNode;
 use DOMText;
 
+
+/**
+ * @internal
+ */
 final class HtmlRenderer
 {
-    public static function create(): HtmlRenderer
-    {
-        return new static;
-    }
-
+    /**
+     * Renders the given hmtl.
+     */
     public function render(string $html): Components\Element
     {
-        $el = $this->parse($html);
-        $el->render();
-
-        return $el;
+        return $this->parse($html);
     }
 
+    /**
+     * Parses the given html.
+     */
     private function parse(string $html): Components\Element
     {
         $dom = new DOMDocument();
 
-        // The XML declaration here is required to load UTF-8 HTML
         $html = '<?xml encoding="UTF-8">'.$html;
         $dom->loadHTML($html, LIBXML_COMPACT | LIBXML_HTML_NODEFDTD | LIBXML_NOBLANKS | LIBXML_NOXMLDECL);
 
@@ -36,17 +37,13 @@ final class HtmlRenderer
 
         $el = $this->convert($body);
 
-        if (is_string($el)) {
-            return Termwind::span($el);
-        }
-
-        return $el;
+        return is_string($el)
+            ? Termwind::span($el)
+            : $el;
     }
 
     /**
      * Convert a tree of DOM nodes to a tree of termwind elements.
-     *
-     * @param  DOMNode  $node
      */
     private function convert(DOMNode $node): Components\Element|string
     {
@@ -63,7 +60,7 @@ final class HtmlRenderer
      * Convert a given DOM node to it's termwind element equivalent.
      *
      * @param  DOMNode  $node
-     * @param  (Components\Element|string)[]  $children
+     * @param  array<int, Components\Element|string>  $children
      */
     private function toElement(DOMNode $node, array $children): Components\Element|string
     {

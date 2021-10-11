@@ -9,36 +9,18 @@ use function Termwind\renderUsing;
 beforeEach(fn () => renderUsing($this->output = new BufferedOutput()));
 afterEach(fn () => renderUsing(null));
 
-it('renders "div" elements', function () {
-    $html = '<div class="ml-2">string</div>';
-
-    render($html);
-
-    expect($this->output->fetch())->toBe("  string\n");
-});
-
 it('can render from an html string', function () {
     $html = render('<div>string</div>');
-    $el = div('string');
 
-    expect($html->toString())->toBe($el->toString());
+    expect($html->toString())->toBe(div('string')->toString());
 });
 
 it('converts class attributes', function () {
     $html = render('<div class="ml-2 bg-white"><a class="ml-2">foo</a><div><a class="ml-2">foo</a></div>string</div>');
 
-    $el = div([
+    expect($html->toString())->toBe(div([
         a('foo', 'ml-2'),
         div([a('foo', 'ml-2')]),
         'string',
-    ], 'ml-2 bg-white');
-
-    expect($html->toString())->toBe($el->toString());
-});
-
-it('anchors support href attribute', function () {
-    $html = render('<a href="foo"></a>');
-    $el = a('foo');
-
-    expect($html->toString())->toBe($el->toString());
+    ], 'ml-2 bg-white')->toString());
 });
