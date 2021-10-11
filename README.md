@@ -48,7 +48,6 @@ render(<<<'HTML'
 HTML);
 
 // Symfony / Laravel console commands
-```php
 use function Termwind\{render};
 
 class UsersAllCommand extends Command
