@@ -230,7 +230,7 @@ it('throws if text-color class names as string received is not found', function 
 it('hides the text', function () {
     $span = span('string');
 
-    $span = $span->hidden();
+    $span = $span->invisible();
 
     expect($span->toString())->toBe("<bg=default;options=>\e[8mstring\e[0m</>");
 });

@@ -228,7 +228,7 @@ it('can receive text-color class names as string', function () {
 it('hides the text', function () {
     $div = div('string');
 
-    $div = $div->hidden();
+    $div = $div->invisible();
 
     expect($div->toString())->toBe("<bg=default;options=>\e[8mstring\e[0m</>");
 });
