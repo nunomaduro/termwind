@@ -16,7 +16,7 @@ it('can render from an html string', function () {
 });
 
 it('converts attributes', function () {
-    $html = (new HtmlRenderer)->parse(<<<HTML
+    $html = (new HtmlRenderer)->parse(<<<'HTML'
 <div class="bg-white">
     <a class="ml-2">foo</a>
     <a class="ml-2" href="bar">foo</a>
@@ -28,5 +28,3 @@ HTML);
         a('foo', 'ml-2')->href('bar'),
     ], 'bg-white')->toString());
 });
-
-
