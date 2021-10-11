@@ -3,9 +3,8 @@
 use Symfony\Component\Console\Output\BufferedOutput;
 use function Termwind\a;
 use function Termwind\div;
-use function Termwind\render;
-use function Termwind\renderUsing;
 use Termwind\HtmlRenderer;
+use function Termwind\renderUsing;
 
 beforeEach(fn () => renderUsing($this->output = new BufferedOutput()));
 afterEach(fn () => renderUsing(null));
