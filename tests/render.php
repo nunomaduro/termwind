@@ -1,7 +1,6 @@
 <?php
 
 use Symfony\Component\Console\Output\BufferedOutput;
-
 use function Termwind\a;
 use function Termwind\div;
 use function Termwind\render;
