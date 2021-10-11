@@ -89,4 +89,37 @@ style('btn')->apply('p-4 bg-blue text-color-white');
 span('Click me', 'btn')->render();
 ```
 
+
+#### `render()`
+
+The `render()` function may be used to render plain html.
+
+```php
+use function Termwind\{render};
+
+class UsersAllCommand extends Command
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'users:all';
+
+    /**
+     * Execute the console command.
+     *
+     * @return int
+     */
+    public function handle()
+    {
+        render(
+            view('users.index', [
+                'users' => User::all()
+            ])
+        );
+    }
+}
+```
+
 Termwind is an open-sourced software licensed under the **[MIT license](https://opensource.org/licenses/MIT)**.
