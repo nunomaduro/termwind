@@ -207,3 +207,11 @@ it('can receive text-color class names as string', function () {
 
     expect($a->toString())->toBe('<href=with color;bg=default;fg=#86efac;options=>with color</>');
 });
+
+it('hides the text', function () {
+    $a = a('string');
+
+    $a = $a->hidden();
+
+    expect($a->toString())->toBe("<href=string;bg=default;options=>\e[8mstring\e[0m</>");
+});

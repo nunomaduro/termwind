@@ -226,3 +226,11 @@ it('throws if text-color class names as string received is not found', function 
         fn () => span('with color', 'text-color-invalidColor-300')
     )->toThrow(ColorNotFound::class);
 });
+
+it('hides the text', function () {
+    $span = span('string');
+
+    $span = $span->hidden();
+
+    expect($span->toString())->toBe("<bg=default;options=>\e[8mstring\e[0m</>");
+});
