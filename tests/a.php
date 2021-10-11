@@ -21,6 +21,14 @@ it('adds font bold', function () {
     expect($a->toString())->toBe('<href=string;bg=default;options=bold>string</>');
 });
 
+it('adds an italic style', function () {
+    $a = a('string');
+
+    $a = $a->italic();
+
+    expect($a->toString())->toBe("<href=string;bg=default;options=>\e[3mstring\e[0m</>");
+});
+
 it('adds underline', function () {
     $a = a('string');
 

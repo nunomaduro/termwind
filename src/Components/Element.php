@@ -63,6 +63,16 @@ abstract class Element
     }
 
     /**
+     * Adds an italic style to the element.
+     */
+    final public function italic(): static
+    {
+        $content = sprintf("\e[3m%s\e[0m", $this->content);
+
+        return new static($this->output, $content, $this->properties);
+    }
+
+    /**
      * Adds an underline style to the element.
      */
     final public function underline(): static
