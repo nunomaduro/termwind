@@ -8,7 +8,6 @@ use DOMDocument;
 use DOMNode;
 use DOMText;
 
-
 /**
  * @internal
  */
