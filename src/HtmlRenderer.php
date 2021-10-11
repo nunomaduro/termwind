@@ -79,7 +79,7 @@ final class HtmlRenderer
         }
 
         if ($node->nodeName === 'span') {
-            return Termwind::div($children, $styles);
+            return Termwind::span($children, $styles);
         }
 
         if ($node->nodeName === 'br') {
