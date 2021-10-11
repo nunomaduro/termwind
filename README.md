@@ -34,66 +34,20 @@ composer require nunomaduro/termwind --dev
 ### Get Started
 
 ```php
-div([
-    div([
-        a('pestphp.com', 'ml-2 mb-1 text-color-magenta font-bold')->href('https://pestphp.com'),
-        span('PASS', 'mt-1 ml-2 px-1 text-color-gray font-bold bg-green'),
-        span('Tests\Feature\ExampleTest.php', ' mx-1 text-color-white'),
-    ]),
-    div([
-        span('✓', 'ml-2 text-color-green'),
-        span('basic test', 'mx-1 text-color-gray'),
-    ], 'mt-1'),
-], 'my-1')->render();
-```
+use function Termwind\{render};
 
-#### `span()`
+// single line html
+render('<div class="p-2 text-color-white bg-blue">Hello World</div>');
 
-The `span()` function may be used to render an inline container used to mark up a part of a text.
+// multi-line html
+render(<<<'HTML'
+    <div class="p-2 text-color-white bg-blue">
+        <a class="ml-2">foo</a>
+        <a class="ml-2" href="https://nunomaduro.com">nunomaduro.com</a>
+    </div>
+HTML);
 
-```php
-use function Termwind\{div, a, span};
-
-span('Hello World', 'p-2 text-color-white bg-blue')->render();
-
-div([
-    span('Hello', 'p-2 text-color-white bg-blue'),
-    span('World', 'p-2 text-color-white bg-blue'),
-])->render();
-```
-
-#### `a()`
-
-The `a()` function may be used to render an inline anchor container used to mark up a clickable hyperlink.
-
-```php
-use function Termwind\{render, a};
-
-a('https://github.com/nunomaduro/termwind', 'p-2 text-color-white bg-blue')->render();
-
-div([
-    a('https://github.com/nunomaduro/termwind', 'p-2 text-color-white bg-blue'),
-    a('Termwind', 'p-2 text-color-white bg-blue')->href('https://github.com/nunomaduro/termwind'),
-])->render();
-```
-
-#### `style()`
-
-The `style()` function may be used to add own custom syles.
-
-```php
-use function Termwind\{style, span};
-
-style('btn')->apply('p-4 bg-blue text-color-white');
-
-span('Click me', 'btn')->render();
-```
-
-
-#### `render()`
-
-The `render()` function may be used to render plain html.
-
+// Symfony / Laravel console commands
 ```php
 use function Termwind\{render};
 
@@ -120,6 +74,18 @@ class UsersAllCommand extends Command
         );
     }
 }
+```
+
+#### `style()`
+
+The `style()` function may be used to add own custom syles.
+
+```php
+use function Termwind\{style, span};
+
+style('btn')->apply('p-4 bg-blue text-color-white');
+
+render('<div class="btn">Click me </div>');
 ```
 
 Termwind is an open-sourced software licensed under the **[MIT license](https://opensource.org/licenses/MIT)**.
