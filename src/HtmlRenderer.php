@@ -28,7 +28,7 @@ final class HtmlRenderer
     {
         $dom = new DOMDocument();
 
-        $html = '<?xml encoding="UTF-8">'.$html;
+        $html = '<?xml encoding="UTF-8">'.trim($html);
         $dom->loadHTML($html, LIBXML_COMPACT | LIBXML_HTML_NODEFDTD | LIBXML_NOBLANKS | LIBXML_NOXMLDECL);
 
         /** @var DOMNode $body */
@@ -63,7 +63,7 @@ final class HtmlRenderer
     private function toElement(DOMNode $node, array $children): Components\Element|string
     {
         if ($node instanceof DOMText) {
-            return $node->textContent;
+            return trim($node->textContent);
         }
 
         /** @var \DOMElement $node */
@@ -87,13 +87,13 @@ final class HtmlRenderer
         }
 
         if ($node->nodeName === 'a') {
-            $href = $node->getAttribute('href');
+            $a = Termwind::anchor($node->textContent, $styles);
 
-            if ($href === '') {
-                $href = $node->textContent;
+            if (strlen($href = $node->getAttribute('href')) > 0) {
+                $a = $a->href($href);
             }
 
-            return Termwind::anchor($href, $styles);
+            return $a;
         }
 
         return Termwind::div($children);
