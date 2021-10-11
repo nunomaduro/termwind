@@ -17,15 +17,15 @@ final class HtmlRenderer
     /**
      * Renders the given hmtl.
      */
-    public function render(string $html): Components\Element
+    public function render(string $html): void
     {
-        return $this->parse($html);
+        $this->parse($html)->render();
     }
 
     /**
      * Parses the given html.
      */
-    private function parse(string $html): Components\Element
+    public function parse(string $html): Components\Element
     {
         $dom = new DOMDocument();
 
@@ -59,7 +59,6 @@ final class HtmlRenderer
     /**
      * Convert a given DOM node to it's termwind element equivalent.
      *
-     * @param  DOMNode  $node
      * @param  array<int, Components\Element|string>  $children
      */
     private function toElement(DOMNode $node, array $children): Components\Element|string

@@ -77,11 +77,9 @@ if (! function_exists('style')) {
 if (! function_exists('render')) {
     /**
      * Render HTML to a string.
-     *
-     * @param  string  $html
      */
-    function render(string $html): Components\Element
+    function render(string $html): void
     {
-        return (new HtmlRenderer)->render($html);
+        (new HtmlRenderer)->render($html);
     }
 }

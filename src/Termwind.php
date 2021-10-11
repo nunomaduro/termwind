@@ -29,7 +29,7 @@ final class Termwind
     /**
      * Creates a div element instance.
      *
-     * @param  array<int, Element>|string  $content
+     * @param  array<int, Element|string>|string  $content
      */
     public static function div(array|string $content = '', string $styles = ''): Components\Div
     {
