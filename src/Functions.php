@@ -73,3 +73,15 @@ if (! function_exists('style')) {
         return Styles::create($name, $callback);
     }
 }
+
+if (! function_exists('render')) {
+    /**
+     * Render HTML to a string.
+     *
+     * @param  string  $html
+     */
+    function render(string $html): Components\Element
+    {
+        return HtmlRenderer::create()->render($html);
+    }
+}
