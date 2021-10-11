@@ -22,6 +22,14 @@ it('adds font bold', function () {
     expect($div->toString())->toBe('<bg=default;options=bold>string</>');
 });
 
+it('adds an italic style', function () {
+    $div = div('string');
+
+    $div = $div->italic();
+
+    expect($div->toString())->toBe("<bg=default;options=>\e[3mstring\e[0m</>");
+});
+
 it('adds underline', function () {
     $div = div('string');
 

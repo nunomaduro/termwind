@@ -12,6 +12,14 @@ it('adds font bold', function () {
     expect($span->toString())->toBe('<bg=default;options=bold>string</>');
 });
 
+it('adds an italic style', function () {
+    $span = span('string');
+
+    $span = $span->italic();
+
+    expect($span->toString())->toBe("<bg=default;options=>\e[3mstring\e[0m</>");
+});
+
 it('adds underline', function () {
     $span = span('string');
 
