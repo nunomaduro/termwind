@@ -28,7 +28,7 @@
 Require Termwind using [Composer](https://getcomposer.org):
 
 ```bash
-composer require nunomaduro/termwind --dev
+composer require nunomaduro/termwind
 ```
 
 ### Get Started
