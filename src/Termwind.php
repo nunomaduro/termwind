@@ -81,6 +81,7 @@ final class Termwind
             }
 
             $index++;
+
             return (string) $element->prepend('• ')->mt($index > 1 ? 1 : 0);
         }, $content));
 
