@@ -78,6 +78,18 @@ final class HtmlRenderer
             return Termwind::div($children, $styles);
         }
 
+        if ($node->nodeName === 'ul') {
+            return Termwind::ul($children, $styles);
+        }
+
+        if ($node->nodeName === 'ol') {
+            return Termwind::ol($children, $styles);
+        }
+
+        if ($node->nodeName === 'li') {
+            return Termwind::li($children, $styles);
+        }
+
         if ($node->nodeName === 'span') {
             return Termwind::div($children, $styles);
         }
