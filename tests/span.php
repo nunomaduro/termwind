@@ -248,5 +248,5 @@ it('prepends text', function () {
 
     $span = $span->prepend('• ');
 
-    expect($span->toString())->toBe("<bg=default;options=>• string</>");
+    expect($span->toString())->toBe('<bg=default;options=>• string</>');
 });

@@ -229,5 +229,5 @@ it('prepends text', function () {
 
     $a = $a->prepend('• ');
 
-    expect($a->toString())->toBe("<href=string;bg=default;options=>• string</>");
+    expect($a->toString())->toBe('<href=string;bg=default;options=>• string</>');
 });
