@@ -52,6 +52,16 @@ if (! function_exists('span')) {
     }
 }
 
+if (! function_exists('strong')) {
+    /**
+     * Create a span element instance with a bold font and the given style.
+     */
+    function strong(string $content = '', string $styles = ''): Components\Span
+    {
+        return Termwind::span($content, $styles)->fontBold();
+    }
+}
+
 if (! function_exists('a')) {
     /**
      * Creates a line element instance with the given link.
