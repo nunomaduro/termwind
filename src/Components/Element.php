@@ -73,6 +73,16 @@ abstract class Element
     }
 
     /**
+     * Adds strikethrough style to the element.
+     */
+    final public function strikethrough(): static
+    {
+        $content = sprintf("\e[9m%s\e[0m", $this->content);
+
+        return new static($this->output, $content, $this->properties);
+    }
+
+    /**
      * Adds an underline style to the element.
      */
     final public function underline(): static

@@ -30,6 +30,14 @@ it('adds an italic style', function () {
     expect($div->toString())->toBe("<bg=default;options=>\e[3mstring\e[0m</>");
 });
 
+it('adds an strikethrough style', function () {
+    $div = div('string');
+
+    $div = $div->strikethrough();
+
+    expect($div->toString())->toBe("<bg=default;options=>\e[9mstring\e[0m</>");
+});
+
 it('adds underline', function () {
     $div = div('string');
 
