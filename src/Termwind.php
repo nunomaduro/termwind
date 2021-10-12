@@ -151,6 +151,8 @@ final class Termwind
                 throw new InvalidChild('Description lists only accept `dt` and `dd` as children');
             }
 
+            $element = $element->mt(1);
+
             if ($element instanceof Components\Dt) {
                 return (string) $element;
             }
