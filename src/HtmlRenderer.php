@@ -98,6 +98,14 @@ final class HtmlRenderer
             return Termwind::breakLine();
         }
 
+        if ($node->nodeName === 'strong') {
+            return Termwind::div($children, $styles)->fontBold();
+        }
+
+        if ($node->nodeName === 'em') {
+            return Termwind::div($children, $styles)->italic();
+        }
+
         if ($node->nodeName === 'a') {
             $a = Termwind::anchor($node->textContent, $styles);
 
