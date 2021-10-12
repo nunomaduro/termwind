@@ -62,6 +62,42 @@ if (! function_exists('a')) {
     }
 }
 
+if (! function_exists('ul')) {
+    /**
+     * Creates an unordered list instance.
+     *
+     * @param  array<int, Element>  $content
+     */
+    function ul(array $content = [], string $styles = ''): Components\Ul
+    {
+        return Termwind::ul($content, $styles);
+    }
+}
+
+if (! function_exists('ol')) {
+    /**
+     * Creates an ordered list instance.
+     *
+     * @param  array<int, Element>  $content
+     */
+    function ol(array $content = [], string $styles = ''): Components\Ol
+    {
+        return Termwind::ol($content, $styles);
+    }
+}
+
+if (! function_exists('li')) {
+    /**
+     * Creates a list item instance.
+     *
+     * @param  array<int, Element>|string  $content
+     */
+    function li(array|string $content = [], string $styles = ''): Components\Li
+    {
+        return Termwind::li($content, $styles);
+    }
+}
+
 if (! function_exists('style')) {
     /**
      * Creates a new style.

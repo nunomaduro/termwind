@@ -223,3 +223,11 @@ it('hides the text', function () {
 
     expect($a->toString())->toBe("<href=string;bg=default;options=>\e[8mstring\e[0m</>");
 });
+
+it('prepends text', function () {
+    $a = a('string');
+
+    $a = $a->prepend('• ');
+
+    expect($a->toString())->toBe("<href=string;bg=default;options=>• string</>");
+});

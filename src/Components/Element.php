@@ -298,6 +298,16 @@ abstract class Element
     }
 
     /**
+     * Prepends text to the content.
+     */
+    final public function prepend(string $text): static
+    {
+        $content = $text.$this->content;
+
+        return new static($this->output, $content, $this->properties);
+    }
+
+    /**
      * Renders the string representation of the element on the output.
      */
     final public function render(): void

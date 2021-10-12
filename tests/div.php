@@ -240,3 +240,11 @@ it('hides the text', function () {
 
     expect($div->toString())->toBe("<bg=default;options=>\e[8mstring\e[0m</>");
 });
+
+it('prepends text', function () {
+    $div = div('string');
+
+    $div = $div->prepend('• ');
+
+    expect($div->toString())->toBe("<bg=default;options=>• string</>");
+});
