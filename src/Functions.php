@@ -62,6 +62,16 @@ if (! function_exists('strong')) {
     }
 }
 
+if (! function_exists('em')) {
+    /**
+     * Create a span element instance with an italic font and the given style.
+     */
+    function em(string $content = '', string $styles = ''): Components\Span
+    {
+        return Termwind::span($content, $styles)->italic();
+    }
+}
+
 if (! function_exists('a')) {
     /**
      * Creates a line element instance with the given link.
