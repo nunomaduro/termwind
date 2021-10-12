@@ -176,7 +176,7 @@ final class Termwind
 
         return Components\Dt::fromStyles(
             self::getRenderer(), $content, $styles
-        );
+        )->fontBold();
     }
 
     /**
