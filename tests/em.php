@@ -1,6 +1,6 @@
 <?php
 
-use function Termwind\{em, span};
+use function Termwind\{em};
 
 it('can render em', function () {
     $em = em('string');
