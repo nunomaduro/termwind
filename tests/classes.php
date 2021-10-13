@@ -178,3 +178,11 @@ test('invisible', function () {
 
     expect($html)->toBe("<bg=default;options=>\e[8mtext\e[0m</>");
 });
+
+test('w-full', function () {
+    putenv('COLUMNS=10');
+
+    $html = parse('<div class="w-full">text</div>');
+
+    expect($html)->toBe("<bg=default;options=>text      </>");
+});
