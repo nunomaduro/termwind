@@ -337,19 +337,12 @@ abstract class Element
         /** @var array<int, string> $href */
         $href = $this->properties['href'] ?? [];
 
-        $options = [];
-
-        foreach ($this->properties['options'] as $option) {
-            $options[] = $option;
-        }
-
         return sprintf(
-            '%s%s<%s%s;options=%s>%s</>%s%s',
+            '%s%s<%s%s;options=>%s</>%s%s',
             str_repeat("\n", (int) ($this->properties['styles']['mt'] ?? 0)),
             str_repeat(' ', (int) ($this->properties['styles']['ml'] ?? 0)),
             count($href) > 0 ? sprintf('href=%s;', array_pop($href)) : '',
             implode(';', $colors),
-            implode(',', $options),
             $this->content,
             str_repeat(' ', (int) ($this->properties['styles']['mr'] ?? 0)),
             str_repeat("\n", (int) ($this->properties['styles']['mb'] ?? 0)),
