@@ -7,6 +7,7 @@ namespace Termwind;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Termwind\Components\Element;
+use Termwind\Exceptions\InvalidChild;
 
 /**
  * @internal
@@ -44,11 +45,17 @@ final class Termwind
 
     /**
      * Creates a span element instance with the given style.
+     *
+     * @param  array<int, Element|string>|string  $content
      */
-    public static function span(string $content = '', string $styles = ''): Components\Span
+    public static function span(array|string $content = '', string $styles = ''): Components\Span
     {
+        $content = implode('', array_map(
+            fn ($element) => (string) $element, is_array($content) ? $content : [$content]
+        ));
+
         return Components\Span::fromStyles(
-            self::getRenderer(), $content, $styles,
+            self::getRenderer(), $content, $styles
         );
     }
 
@@ -64,12 +71,78 @@ final class Termwind
 
     /**
      * Creates an anchor element instance with the given style.
+     *
+     * @param  array<int, Element|string>|string  $content
      */
-    public static function anchor(string $content = '', string $styles = ''): Components\Anchor
+    public static function anchor(array|string $content = '', string $styles = ''): Components\Anchor
     {
+        $content = implode('', array_map(
+            fn ($element) => (string) $element, is_array($content) ? $content : [$content]
+        ));
+
         return Components\Anchor::fromStyles(
             self::getRenderer(), $content, $styles,
-        )->href($content);
+        );
+    }
+
+    /**
+     * Creates an unordered list instance.
+     *
+     * @param  array<int, string|Element>  $content
+     */
+    public static function ul(array $content = [], string $styles = ''): Components\Ul
+    {
+        $index = 0;
+        $text = implode('', array_map(function ($element) use (&$index): string {
+            if (! $element instanceof Components\Li) {
+                throw new InvalidChild('Unordered lists only accept `li` as child');
+            }
+
+            $index++;
+
+            return (string) $element->prepend('• ')->mt($index > 1 ? 1 : 0);
+        }, $content));
+
+        return Components\Ul::fromStyles(
+            self::getRenderer(), $text, $styles
+        );
+    }
+
+    /**
+     * Creates an ordered list instance.
+     *
+     * @param  array<int, string|Element>  $content
+     */
+    public static function ol(array $content = [], string $styles = ''): Components\Ol
+    {
+        $index = 0;
+        $text = implode('', array_map(function ($element) use (&$index): string {
+            if (! $element instanceof Components\Li) {
+                throw new InvalidChild('Ordered lists only accept `li` as child');
+            }
+
+            return (string) $element->prepend(sprintf('%s. ', ++$index))->mt($index > 1 ? 1 : 0);
+        }, $content));
+
+        return Components\Ol::fromStyles(
+            self::getRenderer(), $text, $styles
+        );
+    }
+
+    /**
+     * Creates a list item instance.
+     *
+     * @param  array<int, Element|string>|string  $content
+     */
+    public static function li(array|string $content = '', string $styles = ''): Components\Li
+    {
+        $content = implode('', array_map(
+            fn ($element) => (string) $element, is_array($content) ? $content : [$content]
+        ));
+
+        return Components\Li::fromStyles(
+            self::getRenderer(), $content, $styles
+        );
     }
 
     /**

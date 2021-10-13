@@ -1,32 +1,33 @@
 <?php
 
-use Symfony\Component\Console\Output\BufferedOutput;
-use function Termwind\a;
-use function Termwind\div;
-use Termwind\HtmlRenderer;
-use function Termwind\renderUsing;
+use function Termwind\{render};
 
-beforeEach(fn () => renderUsing($this->output = new BufferedOutput()));
-afterEach(fn () => renderUsing(null));
-
-it('can render from an html string', function () {
-    $html = (new HtmlRenderer)->parse('<div>string</div>');
-
-    expect($html->toString())->toBe(div('string')->toString());
-});
-
-it('converts attributes', function () {
-    $html = (new HtmlRenderer)->parse(<<<'HTML'
+it('can render complext html', function () {
+    $html = parse(<<<'HTML'
 <div class="bg-white">
-    <a class="ml-2">foo</a>
-    <a class="ml-2" href="bar">foo</a>
+    <a class="ml-2">link text</a>
+    <a class="ml-2" href="link">link text</a>
 </div>
 HTML);
 
-    expect($html->toString())->toBe(div([
-        a('foo', 'ml-2'),
-        a('foo', 'ml-2')->href('bar'),
-    ], 'bg-white')->toString());
+    expect($html)->toBe('<bg=white;options=>  <bg=default;options=>link text</>  <href=link;bg=default;options=>link text</></>');
+});
+
+it('can render strings', function () {
+    $html = parse('text');
+
+    expect($html)->toBe('<bg=default;options=>text</>');
+});
+
+it('can render to custom output', function () {
+    $html = render(<<<'HTML'
+<div class="bg-white">
+    <a class="ml-2">link text</a>
+    <a class="ml-2" href="link">link text</a>
+</div>
+HTML);
+
+    expect($this->output->fetch())->toBe("  link text  link text\n");
 });
 
 
