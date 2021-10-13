@@ -21,7 +21,7 @@
 ------
 **Termwind** allows you to build unique and beautiful PHP command-line applications, using the **[Tailwind CSS](https://tailwindcss.com/)** API. In short, it's like Tailwind CSS, but for the PHP command-line applications.
 
-## Installation & Usage
+## Installation
 
 > **Requires [PHP 8.0+](https://php.net/releases/)**
 
@@ -31,39 +31,27 @@ Require Termwind using [Composer](https://getcomposer.org):
 composer require nunomaduro/termwind
 ```
 
-### Get Started
+## Usage
 
 ```php
 use function Termwind\{render};
 
-// single line html
-render('<div class="p-2 text-color-white bg-blue">Hello World</div>');
+// single line html...
+render('<div class="p-1 bg-green-300">Termwind</div>');
 
-// multi-line html
+// multi-line html...
 render(<<<'HTML'
-    <div class="p-2 text-color-white bg-blue">
-        <a class="ml-2">foo</a>
-        <a class="ml-2" href="https://nunomaduro.com">nunomaduro.com</a>
+    <div>
+        <div class="p-1 bg-green-300">Termwind</div>
+        <em class="ml-1">
+          Give your CLI apps a unique look
+        </em>
     </div>
 HTML);
 
-// Symfony / Laravel console commands
-use function Termwind\{render};
-
-class UsersAllCommand extends Command
+// Laravel or Symfony console commands...
+class UsersCommand extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'users:all';
-
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
     public function handle()
     {
         render(
@@ -75,7 +63,7 @@ class UsersAllCommand extends Command
 }
 ```
 
-#### Render table
+### Render table
 
 ```php
 render(<<<'HTML'
@@ -138,7 +126,7 @@ HTML);
 The `style()` function may be used to add own custom styles.
 
 ```php
-use function Termwind\{style, span};
+use function Termwind\{style};
 
 // Creates a new css class .btn with given classes
 style('btn')->apply('p-4 bg-blue text-color-white');
@@ -146,5 +134,34 @@ style('btn')->apply('p-4 bg-blue text-color-white');
 // Applies .btn class to your tag
 render('<div class="btn">Click me </div>');
 ```
+
+## How To Contribute
+
+Head over to [tailwindcss.com/docs](https://tailwindcss.com/docs), and choose a class that is not implemented in Termwind. As an example, let's assume you would like to add the `lowercase` Tailwind CSS class to Termwind:
+
+1. Head over to [`src/Components/Element`](https://github.com/nunomaduro/termwind/blob/master/src/Components/Element.php#L250) and add a new method with the name `lowercase`:
+```php
+    /**
+     * Makes the element's content lowercase.
+     */
+    final public function lowercase(): static
+    {
+        $content = mb_strtolower($this->content, 'UTF-8');
+
+        return new static($this->output, $content, $this->properties);
+    }
+```
+
+2. Next, add a new test in [`tests/classes.php`](https://github.com/nunomaduro/termwind/blob/master/tests/classes.php#L135) to see if the `lowercase` class works as expected:
+
+```php
+test('lowercase', function () {
+    $html = parse('<div class="lowercase">tEXT</div>');
+
+    expect($html)->toBe('<bg=default;options=>text</>');
+});
+```
+
+3. Pull request the code, and that's it.
 
 Termwind is an open-sourced software licensed under the **[MIT license](https://opensource.org/licenses/MIT)**.

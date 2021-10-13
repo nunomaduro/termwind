@@ -2,8 +2,8 @@
 
 use function Termwind\{br};
 
-it('adds a new line', function () {
-    $br = br();
+it('renders the element', function () {
+    $html = parse('<br/>');
 
-    expect($br->toString())->toBe("<bg=default;options=></>\n");
+    expect($html)->toBe("<bg=default;options=></>\n");
 });

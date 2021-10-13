@@ -59,7 +59,9 @@ abstract class Element
      */
     final public function fontBold(): static
     {
-        return $this->with(['options' => ['bold']]);
+        $content = sprintf("\e[1m%s\e[0m", $this->content);
+
+        return new static($this->output, $content, $this->properties);
     }
 
     /**
@@ -77,7 +79,9 @@ abstract class Element
      */
     final public function underline(): static
     {
-        return $this->with(['options' => ['underscore']]);
+        $content = sprintf("\e[4m%s\e[0m", $this->content);
+
+        return new static($this->output, $content, $this->properties);
     }
 
     /**
@@ -298,6 +302,16 @@ abstract class Element
     }
 
     /**
+     * Prepends text to the content.
+     */
+    final public function prepend(string $text): static
+    {
+        $content = $text.$this->content;
+
+        return new static($this->output, $content, $this->properties);
+    }
+
+    /**
      * Renders the string representation of the element on the output.
      */
     final public function render(): void
@@ -331,19 +345,12 @@ abstract class Element
         /** @var array<int, string> $href */
         $href = $this->properties['href'] ?? [];
 
-        $options = [];
-
-        foreach ($this->properties['options'] as $option) {
-            $options[] = $option;
-        }
-
         return sprintf(
-            '%s%s<%s%s;options=%s>%s</>%s%s',
+            '%s%s<%s%s;options=>%s</>%s%s',
             str_repeat("\n", (int) ($this->properties['styles']['mt'] ?? 0)),
             str_repeat(' ', (int) ($this->properties['styles']['ml'] ?? 0)),
             count($href) > 0 ? sprintf('href=%s;', array_pop($href)) : '',
             implode(';', $colors),
-            implode(',', $options),
             $this->content,
             str_repeat(' ', (int) ($this->properties['styles']['mr'] ?? 0)),
             str_repeat("\n", (int) ($this->properties['styles']['mb'] ?? 0)),
