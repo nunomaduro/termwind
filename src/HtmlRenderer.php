@@ -33,7 +33,6 @@ final class HtmlRenderer
 
         /** @var DOMNode $body */
         $body = $dom->getElementsByTagName('body')->item(0);
-
         $el = $this->convert($body);
 
         // @codeCoverageIgnoreStart
@@ -53,6 +52,8 @@ final class HtmlRenderer
         foreach ($node->childNodes as $child) {
             $children[] = $this->convert($child);
         }
+
+        $children = array_filter($children, fn ($child) => $child !== '');
 
         return $this->toElement($node, $children);
     }
