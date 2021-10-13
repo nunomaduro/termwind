@@ -63,8 +63,8 @@ abstract class Element
     }
 
     /**
-    * Adds a light style to the element.
-    */
+     * Adds a light style to the element.
+     */
     final public function fontLight(): static
     {
         return $this->with(['options' => ['light']]);
