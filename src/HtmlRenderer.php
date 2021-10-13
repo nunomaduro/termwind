@@ -36,9 +36,11 @@ final class HtmlRenderer
 
         $el = $this->convert($body);
 
+        // @codeCoverageIgnoreStart
         return is_string($el)
             ? Termwind::span($el)
             : $el;
+        // @codeCoverageIgnoreEnd
     }
 
     /**
