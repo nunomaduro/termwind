@@ -94,7 +94,7 @@ Head over to [tailwindcss.com/docs](https://tailwindcss.com/docs), and choose a 
 
 2. Next, add a new test in [`tests/classes.php`](https://github.com/nunomaduro/termwind/blob/master/tests/classes.php#L135) to see if the `lowercase` class works as expected:
 
-````php
+```php
 test('lowercase', function () {
     $html = parse('<div class="lowercase">tEXT</div>');
 
