@@ -45,11 +45,17 @@ final class Termwind
 
     /**
      * Creates a span element instance with the given style.
+     *
+     * @param  array<int, Element|string>|string  $content
      */
-    public static function span(string $content = '', string $styles = ''): Components\Span
+    public static function span(array|string $content = '', string $styles = ''): Components\Span
     {
+        $content = implode('', array_map(
+            fn ($element) => (string) $element, is_array($content) ? $content : [$content]
+        ));
+
         return Components\Span::fromStyles(
-            self::getRenderer(), $content, $styles,
+            self::getRenderer(), $content, $styles
         );
     }
 
@@ -72,10 +78,6 @@ final class Termwind
     {
         $index = 0;
         $text = implode('', array_map(function ($element) use (&$index): string {
-            if (! $element instanceof Components\Element) {
-                return '';
-            }
-
             if (! $element instanceof Components\Li) {
                 throw new InvalidChild('Unordered lists only accept `li` as child');
             }
@@ -99,10 +101,6 @@ final class Termwind
     {
         $index = 0;
         $text = implode('', array_map(function ($element) use (&$index): string {
-            if (! $element instanceof Components\Element) {
-                return '';
-            }
-
             if (! $element instanceof Components\Li) {
                 throw new InvalidChild('Ordered lists only accept `li` as child');
             }

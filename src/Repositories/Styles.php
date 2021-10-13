@@ -33,6 +33,14 @@ final class Styles
     }
 
     /**
+     * Removes all existing styles.
+     */
+    public static function flush(): void
+    {
+        self::$storage = [];
+    }
+
+    /**
      * Checks a style with the given name exists.
      */
     public static function has(string $name): bool
@@ -45,10 +53,6 @@ final class Styles
      */
     public static function get(string $name): Style
     {
-        if (! self::has($name)) {
-            throw StyleNotFound::fromStyle($name);
-        }
-
         return self::$storage[$name];
     }
 }
