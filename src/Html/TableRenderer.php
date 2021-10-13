@@ -110,7 +110,7 @@ final class TableRenderer
                 foreach ($this->parseRow($child) as $row) {
                     $this->table->addRow($row);
                 }
-            } else if ($child->nodeName === 'hr') {
+            } elseif ($child->nodeName === 'hr') {
                 $this->table->addRow(new TableSeparator());
             }
         }
