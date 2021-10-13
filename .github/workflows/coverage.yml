@@ -1,4 +1,4 @@
-name: Tests
+name: Coverage
 
 on: ['push', 'pull_request']
 
@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php: ['8.0', '8.1']
+        php: ['8.0']
         dependency-version: [prefer-lowest, prefer-stable]
 
     name: PHP ${{ matrix.php }} - ${{ matrix.dependency-version }} - ${{ matrix.parallel }}
@@ -21,7 +21,7 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           tools: composer:v2
-          coverage: none
+          coverage: xdebug
 
       - name: Setup Problem Matches
         run: |
@@ -32,4 +32,4 @@ jobs:
         run: composer update --${{ matrix.dependency-version }} --no-interaction --no-progress
 
       - name: Integration Tests
-        run: php vendor/bin/pest --colors=always
+        run: XDEBUG_MODE=coverage php vendor/bin/pest --colors=always --coverage --min=100
