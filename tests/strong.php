@@ -1,9 +1,9 @@
 <?php
 
-use function Termwind\{strong};
+use function Termwind\{span};
 
-it('can render strong', function () {
-    $strong = strong('string');
+it('renders the element', function () {
+    $html = parse('<strong>text</strong>');
 
-    expect($strong->toString())->toBe('<bg=default;options=bold>string</>');
+    expect($html)->toBe('<bg=default;options=bold>text</>');
 });

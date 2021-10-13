@@ -1,9 +1,8 @@
 <?php
 
-use function Termwind\{em};
+it('renders the element', function () {
+    $html = parse('<em>text</em>');
 
-it('can render em', function () {
-    $em = em('string');
-
-    expect($em->toString())->toBe("<bg=default;options=>\e[3mstring\e[0m</>");
+    expect($html)->toBe("<bg=default;options=>\e[3mtext\e[0m</>");
 });
+

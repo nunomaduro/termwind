@@ -2,21 +2,15 @@
 
 use function Termwind\div;
 use Termwind\Exceptions\InvalidChild;
-use function Termwind\li;
-use function Termwind\ul;
 
-it('accepts multiple elements', function () {
-    $ul = ul([
-        li('list item 1', 'text-color-white'),
-        li('list item 2', 'text-color-gray'),
-    ]);
+it('renders the element', function () {
+    $html = parse('<ul><li>list text 1</li></ul>');
 
-    expect($ul->toString())->toBe("<bg=default;options=><bg=default;fg=white;options=>• list item 1</>\n<bg=default;fg=gray;options=>• list item 2</></>");
+    expect($html)->toBe('<bg=default;options=><bg=default;options=>• list text 1</></>');
 });
 
-it('only accepts li as children', function () {
-    expect(fn () => ul([
-        li('list item', 'text-color-white'),
-        div('not list item', 'text-color-white'),
-    ], 'bg-green'))->toThrow(InvalidChild::class);
+it('renders only "li" as children', function () {
+    expect(fn () => parse('<ul><div>list text 1</div></ul>'))
+        ->toThrow(InvalidChild::class);
 });
+
