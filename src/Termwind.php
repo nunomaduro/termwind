@@ -61,12 +61,18 @@ final class Termwind
 
     /**
      * Creates an anchor element instance with the given style.
+     *
+     * @param  array<int, Element|string>|string  $content
      */
-    public static function anchor(string $content = '', string $styles = ''): Components\Anchor
+    public static function anchor(array|string $content = '', string $styles = ''): Components\Anchor
     {
+        $content = implode('', array_map(
+            fn ($element) => (string) $element, is_array($content) ? $content : [$content]
+        ));
+
         return Components\Anchor::fromStyles(
             self::getRenderer(), $content, $styles,
-        )->href($content);
+        );
     }
 
     /**

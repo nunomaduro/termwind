@@ -5,7 +5,7 @@ use function Termwind\{a};
 it('renders the element', function () {
     $html = parse('<a>link text</a>');
 
-    expect($html)->toBe('<href=link text;bg=default;options=>link text</>');
+    expect($html)->toBe('<bg=default;options=>link text</>');
 });
 
 it('renders the href property', function () {

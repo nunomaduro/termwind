@@ -109,13 +109,7 @@ final class HtmlRenderer
         }
 
         if ($node->nodeName === 'a') {
-            $a = Termwind::anchor($node->textContent, $styles);
-
-            if (strlen($href = $node->getAttribute('href')) > 0) {
-                $a = $a->href($href);
-            }
-
-            return $a;
+            return Termwind::anchor($children, $styles)->href($node->getAttribute('href'));
         }
 
         return Termwind::div($children);
