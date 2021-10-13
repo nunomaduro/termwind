@@ -8,6 +8,12 @@ test('font bold', function () {
     expect($html)->toBe('<bg=default;options=bold>text</>');
 });
 
+test('font light', function () {
+    $html = parse('<div class="font-light">text</div>');
+
+    expect($html)->toBe('<bg=default;options=light>text</>');
+});
+
 test('italic', function () {
     $html = parse('<div class="italic">text</div>');
 
