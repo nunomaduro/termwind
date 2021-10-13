@@ -5,7 +5,7 @@ use Termwind\Exceptions\ColorNotFound;
 test('font bold', function () {
     $html = parse('<div class="font-bold">text</div>');
 
-    expect($html)->toBe('<bg=default;options=bold>text</>');
+    expect($html)->toBe("<bg=default;options=>\e[1mtext\e[0m</>");
 });
 
 test('italic', function () {
@@ -17,7 +17,7 @@ test('italic', function () {
 test('underline', function () {
     $html = parse('<div class="underline">text</div>');
 
-    expect($html)->toBe('<bg=default;options=underscore>text</>');
+    expect($html)->toBe("<bg=default;options=>\e[4mtext\e[0m</>");
 });
 
 test('pl', function () {
