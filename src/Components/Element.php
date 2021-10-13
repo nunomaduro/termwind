@@ -59,7 +59,9 @@ abstract class Element
      */
     final public function fontBold(): static
     {
-        return $this->with(['options' => ['bold']]);
+        $content = sprintf("\e[1m%s\e[0m", $this->content);
+
+        return new static($this->output, $content, $this->properties);
     }
 
     /**
@@ -77,7 +79,9 @@ abstract class Element
      */
     final public function underline(): static
     {
-        return $this->with(['options' => ['underscore']]);
+        $content = sprintf("\e[4m%s\e[0m", $this->content);
+
+        return new static($this->output, $content, $this->properties);
     }
 
     /**
