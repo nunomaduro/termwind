@@ -5,4 +5,3 @@ it('renders the element', function () {
 
     expect($html)->toBe("<bg=default;options=>\e[3mtext\e[0m</>");
 });
-

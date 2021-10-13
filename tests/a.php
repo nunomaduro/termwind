@@ -1,6 +1,5 @@
 <?php
 
-use Termwind\Enums\Color;
 use function Termwind\{a};
 
 it('renders the element', function () {

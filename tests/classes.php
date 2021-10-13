@@ -1,11 +1,5 @@
 <?php
 
-use Symfony\Component\Console\Output\BufferedOutput;
-use function Termwind\a;
-use function Termwind\div;
-use Termwind\HtmlRenderer;
-use function Termwind\renderUsing;
-
 it('adds font bold', function () {
     $html = parse('<div class="font-bold">text</div>');
 
@@ -62,7 +56,6 @@ it('adds text color', function () {
 
 it('adds text color using color enum', function () {
     $html = parse('<div class="text-color-red-400">text</div>');
-
 
     expect($html)->toBe('<bg=default;fg=#f87171;options=>text</>');
 });

@@ -1,6 +1,5 @@
 <?php
 
-use function Termwind\span;
 use function Termwind\style;
 
 it('allows the creation of styles', function () {
