@@ -9,7 +9,7 @@
 </h1>
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/nunomaduro/tailcli/master/art/example.png" alt="TailCli example" height="300">
+    <img src="/art/example.png" alt="TailCli example" height="300">
     <p align="center">
         <a href="https://github.com/nunomaduro/termwind/actions"><img alt="GitHub Workflow Status (master)" src="https://img.shields.io/github/workflow/status/nunomaduro/termwind/Tests/master"></a>
         <a href="https://packagist.org/packages/nunomaduro/termwind"><img alt="Total Downloads" src="https://img.shields.io/packagist/dt/nunomaduro/termwind"></a>
@@ -75,15 +75,75 @@ class UsersAllCommand extends Command
 }
 ```
 
-#### `style()`
+#### Render table
 
-The `style()` function may be used to add own custom syles.
+```php
+render(<<<'HTML'
+    <table style="box">
+        <thead>
+            <tr>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>4</td>
+                <td>9</td>
+                <td class="ml-5">6</td>
+            </tr>
+            <tr>
+                <td class="bg-blue text-color-red" align="center">7</td>
+                <td colspan="2" align="center">4</td>
+            </tr>
+            <tr>
+                <td class="mx-10">12</td>
+                <td>12</td>
+                <td align="center">13</td>
+            </tr>
+        </tbody>
+    </table>
+HTML);
+```
+
+**Will render**
+
+<p align="center">
+    <img width="407" height="205" alt="Table" src="/art/table.png"/>
+</p>
+
+#### !!! Make sure that you have only one root element. !!!
+
+**Wrong**
+```html
+<div>...</div>
+<table>
+       ...
+</table>
+```
+
+**Correct**
+```html
+<div>
+    <div>...</div>
+    <table>
+           ...
+    </table>
+</div>
+```
+
+#### Creating custom css classes
+
+The `style()` function may be used to add own custom styles.
 
 ```php
 use function Termwind\{style, span};
 
+// Creates a new css class .btn with given classes
 style('btn')->apply('p-4 bg-blue text-color-white');
 
+// Applies .btn class to your tag
 render('<div class="btn">Click me </div>');
 ```
 

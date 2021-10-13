@@ -306,6 +306,14 @@ abstract class Element
     }
 
     /**
+     * Gets the element's style properties
+     */
+    final public function getProperties(): array
+    {
+        return $this->properties;
+    }
+
+    /**
      * Get the string representation of the element.
      */
     public function toString(): string
