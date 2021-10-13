@@ -21,7 +21,7 @@
 ------
 **Termwind** allows you to build unique and beautiful PHP command-line applications, using the **[Tailwind CSS](https://tailwindcss.com/)** API. In short, it's like Tailwind CSS, but for the PHP command-line applications.
 
-## ⚗️ Installation
+## Installation
 
 > **Requires [PHP 8.0+](https://php.net/releases/)**
 
@@ -31,7 +31,7 @@ Require Termwind using [Composer](https://getcomposer.org):
 composer require nunomaduro/termwind
 ```
 
-## 🎨 Usage
+## Usage
 
 ```php
 use function Termwind\{render};
@@ -75,7 +75,7 @@ style('btn')->apply('p-4 bg-blue text-color-white');
 render('<div class="btn">Click me</div>');
 ```
 
-## ⚡️ How To Contribute
+## How To Contribute
 
 Head over to [tailwindcss.com/docs](https://tailwindcss.com/docs), and choose a class that is not implemented in Termwind. As an example, let's assume you would like to add the `lowercase` Tailwind CSS class to Termwind:
 
