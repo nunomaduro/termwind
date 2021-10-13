@@ -21,7 +21,7 @@
 ------
 **Termwind** allows you to build unique and beautiful PHP command-line applications, using the **[Tailwind CSS](https://tailwindcss.com/)** API. In short, it's like Tailwind CSS, but for the PHP command-line applications.
 
-## Installation & Usage
+## ⚗️ Installation
 
 > **Requires [PHP 8.0+](https://php.net/releases/)**
 
@@ -31,7 +31,7 @@ Require Termwind using [Composer](https://getcomposer.org):
 composer require nunomaduro/termwind
 ```
 
-### Get Started
+## 🎨 Usage
 
 ```php
 use function Termwind\{render};
@@ -63,7 +63,7 @@ class UsersCommand extends Command
 }
 ```
 
-#### `style()`
+### `style()`
 
 The `style()` function may be used to add own custom syles.
 
@@ -74,5 +74,34 @@ style('btn')->apply('p-4 bg-blue text-color-white');
 
 render('<div class="btn">Click me</div>');
 ```
+
+## ⚡️ How To Contribute
+
+Head over to [tailwindcss.com/docs](https://tailwindcss.com/docs), and choose a class that is not implemented in Termwind. As an example, let's assume you would like to add the `lowercase` Tailwind CSS class to Termwind:
+
+1. Head over to [`src/Components/Element`](https://github.com/nunomaduro/termwind/blob/master/src/Components/Element.php#L250) and add a new method with the name `lowercase`:
+```php
+    /**
+     * Makes the element's content lowercase.
+     */
+    final public function lowercase(): static
+    {
+        $content = mb_strtolower($this->content, 'UTF-8');
+
+        return new static($this->output, $content, $this->properties);
+    }
+```
+
+2. Next, add a new test in [`tests/classes.php`](https://github.com/nunomaduro/termwind/blob/master/tests/classes.php#L135) to see if the `lowercase` class works as expected:
+
+````php
+test('lowercase', function () {
+    $html = parse('<div class="lowercase">tEXT</div>');
+
+    expect($html)->toBe('<bg=default;options=>text</>');
+});
+```
+
+3. Pull request the code, and that's it.
 
 Termwind is an open-sourced software licensed under the **[MIT license](https://opensource.org/licenses/MIT)**.
