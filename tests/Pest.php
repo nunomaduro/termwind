@@ -10,7 +10,7 @@ uses()->beforeEach(fn () => renderUsing($this->output = new BufferedOutput()))
         renderUsing(null);
 
         Styles::flush();
-      })->in(__DIR__);
+    })->in(__DIR__);
 
 /**
  * Parses the given html to string.
