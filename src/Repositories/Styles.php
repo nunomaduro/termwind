@@ -6,7 +6,6 @@ namespace Termwind\Repositories;
 
 use Closure;
 use Termwind\Components\Element;
-use Termwind\Exceptions\StyleNotFound;
 use Termwind\ValueObjects\Style;
 
 /**
