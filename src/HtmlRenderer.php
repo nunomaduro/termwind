@@ -71,47 +71,18 @@ final class HtmlRenderer
         /** @var \DOMElement $node */
         $styles = $node->getAttribute('class');
 
-        if ($node->nodeName === 'body') {
-            // Pick only the first element from the body node
-            return $children[0];
-        }
-
-        if ($node->nodeName === 'div') {
-            return Termwind::div($children, $styles);
-        }
-
-        if ($node->nodeName === 'ul') {
-            return Termwind::ul($children, $styles);
-        }
-
-        if ($node->nodeName === 'ol') {
-            return Termwind::ol($children, $styles);
-        }
-
-        if ($node->nodeName === 'li') {
-            return Termwind::li($children, $styles);
-        }
-
-        if ($node->nodeName === 'span') {
-            return Termwind::span($children, $styles);
-        }
-
-        if ($node->nodeName === 'br') {
-            return Termwind::breakLine();
-        }
-
-        if ($node->nodeName === 'strong') {
-            return Termwind::div($children, $styles)->fontBold();
-        }
-
-        if ($node->nodeName === 'em') {
-            return Termwind::div($children, $styles)->italic();
-        }
-
-        if ($node->nodeName === 'a') {
-            return Termwind::anchor($children, $styles)->href($node->getAttribute('href'));
-        }
-
-        return Termwind::div($children);
+        return match ($node->nodeName) {
+            'body' => $children[0], // Pick only the first element from the body node
+            'div' => Termwind::div($children, $styles),
+            'ul' => Termwind::ul($children, $styles),
+            'ol' => Termwind::ol($children, $styles),
+            'li' => Termwind::li($children, $styles),
+            'span' => Termwind::span($children, $styles),
+            'br' => Termwind::breakLine(),
+            'strong' => Termwind::div($children, $styles)->fontBold(),
+            'em' => Termwind::div($children, $styles)->italic(),
+            'a' => Termwind::anchor($children, $styles)->href($node->getAttribute('href')),
+            default => Termwind::div($children),
+        };
     }
 }
