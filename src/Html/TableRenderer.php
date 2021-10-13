@@ -86,7 +86,6 @@ final class TableRenderer
 
         foreach ($node->childNodes as $child) {
             if ($child->nodeName === 'th' || $child->nodeName === 'td') {
-
                 $align = $child->getAttribute('align');
 
                 $row[] = new TableCell(

@@ -30,7 +30,6 @@ HTML);
     expect($this->output->fetch())->toBe("  link text  link text\n");
 });
 
-
 it('can render table to a string', function () {
     $html = (new HtmlRenderer)->parse(<<<'HTML'
 <table style="box">
