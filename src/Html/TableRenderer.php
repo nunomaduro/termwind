@@ -32,7 +32,7 @@ final class TableRenderer
         $style = $node->getAttribute('style');
         $this->styles = $node->getAttribute('class');
 
-        if (!empty($style)) {
+        if (! empty($style)) {
             $this->table->setStyle($style);
         }
 
@@ -91,17 +91,17 @@ final class TableRenderer
 
                 $row[] = new TableCell(
                     // I need only spaces after margin, padding and width except.
-                    strip_tags((string)Termwind::span($child->nodeValue, $child->getAttribute('class'))),
+                    strip_tags((string) Termwind::span($child->nodeValue, $child->getAttribute('class'))),
                     [
                         // Gets rowspan and colspan from tr and td tag attributes
-                        'colspan' => max((int)$child->getAttribute('colspan'), 1),
-                        'rowspan' => max((int)$child->getAttribute('rowspan'), 1),
+                        'colspan' => max((int) $child->getAttribute('colspan'), 1),
+                        'rowspan' => max((int) $child->getAttribute('rowspan'), 1),
 
                         // There are background and foreground and options
                         'style' => $this->parseCellStyle(
                             $child->getAttribute('class'),
                             $align === '' ? TableCellStyle::DEFAULT_ALIGN : $align
-                        )
+                        ),
                     ]
                 );
             }
@@ -113,7 +113,7 @@ final class TableRenderer
     }
 
     /**
-     * Converts table output to the content element
+     * Converts table output to the content element.
      */
     public function toElement(): Element
     {
@@ -123,7 +123,7 @@ final class TableRenderer
     }
 
     /**
-     * Parses tr, td tag class attibute and passes bg, fg and options to a table cell style
+     * Parses tr, td tag class attribute and passes bg, fg and options to a table cell style.
      */
     private function parseCellStyle(string $styles, string $align = TableCellStyle::DEFAULT_ALIGN): TableCellStyle
     {

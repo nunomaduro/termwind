@@ -306,7 +306,7 @@ abstract class Element
     }
 
     /**
-     * Gets the element's style properties
+     * Gets the element's style properties.
      */
     final public function getProperties(): array
     {
