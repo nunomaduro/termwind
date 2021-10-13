@@ -36,34 +36,22 @@ composer require nunomaduro/termwind
 ```php
 use function Termwind\{render};
 
-// single line html
-render('<div class="p-2 text-color-white bg-blue">Hello World</div>');
+// single line html...
+render('<div class="p-1 bg-green-300">Termwind</div>');
 
-// multi-line html
+// multi-line html...
 render(<<<'HTML'
-    <div class="p-2 text-color-white bg-blue">
-        <a class="ml-2">foo</a>
-        <a class="ml-2" href="https://nunomaduro.com">nunomaduro.com</a>
+    <div>
+        <div class="p-1 bg-green-300">Termwind</div>
+        <em class="ml-1">
+          Give your CLI apps a unique look
+        </em>
     </div>
 HTML);
 
-// Symfony / Laravel console commands
-use function Termwind\{render};
-
-class UsersAllCommand extends Command
+// Laravel or Symfony console commands...
+class UsersCommand extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'users:all';
-
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
     public function handle()
     {
         render(
@@ -80,11 +68,11 @@ class UsersAllCommand extends Command
 The `style()` function may be used to add own custom syles.
 
 ```php
-use function Termwind\{style, span};
+use function Termwind\{style};
 
 style('btn')->apply('p-4 bg-blue text-color-white');
 
-render('<div class="btn">Click me </div>');
+render('<div class="btn">Click me</div>');
 ```
 
 Termwind is an open-sourced software licensed under the **[MIT license](https://opensource.org/licenses/MIT)**.
