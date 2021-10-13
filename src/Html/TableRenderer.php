@@ -8,6 +8,7 @@ use DOMNode;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Helper\TableCell;
 use Symfony\Component\Console\Helper\TableCellStyle;
+use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Termwind\Components\Element;
@@ -46,6 +47,10 @@ final class TableRenderer
                 $this->parseHeader($child);
             }
 
+            if ($child->nodeName === 'tfoot') {
+                $this->parseFoot($child);
+            }
+
             if ($child->nodeName === 'tbody') {
                 $this->parseBody($child);
             }
@@ -55,15 +60,44 @@ final class TableRenderer
                     $this->table->addRow($row);
                 }
             }
+
+            if ($child->nodeName === 'hr') {
+                $this->table->addRow(new TableSeparator());
+            }
         }
     }
 
     private function parseHeader(DOMNode $node)
     {
+        $title = $node->getAttribute('title');
+
+        if ($title !== '') {
+            $this->table->setHeaderTitle($title);
+        }
+
         foreach ($node->childNodes as $child) {
             if ($child->nodeName === 'tr') {
                 foreach ($this->parseRow($child) as $row) {
                     $this->table->setHeaders($row);
+                }
+            }
+        }
+    }
+
+    private function parseFoot(DOMNode $node)
+    {
+        $title = $node->getAttribute('title');
+
+        if ($title !== '') {
+            $this->table->setFooterTitle($title);
+        }
+
+        foreach ($node->childNodes as $child) {
+            if ($child->nodeName === 'tr') {
+                $rows = iterator_to_array($this->parseRow($child));
+                if (count($rows) > 0) {
+                    $this->table->addRow(new TableSeparator());
+                    $this->table->addRows($rows);
                 }
             }
         }
@@ -76,6 +110,8 @@ final class TableRenderer
                 foreach ($this->parseRow($child) as $row) {
                     $this->table->addRow($row);
                 }
+            } else if ($child->nodeName === 'hr') {
+                $this->table->addRow(new TableSeparator());
             }
         }
     }
@@ -88,9 +124,14 @@ final class TableRenderer
             if ($child->nodeName === 'th' || $child->nodeName === 'td') {
                 $align = $child->getAttribute('align');
 
+                $class = $child->getAttribute('class');
+                if ($child->nodeName === 'th') {
+                    $class .= ' font-bold';
+                }
+
                 $row[] = new TableCell(
                     // I need only spaces after margin, padding and width except.
-                    strip_tags((string) Termwind::span($child->nodeValue, $child->getAttribute('class'))),
+                    strip_tags((string) Termwind::span($child->nodeValue, $class)),
                     [
                         // Gets rowspan and colspan from tr and td tag attributes
                         'colspan' => max((int) $child->getAttribute('colspan'), 1),
@@ -98,7 +139,7 @@ final class TableRenderer
 
                         // There are background and foreground and options
                         'style' => $this->parseCellStyle(
-                            $child->getAttribute('class'),
+                            $class,
                             $align === '' ? TableCellStyle::DEFAULT_ALIGN : $align
                         ),
                     ]

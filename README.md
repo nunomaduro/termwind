@@ -66,40 +66,73 @@ class UsersCommand extends Command
 ### Render table
 
 ```php
+use function Termwind\{render};
+
 render(<<<'HTML'
-    <table style="box">
-        <thead>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>4</td>
-                <td>9</td>
-                <td class="ml-5">6</td>
-            </tr>
-            <tr>
-                <td class="bg-blue text-color-red" align="center">7</td>
-                <td colspan="2" align="center">4</td>
-            </tr>
-            <tr>
-                <td class="mx-10">12</td>
-                <td>12</td>
-                <td align="center">13</td>
-            </tr>
-        </tbody>
-    </table>
+<table style="box-double">
+    <thead title="Books">
+        <tr>
+            <th align="right">ISBN</th>
+            <th>Title</th>
+            <th>Author</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th align="right">99921-58-10-7</th>
+            <td>Divine Comedy</td>
+            <td align="center">Dante Alighieri</td>
+        </tr>
+        <tr>
+            <th class="bg-blue text-color-red" align="right">9971-5-0210-0</th>
+            <td>A Tale of Two Cities</td>
+            <td align="center">Charles Dickens</td>
+        </tr>
+        <hr>
+        <tr>
+            <th align="right">960-425-059-0</th>
+            <td>The Lord of the Rings</td>
+            <td align="right">J. R. R. Tolkien</td>
+        </tr>
+        <tr>
+            <th align="right">80-902734-1-6</th>
+            <td>And Then There Were None</td>
+            <td rowspan="2" align="right">Dante Alighieri\nspans multiple rows</td>
+        </tr>
+        <tr>
+            <th align="right">978-052156781</th>
+            <td>De Monarchia</td>
+        </tr>
+    </tbody>
+    <tfoot title="Page 1/2">
+        <tr>
+            <th colspan="3">This value spans 3 columns.</th>
+        </tr>
+    </tfoot>
+</table>
 HTML);
 ```
 
 **Will render**
 
 <p align="center">
-    <img width="407" height="205" alt="Table" src="/art/table.png"/>
+    <img width="671" height="359" alt="Table" src="/art/table.png"/>
 </p>
+
+#### Table style
+Table can have the `style` attribute to set specific table style. 
+
+Available styles
+
+```
+- default
+- borderless
+- box
+- box-double
+```
+
+See https://symfony.com/doc/current/components/console/helpers/table.html 
+
 
 #### !!! Make sure that you have only one root element. !!!
 
