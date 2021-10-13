@@ -41,3 +41,13 @@ if (! function_exists('render')) {
         (new HtmlRenderer)->render($html);
     }
 }
+
+if (! function_exists('terminal')) {
+    /**
+     * Returns a Terminal instance
+     */
+    function terminal(): Terminal
+    {
+        return new Terminal;
+    }
+}
