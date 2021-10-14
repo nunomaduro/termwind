@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Termwind\Html;
 
 use DOMNode;
+use Iterator;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Helper\TableCell;
 use Symfony\Component\Console\Helper\TableCellStyle;
@@ -14,11 +15,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Termwind\Components\Element;
 use Termwind\Termwind;
 
+/**
+ * @internal
+ */
 final class TableRenderer
 {
     private Table $table;
     private BufferedOutput $output;
-    private string $styles;
 
     public function __construct(DOMNode $node)
     {
@@ -29,37 +32,33 @@ final class TableRenderer
         );
 
         $this->table = new Table($this->output);
+        $this->parseTable($node);
+    }
 
+    /**
+     * Converts table output to the content element.
+     */
+    public function toElement(): Element
+    {
+        $this->table->render();
+
+        return Termwind::raw($this->output->fetch());
+    }
+
+    private function parseTable(DOMNode $node): void
+    {
         $style = $node->getAttribute('style');
-        $this->styles = $node->getAttribute('class');
-
         if (! empty($style)) {
             $this->table->setStyle($style);
         }
 
-        $this->convert($node);
-    }
-
-    private function convert(DOMNode $node)
-    {
         foreach ($node->childNodes as $child) {
-            if ($child->nodeName === 'thead') {
-                $this->parseHeader($child);
-            }
-
-            if ($child->nodeName === 'tfoot') {
-                $this->parseFoot($child);
-            }
-
-            if ($child->nodeName === 'tbody') {
-                $this->parseBody($child);
-            }
-
-            if ($child->nodeName === 'tr') {
-                foreach ($this->parseRow($child) as $row) {
-                    $this->table->addRow($row);
-                }
-            }
+            match ($child->nodeName) {
+                'thead' => $this->parseHeader($child),
+                'tfoot' =>  $this->parseFoot($child),
+                'tbody' => $this->parseBody($child),
+                'tr' => $this->parseRows($child),
+            };
         }
     }
 
@@ -69,7 +68,7 @@ final class TableRenderer
 
         if ($title !== '') {
             $this->table->getStyle()->setHeaderTitleFormat(
-                $this->buildTitleStyle($node)
+                $this->parseTitleStyle($node)
             );
             $this->table->setHeaderTitle($title);
         }
@@ -83,13 +82,13 @@ final class TableRenderer
         }
     }
 
-    private function parseFoot(DOMNode $node)
+    private function parseFoot(DOMNode $node): void
     {
         $title = $node->getAttribute('title');
 
         if ($title !== '') {
             $this->table->getStyle()->setFooterTitleFormat(
-                $this->buildTitleStyle($node)
+                $this->parseTitleStyle($node)
             );
             $this->table->setFooterTitle($title);
         }
@@ -105,18 +104,23 @@ final class TableRenderer
         }
     }
 
-    private function parseBody(DOMNode $node)
+    private function parseBody(DOMNode $node): void
     {
         foreach ($node->childNodes as $child) {
             if ($child->nodeName === 'tr') {
-                foreach ($this->parseRow($child) as $row) {
-                    $this->table->addRow($row);
-                }
+                $this->parseRows($child);
             }
         }
     }
 
-    private function parseRow(DOMNode $node): \Iterator
+    private function parseRows(DOMNode $node): void
+    {
+        foreach ($this->parseRow($node) as $row) {
+            $this->table->addRow($row);
+        }
+    }
+
+    private function parseRow(DOMNode $node): Iterator
     {
         $row = [];
 
@@ -159,16 +163,6 @@ final class TableRenderer
     }
 
     /**
-     * Converts table output to the content element.
-     */
-    public function toElement(): Element
-    {
-        $this->table->render();
-
-        return Termwind::raw($this->output->fetch());
-    }
-
-    /**
      * Parses tr, td tag class attribute and passes bg, fg and options to a table cell style.
      */
     private function parseCellStyle(string $styles, string $align = TableCellStyle::DEFAULT_ALIGN): TableCellStyle
@@ -190,7 +184,7 @@ final class TableRenderer
         ]);
     }
 
-    private function buildTitleStyle(DOMNode $node): string
+    private function parseTitleStyle(DOMNode $node): string
     {
         return (string) Termwind::span(' %s ', $node->getAttribute('class'));
     }
