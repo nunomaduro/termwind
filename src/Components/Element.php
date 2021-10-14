@@ -391,7 +391,7 @@ abstract class Element
         }
 
         if (count($formatters) > 0) {
-            return '%s%s<' . implode(';', $formatters) . '>%s</>%s%s';
+            return '%s%s<'.implode(';', $formatters).'>%s</>%s%s';
         }
 
         return '%s%s%s%s%s';

@@ -11,6 +11,6 @@ final class Div extends Element
      */
     public function toString(): string
     {
-        return parent::toString() . \PHP_EOL;
+        return parent::toString().\PHP_EOL;
     }
 }
