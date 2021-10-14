@@ -8,6 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Termwind\Actions\StyleToMethod;
 use Termwind\Enums\Color;
 use Termwind\Exceptions\ColorNotFound;
+use function Termwind\terminal;
 
 /**
  * @internal
@@ -236,6 +237,14 @@ abstract class Element
         $content = rtrim(mb_strimwidth($this->content, 0, $content, '', 'UTF-8'));
 
         return new static($this->output, $content, $this->properties);
+    }
+
+    /**
+     * Forces the element width to the full width of the terminal.
+     */
+    final public function wFull(): static
+    {
+        return $this->width(terminal()->width());
     }
 
     /**
