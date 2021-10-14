@@ -12,13 +12,16 @@ use Symfony\Component\Console\Terminal as ConsoleTerminal;
 final class Terminal
 {
     /**
-     * The terminal implementation from symfony/console.
+     * An instance of Symfony's console terminal.
      */
     private ConsoleTerminal $terminal;
 
-    public function __construct()
+    /**
+     * Creates a new terminal instance.
+     */
+    public function __construct(ConsoleTerminal $terminal = null)
     {
-        $this->terminal = new ConsoleTerminal();
+        $this->terminal = $terminal ?? new ConsoleTerminal();
     }
 
     /**
