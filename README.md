@@ -70,7 +70,7 @@ use function Termwind\{render};
 
 render(<<<'HTML'
 <table style="box-double">
-    <thead title="Books">
+    <thead title="Books" class="bg-red text-color-white px-10">
         <tr>
             <th align="right">ISBN</th>
             <th>Title</th>
@@ -81,14 +81,13 @@ render(<<<'HTML'
         <tr>
             <th align="right">99921-58-10-7</th>
             <td>Divine Comedy</td>
-            <td align="center">Dante Alighieri</td>
+            <td align="right">Dante Alighieri</td>
         </tr>
-        <tr>
+        <tr border="1">
             <th class="bg-blue text-color-red" align="right">9971-5-0210-0</th>
             <td>A Tale of Two Cities</td>
-            <td align="center">Charles Dickens</td>
+            <td align="right">Charles Dickens</td>
         </tr>
-        <hr>
         <tr>
             <th align="right">960-425-059-0</th>
             <td>The Lord of the Rings</td>
@@ -104,7 +103,7 @@ render(<<<'HTML'
             <td>De Monarchia</td>
         </tr>
     </tbody>
-    <tfoot title="Page 1/2">
+    <tfoot title="Page 1/2" class="mx-5 bg-blue">
         <tr>
             <th colspan="3">This value spans 3 columns.</th>
         </tr>

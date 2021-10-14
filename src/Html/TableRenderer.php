@@ -60,10 +60,6 @@ final class TableRenderer
                     $this->table->addRow($row);
                 }
             }
-
-            if ($child->nodeName === 'hr') {
-                $this->table->addRow(new TableSeparator());
-            }
         }
     }
 
@@ -72,6 +68,9 @@ final class TableRenderer
         $title = $node->getAttribute('title');
 
         if ($title !== '') {
+            $this->table->getStyle()->setHeaderTitleFormat(
+                $this->buildTitleStyle($node)
+            );
             $this->table->setHeaderTitle($title);
         }
 
@@ -89,6 +88,9 @@ final class TableRenderer
         $title = $node->getAttribute('title');
 
         if ($title !== '') {
+            $this->table->getStyle()->setFooterTitleFormat(
+                $this->buildTitleStyle($node)
+            );
             $this->table->setFooterTitle($title);
         }
 
@@ -110,8 +112,6 @@ final class TableRenderer
                 foreach ($this->parseRow($child) as $row) {
                     $this->table->addRow($row);
                 }
-            } elseif ($child->nodeName === 'hr') {
-                $this->table->addRow(new TableSeparator());
             }
         }
     }
@@ -130,7 +130,8 @@ final class TableRenderer
                 }
 
                 $row[] = new TableCell(
-                    // I need only spaces after margin, padding and width except.
+                    // I need only spaces after applying margin, padding and width except tags.
+                    // There is no place for tags, they broke cell formatting.
                     strip_tags((string) Termwind::span($child->nodeValue, $class)),
                     [
                         // Gets rowspan and colspan from tr and td tag attributes
@@ -149,6 +150,11 @@ final class TableRenderer
 
         if ($row !== []) {
             yield $row;
+        }
+
+        $border = (int) $node->getAttribute('border');
+        for ($i = $border; $i--; $i > 0) {
+            yield new TableSeparator();
         }
     }
 
@@ -182,5 +188,10 @@ final class TableRenderer
             'options' => $options === [] ? null : $options,
             'align' => $align,
         ]);
+    }
+
+    private function buildTitleStyle(DOMNode $node): string
+    {
+        return (string) Termwind::span(' %s ', $node->getAttribute('class'));
     }
 }
