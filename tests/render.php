@@ -75,7 +75,6 @@ it('can render table to a string', function () {
 </table>
 HTML);
 
-    echo $html->toString();
     expect($html->toString())->toBe(<<<'OUT'
 ╔═══════════════╤══[37;41m           Books           [39;49m═══════════════════╗
 ║[39;49m          [1mISBN[0m [39;49m│[39;49m [1mTitle[0m                    [39;49m│[39;49m [1mAuthor[0m              [39;49m║
