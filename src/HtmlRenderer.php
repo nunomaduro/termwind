@@ -66,24 +66,23 @@ final class HtmlRenderer
     private function toElement(DOMNode $node, array $children): Components\Element|string
     {
         if ($node instanceof DOMText) {
-            return trim($node->textContent);
+            return ltrim($node->textContent);
         }
 
         /** @var \DOMElement $node */
         $styles = $node->getAttribute('class');
 
         return match ($node->nodeName) {
-            'body' => $children[0], // Pick only the first element from the body node
-            'div' => Termwind::div($children, $styles),
+            'body' => Termwind::span($children, $styles), // Pick only the first element from the body node
             'ul' => Termwind::ul($children, $styles),
             'ol' => Termwind::ol($children, $styles),
             'li' => Termwind::li($children, $styles),
             'span' => Termwind::span($children, $styles),
             'br' => Termwind::breakLine(),
-            'strong' => Termwind::div($children, $styles)->fontBold(),
-            'em' => Termwind::div($children, $styles)->italic(),
+            'strong' => Termwind::span($children, $styles)->fontBold(),
+            'em' => Termwind::span($children, $styles)->italic(),
             'a' => Termwind::anchor($children, $styles)->href($node->getAttribute('href')),
-            default => Termwind::div($children),
+            default => Termwind::div($children, $styles),
         };
     }
 }

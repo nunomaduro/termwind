@@ -333,25 +333,10 @@ abstract class Element
      */
     public function toString(): string
     {
-        $colors = [];
-
-        foreach ($this->properties['colors'] as $option => $content) {
-            if (in_array($option, ['fg', 'bg'], true)) {
-                $content = is_array($content) ? array_pop($content) : $content;
-
-                $colors[] = "$option=$content";
-            }
-        }
-
-        /** @var array<int, string> $href */
-        $href = $this->properties['href'] ?? [];
-
         return sprintf(
-            '%s%s<%s%s;options=>%s</>%s%s',
+            $this->getContentStyle(),
             str_repeat("\n", (int) ($this->properties['styles']['mt'] ?? 0)),
             str_repeat(' ', (int) ($this->properties['styles']['ml'] ?? 0)),
-            count($href) > 0 ? sprintf('href=%s;', array_pop($href)) : '',
-            implode(';', $colors),
             $this->content,
             str_repeat(' ', (int) ($this->properties['styles']['mr'] ?? 0)),
             str_repeat("\n", (int) ($this->properties['styles']['mb'] ?? 0)),
@@ -380,6 +365,36 @@ abstract class Element
             $this->content,
             $properties,
         );
+    }
+
+    private function getContentStyle(): string
+    {
+        /** @var array<int, string> $href */
+        $href = $this->properties['href'] ?? [];
+
+        $formatters = [];
+
+        if (count($href) > 0) {
+            $formatters[] = sprintf('href=%s', array_pop($href));
+        }
+
+        foreach ($this->properties['colors'] as $option => $content) {
+            if (in_array($option, ['fg', 'bg'], true)) {
+                $content = is_array($content) ? array_pop($content) : $content;
+
+                if ($content === 'default') {
+                    continue;
+                }
+
+                $formatters[] = "$option=$content";
+            }
+        }
+
+        if (count($formatters) > 0) {
+            return '%s%s<' . implode(';', $formatters) . '>%s</>%s%s';
+        }
+
+        return '%s%s%s%s%s';
     }
 
     /**
