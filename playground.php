@@ -2,4 +2,6 @@
 
 require_once __DIR__.'/vendor/autoload.php';
 
-dd(PHP_VERSION_ID);
+use function Termwind\{render};
+
+render('<div class="bg-blue text-color-white p-1 m-1">Hello<div/>');
