@@ -12,7 +12,7 @@ use Symfony\Component\Console\Terminal as ConsoleTerminal;
 final class Terminal
 {
     /**
-     * The terminal implementation from symfony/console
+     * The terminal implementation from symfony/console.
      */
     private ConsoleTerminal $terminal;
 

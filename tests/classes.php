@@ -184,5 +184,5 @@ test('w-full', function () {
 
     $html = parse('<div class="w-full">text</div>');
 
-    expect($html)->toBe("<bg=default;options=>text      </>");
+    expect($html)->toBe('<bg=default;options=>text      </>');
 });

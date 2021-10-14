@@ -44,7 +44,7 @@ if (! function_exists('render')) {
 
 if (! function_exists('terminal')) {
     /**
-     * Returns a Terminal instance
+     * Returns a Terminal instance.
      */
     function terminal(): Terminal
     {

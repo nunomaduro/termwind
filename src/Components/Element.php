@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Termwind\Components;
 
 use Symfony\Component\Console\Output\OutputInterface;
-use function Termwind\terminal;
 use Termwind\Actions\StyleToMethod;
 use Termwind\Enums\Color;
 use Termwind\Exceptions\ColorNotFound;
+use function Termwind\terminal;
 
 /**
  * @internal
