@@ -393,7 +393,6 @@ abstract class Element
             }
         }
 
-
         // If there are no styles we don't need extra tags
         if ($styles === []) {
             return '%s%s%s%s%s';
