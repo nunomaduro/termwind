@@ -35,7 +35,8 @@ final class Termwind
     public static function div(array|string $content = '', string $styles = ''): Components\Div
     {
         $content = implode('', array_map(
-            fn ($element) => (string) $element, is_array($content) ? $content : [$content]
+            static fn ($element) => is_string($element) ? $element : (string) $element->inheritFromStyles($styles),
+            is_array($content) ? $content : [$content]
         ));
 
         return Components\Div::fromStyles(
@@ -51,7 +52,8 @@ final class Termwind
     public static function span(array|string $content = '', string $styles = ''): Components\Span
     {
         $content = implode('', array_map(
-            fn ($element) => (string) $element, is_array($content) ? $content : [$content]
+            static fn ($element) => is_string($element) ? $element : (string) $element->inheritFromStyles($styles),
+            is_array($content) ? $content : [$content]
         ));
 
         return Components\Span::fromStyles(
@@ -67,7 +69,8 @@ final class Termwind
     public static function anchor(array|string $content = '', string $styles = ''): Components\Anchor
     {
         $content = implode('', array_map(
-            fn ($element) => (string) $element, is_array($content) ? $content : [$content]
+            static fn ($element) => is_string($element) ? $element : (string) $element->inheritFromStyles($styles),
+            is_array($content) ? $content : [$content]
         ));
 
         return Components\Anchor::fromStyles(
@@ -83,14 +86,17 @@ final class Termwind
     public static function ul(array $content = [], string $styles = ''): Components\Ul
     {
         $index = 0;
-        $text = implode('', array_map(function ($element) use (&$index): string {
+        $text = implode('', array_map(static function ($element) use ($styles, &$index): string {
             if (! $element instanceof Components\Li) {
                 throw new InvalidChild('Unordered lists only accept `li` as child');
             }
 
             $index++;
 
-            return (string) $element->prepend('• ')->mt($index > 1 ? 1 : 0);
+            return (string) $element
+                ->prepend('• ')
+                ->mt($index > 1 ? 1 : 0)
+                ->inheritFromStyles($styles);
         }, $content));
 
         return Components\Ul::fromStyles(
@@ -106,12 +112,15 @@ final class Termwind
     public static function ol(array $content = [], string $styles = ''): Components\Ol
     {
         $index = 0;
-        $text = implode('', array_map(function ($element) use (&$index): string {
+        $text = implode('', array_map(static function ($element) use ($styles, &$index): string {
             if (! $element instanceof Components\Li) {
                 throw new InvalidChild('Ordered lists only accept `li` as child');
             }
 
-            return (string) $element->prepend(sprintf('%s. ', ++$index))->mt($index > 1 ? 1 : 0);
+            return (string) $element
+                ->prepend(sprintf('%s. ', ++$index))
+                ->mt($index > 1 ? 1 : 0)
+                ->inheritFromStyles($styles);
         }, $content));
 
         return Components\Ol::fromStyles(
@@ -127,7 +136,8 @@ final class Termwind
     public static function li(array|string $content = '', string $styles = ''): Components\Li
     {
         $content = implode('', array_map(
-            fn ($element) => (string) $element, is_array($content) ? $content : [$content]
+            fn ($element) => is_string($element) ? $element : (string) $element->inheritFromStyles($styles),
+            is_array($content) ? $content : [$content]
         ));
 
         return Components\Li::fromStyles(

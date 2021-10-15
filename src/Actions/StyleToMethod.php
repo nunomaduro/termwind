@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Termwind\Actions;
 
-use Termwind\Components\Element;
 use Termwind\Exceptions\StyleNotFound;
 use Termwind\Repositories\Styles;
+use Termwind\ValueObjects\StylesFormatter;
 
 /**
  * @internal
@@ -16,10 +16,10 @@ final class StyleToMethod
     /**
      * Creates a new action instance.
      *
-     * @param  Element  $element
+     * @param  StylesFormatter $formatter
      */
     public function __construct(
-        private Element $element,
+        private StylesFormatter $formatter,
         private string $style,
     ) {
         // ..
@@ -28,12 +28,13 @@ final class StyleToMethod
     /**
      * Applies multiple styles to the given element.
      *
-     * @template TElement of Element
+     * @template TElement of StylesFormatter
      *
-     * @param  TElement  $element
+     * @param  StylesFormatter  $formatter
+     * @param  string $styles
      * @return TElement
      */
-    public static function multiple(Element $element, string $styles): Element
+    public static function multiple(StylesFormatter $formatter, string $styles): StylesFormatter
     {
         $styles = explode(' ', $styles);
 
@@ -42,24 +43,22 @@ final class StyleToMethod
         });
 
         foreach ($styles as $style) {
-            $element = (new self($element, $style))->__invoke();
+            $formatter = (new self($formatter, $style))->__invoke();
         }
 
-        /** @var TElement $element */
-        return $element;
+        /** @var TElement $formatter */
+        return $formatter;
     }
 
     /**
      * Converts the given style to a method name.
      *
-     * @return Element
+     * @return StylesFormatter
      */
-    public function __invoke(string|int ...$arguments): Element
+    public function __invoke(string|int ...$arguments): StylesFormatter
     {
         if (Styles::has($this->style)) {
-            $element = Styles::get($this->style)($this->element, ...$arguments);
-
-            return $element;
+            return Styles::get($this->style)($this->formatter, ...$arguments);
         }
 
         $method = explode('-', $this->style);
@@ -75,7 +74,7 @@ final class StyleToMethod
             throw StyleNotFound::fromStyle($this->style);
         }
 
-        if (! method_exists($this->element, $methodName)) {
+        if (! method_exists($this->formatter, $methodName)) {
             $argument = array_pop($method);
 
             $arguments[] = is_numeric($argument) ? (int) $argument : (string) $argument;
@@ -83,6 +82,6 @@ final class StyleToMethod
             return $this->__invoke(...$arguments);
         }
 
-        return $this->element->$methodName(...array_reverse($arguments));
+        return $this->formatter->$methodName(...array_reverse($arguments));
     }
 }
