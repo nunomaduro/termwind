@@ -368,7 +368,7 @@ abstract class Element
     }
 
     /**
-     * Get the format string including required styles
+     * Get the format string including required styles.
      */
     private function getContentFormatString(): string
     {
