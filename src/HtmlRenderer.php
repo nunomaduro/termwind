@@ -67,6 +67,7 @@ final class HtmlRenderer
     {
         if ($node instanceof DOMText) {
             $text = ltrim($node->textContent);
+
             return preg_replace('!\s+!', ' ', $text);
         }
 
