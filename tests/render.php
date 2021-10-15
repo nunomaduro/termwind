@@ -30,7 +30,6 @@ HTML);
     expect($this->output->fetch())->toBe("  link text  link text\n");
 });
 
-
 it('renders element inside another one', function () {
     $html = parse('<div>Hello <strong>world</strong></div>');
 
