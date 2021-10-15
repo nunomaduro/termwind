@@ -8,7 +8,7 @@ it('allows the creation of styles', function () {
 
     $html = parse('<a class="btn">link text</a>');
 
-    expect($html)->toBe('<bg=blue;fg=white;options=>    link text    </>');
+    expect($html)->toBe('<bg=blue;fg=white>    link text    </>');
 });
 
 it('disalows the usage of non-defined styles', function () {

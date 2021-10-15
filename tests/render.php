@@ -10,13 +10,13 @@ it('can render complext html', function () {
 </div>
 HTML);
 
-    expect($html)->toBe('<bg=white;options=>  <bg=default;options=>link text</>  <href=link;bg=default;options=>link text</></>');
+    expect($html)->toBe('<bg=white>  link text  <href=link>link text</></>');
 });
 
 it('can render strings', function () {
     $html = parse('text');
 
-    expect($html)->toBe('<bg=default;options=>text</>');
+    expect($html)->toBe('text');
 });
 
 it('can render to custom output', function () {
