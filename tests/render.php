@@ -29,3 +29,10 @@ HTML);
 
     expect($this->output->fetch())->toBe("  link text  link text\n");
 });
+
+
+it('renders element inside another one', function () {
+    $html = parse('<div>Hello <strong>world</strong></div>');
+
+    expect($html)->toBe("<bg=default;options=>Hello <bg=default;options=>\e[1mworld\e[0m</></>");
+});
