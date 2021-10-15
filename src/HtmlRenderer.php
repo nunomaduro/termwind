@@ -66,7 +66,7 @@ final class HtmlRenderer
     private function toElement(DOMNode $node, array $children): Components\Element|string
     {
         if ($node instanceof DOMText) {
-            return trim($node->textContent);
+            return ltrim($node->textContent);
         }
 
         /** @var \DOMElement $node */
