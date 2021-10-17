@@ -143,10 +143,6 @@ final class Termwind
     public static function dl(array $content = [], string $styles = ''): Components\Dl
     {
         $text = implode('', array_map(function ($element): string {
-            if (! $element instanceof Components\Element) {
-                return '';
-            }
-
             if (! $element instanceof Components\Dt && ! $element instanceof Components\Dd) {
                 throw new InvalidChild('Description lists only accept `dt` and `dd` as children');
             }
