@@ -189,6 +189,18 @@ final class Termwind
     }
 
     /**
+     * Creates a horizontal rule instance.
+     */
+    public static function hr(string $styles = ''): Components\Hr
+    {
+        $width = terminal()->width();
+
+        return Components\Hr::fromStyles(
+            self::getRenderer(), str_repeat(html_entity_decode('&mdash;'), $width), $styles,
+        );
+    }
+
+    /**
      * Creates an break line element instance.
      */
     public static function breakLine(): Components\BreakLine
