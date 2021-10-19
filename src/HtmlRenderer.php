@@ -55,7 +55,18 @@ final class HtmlRenderer
 
         $children = array_filter($children, fn ($child) => $child !== '');
 
-        return $this->toElement($node, $children, is_null($node->previousSibling));
+        $isFirstChild = is_null($node->previousSibling);
+
+        $previous = $node->previousSibling;
+        while ($previous) {
+            if (preg_replace('/\s+/', '', $previous->nodeValue) !== '') {
+                break;
+            }
+
+            $previous = $previous->previousSibling;
+        }
+
+        return $this->toElement($node, $children, is_null($previous));
     }
 
     /**
