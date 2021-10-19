@@ -25,9 +25,7 @@ abstract class Element
         protected OutputInterface $output,
         protected string $content,
         protected array $properties = [
-            'colors' => [
-                'bg' => 'default',
-            ],
+            'colors' => [],
             'options' => [],
             'isFirstChild' => false,
         ])
@@ -405,11 +403,6 @@ abstract class Element
         foreach ($colors as $option => $content) {
             if (in_array($option, ['fg', 'bg'], true)) {
                 $content = is_array($content) ? array_pop($content) : $content;
-
-                // Skip default color
-                if ($content === 'default') {
-                    continue;
-                }
 
                 $styles[] = "$option=$content";
             }
