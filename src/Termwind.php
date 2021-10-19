@@ -197,7 +197,7 @@ final class Termwind
 
         return Components\Hr::fromStyles(
             self::getRenderer(), str_repeat(html_entity_decode('&mdash;'), $width), $styles,
-        );
+        )->block();
     }
 
     /**
