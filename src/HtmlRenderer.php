@@ -66,15 +66,21 @@ final class HtmlRenderer
             $previous = $previous->previousSibling;
         }
 
-        return $this->toElement($node, $children, is_null($previous));
+        /** @var array<string, mixed> $properties */
+        $properties = [
+            'isFirstChild' => is_null($previous),
+        ];
+
+        return $this->toElement($node, $children, $properties);
     }
 
     /**
      * Convert a given DOM node to it's termwind element equivalent.
      *
      * @param  array<int, Components\Element|string>  $children
+     * @param  array<string, mixed>  $properties
      */
-    private function toElement(DOMNode $node, array $children, bool $isFirstChild = false): Components\Element|string
+    private function toElement(DOMNode $node, array $children, array $properties = []): Components\Element|string
     {
         if ($node instanceof DOMText) {
             $trimedText = ltrim($node->textContent);
@@ -85,11 +91,6 @@ final class HtmlRenderer
 
         /** @var \DOMElement $node */
         $styles = $node->getAttribute('class');
-
-        /** @var array<string, mixed> $properties */
-        $properties = [
-            'isFirstChild' => $isFirstChild,
-        ];
 
         return match ($node->nodeName) {
             'body' => $children[0], // Pick only the first element from the body node
