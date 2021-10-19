@@ -5,7 +5,7 @@ use Termwind\Exceptions\InvalidChild;
 it('renders the element', function () {
     $html = parse('<ul><li>list text 1</li></ul>');
 
-    expect($html)->toBe('<bg=default;options=><bg=default;options=>• list text 1</></>');
+    expect($html)->toBe('• list text 1');
 });
 
 it('renders only "li" as children', function () {
@@ -16,5 +16,5 @@ it('renders only "li" as children', function () {
 it('renders "li" elements and ignore empty spaces', function () {
     $html = parse("<ul> <li>list text 1</li>\n\n\n</ul>");
 
-    expect($html)->toBe('<bg=default;options=><bg=default;options=>• list text 1</></>');
+    expect($html)->toBe('• list text 1');
 });

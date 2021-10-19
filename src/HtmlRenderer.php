@@ -71,7 +71,10 @@ final class HtmlRenderer
     private function toElement(DOMNode $node, array $children): Components\Element|string
     {
         if ($node instanceof DOMText) {
-            return trim($node->textContent);
+            $trimedText = ltrim($node->textContent);
+            $text = preg_replace('/\s+/', ' ', $trimedText);
+
+            return is_string($text) ? $text : $trimedText;
         }
 
         /** @var \DOMElement $node */
@@ -83,6 +86,9 @@ final class HtmlRenderer
             'ul' => Termwind::ul($children, $styles),
             'ol' => Termwind::ol($children, $styles),
             'li' => Termwind::li($children, $styles),
+            'dl' => Termwind::dl($children, $styles),
+            'dt' => Termwind::dt($children, $styles),
+            'dd' =>  Termwind::dd($children, $styles),
             'span' => Termwind::span($children, $styles),
             'br' => Termwind::breakLine(),
             'strong' => Termwind::div($children, $styles)->fontBold(),

@@ -8,6 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Termwind\Actions\StyleToMethod;
 use Termwind\Enums\Color;
 use Termwind\Exceptions\ColorNotFound;
+use function Termwind\terminal;
 
 /**
  * @internal
@@ -239,6 +240,14 @@ abstract class Element
     }
 
     /**
+     * Forces the element width to the full width of the terminal.
+     */
+    final public function wFull(): static
+    {
+        return $this->width(terminal()->width());
+    }
+
+    /**
      * Makes the element's content uppercase.
      */
     final public function uppercase(): static
@@ -332,25 +341,10 @@ abstract class Element
      */
     public function toString(): string
     {
-        $colors = [];
-
-        foreach ($this->properties['colors'] as $option => $content) {
-            if (in_array($option, ['fg', 'bg'], true)) {
-                $content = is_array($content) ? array_pop($content) : $content;
-
-                $colors[] = "$option=$content";
-            }
-        }
-
-        /** @var array<int, string> $href */
-        $href = $this->properties['href'] ?? [];
-
         return sprintf(
-            '%s%s<%s%s;options=>%s</>%s%s',
+            $this->getContentFormatString(),
             str_repeat("\n", (int) ($this->properties['styles']['mt'] ?? 0)),
             str_repeat(' ', (int) ($this->properties['styles']['ml'] ?? 0)),
-            count($href) > 0 ? sprintf('href=%s;', array_pop($href)) : '',
-            implode(';', $colors),
             $this->content,
             str_repeat(' ', (int) ($this->properties['styles']['mr'] ?? 0)),
             str_repeat("\n", (int) ($this->properties['styles']['mb'] ?? 0)),
@@ -379,6 +373,40 @@ abstract class Element
             $this->content,
             $properties,
         );
+    }
+
+    /**
+     * Get the format string including required styles.
+     */
+    private function getContentFormatString(): string
+    {
+        $styles = [];
+
+        /** @var array<int, string> $href */
+        $href = $this->properties['href'] ?? [];
+        if ($href !== []) {
+            $styles[] = sprintf('href=%s', array_pop($href));
+        }
+
+        foreach ($this->properties['colors'] as $option => $content) {
+            if (in_array($option, ['fg', 'bg'], true)) {
+                $content = is_array($content) ? array_pop($content) : $content;
+
+                // Skip default color
+                if ($content === 'default') {
+                    continue;
+                }
+
+                $styles[] = "$option=$content";
+            }
+        }
+
+        // If there are no styles we don't need extra tags
+        if ($styles === []) {
+            return '%s%s%s%s%s';
+        }
+
+        return '%s%s<'.implode(';', $styles).'>%s</>%s%s';
     }
 
     /**
