@@ -191,12 +191,12 @@ final class Termwind
     /**
      * Creates a horizontal rule instance.
      */
-    public static function hr(string $styles = ''): Components\Hr
+    public static function hr(string $styles = '', bool $isFirstChild = false): Components\Hr
     {
         $width = terminal()->width();
 
         return Components\Hr::fromStyles(
-            self::getRenderer(), str_repeat(html_entity_decode('&mdash;'), $width), $styles,
+            self::getRenderer(), str_repeat(html_entity_decode('&mdash;'), $width), $styles, $isFirstChild
         )->block();
     }
 

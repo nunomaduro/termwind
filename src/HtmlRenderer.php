@@ -100,7 +100,7 @@ final class HtmlRenderer
             'strong' => Termwind::span($children, $styles, $isFirstChild)->fontBold(),
             'em' => Termwind::span($children, $styles, $isFirstChild)->italic(),
             'a' => Termwind::anchor($children, $styles, $isFirstChild)->href($node->getAttribute('href')),
-            'hr' => Termwind::hr($styles),
+            'hr' => Termwind::hr($styles, $isFirstChild),
             default => Termwind::div($children, $styles, $isFirstChild),
         };
     }
