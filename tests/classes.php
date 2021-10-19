@@ -64,24 +64,24 @@ test('text-color-number', function () {
 
 test('truncate', function () {
     $html = parse(<<<'HTML'
-<div>
-    <div class="truncate-5">text text</div>
-    <div class="truncate-20">text text</div>
-</div>
-HTML);
+        <span>
+            <span class="truncate-5">text text</span>
+            <span class="truncate-20">text text</span>
+        </span>
+    HTML);
 
     expect($html)->toBe('te...text text');
 });
 
 test('width', function () {
     $html = parse(<<<'HTML'
-<div>
-    <div class="width-5">text text</div>
-    <div class="width-10">text text</div>
-</div>
-HTML);
+        <span>
+            <span class="width-5">text-ignored</span>
+            <span class="width-10">text text</span>
+        </span>
+    HTML);
 
-    expect($html)->toBe('texttext text ');
+    expect($html)->toBe('text-text text ');
 });
 
 test('ml', function () {
@@ -188,7 +188,11 @@ test('w-full', function () {
 });
 
 test('block', function () {
-    $html = parse('<div><span class="block">Hello</span><span class="block">World</span></div>');
+    $html = parse('<span class="block">Hello <span>World</span></span>');
 
-    expect($html)->toBe("Hello\nWorld\n");
+    expect($html)->toBe('Hello World');
+
+    $html = parse('<span>Hello <span class="block">World</span></span>');
+
+    expect($html)->toBe("Hello \nWorld");
 });

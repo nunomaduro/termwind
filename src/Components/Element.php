@@ -23,6 +23,7 @@ abstract class Element
     final public function __construct(
         protected OutputInterface $output,
         protected string $content,
+        protected bool $isFirstChild = false,
         protected array $properties = [
             'colors' => [
                 'bg' => 'default',
@@ -36,9 +37,9 @@ abstract class Element
     /**
      * Creates an element instance with the given styles.
      */
-    final public static function fromStyles(OutputInterface $output, string $content, string $styles): static
+    final public static function fromStyles(OutputInterface $output, string $content, string $styles, bool $isFirstChild = false): static
     {
-        $element = new static($output, $content);
+        $element = new static($output, $content, $isFirstChild);
 
         return StyleToMethod::multiple($element, $styles);
     }
@@ -62,7 +63,7 @@ abstract class Element
     {
         $content = sprintf("\e[1m%s\e[0m", $this->content);
 
-        return new static($this->output, $content, $this->properties);
+        return new static($this->output, $content, $this->isFirstChild, $this->properties);
     }
 
     /**
@@ -72,7 +73,7 @@ abstract class Element
     {
         $content = sprintf("\e[3m%s\e[0m", $this->content);
 
-        return new static($this->output, $content, $this->properties);
+        return new static($this->output, $content, $this->isFirstChild, $this->properties);
     }
 
     /**
@@ -82,7 +83,7 @@ abstract class Element
     {
         $content = sprintf("\e[4m%s\e[0m", $this->content);
 
-        return new static($this->output, $content, $this->properties);
+        return new static($this->output, $content, $this->isFirstChild, $this->properties);
     }
 
     /**
@@ -162,7 +163,7 @@ abstract class Element
     {
         $content = sprintf('%s%s', str_repeat(' ', $padding), $this->content);
 
-        return new static($this->output, $content, $this->properties);
+        return new static($this->output, $content, $this->isFirstChild, $this->properties);
     }
 
     /**
@@ -172,7 +173,7 @@ abstract class Element
     {
         $content = sprintf('%s%s', $this->content, str_repeat(' ', $padding));
 
-        return new static($this->output, $content, $this->properties);
+        return new static($this->output, $content, $this->isFirstChild, $this->properties);
     }
 
     /**
@@ -213,12 +214,12 @@ abstract class Element
         $limit -= mb_strwidth($end, 'UTF-8');
 
         if (mb_strwidth($this->content, 'UTF-8') <= $limit) {
-            return new static($this->output, $this->content, $this->properties);
+            return new static($this->output, $this->content, $this->isFirstChild, $this->properties);
         }
 
         $content = rtrim(mb_strimwidth($this->content, 0, $limit, '', 'UTF-8')).$end;
 
-        return new static($this->output, $content, $this->properties);
+        return new static($this->output, $content, $this->isFirstChild, $this->properties);
     }
 
     /**
@@ -231,12 +232,12 @@ abstract class Element
         if ($length <= $content) {
             $content = $this->content.str_repeat(' ', $content - $length);
 
-            return new static($this->output, $content, $this->properties);
+            return new static($this->output, $content, $this->isFirstChild, $this->properties);
         }
 
         $content = rtrim(mb_strimwidth($this->content, 0, $content, '', 'UTF-8'));
 
-        return new static($this->output, $content, $this->properties);
+        return new static($this->output, $content, $this->isFirstChild, $this->properties);
     }
 
     /**
@@ -254,7 +255,7 @@ abstract class Element
     {
         $content = mb_strtoupper($this->content, 'UTF-8');
 
-        return new static($this->output, $content, $this->properties);
+        return new static($this->output, $content, $this->isFirstChild, $this->properties);
     }
 
     /**
@@ -264,7 +265,7 @@ abstract class Element
     {
         $content = mb_strtolower($this->content, 'UTF-8');
 
-        return new static($this->output, $content, $this->properties);
+        return new static($this->output, $content, $this->isFirstChild, $this->properties);
     }
 
     /**
@@ -274,7 +275,7 @@ abstract class Element
     {
         $content = mb_convert_case($this->content, MB_CASE_TITLE, 'UTF-8');
 
-        return new static($this->output, $content, $this->properties);
+        return new static($this->output, $content, $this->isFirstChild, $this->properties);
     }
 
     /**
@@ -287,7 +288,7 @@ abstract class Element
             'UTF-8'
         );
 
-        return new static($this->output, $content, $this->properties);
+        return new static($this->output, $content, $this->isFirstChild, $this->properties);
     }
 
     /**
@@ -297,7 +298,7 @@ abstract class Element
     {
         $content = sprintf("\e[9m%s\e[0m", $this->content);
 
-        return new static($this->output, $content, $this->properties);
+        return new static($this->output, $content, $this->isFirstChild, $this->properties);
     }
 
     /**
@@ -307,11 +308,11 @@ abstract class Element
     {
         $content = sprintf("\e[8m%s\e[0m", $this->content);
 
-        return new static($this->output, $content, $this->properties);
+        return new static($this->output, $content, $this->isFirstChild, $this->properties);
     }
 
     /**
-     * Makes a line break after the element's content.
+     * Makes a line break before the element's content.
      */
     final public function block(): static
     {
@@ -327,7 +328,7 @@ abstract class Element
     {
         $content = $text.$this->content;
 
-        return new static($this->output, $content, $this->properties);
+        return new static($this->output, $content, $this->isFirstChild, $this->properties);
     }
 
     /**
@@ -347,12 +348,12 @@ abstract class Element
 
         return sprintf(
             $this->getContentFormatString(),
+            $display === 'block' && ! $this->isFirstChild ? "\n" : '',
             str_repeat("\n", (int) ($this->properties['styles']['mt'] ?? 0)),
             str_repeat(' ', (int) ($this->properties['styles']['ml'] ?? 0)),
             $this->content,
             str_repeat(' ', (int) ($this->properties['styles']['mr'] ?? 0)),
             str_repeat("\n", (int) ($this->properties['styles']['mb'] ?? 0)),
-            $display === 'block' ? "\n" : '',
         );
     }
 
@@ -376,6 +377,7 @@ abstract class Element
         return new static(
             $this->output,
             $this->content,
+            $this->isFirstChild,
             $properties,
         );
     }
@@ -411,7 +413,7 @@ abstract class Element
             return '%s%s%s%s%s%s';
         }
 
-        return '%s%s<'.implode(';', $styles).'>%s</>%s%s%s';
+        return '%s%s%s<'.implode(';', $styles).'>%s</>%s%s';
     }
 
     /**

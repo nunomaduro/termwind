@@ -7,3 +7,9 @@ it('renders the element', function () {
 
     expect($html)->toBe('text');
 });
+
+it('renders the element with display block as default', function () {
+    $html = parse('<div><div>First Line</div><div>Second Line</div></div>');
+
+    expect($html)->toBe("First Line\nSecond Line");
+});

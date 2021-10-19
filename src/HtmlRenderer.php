@@ -55,7 +55,7 @@ final class HtmlRenderer
 
         $children = array_filter($children, fn ($child) => $child !== '');
 
-        return $this->toElement($node, $children);
+        return $this->toElement($node, $children, is_null($node->previousSibling));
     }
 
     /**
@@ -63,7 +63,7 @@ final class HtmlRenderer
      *
      * @param  array<int, Components\Element|string>  $children
      */
-    private function toElement(DOMNode $node, array $children): Components\Element|string
+    private function toElement(DOMNode $node, array $children, bool $isFirstChild = false): Components\Element|string
     {
         if ($node instanceof DOMText) {
             $trimedText = ltrim($node->textContent);
@@ -77,19 +77,19 @@ final class HtmlRenderer
 
         return match ($node->nodeName) {
             'body' => $children[0], // Pick only the first element from the body node
-            'div' => Termwind::div($children, $styles),
-            'ul' => Termwind::ul($children, $styles),
-            'ol' => Termwind::ol($children, $styles),
-            'li' => Termwind::li($children, $styles),
-            'dl' => Termwind::dl($children, $styles),
-            'dt' => Termwind::dt($children, $styles),
-            'dd' =>  Termwind::dd($children, $styles),
-            'span' => Termwind::span($children, $styles),
+            'div' => Termwind::div($children, $styles, $isFirstChild),
+            'ul' => Termwind::ul($children, $styles, $isFirstChild),
+            'ol' => Termwind::ol($children, $styles, $isFirstChild),
+            'li' => Termwind::li($children, $styles, $isFirstChild),
+            'dl' => Termwind::dl($children, $styles, $isFirstChild),
+            'dt' => Termwind::dt($children, $styles, $isFirstChild),
+            'dd' =>  Termwind::dd($children, $styles, $isFirstChild),
+            'span' => Termwind::span($children, $styles, $isFirstChild),
             'br' => Termwind::breakLine(),
-            'strong' => Termwind::div($children, $styles)->fontBold(),
-            'em' => Termwind::div($children, $styles)->italic(),
-            'a' => Termwind::anchor($children, $styles)->href($node->getAttribute('href')),
-            default => Termwind::div($children),
+            'strong' => Termwind::span($children, $styles, $isFirstChild)->fontBold(),
+            'em' => Termwind::span($children, $styles, $isFirstChild)->italic(),
+            'a' => Termwind::anchor($children, $styles, $isFirstChild)->href($node->getAttribute('href')),
+            default => Termwind::div($children, $styles, $isFirstChild),
         };
     }
 }
