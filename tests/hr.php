@@ -21,5 +21,5 @@ it('can be styled', function () {
 
     expect($html)
         ->toContain($mdash)
-        ->toBe('<fg=red>' . str_repeat($mdash, 10) . '</>');
+        ->toBe('<fg=red>'.str_repeat($mdash, 10).'</>');
 });
