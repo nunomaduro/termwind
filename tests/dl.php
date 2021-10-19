@@ -12,7 +12,7 @@ it('accepts multiple elements', function () {
         </dl>
     HTML);
 
-    expect($dl)->toBe("<bg=default;options=>\n<bg=default;options=>\e[1mterm\e[0m</>\n    <bg=default;options=>details</>\n<bg=default;options=>\e[1manother term\e[0m</>\n    <bg=default;options=>more details</></>");
+    expect($dl)->toBe("\n\e[1mterm\e[0m\n    details\n\e[1manother term\e[0m\n    more details");
 });
 
 it('renders only "dt" and "dd" as children', function () {
@@ -33,5 +33,5 @@ it('renders "dt" and "dd" elements and ignore empty spaces', function () {
         </dl>
     HTML);
 
-    expect($html)->toBe("<bg=default;options=>\n<bg=default;options=>\e[1mterm\e[0m</>\n    <bg=default;options=>details</>\n<bg=default;options=>\e[1manother term\e[0m</>\n    <bg=default;options=>more details</></>");
+    expect($html)->toBe("\n\e[1mterm\e[0m\n    details\n\e[1manother term\e[0m\n    more details");
 });
