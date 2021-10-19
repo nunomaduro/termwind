@@ -21,8 +21,7 @@ final class StylesFormatter
         ],
         protected array $textModifiers = [],
         protected array $styleModifiers = []
-    )
-    {
+    ) {
     }
 
     /**
@@ -36,26 +35,26 @@ final class StylesFormatter
     }
 
     /**
-     * Checks if formatter has styles
+     * Checks if formatter has styles.
      */
     final public function hasStyles(): bool
     {
-        return !empty($this->properties['colors']['bg'])
-            || !empty($this->properties['colors']['fg'])
-            || !empty($this->properties['options']);
+        return ! empty($this->properties['colors']['bg'])
+            || ! empty($this->properties['colors']['fg'])
+            || ! empty($this->properties['options']);
     }
 
     /**
-     * Inherit styles from given string
+     * Inherit styles from given string.
      */
     final public function inheritFromStyles(StylesFormatter $formatter): self
     {
         if ($this->hasStyles()) {
-            if (!isset($this->properties['colors']['bg']) && isset($formatter->properties['colors']['bg'])) {
+            if (! isset($this->properties['colors']['bg']) && isset($formatter->properties['colors']['bg'])) {
                 $this->properties['colors']['bg'] = $formatter->properties['colors']['bg'];
             }
 
-            if (!isset($this->properties['colors']['fg']) && isset($formatter->properties['colors']['fg'])) {
+            if (! isset($this->properties['colors']['fg']) && isset($formatter->properties['colors']['fg'])) {
                 $this->properties['colors']['fg'] = $formatter->properties['colors']['fg'];
             }
         }
@@ -80,7 +79,7 @@ final class StylesFormatter
      */
     final public function fontBold(): self
     {
-        $this->styleModifiers[__METHOD__] = static fn($text) => sprintf("\e[1m%s\e[0m", $text);
+        $this->styleModifiers[__METHOD__] = static fn ($text) => sprintf("\e[1m%s\e[0m", $text);
 
         return $this;
     }
@@ -90,7 +89,7 @@ final class StylesFormatter
      */
     final public function italic(): self
     {
-        $this->styleModifiers[__METHOD__] = static fn($text) => sprintf("\e[3m%s\e[0m", $text);
+        $this->styleModifiers[__METHOD__] = static fn ($text) => sprintf("\e[3m%s\e[0m", $text);
 
         return $this;
     }
@@ -100,7 +99,7 @@ final class StylesFormatter
      */
     final public function underline(): self
     {
-        $this->styleModifiers[__METHOD__] = static fn($text) => sprintf("\e[4m%s\e[0m", $text);
+        $this->styleModifiers[__METHOD__] = static fn ($text) => sprintf("\e[4m%s\e[0m", $text);
 
         return $this;
     }
@@ -180,7 +179,7 @@ final class StylesFormatter
      */
     final public function pl(int $padding): self
     {
-        $this->textModifiers[__METHOD__] = static fn($text) => sprintf('%s%s', str_repeat(' ', $padding), $text);
+        $this->textModifiers[__METHOD__] = static fn ($text) => sprintf('%s%s', str_repeat(' ', $padding), $text);
 
         return $this;
     }
@@ -190,7 +189,7 @@ final class StylesFormatter
      */
     final public function pr(int $padding): self
     {
-        $this->textModifiers[__METHOD__] = static fn($text) => sprintf('%s%s', $text, str_repeat(' ', $padding));
+        $this->textModifiers[__METHOD__] = static fn ($text) => sprintf('%s%s', $text, str_repeat(' ', $padding));
 
         return $this;
     }
@@ -237,7 +236,7 @@ final class StylesFormatter
                 return $text;
             }
 
-            return rtrim(mb_strimwidth($text, 0, $limit, '', 'UTF-8')) . $end;
+            return rtrim(mb_strimwidth($text, 0, $limit, '', 'UTF-8')).$end;
         };
 
 
@@ -253,7 +252,7 @@ final class StylesFormatter
             $length = mb_strlen($text, 'UTF-8');
 
             if ($length <= $content) {
-                return $text . str_repeat(' ', $content - $length);
+                return $text.str_repeat(' ', $content - $length);
             }
 
             return rtrim(mb_strimwidth($text, 0, $content, '', 'UTF-8'));
@@ -275,7 +274,7 @@ final class StylesFormatter
      */
     final public function uppercase(): self
     {
-        $this->textModifiers[__METHOD__] = static fn($text) => mb_strtoupper($text, 'UTF-8');
+        $this->textModifiers[__METHOD__] = static fn ($text) => mb_strtoupper($text, 'UTF-8');
 
         return $this;
     }
@@ -285,7 +284,7 @@ final class StylesFormatter
      */
     final public function lowercase(): self
     {
-        $this->textModifiers[__METHOD__] = static fn($text) => mb_strtolower($text, 'UTF-8');
+        $this->textModifiers[__METHOD__] = static fn ($text) => mb_strtolower($text, 'UTF-8');
 
         return $this;
     }
@@ -295,7 +294,7 @@ final class StylesFormatter
      */
     final public function capitalize(): self
     {
-        $this->textModifiers[__METHOD__] = static fn($text) => mb_convert_case($text, MB_CASE_TITLE, 'UTF-8');
+        $this->textModifiers[__METHOD__] = static fn ($text) => mb_convert_case($text, MB_CASE_TITLE, 'UTF-8');
 
         return $this;
     }
@@ -305,8 +304,8 @@ final class StylesFormatter
      */
     final public function snakecase(): self
     {
-        $this->textModifiers[__METHOD__] = static fn($text) => mb_strtolower(
-            (string)preg_replace(['/([a-z\d])([A-Z])/', '/([^_])([A-Z][a-z])/'], '$1_$2', $text),
+        $this->textModifiers[__METHOD__] = static fn ($text) => mb_strtolower(
+            (string) preg_replace(['/([a-z\d])([A-Z])/', '/([^_])([A-Z][a-z])/'], '$1_$2', $text),
             'UTF-8'
         );
 
@@ -318,7 +317,7 @@ final class StylesFormatter
      */
     final public function lineThrough(): self
     {
-        $this->styleModifiers[__METHOD__] = static fn($text) => sprintf("\e[9m%s\e[0m", $text);
+        $this->styleModifiers[__METHOD__] = static fn ($text) => sprintf("\e[9m%s\e[0m", $text);
 
         return $this;
     }
@@ -328,7 +327,7 @@ final class StylesFormatter
      */
     final public function invisible(): self
     {
-        $this->styleModifiers[__METHOD__] = static fn($text) => sprintf("\e[8m%s\e[0m", $text);
+        $this->styleModifiers[__METHOD__] = static fn ($text) => sprintf("\e[8m%s\e[0m", $text);
 
         return $this;
     }
@@ -338,7 +337,7 @@ final class StylesFormatter
      */
     final public function prepend(string $string): self
     {
-        $this->textModifiers[__METHOD__] = static fn($text) => $string.$text;
+        $this->textModifiers[__METHOD__] = static fn ($text) => $string.$text;
 
         return $this;
     }
@@ -348,13 +347,13 @@ final class StylesFormatter
      */
     final public function append(string $string): self
     {
-        $this->textModifiers[__METHOD__] = static fn($text) => $text.$string;
+        $this->textModifiers[__METHOD__] = static fn ($text) => $text.$string;
 
         return $this;
     }
 
     /**
-     * Formats a given string
+     * Formats a given string.
      */
     final public function format(string $content): string
     {
@@ -368,18 +367,18 @@ final class StylesFormatter
 
         return sprintf(
             $this->getFormatString(),
-            str_repeat("\n", (int)($this->properties['styles']['mt'] ?? 0)),
-            str_repeat(' ', (int)($this->properties['styles']['ml'] ?? 0)),
+            str_repeat("\n", (int) ($this->properties['styles']['mt'] ?? 0)),
+            str_repeat(' ', (int) ($this->properties['styles']['ml'] ?? 0)),
             $content,
-            str_repeat(' ', (int)($this->properties['styles']['mr'] ?? 0)),
-            str_repeat("\n", (int)($this->properties['styles']['mb'] ?? 0)),
+            str_repeat(' ', (int) ($this->properties['styles']['mr'] ?? 0)),
+            str_repeat("\n", (int) ($this->properties['styles']['mb'] ?? 0)),
         );
     }
 
     /**
      * Adds the given properties.
      *
-     * @param array<string, array<int|string, int|string>> $properties
+     * @param  array<string, array<int|string, int|string>>  $properties
      */
     public function with(array $properties): self
     {
@@ -396,7 +395,7 @@ final class StylesFormatter
         $styles = [];
 
         foreach ($this->properties['options'] as $key => $option) {
-            if (!empty($option)) {
+            if (! empty($option)) {
                 $styles[] = sprintf('%s=%s', $key, $option);
             }
         }
@@ -419,7 +418,7 @@ final class StylesFormatter
             return '%s%s%s%s%s';
         }
 
-        return '%s%s<' . implode(';', $styles) . '>%s</>%s%s';
+        return '%s%s<'.implode(';', $styles).'>%s</>%s%s';
     }
 
     /**
@@ -427,12 +426,12 @@ final class StylesFormatter
      */
     private function getColorVariant(string $color, int $variant): string
     {
-        $colorConstant = mb_strtoupper($color . '_' . $variant, 'UTF-8');
+        $colorConstant = mb_strtoupper($color.'_'.$variant, 'UTF-8');
 
-        if (!defined(Color::class . "::$colorConstant")) {
+        if (! defined(Color::class."::$colorConstant")) {
             throw new ColorNotFound($colorConstant);
         }
 
-        return constant(Color::class . "::$colorConstant");
+        return constant(Color::class."::$colorConstant");
     }
 }

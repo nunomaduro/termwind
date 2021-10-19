@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Termwind\Actions;
 
@@ -17,19 +17,19 @@ final class InheritStyles
     private StylesFormatter $styles;
 
     /**
-     * @param string[]|Element[] $elements
-     * @param string $styles
+     * @param  string[]|Element[]  $elements
+     * @param  string  $styles
      */
     public function __construct(
         private array $elements,
-        string        $styles = ''
-    )
-    {
+        string $styles = ''
+    ) {
         $this->styles = StylesFormatter::fromStyles($styles);
     }
 
     /**
-     * Applies styles from parent element to child elements
+     * Applies styles from parent element to child elements.
+     *
      * @return Element[]
      */
     public function __invoke(?Closure $closure): array

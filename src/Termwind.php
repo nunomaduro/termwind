@@ -176,7 +176,7 @@ final class Termwind
     }
 
     /**
-     * Adds root styles to child elements
+     * Adds root styles to child elements.
      */
     private static function inheritStyles($content, string $styles = '', Closure $callback = null): array
     {
@@ -186,12 +186,12 @@ final class Termwind
     }
 
     /**
-     * Convert child elements to a string
+     * Convert child elements to a string.
      */
     private static function prepareElements(array $elements): string
     {
         return implode('', array_map(
-            fn($element) => (string)$element,
+            fn ($element) => (string) $element,
             $elements
         ));
     }

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Termwind\Components;
 
@@ -18,11 +18,10 @@ abstract class Element
      * Creates an element instance.
      */
     final public function __construct(
-        protected OutputInterface  $output,
-        protected string           $content,
+        protected OutputInterface $output,
+        protected string $content,
         protected ?StylesFormatter $formatter = null
-    )
-    {
+    ) {
         if ($formatter === null) {
             $this->formatter = new StylesFormatter();
         }

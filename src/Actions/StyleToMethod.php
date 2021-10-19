@@ -16,7 +16,7 @@ final class StyleToMethod
     /**
      * Creates a new action instance.
      *
-     * @param  StylesFormatter $formatter
+     * @param  StylesFormatter  $formatter
      */
     public function __construct(
         private StylesFormatter $formatter,
@@ -31,7 +31,7 @@ final class StyleToMethod
      * @template TElement of StylesFormatter
      *
      * @param  StylesFormatter  $formatter
-     * @param  string $styles
+     * @param  string  $styles
      * @return TElement
      */
     public static function multiple(StylesFormatter $formatter, string $styles): StylesFormatter
