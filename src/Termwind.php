@@ -147,6 +147,64 @@ final class Termwind
     }
 
     /**
+     * Creates a description list instance.
+     *
+     * @param  array<int, string|Element>  $content
+     */
+    public static function dl(array $content = [], string $styles = ''): Components\Dl
+    {
+        $text = implode('', array_map(function ($element): string {
+            if (! $element instanceof Components\Dt && ! $element instanceof Components\Dd) {
+                throw new InvalidChild('Description lists only accept `dt` and `dd` as children');
+            }
+
+            $element = $element->mt(1);
+
+            if ($element instanceof Components\Dt) {
+                return (string) $element;
+            }
+
+            return (string) $element->ml(4);
+        }, $content));
+
+        return Components\Dl::fromStyles(
+            self::getRenderer(), $text, $styles
+        );
+    }
+
+    /**
+     * Creates a description term instance.
+     *
+     * @param  array<int, Element|string>|string  $content
+     */
+    public static function dt(array|string $content = '', string $styles = ''): Components\Dt
+    {
+        $content = implode('', array_map(
+            fn ($element) => (string) $element, is_array($content) ? $content : [$content]
+        ));
+
+        return Components\Dt::fromStyles(
+            self::getRenderer(), $content, $styles
+        )->fontBold();
+    }
+
+    /**
+     * Creates a description details instance.
+     *
+     * @param  array<int, Element|string>|string  $content
+     */
+    public static function dd(array|string $content = '', string $styles = ''): Components\Dd
+    {
+        $content = implode('', array_map(
+            fn ($element) => (string) $element, is_array($content) ? $content : [$content]
+        ));
+
+        return Components\Dd::fromStyles(
+            self::getRenderer(), $content, $styles
+        );
+    }
+
+    /**
      * Creates a break line element instance.
      */
     public static function breakLine(): Components\BreakLine
