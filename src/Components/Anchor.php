@@ -11,6 +11,11 @@ final class Anchor extends Element
      */
     final public function href(string $href): self
     {
-        return $this->with(['href' => array_filter([$href])]);
+        // Ignore empty links
+        if ($href === '') {
+            return $this;
+        }
+
+        return $this->with(['options' => ['href' => $href]]);
     }
 }

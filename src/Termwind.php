@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Termwind;
 
+use Closure;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
+use Termwind\Actions\InheritStyles;
 use Termwind\Components\Element;
 use Termwind\Exceptions\InvalidChild;
 
@@ -34,10 +36,9 @@ final class Termwind
      */
     public static function div(array|string $content = '', string $styles = ''): Components\Div
     {
-        $content = implode('', array_map(
-            static fn ($element) => is_string($element) ? $element : (string) $element->inheritFromStyles($styles),
-            is_array($content) ? $content : [$content]
-        ));
+        $content = self::prepareElements(
+            self::inheritStyles($content, $styles)
+        );
 
         return Components\Div::fromStyles(
             self::getRenderer(), $content, $styles
@@ -51,10 +52,9 @@ final class Termwind
      */
     public static function span(array|string $content = '', string $styles = ''): Components\Span
     {
-        $content = implode('', array_map(
-            static fn ($element) => is_string($element) ? $element : (string) $element->inheritFromStyles($styles),
-            is_array($content) ? $content : [$content]
-        ));
+        $content = self::prepareElements(
+            self::inheritStyles($content, $styles)
+        );
 
         return Components\Span::fromStyles(
             self::getRenderer(), $content, $styles
@@ -68,10 +68,9 @@ final class Termwind
      */
     public static function anchor(array|string $content = '', string $styles = ''): Components\Anchor
     {
-        $content = implode('', array_map(
-            static fn ($element) => is_string($element) ? $element : (string) $element->inheritFromStyles($styles),
-            is_array($content) ? $content : [$content]
-        ));
+        $content = self::prepareElements(
+            self::inheritStyles($content, $styles)
+        );
 
         return Components\Anchor::fromStyles(
             self::getRenderer(), $content, $styles,
@@ -86,21 +85,22 @@ final class Termwind
     public static function ul(array $content = [], string $styles = ''): Components\Ul
     {
         $index = 0;
-        $text = implode('', array_map(static function ($element) use ($styles, &$index): string {
-            if (! $element instanceof Components\Li) {
-                throw new InvalidChild('Unordered lists only accept `li` as child');
-            }
+        $content = self::prepareElements(
+            self::inheritStyles($content, $styles, static function (Element $element) use (&$index) {
+                if (! $element instanceof Components\Li) {
+                    throw new InvalidChild('Unordered lists only accept `li` as child');
+                }
 
-            $index++;
+                $index++;
 
-            return (string) $element
-                ->prepend('• ')
-                ->mt($index > 1 ? 1 : 0)
-                ->inheritFromStyles($styles);
-        }, $content));
+                return $element
+                    ->prepend('• ')
+                    ->mt($index > 1 ? 1 : 0);
+            })
+        );
 
         return Components\Ul::fromStyles(
-            self::getRenderer(), $text, $styles
+            self::getRenderer(), $content, $styles
         );
     }
 
@@ -112,19 +112,21 @@ final class Termwind
     public static function ol(array $content = [], string $styles = ''): Components\Ol
     {
         $index = 0;
-        $text = implode('', array_map(static function ($element) use ($styles, &$index): string {
-            if (! $element instanceof Components\Li) {
-                throw new InvalidChild('Ordered lists only accept `li` as child');
-            }
 
-            return (string) $element
-                ->prepend(sprintf('%s. ', ++$index))
-                ->mt($index > 1 ? 1 : 0)
-                ->inheritFromStyles($styles);
-        }, $content));
+        $content = self::prepareElements(
+            self::inheritStyles($content, $styles, static function (Element $element) use (&$index) {
+                if (! $element instanceof Components\Li) {
+                    throw new InvalidChild('Ordered lists only accept `li` as child');
+                }
+
+                return $element
+                    ->prepend(sprintf('%s. ', ++$index))
+                    ->mt($index > 1 ? 1 : 0);
+            })
+        );
 
         return Components\Ol::fromStyles(
-            self::getRenderer(), $text, $styles
+            self::getRenderer(), $content, $styles
         );
     }
 
@@ -135,10 +137,9 @@ final class Termwind
      */
     public static function li(array|string $content = '', string $styles = ''): Components\Li
     {
-        $content = implode('', array_map(
-            fn ($element) => is_string($element) ? $element : (string) $element->inheritFromStyles($styles),
-            is_array($content) ? $content : [$content]
-        ));
+        $content = self::prepareElements(
+            self::inheritStyles($content, $styles)
+        );
 
         return Components\Li::fromStyles(
             self::getRenderer(), $content, $styles
@@ -146,7 +147,7 @@ final class Termwind
     }
 
     /**
-     * Creates an break line element instance.
+     * Creates a break line element instance.
      */
     public static function breakLine(): Components\BreakLine
     {
@@ -156,10 +157,42 @@ final class Termwind
     }
 
     /**
+     * @internal
+     * Creates a raw element instance.
+     */
+    public static function raw(string $content = ''): Components\Span
+    {
+        return Components\Span::fromStyles(
+            self::getRenderer(), $content, '',
+        );
+    }
+
+    /**
      * Gets the current renderer instance.
      */
     private static function getRenderer(): OutputInterface
     {
         return self::$renderer ??= new ConsoleOutput();
+    }
+
+    /**
+     * Adds root styles to child elements
+     */
+    private static function inheritStyles($content, string $styles = '', Closure $callback = null): array
+    {
+        $content = is_array($content) ? $content : [$content];
+
+        return (new InheritStyles($content, $styles))($callback);
+    }
+
+    /**
+     * Convert child elements to a string
+     */
+    private static function prepareElements(array $elements): string
+    {
+        return implode('', array_map(
+            fn($element) => (string)$element,
+            $elements
+        ));
     }
 }

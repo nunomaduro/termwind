@@ -10,7 +10,7 @@ it('can render complex html', function () {
 </div>
 HTML);
 
-    expect($html)->toBe('<bg=white>  link text  <href=link>link text</></>');
+    expect($html)->toBe('<bg=white>  link text  <href=link;bg=white>link text</></>');
 });
 
 it('can render strings', function () {

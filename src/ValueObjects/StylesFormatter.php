@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Termwind\ValueObjects;
@@ -47,10 +48,8 @@ final class StylesFormatter
     /**
      * Inherit styles from given string
      */
-    final public function inheritFromStyles(string $styles): self
+    final public function inheritFromStyles(StylesFormatter $formatter): self
     {
-        $formatter = self::fromStyles($styles);
-
         if ($this->hasStyles()) {
             if (!isset($this->properties['colors']['bg']) && isset($formatter->properties['colors']['bg'])) {
                 $this->properties['colors']['bg'] = $formatter->properties['colors']['bg'];
@@ -339,7 +338,17 @@ final class StylesFormatter
      */
     final public function prepend(string $string): self
     {
-        $this->textModifiers[__METHOD__] = static fn($text) => $string . $text;
+        $this->textModifiers[__METHOD__] = static fn($text) => $string.$text;
+
+        return $this;
+    }
+
+    /**
+     * Appends text to the content.
+     */
+    final public function append(string $string): self
+    {
+        $this->textModifiers[__METHOD__] = static fn($text) => $text.$string;
 
         return $this;
     }
@@ -386,10 +395,10 @@ final class StylesFormatter
     {
         $styles = [];
 
-        /** @var array<int, string> $href */
-        $href = $this->properties['href'] ?? [];
-        if ($href !== []) {
-            $styles[] = sprintf('href=%s', array_pop($href));
+        foreach ($this->properties['options'] as $key => $option) {
+            if (!empty($option)) {
+                $styles[] = sprintf('%s=%s', $key, $option);
+            }
         }
 
         foreach ($this->properties['colors'] as $option => $content) {

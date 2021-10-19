@@ -10,6 +10,7 @@ use Termwind\ValueObjects\StylesFormatter;
 
 /**
  * @internal
+ * @mixin StylesFormatter
  */
 abstract class Element
 {
@@ -17,8 +18,8 @@ abstract class Element
      * Creates an element instance.
      */
     final public function __construct(
-        protected OutputInterface $output,
-        protected string          $content,
+        protected OutputInterface  $output,
+        protected string           $content,
         protected ?StylesFormatter $formatter = null
     )
     {
