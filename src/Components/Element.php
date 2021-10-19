@@ -311,6 +311,16 @@ abstract class Element
     }
 
     /**
+     * Makes a line break after the element's content.
+     */
+    final public function block(): static
+    {
+        return $this->with(['styles' => [
+            'display' => 'block',
+        ]]);
+    }
+
+    /**
      * Prepends text to the content.
      */
     final public function prepend(string $text): static
@@ -333,6 +343,8 @@ abstract class Element
      */
     public function toString(): string
     {
+        $display = $this->properties['styles']['display'] ?? 'inline';
+
         return sprintf(
             $this->getContentFormatString(),
             str_repeat("\n", (int) ($this->properties['styles']['mt'] ?? 0)),
@@ -340,6 +352,7 @@ abstract class Element
             $this->content,
             str_repeat(' ', (int) ($this->properties['styles']['mr'] ?? 0)),
             str_repeat("\n", (int) ($this->properties['styles']['mb'] ?? 0)),
+            $display === 'block' ? "\n" : '',
         );
     }
 
@@ -395,10 +408,10 @@ abstract class Element
 
         // If there are no styles we don't need extra tags
         if ($styles === []) {
-            return '%s%s%s%s%s';
+            return '%s%s%s%s%s%s';
         }
 
-        return '%s%s<'.implode(';', $styles).'>%s</>%s%s';
+        return '%s%s<'.implode(';', $styles).'>%s</>%s%s%s';
     }
 
     /**

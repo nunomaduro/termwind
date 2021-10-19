@@ -186,3 +186,9 @@ test('w-full', function () {
 
     expect($html)->toBe('text      ');
 });
+
+test('block', function () {
+    $html = parse('<div><span class="block">Hello</span><span class="block">World</span></div>');
+
+    expect($html)->toBe("Hello\nWorld\n");
+});
