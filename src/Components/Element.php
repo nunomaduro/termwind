@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Termwind\Components;
 
@@ -65,10 +65,10 @@ abstract class Element
     {
         if (method_exists($this->formatter, $name)) {
             $this->formatter->{$name}(...$arguments);
+
             return $this;
         }
 
         throw new \BadMethodCallException("Method {$name} is not found.");
-
     }
 }

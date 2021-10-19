@@ -239,7 +239,6 @@ final class StylesFormatter
             return rtrim(mb_strimwidth($text, 0, $limit, '', 'UTF-8')).$end;
         };
 
-
         return $this;
     }
 
