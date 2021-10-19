@@ -86,22 +86,27 @@ final class HtmlRenderer
         /** @var \DOMElement $node */
         $styles = $node->getAttribute('class');
 
+        /** @var array<string, mixed> $properties */
+        $properties = [
+            'isFirstChild' => $isFirstChild,
+        ];
+
         return match ($node->nodeName) {
             'body' => $children[0], // Pick only the first element from the body node
-            'div' => Termwind::div($children, $styles, $isFirstChild),
-            'ul' => Termwind::ul($children, $styles, $isFirstChild),
-            'ol' => Termwind::ol($children, $styles, $isFirstChild),
-            'li' => Termwind::li($children, $styles, $isFirstChild),
-            'dl' => Termwind::dl($children, $styles, $isFirstChild),
-            'dt' => Termwind::dt($children, $styles, $isFirstChild),
-            'dd' =>  Termwind::dd($children, $styles, $isFirstChild),
-            'span' => Termwind::span($children, $styles, $isFirstChild),
+            'div' => Termwind::div($children, $styles, $properties),
+            'ul' => Termwind::ul($children, $styles, $properties),
+            'ol' => Termwind::ol($children, $styles, $properties),
+            'li' => Termwind::li($children, $styles, $properties),
+            'dl' => Termwind::dl($children, $styles, $properties),
+            'dt' => Termwind::dt($children, $styles, $properties),
+            'dd' =>  Termwind::dd($children, $styles, $properties),
+            'span' => Termwind::span($children, $styles, $properties),
             'br' => Termwind::breakLine(),
-            'strong' => Termwind::span($children, $styles, $isFirstChild)->fontBold(),
-            'em' => Termwind::span($children, $styles, $isFirstChild)->italic(),
-            'a' => Termwind::anchor($children, $styles, $isFirstChild)->href($node->getAttribute('href')),
-            'hr' => Termwind::hr($styles, $isFirstChild),
-            default => Termwind::div($children, $styles, $isFirstChild),
+            'strong' => Termwind::span($children, $styles, $properties)->fontBold(),
+            'em' => Termwind::span($children, $styles, $properties)->italic(),
+            'a' => Termwind::anchor($children, $styles, $properties)->href($node->getAttribute('href')),
+            'hr' => Termwind::hr($styles, $properties),
+            default => Termwind::div($children, $styles, $properties),
         };
     }
 }

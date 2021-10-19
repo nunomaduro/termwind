@@ -15,7 +15,6 @@ use function Termwind\terminal;
  */
 abstract class Element
 {
-
     /**
      * Creates an element instance.
      *
@@ -34,12 +33,12 @@ abstract class Element
 
     /**
      * Creates an element instance with the given styles.
+     *
+     * @param  array<string, mixed>  $properties
      */
-    final public static function fromStyles(OutputInterface $output, string $content, string $styles, bool $isFirstChild = false): static
+    final public static function fromStyles(OutputInterface $output, string $content, string $styles, array $properties = []): static
     {
-        $element = new static($output, $content, [
-            'isFirstChild' => $isFirstChild,
-        ]);
+        $element = new static($output, $content, $properties);
 
         return StyleToMethod::multiple($element, $styles);
     }
