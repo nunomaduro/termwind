@@ -30,22 +30,28 @@ final class InheritStyles
     /**
      * Applies styles from parent element to child elements.
      *
-     * @return Element[]
+     * @param  null|Closure(Element): Element  $callback
+     * @return array<Element>
      */
-    public function __invoke(?Closure $closure): array
+    public function __invoke(Closure|null $callback = null): array
     {
+        /** @var array<Element> $elements */
+        $elements = [];
+
         foreach ($this->elements as $i => $element) {
             if (is_string($element)) {
-                $this->elements[$i] = $element = Termwind::raw($element);
+                $element = Termwind::raw($element);
             }
 
             $element->inheritFromStyles($this->styles);
 
-            if ($closure) {
-                $this->elements[$i] = $closure($element);
+            if (! is_null($callback)) {
+                $element = $callback($element);
             }
+
+            $elements[] = $element;
         }
 
-        return $this->elements;
+        return $elements;
     }
 }

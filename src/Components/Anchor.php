@@ -16,6 +16,8 @@ final class Anchor extends Element
             return $this;
         }
 
-        return $this->with(['options' => ['href' => $href]]);
+        $this->with(['options' => ['href' => $href]]);
+
+        return $this;
     }
 }

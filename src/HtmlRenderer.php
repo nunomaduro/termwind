@@ -66,10 +66,10 @@ final class HtmlRenderer
     private function toElement(DOMNode $node, array $children): Components\Element|string
     {
         if ($node instanceof DOMText) {
-            $trimedText = ltrim($node->textContent);
-            $text = preg_replace('/\s+/', ' ', $trimedText);
+            $trimmedText = ltrim($node->textContent);
+            $text = preg_replace('/\s+/', ' ', $trimmedText);
 
-            return is_string($text) ? $text : $trimedText;
+            return is_string($text) ? $text : $trimmedText;
         }
 
         /** @var \DOMElement $node */

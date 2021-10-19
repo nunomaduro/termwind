@@ -86,7 +86,7 @@ final class Termwind
     {
         $index = 0;
         $content = self::prepareElements(
-            self::inheritStyles($content, $styles, static function (Element $element) use (&$index) {
+            self::inheritStyles($content, $styles, static function (Element $element) use (&$index): Components\Li {
                 if (! $element instanceof Components\Li) {
                     throw new InvalidChild('Unordered lists only accept `li` as child');
                 }
@@ -114,7 +114,7 @@ final class Termwind
         $index = 0;
 
         $content = self::prepareElements(
-            self::inheritStyles($content, $styles, static function (Element $element) use (&$index) {
+            self::inheritStyles($content, $styles, static function (Element $element) use (&$index): Components\Li {
                 if (! $element instanceof Components\Li) {
                     throw new InvalidChild('Ordered lists only accept `li` as child');
                 }
@@ -154,7 +154,7 @@ final class Termwind
     public static function dl(array $content = [], string $styles = ''): Components\Dl
     {
         $content = self::prepareElements(
-            self::inheritStyles($content, $styles, static function (Element $element) {
+            self::inheritStyles($content, $styles, static function (Element $element): Element {
                 if (! $element instanceof Components\Dt && ! $element instanceof Components\Dd) {
                     throw new InvalidChild('Description lists only accept `dt` and `dd` as children');
                 }
@@ -237,6 +237,11 @@ final class Termwind
 
     /**
      * Adds root styles to child elements.
+     *
+     * @param  array<int, string|Element>|string  $content
+     * @param  string  $styles
+     * @param  null|Closure(Element): Element  $callback $callback
+     * @return array<int, Element>
      */
     private static function inheritStyles($content, string $styles = '', Closure $callback = null): array
     {
@@ -247,6 +252,8 @@ final class Termwind
 
     /**
      * Convert child elements to a string.
+     *
+     * @param  array<int, string|Element>  $elements
      */
     private static function prepareElements(array $elements): string
     {

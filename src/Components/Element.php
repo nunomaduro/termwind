@@ -10,19 +10,20 @@ use Termwind\ValueObjects\StylesFormatter;
 
 /**
  * @internal
- * @mixin StylesFormatter
  */
 abstract class Element
 {
+    protected StylesFormatter $formatter;
+
     /**
      * Creates an element instance.
      */
     final public function __construct(
         protected OutputInterface $output,
         protected string $content,
-        protected ?StylesFormatter $formatter = null
+        StylesFormatter|null $formatter = null
     ) {
-        if ($formatter === null) {
+        if (is_null($formatter)) {
             $this->formatter = new StylesFormatter();
         }
     }
@@ -61,11 +62,15 @@ abstract class Element
         return $this->toString();
     }
 
+    /**
+     * Calls style methods from Style formatter.
+     *
+     * @param  array<int, mixed>  $arguments
+     */
     public function __call(string $name, array $arguments): self
     {
         if (method_exists($this->formatter, $name)) {
             $this->formatter->{$name}(...$arguments);
-
             return $this;
         }
 

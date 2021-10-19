@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Termwind\ValueObjects;
 
+use Closure;
 use Termwind\Actions\StyleToMethod;
 use Termwind\Enums\Color;
 use Termwind\Exceptions\ColorNotFound;
@@ -14,6 +15,13 @@ use function Termwind\terminal;
  */
 final class StylesFormatter
 {
+    /**
+     * Creates a Style formatter instance.
+     *
+     * @param  array<string, array<mixed>>  $properties
+     * @param  array<string, Closure(string): string>  $textModifiers
+     * @param  array<string, Closure(string): string>  $styleModifiers
+     */
     final public function __construct(
         protected array $properties = [
             'colors' => [],
@@ -41,7 +49,7 @@ final class StylesFormatter
     {
         return ! empty($this->properties['colors']['bg'])
             || ! empty($this->properties['colors']['fg'])
-            || ! empty($this->properties['options']);
+            || $this->properties['options'] !== [];
     }
 
     /**
@@ -229,7 +237,7 @@ final class StylesFormatter
      */
     final public function truncate(int $limit, string $end = '...'): self
     {
-        $this->textModifiers[__METHOD__] = static function ($text) use ($limit, $end) {
+        $this->textModifiers[__METHOD__] = static function ($text) use ($limit, $end): string {
             $limit -= mb_strwidth($end, 'UTF-8');
 
             if (mb_strwidth($text, 'UTF-8') <= $limit) {
@@ -247,7 +255,7 @@ final class StylesFormatter
      */
     final public function width(int $content): self
     {
-        $this->textModifiers[__METHOD__] = static function ($text) use ($content) {
+        $this->textModifiers[__METHOD__] = static function ($text) use ($content): string {
             $length = mb_strlen($text, 'UTF-8');
 
             if ($length <= $content) {
@@ -394,7 +402,7 @@ final class StylesFormatter
         $styles = [];
 
         foreach ($this->properties['options'] as $key => $option) {
-            if (! empty($option)) {
+            if ($option !== '') {
                 $styles[] = sprintf('%s=%s', $key, $option);
             }
         }
