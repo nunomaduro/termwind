@@ -96,7 +96,7 @@ OUT
 it('renders element inside another one', function () {
     $html = parse('<div>Hello <strong>world</strong></div>');
 
-    expect($html)->toBe("<bg=default;options=>Hello <bg=default;options=>\e[1mworld\e[0m</></>");
+    expect($html)->toBe("Hello \e[1mworld\e[0m");
 });
 
 it('renders element inside another one with extra spaces and line breaks', function () {
@@ -107,5 +107,5 @@ it('renders element inside another one with extra spaces and line breaks', funct
         </div>
     HTML);
 
-    expect($html)->toBe("<bg=red;options=>Hello <bg=default;options=>\e[1mworld\e[0m</></>");
+    expect($html)->toBe("<bg=red>Hello \e[1mworld\e[0m</>");
 });
