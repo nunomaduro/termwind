@@ -27,7 +27,7 @@ final class TableRenderer
     public function __construct(DOMNode $node)
     {
         $this->output = new BufferedOutput(
-        // Content should output as is, without changes
+             // Content should output as is, without changes
             OutputInterface::VERBOSITY_NORMAL | OutputInterface::OUTPUT_RAW,
             true
         );
@@ -146,8 +146,8 @@ final class TableRenderer
                 }
 
                 $row[] = new TableCell(
-                // I need only spaces after applying margin, padding and width except tags.
-                // There is no place for tags, they broke cell formatting.
+                    // I need only spaces after applying margin, padding and width except tags.
+                    // There is no place for tags, they broke cell formatting.
                     strip_tags((string) Termwind::span($child->nodeValue, $class)),
                     [
                         // Gets rowspan and colspan from tr and td tag attributes
