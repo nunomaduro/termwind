@@ -50,7 +50,7 @@ final class HtmlRenderer
         $previous = $node->previousSibling;
 
         while ($previous) {
-            if ($previous->nodeName !== "#text" ||
+            if ($previous->nodeName !== '#text' ||
                 preg_replace('/\s+/', '', $previous->nodeValue) !== '') {
                 return false;
             }
