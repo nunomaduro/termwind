@@ -43,6 +43,24 @@ final class HtmlRenderer
     }
 
     /**
+     * Checks if the node is the first child.
+     */
+    private function isNodeFirstChild(DOMNode $node): bool
+    {
+        $previous = $node->previousSibling;
+
+        while ($previous) {
+            if (preg_replace('/\s+/', '', $previous->nodeValue) !== '') {
+                break;
+            }
+
+            $previous = $previous->previousSibling;
+        }
+
+        return is_null($previous);
+    }
+
+    /**
      * Convert a tree of DOM nodes to a tree of termwind elements.
      */
     private function convert(DOMNode $node): Components\Element|string
@@ -55,32 +73,15 @@ final class HtmlRenderer
 
         $children = array_filter($children, fn ($child) => $child !== '');
 
-        $isFirstChild = is_null($node->previousSibling);
-
-        $previous = $node->previousSibling;
-        while ($previous) {
-            if (preg_replace('/\s+/', '', $previous->nodeValue) !== '') {
-                break;
-            }
-
-            $previous = $previous->previousSibling;
-        }
-
-        /** @var array<string, mixed> $properties */
-        $properties = [
-            'isFirstChild' => is_null($previous),
-        ];
-
-        return $this->toElement($node, $children, $properties);
+        return $this->toElement($node, $children);
     }
 
     /**
      * Convert a given DOM node to it's termwind element equivalent.
      *
      * @param  array<int, Components\Element|string>  $children
-     * @param  array<string, mixed>  $properties
      */
-    private function toElement(DOMNode $node, array $children, array $properties = []): Components\Element|string
+    private function toElement(DOMNode $node, array $children): Components\Element|string
     {
         if ($node instanceof DOMText) {
             $trimedText = ltrim($node->textContent);
@@ -88,6 +89,11 @@ final class HtmlRenderer
 
             return is_string($text) ? $text : $trimedText;
         }
+
+        /** @var array<string, mixed> $properties */
+        $properties = [
+            'isFirstChild' => $this->isNodeFirstChild($node),
+        ];
 
         /** @var \DOMElement $node */
         $styles = $node->getAttribute('class');
