@@ -374,7 +374,7 @@ abstract class Element
      */
     public function with(array $properties): static
     {
-        $properties = array_merge_recursive($this->properties, $properties);
+        $properties = array_replace_recursive($this->properties, $properties);
 
         return new static(
             $this->output,
