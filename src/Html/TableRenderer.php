@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Termwind\Html;
 
+use DOMElement;
 use DOMNode;
 use Iterator;
 use Symfony\Component\Console\Helper\Table;
@@ -26,7 +27,7 @@ final class TableRenderer
     public function __construct(DOMNode $node)
     {
         $this->output = new BufferedOutput(
-            // Content should output as is, without changes
+        // Content should output as is, without changes
             OutputInterface::VERBOSITY_NORMAL | OutputInterface::OUTPUT_RAW,
             true
         );
@@ -47,23 +48,25 @@ final class TableRenderer
 
     private function parseTable(DOMNode $node): void
     {
+        /** @var DOMElement $node */
         $style = $node->getAttribute('style');
-        if (! empty($style)) {
+        if ($style !== '') {
             $this->table->setStyle($style);
         }
 
         foreach ($node->childNodes as $child) {
             match ($child->nodeName) {
                 'thead' => $this->parseHeader($child),
-                'tfoot' =>  $this->parseFoot($child),
+                'tfoot' => $this->parseFoot($child),
                 'tbody' => $this->parseBody($child),
-                'tr' => $this->parseRows($child),
+                default => $this->parseRows($child)
             };
         }
     }
 
-    private function parseHeader(DOMNode $node)
+    private function parseHeader(DOMNode $node): void
     {
+        /** @var DOMElement $node */
         $title = $node->getAttribute('title');
 
         if ($title !== '') {
@@ -76,6 +79,9 @@ final class TableRenderer
         foreach ($node->childNodes as $child) {
             if ($child->nodeName === 'tr') {
                 foreach ($this->parseRow($child) as $row) {
+                    if (! is_array($row)) {
+                        continue;
+                    }
                     $this->table->setHeaders($row);
                 }
             }
@@ -84,6 +90,7 @@ final class TableRenderer
 
     private function parseFoot(DOMNode $node): void
     {
+        /** @var DOMElement $node */
         $title = $node->getAttribute('title');
 
         if ($title !== '') {
@@ -120,11 +127,16 @@ final class TableRenderer
         }
     }
 
+    /**
+     * @param  DOMNode  $node
+     * @return Iterator<array<int, TableCell>|TableSeparator>
+     */
     private function parseRow(DOMNode $node): Iterator
     {
         $row = [];
 
         foreach ($node->childNodes as $child) {
+            /** @var DOMElement $child */
             if ($child->nodeName === 'th' || $child->nodeName === 'td') {
                 $align = $child->getAttribute('align');
 
@@ -134,8 +146,8 @@ final class TableRenderer
                 }
 
                 $row[] = new TableCell(
-                    // I need only spaces after applying margin, padding and width except tags.
-                    // There is no place for tags, they broke cell formatting.
+                // I need only spaces after applying margin, padding and width except tags.
+                // There is no place for tags, they broke cell formatting.
                     strip_tags((string) Termwind::span($child->nodeValue, $class)),
                     [
                         // Gets rowspan and colspan from tr and td tag attributes
@@ -156,6 +168,7 @@ final class TableRenderer
             yield $row;
         }
 
+        /** @var DOMElement $node */
         $border = (int) $node->getAttribute('border');
         for ($i = $border; $i--; $i > 0) {
             yield new TableSeparator();
@@ -186,6 +199,7 @@ final class TableRenderer
 
     private function parseTitleStyle(DOMNode $node): string
     {
+        /** @var DOMElement $node */
         return (string) Termwind::span(' %s ', $node->getAttribute('class'));
     }
 }

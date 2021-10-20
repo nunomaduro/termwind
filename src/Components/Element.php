@@ -330,6 +330,8 @@ abstract class Element
 
     /**
      * Gets the element's style properties.
+     *
+     * @return array<string, mixed>
      */
     final public function getProperties(): array
     {
