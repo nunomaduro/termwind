@@ -46,3 +46,11 @@ it('renders element inside another one with extra spaces and line breaks', funct
 
     expect($html)->toBe("<bg=red>Hello \e[1mworld\e[0m</>");
 });
+
+it('renders element and ignores the classes of the same type', function () {
+    $html = parse(<<<'HTML'
+        <div class="ml-3 ml-1">Hello World</div>
+    HTML);
+
+    expect($html)->toBe(' Hello World');
+});
