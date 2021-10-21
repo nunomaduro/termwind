@@ -162,10 +162,10 @@ final class Termwind
                 $element = $element->mt(1);
 
                 if ($element instanceof Components\Dt) {
-                    return $element;
+                    return (string) $element;
                 }
 
-                return $element->ml(4);
+                return (string) $element->ml(4);
             })
         );
 
@@ -203,6 +203,18 @@ final class Termwind
 
         return Components\Dd::fromStyles(
             self::getRenderer(), $content, $styles
+        );
+    }
+
+    /**
+     * Creates a horizontal rule instance.
+     */
+    public static function hr(string $styles = ''): Components\Hr
+    {
+        $width = terminal()->width();
+
+        return Components\Hr::fromStyles(
+            self::getRenderer(), str_repeat(html_entity_decode('&mdash;'), $width), $styles,
         );
     }
 

@@ -89,6 +89,7 @@ final class HtmlRenderer
             'strong' => Termwind::div($children, $styles)->fontBold(),
             'em' => Termwind::div($children, $styles)->italic(),
             'a' => Termwind::anchor($children, $styles)->href($node->getAttribute('href')),
+            'hr' => Termwind::hr($styles),
             default => Termwind::div($children),
         };
     }
