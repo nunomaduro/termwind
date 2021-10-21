@@ -6,5 +6,5 @@ namespace Termwind\Components;
 
 final class Ul extends Element
 {
-    // ..
+    public $defaultStyles = ['block'];
 }

@@ -41,7 +41,7 @@ final class Termwind
 
         return Components\Div::fromStyles(
             self::getRenderer(), $content, $styles, $properties
-        )->block();
+        );
     }
 
     /**
@@ -96,7 +96,7 @@ final class Termwind
 
         return Components\Ul::fromStyles(
             self::getRenderer(), $text, $styles, $properties
-        )->block();
+        );
     }
 
     /**
@@ -118,7 +118,7 @@ final class Termwind
 
         return Components\Ol::fromStyles(
             self::getRenderer(), $text, $styles, $properties
-        )->block();
+        );
     }
 
     /**
@@ -135,7 +135,7 @@ final class Termwind
 
         return Components\Li::fromStyles(
             self::getRenderer(), $content, $styles, $properties
-        )->block();
+        );
     }
 
     /**
@@ -151,16 +151,12 @@ final class Termwind
                 throw new InvalidChild('Description lists only accept `dt` and `dd` as children');
             }
 
-            if ($element instanceof Components\Dt) {
-                return (string) $element;
-            }
-
-            return (string) $element->ml(4);
+            return (string) $element;
         }, $content));
 
         return Components\Dl::fromStyles(
             self::getRenderer(), $text, $styles, $properties
-        )->block();
+        );
     }
 
     /**
@@ -177,7 +173,7 @@ final class Termwind
 
         return Components\Dt::fromStyles(
             self::getRenderer(), $content, $styles, $properties
-        )->fontBold()->block();
+        );
     }
 
     /**
@@ -194,7 +190,7 @@ final class Termwind
 
         return Components\Dd::fromStyles(
             self::getRenderer(), $content, $styles, $properties
-        )->block();
+        );
     }
 
     /**
@@ -208,7 +204,7 @@ final class Termwind
 
         return Components\Hr::fromStyles(
             self::getRenderer(), str_repeat(html_entity_decode('&mdash;'), $width), $styles, $properties
-        )->block();
+        );
     }
 
     /**

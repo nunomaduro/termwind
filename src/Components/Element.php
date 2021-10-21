@@ -16,6 +16,11 @@ use function Termwind\terminal;
 abstract class Element
 {
     /**
+     * @var array<int, string>
+     */
+    public $defaultStyles = [];
+
+    /**
      * Creates an element instance.
      *
      * @param  array<string, mixed>  $properties
