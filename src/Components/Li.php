@@ -6,5 +6,5 @@ namespace Termwind\Components;
 
 final class Li extends Element
 {
-    // ..
+    public $defaultStyles = ['block'];
 }
