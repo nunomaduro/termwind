@@ -35,7 +35,7 @@ final class StyleToMethod
      */
     public static function multiple(Element $element, string $styles): Element
     {
-        $styles = explode(' ', $styles);
+        $styles = array_merge($element->defaultStyles, explode(' ', $styles));
 
         $styles = array_filter($styles, static function ($style): bool {
             return $style !== '';

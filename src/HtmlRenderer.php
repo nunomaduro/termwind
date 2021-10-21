@@ -44,6 +44,25 @@ final class HtmlRenderer
     }
 
     /**
+     * Checks if the node is the first child.
+     */
+    private function isNodeFirstChild(DOMNode $node): bool
+    {
+        $previous = $node->previousSibling;
+
+        while ($previous) {
+            if ($previous->nodeName !== '#text' ||
+                preg_replace('/\s+/', '', $previous->nodeValue) !== '') {
+                return false;
+            }
+
+            $previous = $previous->previousSibling;
+        }
+
+        return is_null($previous);
+    }
+
+    /**
      * Convert a tree of DOM nodes to a tree of termwind elements.
      */
     private function convert(DOMNode $node): Components\Element|string
@@ -77,24 +96,30 @@ final class HtmlRenderer
             return is_string($text) ? $text : $trimedText;
         }
 
+        /** @var array<string, mixed> $properties */
+        $properties = [
+            'isFirstChild' => $this->isNodeFirstChild($node),
+        ];
+
         /** @var \DOMElement $node */
         $styles = $node->getAttribute('class');
 
         return match ($node->nodeName) {
             'body' => $children[0], // Pick only the first element from the body node
-            'div' => Termwind::div($children, $styles),
-            'ul' => Termwind::ul($children, $styles),
-            'ol' => Termwind::ol($children, $styles),
-            'li' => Termwind::li($children, $styles),
-            'dl' => Termwind::dl($children, $styles),
-            'dt' => Termwind::dt($children, $styles),
-            'dd' =>  Termwind::dd($children, $styles),
-            'span' => Termwind::span($children, $styles),
+            'div' => Termwind::div($children, $styles, $properties),
+            'ul' => Termwind::ul($children, $styles, $properties),
+            'ol' => Termwind::ol($children, $styles, $properties),
+            'li' => Termwind::li($children, $styles, $properties),
+            'dl' => Termwind::dl($children, $styles, $properties),
+            'dt' => Termwind::dt($children, $styles, $properties),
+            'dd' =>  Termwind::dd($children, $styles, $properties),
+            'span' => Termwind::span($children, $styles, $properties),
             'br' => Termwind::breakLine(),
-            'strong' => Termwind::div($children, $styles)->fontBold(),
-            'em' => Termwind::div($children, $styles)->italic(),
-            'a' => Termwind::anchor($children, $styles)->href($node->getAttribute('href')),
-            default => Termwind::div($children),
+            'strong' => Termwind::span($children, $styles, $properties)->fontBold(),
+            'em' => Termwind::span($children, $styles, $properties)->italic(),
+            'a' => Termwind::anchor($children, $styles, $properties)->href($node->getAttribute('href')),
+            'hr' => Termwind::hr($styles, $properties),
+            default => Termwind::div($children, $styles, $properties),
         };
     }
 }

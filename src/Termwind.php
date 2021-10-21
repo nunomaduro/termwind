@@ -31,15 +31,16 @@ final class Termwind
      * Creates a div element instance.
      *
      * @param  array<int, Element|string>|string  $content
+     * @param  array<string, mixed>  $properties
      */
-    public static function div(array|string $content = '', string $styles = ''): Components\Div
+    public static function div(array|string $content = '', string $styles = '', array $properties = []): Components\Div
     {
         $content = implode('', array_map(
             fn ($element) => (string) $element, is_array($content) ? $content : [$content]
         ));
 
         return Components\Div::fromStyles(
-            self::getRenderer(), $content, $styles
+            self::getRenderer(), $content, $styles, $properties
         );
     }
 
@@ -47,15 +48,16 @@ final class Termwind
      * Creates a span element instance with the given style.
      *
      * @param  array<int, Element|string>|string  $content
+     * @param  array<string, mixed>  $properties
      */
-    public static function span(array|string $content = '', string $styles = ''): Components\Span
+    public static function span(array|string $content = '', string $styles = '', array $properties = []): Components\Span
     {
         $content = implode('', array_map(
             fn ($element) => (string) $element, is_array($content) ? $content : [$content]
         ));
 
         return Components\Span::fromStyles(
-            self::getRenderer(), $content, $styles
+            self::getRenderer(), $content, $styles, $properties
         );
     }
 
@@ -73,15 +75,16 @@ final class Termwind
      * Creates an anchor element instance with the given style.
      *
      * @param  array<int, Element|string>|string  $content
+     * @param  array<string, mixed>  $properties
      */
-    public static function anchor(array|string $content = '', string $styles = ''): Components\Anchor
+    public static function anchor(array|string $content = '', string $styles = '', array $properties = []): Components\Anchor
     {
         $content = implode('', array_map(
             fn ($element) => (string) $element, is_array($content) ? $content : [$content]
         ));
 
         return Components\Anchor::fromStyles(
-            self::getRenderer(), $content, $styles,
+            self::getRenderer(), $content, $styles, $properties
         );
     }
 
@@ -89,22 +92,20 @@ final class Termwind
      * Creates an unordered list instance.
      *
      * @param  array<int, string|Element>  $content
+     * @param  array<string, mixed>  $properties
      */
-    public static function ul(array $content = [], string $styles = ''): Components\Ul
+    public static function ul(array $content = [], string $styles = '', array $properties = []): Components\Ul
     {
-        $index = 0;
-        $text = implode('', array_map(function ($element) use (&$index): string {
+        $text = implode('', array_map(function ($element): string {
             if (! $element instanceof Components\Li) {
                 throw new InvalidChild('Unordered lists only accept `li` as child');
             }
 
-            $index++;
-
-            return (string) $element->prepend('• ')->mt($index > 1 ? 1 : 0);
+            return (string) $element->prepend('• ');
         }, $content));
 
         return Components\Ul::fromStyles(
-            self::getRenderer(), $text, $styles
+            self::getRenderer(), $text, $styles, $properties
         );
     }
 
@@ -112,8 +113,9 @@ final class Termwind
      * Creates an ordered list instance.
      *
      * @param  array<int, string|Element>  $content
+     * @param  array<string, mixed>  $properties
      */
-    public static function ol(array $content = [], string $styles = ''): Components\Ol
+    public static function ol(array $content = [], string $styles = '', array $properties = []): Components\Ol
     {
         $index = 0;
         $text = implode('', array_map(function ($element) use (&$index): string {
@@ -121,11 +123,11 @@ final class Termwind
                 throw new InvalidChild('Ordered lists only accept `li` as child');
             }
 
-            return (string) $element->prepend(sprintf('%s. ', ++$index))->mt($index > 1 ? 1 : 0);
+            return (string) $element->prepend(sprintf('%s. ', ++$index));
         }, $content));
 
         return Components\Ol::fromStyles(
-            self::getRenderer(), $text, $styles
+            self::getRenderer(), $text, $styles, $properties
         );
     }
 
@@ -133,15 +135,16 @@ final class Termwind
      * Creates a list item instance.
      *
      * @param  array<int, Element|string>|string  $content
+     * @param  array<string, mixed>  $properties
      */
-    public static function li(array|string $content = '', string $styles = ''): Components\Li
+    public static function li(array|string $content = '', string $styles = '', array $properties = []): Components\Li
     {
         $content = implode('', array_map(
             fn ($element) => (string) $element, is_array($content) ? $content : [$content]
         ));
 
         return Components\Li::fromStyles(
-            self::getRenderer(), $content, $styles
+            self::getRenderer(), $content, $styles, $properties
         );
     }
 
@@ -149,25 +152,20 @@ final class Termwind
      * Creates a description list instance.
      *
      * @param  array<int, string|Element>  $content
+     * @param  array<string, mixed>  $properties
      */
-    public static function dl(array $content = [], string $styles = ''): Components\Dl
+    public static function dl(array $content = [], string $styles = '', array $properties = []): Components\Dl
     {
         $text = implode('', array_map(function ($element): string {
             if (! $element instanceof Components\Dt && ! $element instanceof Components\Dd) {
                 throw new InvalidChild('Description lists only accept `dt` and `dd` as children');
             }
 
-            $element = $element->mt(1);
-
-            if ($element instanceof Components\Dt) {
-                return (string) $element;
-            }
-
-            return (string) $element->ml(4);
+            return (string) $element;
         }, $content));
 
         return Components\Dl::fromStyles(
-            self::getRenderer(), $text, $styles
+            self::getRenderer(), $text, $styles, $properties
         );
     }
 
@@ -175,31 +173,47 @@ final class Termwind
      * Creates a description term instance.
      *
      * @param  array<int, Element|string>|string  $content
+     * @param  array<string, mixed>  $properties
      */
-    public static function dt(array|string $content = '', string $styles = ''): Components\Dt
+    public static function dt(array|string $content = '', string $styles = '', array $properties = []): Components\Dt
     {
         $content = implode('', array_map(
             fn ($element) => (string) $element, is_array($content) ? $content : [$content]
         ));
 
         return Components\Dt::fromStyles(
-            self::getRenderer(), $content, $styles
-        )->fontBold();
+            self::getRenderer(), $content, $styles, $properties
+        );
     }
 
     /**
      * Creates a description details instance.
      *
      * @param  array<int, Element|string>|string  $content
+     * @param  array<string, mixed>  $properties
      */
-    public static function dd(array|string $content = '', string $styles = ''): Components\Dd
+    public static function dd(array|string $content = '', string $styles = '', array $properties = []): Components\Dd
     {
         $content = implode('', array_map(
             fn ($element) => (string) $element, is_array($content) ? $content : [$content]
         ));
 
         return Components\Dd::fromStyles(
-            self::getRenderer(), $content, $styles
+            self::getRenderer(), $content, $styles, $properties
+        );
+    }
+
+    /**
+     * Creates a horizontal rule instance.
+     *
+     * @param  array<string, mixed>  $properties
+     */
+    public static function hr(string $styles = '', array $properties = []): Components\Hr
+    {
+        $width = terminal()->width();
+
+        return Components\Hr::fromStyles(
+            self::getRenderer(), str_repeat(html_entity_decode('&mdash;'), $width), $styles, $properties
         );
     }
 

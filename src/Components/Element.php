@@ -16,6 +16,11 @@ use function Termwind\terminal;
 abstract class Element
 {
     /**
+     * @var array<int, string>
+     */
+    public $defaultStyles = [];
+
+    /**
      * Creates an element instance.
      *
      * @param  array<string, mixed>  $properties
@@ -24,21 +29,21 @@ abstract class Element
         protected OutputInterface $output,
         protected string $content,
         protected array $properties = [
-            'colors' => [
-                'bg' => 'default',
-            ],
+            'colors' => [],
             'options' => [],
+            'isFirstChild' => false,
         ])
     {
-        // ..
     }
 
     /**
      * Creates an element instance with the given styles.
+     *
+     * @param  array<string, mixed>  $properties
      */
-    final public static function fromStyles(OutputInterface $output, string $content, string $styles): static
+    final public static function fromStyles(OutputInterface $output, string $content, string $styles, array $properties = []): static
     {
-        $element = new static($output, $content);
+        $element = new static($output, $content, $properties);
 
         return StyleToMethod::multiple($element, $styles);
     }
@@ -311,6 +316,16 @@ abstract class Element
     }
 
     /**
+     * Makes a line break before the element's content.
+     */
+    final public function block(): static
+    {
+        return $this->with(['styles' => [
+            'display' => 'block',
+        ]]);
+    }
+
+    /**
      * Prepends text to the content.
      */
     final public function prepend(string $text): static
@@ -343,8 +358,14 @@ abstract class Element
      */
     public function toString(): string
     {
+        $display = $this->properties['styles']['display'] ?? 'inline';
+
+        /** @var bool $isFirstChild */
+        $isFirstChild = $this->properties['isFirstChild'] ?? false;
+
         return sprintf(
             $this->getContentFormatString(),
+            $display === 'block' && ! $isFirstChild ? "\n" : '',
             str_repeat("\n", (int) ($this->properties['styles']['mt'] ?? 0)),
             str_repeat(' ', (int) ($this->properties['styles']['ml'] ?? 0)),
             $this->content,
@@ -368,7 +389,7 @@ abstract class Element
      */
     public function with(array $properties): static
     {
-        $properties = array_merge_recursive($this->properties, $properties);
+        $properties = array_replace_recursive($this->properties, $properties);
 
         return new static(
             $this->output,
@@ -390,14 +411,12 @@ abstract class Element
             $styles[] = sprintf('href=%s', array_pop($href));
         }
 
-        foreach ($this->properties['colors'] as $option => $content) {
+        /** @var array<int, string> $href */
+        $colors = $this->properties['colors'] ?? [];
+
+        foreach ($colors as $option => $content) {
             if (in_array($option, ['fg', 'bg'], true)) {
                 $content = is_array($content) ? array_pop($content) : $content;
-
-                // Skip default color
-                if ($content === 'default') {
-                    continue;
-                }
 
                 $styles[] = "$option=$content";
             }
@@ -405,10 +424,10 @@ abstract class Element
 
         // If there are no styles we don't need extra tags
         if ($styles === []) {
-            return '%s%s%s%s%s';
+            return '%s%s%s%s%s%s';
         }
 
-        return '%s%s<'.implode(';', $styles).'>%s</>%s%s';
+        return '%s%s%s<'.implode(';', $styles).'>%s</>%s%s';
     }
 
     /**

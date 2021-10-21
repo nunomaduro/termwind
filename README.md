@@ -171,7 +171,7 @@ render('<div class="btn">Click me </div>');
 
 Head over to [tailwindcss.com/docs](https://tailwindcss.com/docs), and choose a class that is not implemented in Termwind. As an example, let's assume you would like to add the `lowercase` Tailwind CSS class to Termwind:
 
-1. Head over to [`src/Components/Element`](https://github.com/nunomaduro/termwind/blob/master/src/Components/Element.php#L250) and add a new method with the name `lowercase`:
+1. Head over to [`src/Components/Element`](https://github.com/nunomaduro/termwind/blob/master/src/Components/Element.php#L263) and add a new method with the name `lowercase`:
 ```php
     /**
      * Makes the element's content lowercase.
