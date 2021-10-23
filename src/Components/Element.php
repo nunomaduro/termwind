@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Termwind\Components;
 
-use Symfony\Component\Console\Output\OutputInterface;
-use Termwind\Actions\StyleToMethod;
 use Termwind\Enums\Color;
-use Termwind\Exceptions\ColorNotFound;
 use function Termwind\terminal;
+use Termwind\Components\{Ol, Ul};
+use Termwind\Actions\StyleToMethod;
+use Symfony\Component\Console\Output\OutputInterface;
+use Termwind\Exceptions\{ColorNotFound, InvalidStyle};
 
 /**
  * @internal
@@ -336,12 +337,12 @@ abstract class Element
     }
 
     /**
-     * Hides the default styles of ul, ol
+     * Hides the default styles of ul, ol.
      */
     final public function listNone(): static
     {
-        if ( (static::class != 'Termwind\Components\Ul') && (static::class !='Termwind\Components\Ol') ) {
-            throw new \Termwind\Exceptions\InvalidStyle(sprintf('Style list-none cannot be used with %s', static::class));
+        if ((static::class != Ul::class) && (static::class != Ol::class)) {
+            throw new InvalidStyle(sprintf('Style list-none cannot be used with %s', static::class));
         }
         
         $content = (string) preg_replace(['/(^\d+[. ]{2})/m', '/(^•+[ ]{1})/m'], '', $this->content);
