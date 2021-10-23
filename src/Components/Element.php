@@ -344,7 +344,7 @@ abstract class Element
             throw new \Termwind\Exceptions\InvalidStyle(sprintf('Style list-none cannot be used with %s', static::class));
         }
         
-        $content = preg_replace(['/(^\d+[. ]{2})/m', '/(^•+[ ]{1})/m'], '', $this->content);
+        $content = (string) preg_replace(['/(^\d+[. ]{2})/m', '/(^•+[ ]{1})/m'], '', $this->content);
 
         return new static($this->output, $content, $this->properties);
     }
