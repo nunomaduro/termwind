@@ -14,7 +14,7 @@ use DOMText;
 final class HtmlRenderer
 {
     /**
-     * Renders the given hmtl.
+     * Renders the given html.
      */
     public function render(string $html): void
     {
