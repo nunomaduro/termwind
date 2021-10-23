@@ -1,6 +1,7 @@
 <?php
 
 use Termwind\Exceptions\ColorNotFound;
+use Termwind\Exceptions\InvalidStyle;
 
 test('font bold', function () {
     $html = parse('<div class="font-bold">text</div>');
@@ -195,4 +196,9 @@ test('block', function () {
     $html = parse('<span>Hello <span class="block">World</span></span>');
 
     expect($html)->toBe("Hello \nWorld");
+});
+
+test('Invalid use of style list-none', function () {
+    expect(fn () => parse('<span class="list-none">Hello <span>World</span></span>'))
+        ->toThrow(InvalidStyle::class);
 });

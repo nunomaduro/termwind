@@ -336,6 +336,20 @@ abstract class Element
     }
 
     /**
+     * Hides the default styles of ul, ol
+     */
+    final public function listNone(): static
+    {
+        if (!in_array(static::class, ['Termwind\Components\Ul', 'Termwind\Components\Ol'])) {
+            throw new \Termwind\Exceptions\InvalidStyle(sprintf('Style list-none cannot be used with %s', static::class));
+        }
+        
+        $content = preg_replace(['/(^\d+[. ]{2})/m', '/(^•+[ ]{1})/m'], '', $this->content);
+
+        return new static($this->output, $content, $this->properties);
+    }
+
+    /**
      * Renders the string representation of the element on the output.
      */
     final public function render(): void

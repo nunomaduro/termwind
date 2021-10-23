@@ -23,3 +23,14 @@ it('renders "li" elements and ignore empty spaces', function () {
 
     expect($html)->toBe("• list text 1\n• list text 2");
 });
+
+it('renders "li" elements without style', function () {
+    $html = parse(<<<'HTML'
+        <ul class="list-none">
+            <li>list text 1</li>
+            <li>list text 2</li>
+        </ul>
+    HTML);
+
+    expect($html)->toBe("list text 1\nlist text 2");
+});
