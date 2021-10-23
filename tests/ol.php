@@ -24,4 +24,3 @@ it('renders "li" elements without style', function () {
 
     expect($html)->toBe("list item 1.1 test\nlist item 1.2 test");
 });
-
