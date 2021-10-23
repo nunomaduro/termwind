@@ -340,7 +340,7 @@ abstract class Element
      */
     final public function listNone(): static
     {
-        if (!in_array(static::class, ['Termwind\Components\Ul', 'Termwind\Components\Ol'])) {
+        if ( (static::class != 'Termwind\Components\Ul') && (static::class !='Termwind\Components\Ol') ) {
             throw new \Termwind\Exceptions\InvalidStyle(sprintf('Style list-none cannot be used with %s', static::class));
         }
         
