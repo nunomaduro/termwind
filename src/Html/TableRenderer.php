@@ -27,7 +27,7 @@ final class TableRenderer
     public function __construct(DOMNode $node)
     {
         $this->output = new BufferedOutput(
-             // Content should output as is, without changes
+            // Content should output as is, without changes
             OutputInterface::VERBOSITY_NORMAL | OutputInterface::OUTPUT_RAW,
             true
         );
@@ -177,23 +177,44 @@ final class TableRenderer
 
     /**
      * Parses tr, td tag class attribute and passes bg, fg and options to a table cell style.
+     *
+     * TODO: this code duplication will disappear after Style inheritance release
      */
     private function parseCellStyle(string $styles, string $align = TableCellStyle::DEFAULT_ALIGN): TableCellStyle
     {
-        // I use this empty div for getting styles for bg, fg and options
+        // I use this empty span for getting styles for bg, fg and options
         // It will be a good idea to get properties without element object and then pass them to an element object
-        $element = Termwind::div('', $styles);
+        $element = Termwind::span('%s', $styles);
 
-        $fg = $element->getProperties()['colors']['fg'] ?? 'default';
-        $bg = $element->getProperties()['colors']['bg'] ?? 'default';
-        $options = $element->getProperties()['options'] ?? [];
+        $styles = [];
+
+        /** @var array<int, string> $href */
+        $href = $element->getProperties()['href'] ?? [];
+        if ($href !== []) {
+            $styles[] = sprintf('href=%s', array_pop($href));
+        }
+
+        /** @var array<int, string> $href */
+        $colors = $element->getProperties()['colors'] ?? [];
+
+        foreach ($colors as $option => $content) {
+            if (in_array($option, ['fg', 'bg'], true)) {
+                $content = is_array($content) ? array_pop($content) : $content;
+
+                $styles[] = "$option=$content";
+            }
+        }
+
+        // If there are no styles we don't need extra tags
+        if ($styles === []) {
+            $cellFormat = '%s';
+        } else {
+            $cellFormat = '<'.implode(';', $styles).'>%s</>';
+        }
 
         return new TableCellStyle([
-            // Sometimes after recursive array merging fg and bg may contain array instead of string
-            'fg' => is_array($fg) ? end($fg) : $fg,
-            'bg' => is_array($bg) ? end($bg) : $bg,
-            'options' => $options === [] ? null : $options,
             'align' => $align,
+            'cellFormat' => $cellFormat,
         ]);
     }
 

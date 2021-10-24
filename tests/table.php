@@ -11,7 +11,7 @@ it('can render table without thead, tbody, tfoot to a string', function () {
         <td align="right">Dante Alighieri</td>
     </tr>
     <tr border="1">
-        <th class="bg-blue text-color-red" align="right">9971-5-0210-0</th>
+        <th class="bg-blue-400 text-color-red" align="right">9971-5-0210-0</th>
         <td>A Tale of Two Cities</td>
         <td align="right">Charles Dickens</td>
     </tr>
@@ -34,12 +34,12 @@ HTML);
 
     expect($html->toString())->toBe(<<<'OUT'
 ├───────────────┼──────────────────────────┼─────────────────────┤
-│[39;49m [1m99921-58-10-7[0m [39;49m│[39;49m Divine Comedy            [39;49m│[39;49m     Dante Alighieri [39;49m│
-│[31;44m [1m9971-5-0210-0[0m [39;49m│[39;49m A Tale of Two Cities     [39;49m│[39;49m     Charles Dickens [39;49m│
+│ [1m99921-58-10-7[0m │ Divine Comedy            │     Dante Alighieri │
+│[31;46m [1m9971-5-0210-0[0m [39;49m│ A Tale of Two Cities     │     Charles Dickens │
 ├───────────────┼──────────────────────────┼─────────────────────┤
-│[39;49m [1m960-425-059-0[0m [39;49m│[39;49m The Lord of the Rings    [39;49m│[39;49m    J. R. R. Tolkien [39;49m│
-[39;49m│[39;49m[39;49m [1m80-902734-1-6[0m [39;49m[39;49m│[39;49m[39;49m And Then There Were None [39;49m[39;49m│[39;49m[39;49m     Dante Alighieri [39;49m[39;49m│[39;49m
-│[39;49m [1m978-052156781[0m [39;49m│[39;49m De Monarchia             [39;49m│[39;49m spans multiple rows [39;49m│
+│ [1m960-425-059-0[0m │ The Lord of the Rings    │    J. R. R. Tolkien │
+[39;49m│ [1m80-902734-1-6[0m │ And Then There Were None │     Dante Alighieri │[39;49m
+│ [1m978-052156781[0m │ De Monarchia             │ spans multiple rows │
 └───────────────┴──────────────────────────┴─────────────────────┘
 
 OUT
@@ -85,14 +85,14 @@ HTML);
 
     expect($html->toString())->toBe(<<<'OUT'
 +---------------+--[37;41m           Books           [39;49m-------------------+
-|[39;49m          [1mISBN[0m [39;49m|[39;49m [1mTitle[0m                    [39;49m|[39;49m [1mAuthor[0m              [39;49m|
+|          [1mISBN[0m | [1mTitle[0m                    | [1mAuthor[0m              |
 +---------------+--------------------------+---------------------+
-|[39;49m [1m99921-58-10-7[0m [39;49m|[39;49m Divine Comedy            [39;49m|[39;49m     Dante Alighieri [39;49m|
-|[31;44m [1m9971-5-0210-0[0m [39;49m|[39;49m A Tale of Two Cities     [39;49m|[39;49m     Charles Dickens [39;49m|
+| [1m99921-58-10-7[0m | Divine Comedy            |     Dante Alighieri |
+|[31;44m [1m9971-5-0210-0[0m [39;49m| A Tale of Two Cities     |     Charles Dickens |
 +---------------+--------------------------+---------------------+
-|[39;49m [1m960-425-059-0[0m [39;49m|[39;49m The Lord of the Rings    [39;49m|[39;49m    J. R. R. Tolkien [39;49m|
-[39;49m|[39;49m[39;49m [1m80-902734-1-6[0m [39;49m[39;49m|[39;49m[39;49m And Then There Were None [39;49m[39;49m|[39;49m[39;49m     Dante Alighieri [39;49m[39;49m|[39;49m
-|[39;49m [1m978-052156781[0m [39;49m|[39;49m De Monarchia             [39;49m|[39;49m spans multiple rows [39;49m|
+| [1m960-425-059-0[0m | The Lord of the Rings    |    J. R. R. Tolkien |
+[39;49m| [1m80-902734-1-6[0m | And Then There Were None |     Dante Alighieri |[39;49m
+| [1m978-052156781[0m | De Monarchia             | spans multiple rows |
 +---------------+--------------------------+---------------------+
 
 OUT
@@ -143,14 +143,14 @@ HTML);
 
     expect($html->toString())->toBe(<<<'OUT'
 +---------------+--[37;41m           Books           [39;49m-------------------+
-|[39;49m          [1mISBN[0m [39;49m|[39;49m [1mTitle[0m                    [39;49m|[39;49m [1mAuthor[0m              [39;49m|
+|          [1mISBN[0m | [1mTitle[0m                    | [1mAuthor[0m              |
 +---------------+--------------------------+---------------------+
-|[39;49m [1m99921-58-10-7[0m [39;49m|[39;49m Divine Comedy            [39;49m|[39;49m     Dante Alighieri [39;49m|
-|[31;44m [1m9971-5-0210-0[0m [39;49m|[39;49m A Tale of Two Cities     [39;49m|[39;49m     Charles Dickens [39;49m|
+| [1m99921-58-10-7[0m | Divine Comedy            |     Dante Alighieri |
+|[31;44m [1m9971-5-0210-0[0m [39;49m| A Tale of Two Cities     |     Charles Dickens |
 +---------------+--------------------------+---------------------+
-|[39;49m [1m960-425-059-0[0m [39;49m|[39;49m The Lord of the Rings    [39;49m|[39;49m    J. R. R. Tolkien [39;49m|
-[39;49m|[39;49m[39;49m [1m80-902734-1-6[0m [39;49m[39;49m|[39;49m[39;49m And Then There Were None [39;49m[39;49m|[39;49m[39;49m     Dante Alighieri [39;49m[39;49m|[39;49m
-|[39;49m [1m978-052156781[0m [39;49m|[39;49m De Monarchia             [39;49m|[39;49m spans multiple rows [39;49m|
+| [1m960-425-059-0[0m | The Lord of the Rings    |    J. R. R. Tolkien |
+[39;49m| [1m80-902734-1-6[0m | And Then There Were None |     Dante Alighieri |[39;49m
+| [1m978-052156781[0m | De Monarchia             | spans multiple rows |
 +---------------+--------------------------+---------------------+
 
 OUT
@@ -194,14 +194,14 @@ HTML);
 
     expect($html->toString())->toBe(<<<'OUT'
 +---------------+--------------------------+---------------------+
-|[39;49m [1m99921-58-10-7[0m [39;49m|[39;49m Divine Comedy            [39;49m|[39;49m     Dante Alighieri [39;49m|
-|[31;44m [1m9971-5-0210-0[0m [39;49m|[39;49m A Tale of Two Cities     [39;49m|[39;49m     Charles Dickens [39;49m|
+| [1m99921-58-10-7[0m | Divine Comedy            |     Dante Alighieri |
+|[31;44m [1m9971-5-0210-0[0m [39;49m| A Tale of Two Cities     |     Charles Dickens |
 +---------------+--------------------------+---------------------+
-|[39;49m [1m960-425-059-0[0m [39;49m|[39;49m The Lord of the Rings    [39;49m|[39;49m    J. R. R. Tolkien [39;49m|
-[39;49m|[39;49m[39;49m [1m80-902734-1-6[0m [39;49m[39;49m|[39;49m[39;49m And Then There Were None [39;49m[39;49m|[39;49m[39;49m     Dante Alighieri [39;49m[39;49m|[39;49m
-|[39;49m [1m978-052156781[0m [39;49m|[39;49m De Monarchia             [39;49m|[39;49m spans multiple rows [39;49m|
+| [1m960-425-059-0[0m | The Lord of the Rings    |    J. R. R. Tolkien |
+[39;49m| [1m80-902734-1-6[0m | And Then There Were None |     Dante Alighieri |[39;49m
+| [1m978-052156781[0m | De Monarchia             | spans multiple rows |
 +---------------+--------------------------+---------------------+
-|[39;49m [1mThis value spans 3 columns.[0m                                    [39;49m|
+| [1mThis value spans 3 columns.[0m                                    |
 +---------------+------     [44m Page 1/2 [49m     +---------------------+
 
 OUT
@@ -242,12 +242,12 @@ HTML);
 
     expect($html->toString())->toBe(<<<'OUT'
 +---------------+--------------------------+---------------------+
-|[39;49m [1m99921-58-10-7[0m [39;49m|[39;49m Divine Comedy            [39;49m|[39;49m     Dante Alighieri [39;49m|
-|[31;44m [1m9971-5-0210-0[0m [39;49m|[39;49m A Tale of Two Cities     [39;49m|[39;49m     Charles Dickens [39;49m|
+| [1m99921-58-10-7[0m | Divine Comedy            |     Dante Alighieri |
+|[31;44m [1m9971-5-0210-0[0m [39;49m| A Tale of Two Cities     |     Charles Dickens |
 +---------------+--------------------------+---------------------+
-|[39;49m [1m960-425-059-0[0m [39;49m|[39;49m The Lord of the Rings    [39;49m|[39;49m    J. R. R. Tolkien [39;49m|
-[39;49m|[39;49m[39;49m [1m80-902734-1-6[0m [39;49m[39;49m|[39;49m[39;49m And Then There Were None [39;49m[39;49m|[39;49m[39;49m     Dante Alighieri [39;49m[39;49m|[39;49m
-|[39;49m [1m978-052156781[0m [39;49m|[39;49m De Monarchia             [39;49m|[39;49m spans multiple rows [39;49m|
+| [1m960-425-059-0[0m | The Lord of the Rings    |    J. R. R. Tolkien |
+[39;49m| [1m80-902734-1-6[0m | And Then There Were None |     Dante Alighieri |[39;49m
+| [1m978-052156781[0m | De Monarchia             | spans multiple rows |
 +---------------+--------------------------+---------------------+
 
 OUT
@@ -300,16 +300,16 @@ HTML);
 
     expect($html->toString())->toBe(<<<'OUT'
 ╔═══════════════╤══[37;41m           Books           [39;49m═══════════════════╗
-║[39;49m          [1mISBN[0m [39;49m│[39;49m [1mTitle[0m                    [39;49m│[39;49m [1mAuthor[0m              [39;49m║
+║          [1mISBN[0m │ [1mTitle[0m                    │ [1mAuthor[0m              ║
 ╠═══════════════╪══════════════════════════╪═════════════════════╣
-║[39;49m [1m99921-58-10-7[0m [39;49m│[39;49m Divine Comedy            [39;49m│[39;49m     Dante Alighieri [39;49m║
-║[31;44m [1m9971-5-0210-0[0m [39;49m│[39;49m A Tale of Two Cities     [39;49m│[39;49m     Charles Dickens [39;49m║
+║ [1m99921-58-10-7[0m │ Divine Comedy            │     Dante Alighieri ║
+║[31;44m [1m9971-5-0210-0[0m [39;49m│ A Tale of Two Cities     │     Charles Dickens ║
 ╟───────────────┼──────────────────────────┼─────────────────────╢
-║[39;49m [1m960-425-059-0[0m [39;49m│[39;49m The Lord of the Rings    [39;49m│[39;49m    J. R. R. Tolkien [39;49m║
-[39;49m║[39;49m[39;49m [1m80-902734-1-6[0m [39;49m[39;49m│[39;49m[39;49m And Then There Were None [39;49m[39;49m│[39;49m[39;49m     Dante Alighieri [39;49m[39;49m║[39;49m
-║[39;49m [1m978-052156781[0m [39;49m│[39;49m De Monarchia             [39;49m│[39;49m spans multiple rows [39;49m║
+║ [1m960-425-059-0[0m │ The Lord of the Rings    │    J. R. R. Tolkien ║
+[39;49m║ [1m80-902734-1-6[0m │ And Then There Were None │     Dante Alighieri ║[39;49m
+║ [1m978-052156781[0m │ De Monarchia             │ spans multiple rows ║
 ╟───────────────┼──────────────────────────┼─────────────────────╢
-║[39;49m [1mThis value spans 3 columns.[0m                                    [39;49m║
+║ [1mThis value spans 3 columns.[0m                                    ║
 ╚═══════════════╧══════     [44m Page 1/2 [49m     ╧═════════════════════╝
 
 OUT
