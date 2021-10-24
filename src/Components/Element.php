@@ -411,7 +411,6 @@ abstract class Element
             $styles[] = sprintf('href=%s', array_pop($href));
         }
 
-        /** @var array<int, string> $href */
         $colors = $this->properties['colors'] ?? [];
 
         foreach ($colors as $option => $content) {
