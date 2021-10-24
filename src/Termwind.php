@@ -128,7 +128,7 @@ final class Termwind
             return (string) match (true) {
                 $li->hasStyle('list-none') => $li->addStyle('list-none'),
                 $ol->hasStyle('list-none') => $li->addStyle('list-none'),
-                $ol->hasStyle('list-decimal') => $li->addStyle('list-decimal-' . (++$index)),
+                $ol->hasStyle('list-decimal') => $li->addStyle('list-decimal-'.(++$index)),
                 default => $li->addStyle('list-none'),
             };
         }, $content));
