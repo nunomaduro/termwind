@@ -198,6 +198,30 @@ test('block', function () {
     expect($html)->toBe("Hello \nWorld");
 });
 
+test('list-disc', function () {
+    $html = parse('<ul class="list-disc"><li>Hello World</li></ul>');
+
+    expect($html)->toBe('• Hello World');
+});
+
+test('list-square', function () {
+    $html = parse('<ul class="list-square"><li>Hello World</li></ul>');
+
+    expect($html)->toBe('▪ Hello World');
+});
+
+test('list-decimal', function () {
+    $html = parse('<ol class="list-decimal"><li>Hello World</li></ol>');
+
+    expect($html)->toBe('1. Hello World');
+});
+
+test('list-none', function () {
+    $html = parse('<ul class="list-none"><li>Hello World</li></ul>');
+
+    expect($html)->toBe('Hello World');
+});
+
 test('Invalid use of style list-none', function () {
     expect(fn () => parse('<span class="list-none">Hello <span>World</span></span>'))
         ->toThrow(InvalidStyle::class);
