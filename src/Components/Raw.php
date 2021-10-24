@@ -10,7 +10,7 @@ namespace Termwind\Components;
 final class Raw extends Element
 {
     /**
-     * @inheritDoc
+     * Get the string representation of the element.
      */
     public function toString(): string
     {

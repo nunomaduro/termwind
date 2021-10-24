@@ -9,7 +9,7 @@
 </h1>
 
 <p align="center">
-    <img src="/art/example.png" alt="TailCli example" height="300">
+    <img src="https://raw.githubusercontent.com/nunomaduro/tailcli/master/art/example.png" alt="TailCli example" height="300">
     <p align="center">
         <a href="https://github.com/nunomaduro/termwind/actions"><img alt="GitHub Workflow Status (master)" src="https://img.shields.io/github/workflow/status/nunomaduro/termwind/Tests/master"></a>
         <a href="https://packagist.org/packages/nunomaduro/termwind"><img alt="Total Downloads" src="https://img.shields.io/packagist/dt/nunomaduro/termwind"></a>
@@ -153,7 +153,7 @@ See https://symfony.com/doc/current/components/console/helpers/table.html
 </div>
 ```
 
-#### Creating custom css classes
+#### `style()`
 
 The `style()` function may be used to add own custom styles.
 

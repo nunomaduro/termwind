@@ -21,7 +21,14 @@ use Termwind\Termwind;
  */
 final class TableRenderer
 {
+    /**
+     * Symfony table object uses for table generation.
+     */
     private Table $table;
+
+    /**
+     * This object is used for accumulating output data from Symfony table object and return it as a string.
+     */
     private BufferedOutput $output;
 
     public function __construct(DOMNode $node)
@@ -46,6 +53,9 @@ final class TableRenderer
         return Termwind::raw($this->output->fetch());
     }
 
+    /**
+     * Looks for thead, tfoot, tbody, tr elements in a given DOM and appends rows from them to the Symfony table object.
+     */
     private function parseTable(DOMNode $node): void
     {
         /** @var DOMElement $node */
@@ -64,6 +74,9 @@ final class TableRenderer
         }
     }
 
+    /**
+     * Looks for table header title and tr elements in a given thead DOM node and adds them to the Symfony table object.
+     */
     private function parseHeader(DOMNode $node): void
     {
         /** @var DOMElement $node */
@@ -88,6 +101,9 @@ final class TableRenderer
         }
     }
 
+    /**
+     * Looks for table footer and tr elements in a given tfoot DOM node and adds them to the Symfony table object.
+     */
     private function parseFoot(DOMNode $node): void
     {
         /** @var DOMElement $node */
@@ -111,6 +127,9 @@ final class TableRenderer
         }
     }
 
+    /**
+     * Looks for tr elements in a given DOM node and adds them to the Symfony table object.
+     */
     private function parseBody(DOMNode $node): void
     {
         foreach ($node->childNodes as $child) {
@@ -120,6 +139,9 @@ final class TableRenderer
         }
     }
 
+    /**
+     * Parses table tr elements.
+     */
     private function parseRows(DOMNode $node): void
     {
         foreach ($this->parseRow($node) as $row) {
@@ -128,7 +150,8 @@ final class TableRenderer
     }
 
     /**
-     * @param  DOMNode  $node
+     * Looks for th, td elements in a given DOM node and converts them to a table cells.
+     *
      * @return Iterator<array<int, TableCell>|TableSeparator>
      */
     private function parseRow(DOMNode $node): Iterator
@@ -177,8 +200,6 @@ final class TableRenderer
 
     /**
      * Parses tr, td tag class attribute and passes bg, fg and options to a table cell style.
-     *
-     * TODO: this code duplication will disappear after Style inheritance release
      */
     private function parseCellStyle(string $styles, string $align = TableCellStyle::DEFAULT_ALIGN): TableCellStyle
     {
@@ -211,9 +232,11 @@ final class TableRenderer
         ]);
     }
 
-    private function parseTitleStyle(DOMNode $node): string
+    /**
+     * Get styled representation of title.
+     */
+    private function parseTitleStyle(DOMElement $node): string
     {
-        /** @var DOMElement $node */
         return (string) Termwind::span(' %s ', $node->getAttribute('class'));
     }
 }
