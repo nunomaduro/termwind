@@ -403,6 +403,16 @@ abstract class Element
     }
 
     /**
+     * Gets the element's style properties.
+     *
+     * @return array<string, mixed>
+     */
+    final public function getProperties(): array
+    {
+        return $this->properties;
+    }
+
+    /**
      * Get the string representation of the element.
      */
     public function toString(): string
@@ -461,7 +471,6 @@ abstract class Element
             $styles[] = sprintf('href=%s', array_pop($href));
         }
 
-        /** @var array<int, string> $href */
         $colors = $this->properties['colors'] ?? [];
 
         foreach ($colors as $option => $content) {

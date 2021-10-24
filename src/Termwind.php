@@ -62,6 +62,16 @@ final class Termwind
     }
 
     /**
+     * Creates an element instance with raw content.
+     */
+    public static function raw(string $content = ''): Components\Raw
+    {
+        return Components\Raw::fromStyles(
+            self::getRenderer(), $content, ''
+        );
+    }
+
+    /**
      * Creates an anchor element instance with the given style.
      *
      * @param  array<int, Element|string>|string  $content

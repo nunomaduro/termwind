@@ -7,6 +7,7 @@ namespace Termwind;
 use DOMDocument;
 use DOMNode;
 use DOMText;
+use Termwind\Html\TableRenderer;
 
 /**
  * @internal
@@ -67,6 +68,10 @@ final class HtmlRenderer
     private function convert(DOMNode $node): Components\Element|string
     {
         $children = [];
+
+        if ($node->nodeName === 'table') {
+            return (new TableRenderer($node))->toElement();
+        }
 
         foreach ($node->childNodes as $child) {
             $children[] = $this->convert($child);

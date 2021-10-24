@@ -2,13 +2,13 @@
 
 use function Termwind\{render};
 
-it('can render complex html', function () {
+it('can render complext html', function () {
     $html = parse(<<<'HTML'
-        <div class="bg-white">
-            <a class="ml-2">link text</a>
-            <a class="ml-2" href="link">link text</a>
-        </div>
-    HTML);
+<div class="bg-white">
+    <a class="ml-2">link text</a>
+    <a class="ml-2" href="link">link text</a>
+</div>
+HTML);
 
     expect($html)->toBe('<bg=white>  link text  <href=link>link text</></>');
 });
