@@ -189,12 +189,6 @@ final class TableRenderer
         $styles = [];
 
         /** @var array<int, string> $href */
-        $href = $element->getProperties()['href'] ?? [];
-        if ($href !== []) {
-            $styles[] = sprintf('href=%s', array_pop($href));
-        }
-
-        /** @var array<int, string> $href */
         $colors = $element->getProperties()['colors'] ?? [];
 
         foreach ($colors as $option => $content) {
