@@ -25,6 +25,7 @@ abstract class Element
      * Creates an element instance.
      *
      * @param  array<string, mixed>  $properties
+     * @param  array<int, string>  $styles
      */
     final public function __construct(
         protected OutputInterface $output,
@@ -33,18 +34,20 @@ abstract class Element
             'colors' => [],
             'options' => [],
             'isFirstChild' => false,
-        ])
-    {
+        ],
+        protected array $styles = [],
+    ) {
     }
 
     /**
      * Creates an element instance with the given styles.
      *
      * @param  array<string, mixed>  $properties
+     * @param  array<int, string>  $elementStyles
      */
-    final public static function fromStyles(OutputInterface $output, string $content, string $styles, array $properties = []): static
+    final public static function fromStyles(OutputInterface $output, string $content, string $styles, array $properties = [], array $elementStyles = []): static
     {
-        $element = new static($output, $content, $properties);
+        $element = new static($output, $content, $properties, $elementStyles);
 
         return StyleToMethod::multiple($element, $styles);
     }
@@ -68,7 +71,7 @@ abstract class Element
     {
         $content = sprintf("\e[1m%s\e[0m", $this->content);
 
-        return new static($this->output, $content, $this->properties);
+        return new static($this->output, $content, $this->properties, $this->styles);
     }
 
     /**
@@ -78,7 +81,7 @@ abstract class Element
     {
         $content = sprintf("\e[3m%s\e[0m", $this->content);
 
-        return new static($this->output, $content, $this->properties);
+        return new static($this->output, $content, $this->properties, $this->styles);
     }
 
     /**
@@ -88,7 +91,7 @@ abstract class Element
     {
         $content = sprintf("\e[4m%s\e[0m", $this->content);
 
-        return new static($this->output, $content, $this->properties);
+        return new static($this->output, $content, $this->properties, $this->styles);
     }
 
     /**
@@ -168,7 +171,7 @@ abstract class Element
     {
         $content = sprintf('%s%s', str_repeat(' ', $padding), $this->content);
 
-        return new static($this->output, $content, $this->properties);
+        return new static($this->output, $content, $this->properties, $this->styles);
     }
 
     /**
@@ -178,7 +181,7 @@ abstract class Element
     {
         $content = sprintf('%s%s', $this->content, str_repeat(' ', $padding));
 
-        return new static($this->output, $content, $this->properties);
+        return new static($this->output, $content, $this->properties, $this->styles);
     }
 
     /**
@@ -219,12 +222,12 @@ abstract class Element
         $limit -= mb_strwidth($end, 'UTF-8');
 
         if (mb_strwidth($this->content, 'UTF-8') <= $limit) {
-            return new static($this->output, $this->content, $this->properties);
+            return new static($this->output, $this->content, $this->properties, $this->styles);
         }
 
         $content = rtrim(mb_strimwidth($this->content, 0, $limit, '', 'UTF-8')).$end;
 
-        return new static($this->output, $content, $this->properties);
+        return new static($this->output, $content, $this->properties, $this->styles);
     }
 
     /**
@@ -237,12 +240,12 @@ abstract class Element
         if ($length <= $content) {
             $content = $this->content.str_repeat(' ', $content - $length);
 
-            return new static($this->output, $content, $this->properties);
+            return new static($this->output, $content, $this->properties, $this->styles);
         }
 
         $content = rtrim(mb_strimwidth($this->content, 0, $content, '', 'UTF-8'));
 
-        return new static($this->output, $content, $this->properties);
+        return new static($this->output, $content, $this->properties, $this->styles);
     }
 
     /**
@@ -260,7 +263,7 @@ abstract class Element
     {
         $content = mb_strtoupper($this->content, 'UTF-8');
 
-        return new static($this->output, $content, $this->properties);
+        return new static($this->output, $content, $this->properties, $this->styles);
     }
 
     /**
@@ -270,7 +273,7 @@ abstract class Element
     {
         $content = mb_strtolower($this->content, 'UTF-8');
 
-        return new static($this->output, $content, $this->properties);
+        return new static($this->output, $content, $this->properties, $this->styles);
     }
 
     /**
@@ -280,7 +283,7 @@ abstract class Element
     {
         $content = mb_convert_case($this->content, MB_CASE_TITLE, 'UTF-8');
 
-        return new static($this->output, $content, $this->properties);
+        return new static($this->output, $content, $this->properties, $this->styles);
     }
 
     /**
@@ -293,7 +296,7 @@ abstract class Element
             'UTF-8'
         );
 
-        return new static($this->output, $content, $this->properties);
+        return new static($this->output, $content, $this->properties, $this->styles);
     }
 
     /**
@@ -303,7 +306,7 @@ abstract class Element
     {
         $content = sprintf("\e[9m%s\e[0m", $this->content);
 
-        return new static($this->output, $content, $this->properties);
+        return new static($this->output, $content, $this->properties, $this->styles);
     }
 
     /**
@@ -313,7 +316,7 @@ abstract class Element
     {
         $content = sprintf("\e[8m%s\e[0m", $this->content);
 
-        return new static($this->output, $content, $this->properties);
+        return new static($this->output, $content, $this->properties, $this->styles);
     }
 
     /**
@@ -333,21 +336,62 @@ abstract class Element
     {
         $content = $text.$this->content;
 
-        return new static($this->output, $content, $this->properties);
+        return new static($this->output, $content, $this->properties, $this->styles);
     }
 
     /**
-     * Hides the default styles of ul, ol.
+     * Prepends the list style type to the content.
      */
-    final public function listNone(): static
+    final public function list(string $type, int $index = 0): static
     {
-        if ((static::class != Ul::class) && (static::class != Ol::class)) {
+        if (! $this instanceof Ul && ! $this instanceof Ol && ! $this instanceof Li) {
             throw new InvalidStyle(sprintf('Style list-none cannot be used with %s', static::class));
         }
 
-        $content = (string) preg_replace(['/(^\d+[. ]{2})/m', '/(^•+[ ]{1})/m'], '', $this->content);
+        if (! $this instanceof Li) {
+            return new static($this->output, $this->content, $this->properties, $this->styles);
+        }
 
-        return new static($this->output, $content, $this->properties);
+        return match ($type) {
+            'square' => $this->prepend('▪ '),
+            'disc' => $this->prepend('• '),
+            'decimal' => $this->prepend(sprintf('%d. ', $index)),
+            default => new static($this->output, $this->content, $this->properties, $this->styles)
+        };
+    }
+
+    /**
+     * Sets the styles to the element.
+     */
+    final public function setStyle(string $style): static
+    {
+        $styles = array_unique(array_merge($this->styles, [$style]));
+
+        return new static($this->output, $this->content, $this->properties, $styles);
+    }
+
+    /**
+     * Adds a style to the element.
+     */
+    final public function addStyle(string $style): static
+    {
+        return static::fromStyles($this->output, $this->content, $style, $this->properties, $this->styles);
+    }
+
+    /**
+     * Checks if the element has the style.
+     */
+    final public function hasStyle(string $style): bool
+    {
+        return in_array($style, $this->styles, true);
+    }
+
+    /**
+     * Sets the content of the element.
+     */
+    final public function setContent(string $content): static
+    {
+        return new static($this->output, $content, $this->properties, $this->styles);
     }
 
     /**
@@ -400,6 +444,7 @@ abstract class Element
             $this->output,
             $this->content,
             $properties,
+            $this->styles,
         );
     }
 

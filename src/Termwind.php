@@ -86,17 +86,25 @@ final class Termwind
      */
     public static function ul(array $content = [], string $styles = '', array $properties = []): Components\Ul
     {
-        $text = implode('', array_map(function ($element): string {
-            if (! $element instanceof Components\Li) {
+        $ul = Components\Ul::fromStyles(
+            self::getRenderer(), '', $styles, $properties
+        );
+
+        $content = implode('', array_map(function ($li) use ($ul): string {
+            if (! $li instanceof Components\Li) {
                 throw new InvalidChild('Unordered lists only accept `li` as child');
             }
 
-            return (string) $element->prepend('• ');
+            return (string) match (true) {
+                $li->hasStyle('list-none') => $li,
+                $ul->hasStyle('list-none') => $li->addStyle('list-none'),
+                $ul->hasStyle('list-square') => $li->addStyle('list-square'),
+                $ul->hasStyle('list-disc') => $li->addStyle('list-disc'),
+                default => $li->addStyle('list-none'),
+            };
         }, $content));
 
-        return Components\Ul::fromStyles(
-            self::getRenderer(), $text, $styles, $properties
-        );
+        return $ul->setContent($content);
     }
 
     /**
@@ -107,18 +115,25 @@ final class Termwind
      */
     public static function ol(array $content = [], string $styles = '', array $properties = []): Components\Ol
     {
+        $ol = Components\Ol::fromStyles(
+            self::getRenderer(), '', $styles, $properties
+        );
+
         $index = 0;
-        $text = implode('', array_map(function ($element) use (&$index): string {
-            if (! $element instanceof Components\Li) {
+        $content = implode('', array_map(function ($li) use ($ol, &$index): string {
+            if (! $li instanceof Components\Li) {
                 throw new InvalidChild('Ordered lists only accept `li` as child');
             }
 
-            return (string) $element->prepend(sprintf('%s. ', ++$index));
+            return (string) match (true) {
+                $li->hasStyle('list-none') => $li->addStyle('list-none'),
+                $ol->hasStyle('list-none') => $li->addStyle('list-none'),
+                $ol->hasStyle('list-decimal') => $li->addStyle('list-decimal-' . (++$index)),
+                default => $li->addStyle('list-none'),
+            };
         }, $content));
 
-        return Components\Ol::fromStyles(
-            self::getRenderer(), $text, $styles, $properties
-        );
+        return $ol->setContent($content);
     }
 
     /**
