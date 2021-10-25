@@ -1,7 +1,7 @@
 <?php
 
 it('renders the element', function () {
-    $html = parse("<pre>
+    $html = parse('<pre>
     <h1>Introduction</h1>
 
     <div>The body of your message.</div>
@@ -10,9 +10,9 @@ it('renders the element', function () {
     Laravel
 
     © 2021 Laravel. All rights reserved.
-</pre>");
+</pre>');
 
-    expect($html)->toBe("
+    expect($html)->toBe('
     <h1>Introduction</h1>
 
     <div>The body of your message.</div>
@@ -21,5 +21,5 @@ it('renders the element', function () {
     Laravel
 
     © 2021 Laravel. All rights reserved.
-");
+');
 });
