@@ -72,12 +72,12 @@ final class HtmlRenderer
         if ($node->nodeName === 'table') {
             return (new TableRenderer($node))->toElement();
         } elseif ($node->nodeName === 'pre') {
-            // It should convert all child nodes to HTML string
-            $html = array_reduce(
-                iterator_to_array($node->childNodes),
-                static fn (string $html, DOMNode $child) => $html .= $child->ownerDocument->saveXML($child),
-                ''
-            );
+            $html = '';
+            foreach ($node->childNodes as $child) {
+                if ($child->ownerDocument instanceof \DOMNode) {
+                    $html .= $child->ownerDocument->saveXML($child);
+                }
+            }
 
             return Termwind::raw(html_entity_decode($html));
         }
