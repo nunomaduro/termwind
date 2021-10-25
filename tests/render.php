@@ -2,15 +2,14 @@
 
 use function Termwind\{render};
 
-it('can render complext html', function () {
+it('can render complex html', function () {
     $html = parse(<<<'HTML'
-<div class="bg-white">
-    <a class="ml-2">link text</a>
-    <a class="ml-2" href="link">link text</a>
-</div>
-HTML);
+        <div class="bg-white">
+            <a class="ml-2">link text</a> and <a href="link">link text</a>
+        </div>
+    HTML);
 
-    expect($html)->toBe('<bg=white>  link text  <href=link>link text</></>');
+    expect($html)->toBe('<bg=white>  link text and <href=link>link text</></>');
 });
 
 it('can render strings', function () {
@@ -22,8 +21,7 @@ it('can render strings', function () {
 it('can render to custom output', function () {
     $html = render(<<<'HTML'
         <div class="bg-white">
-            <a class="ml-2">link text</a>
-            <a class="ml-2" href="link">link text</a>
+            <a class="ml-2">link text</a><a class="ml-2" href="link">link text</a>
         </div>
     HTML);
 
@@ -40,11 +38,11 @@ it('renders element inside another one with extra spaces and line breaks', funct
     $html = parse(<<<'HTML'
         <div class="bg-red">
             Hello
-            <strong>world</strong>
+            <strong>world</strong> <a href="#">click here</a>
         </div>
     HTML);
 
-    expect($html)->toBe("<bg=red>Hello \e[1mworld\e[0m</>");
+    expect($html)->toBe("<bg=red>Hello \e[1mworld\e[0m <href=#>click here</></>");
 });
 
 it('renders element and ignores the classes of the same type', function () {
