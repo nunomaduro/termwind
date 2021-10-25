@@ -71,7 +71,7 @@ test('truncate', function () {
         </span>
     HTML);
 
-    expect($html)->toBe('te...text text');
+    expect($html)->toBe('te... text text');
 });
 
 test('width', function () {
@@ -82,7 +82,7 @@ test('width', function () {
         </span>
     HTML);
 
-    expect($html)->toBe('text-text text ');
+    expect($html)->toBe('text- text text ');
 });
 
 test('ml', function () {

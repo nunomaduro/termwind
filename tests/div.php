@@ -1,7 +1,5 @@
 <?php
 
-use function Termwind\{div};
-
 it('renders the element', function () {
     $html = parse('<div>text</div>');
 
@@ -16,5 +14,5 @@ it('renders the element with display block as default', function () {
         </div>
     HTML);
 
-    expect($html)->toBe("\nSecond Line");
+    expect($html)->toBe(" \nSecond Line");
 });
