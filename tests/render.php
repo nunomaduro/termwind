@@ -52,3 +52,14 @@ it('renders element and ignores the classes of the same type', function () {
 
     expect($html)->toBe(' Hello World');
 });
+
+it('does not render comment html strings', function () {
+    $html = parse(<<<'HTML'
+        <div>
+            <!-- This is a comment -->
+            <div>Hello World</div>
+        </div>
+    HTML);
+
+    expect($html)->toBe('Hello World');
+});
