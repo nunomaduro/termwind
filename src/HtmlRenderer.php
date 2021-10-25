@@ -74,7 +74,7 @@ final class HtmlRenderer
         } elseif ($node->nodeName === 'pre') {
             $html = '';
             foreach ($node->childNodes as $child) {
-                if ($child->ownerDocument instanceof \DOMNode) {
+                if ($child->ownerDocument instanceof \DOMDocument) {
                     $html .= $child->ownerDocument->saveXML($child);
                 }
             }
