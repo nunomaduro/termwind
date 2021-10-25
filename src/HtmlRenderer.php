@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Termwind;
 
+use DOMComment;
 use DOMDocument;
 use DOMNode;
 use DOMText;
@@ -44,22 +45,56 @@ final class HtmlRenderer
     }
 
     /**
+     * Checks if the node is empty.
+     */
+    private function isNodeEmpty(DOMNode $node): bool
+    {
+        return $node instanceof DOMText &&
+            preg_replace('/\s+/', '', $node->nodeValue) === '';
+    }
+
+    /**
+     * Gets the previous sibling from a node.
+     */
+    private function getNodePreviousSibling(DOMNode $node): DOMNode|null
+    {
+        while ($node = $node->previousSibling) {
+            if ($this->isNodeEmpty($node)) {
+                continue;
+            }
+
+            if (! $node instanceof DOMComment) {
+                return $node;
+            }
+        }
+
+        return $node;
+    }
+
+    /**
+     * Gets the next sibling from a node.
+     */
+    private function getNodeNextSibling(DOMNode $node): DOMNode|null
+    {
+        while ($node = $node->nextSibling) {
+            if ($this->isNodeEmpty($node)) {
+                continue;
+            }
+
+            if (! $node instanceof DOMComment) {
+                return $node;
+            }
+        }
+
+        return $node;
+    }
+
+    /**
      * Checks if the node is the first child.
      */
     private function isNodeFirstChild(DOMNode $node): bool
     {
-        $previous = $node->previousSibling;
-
-        while ($previous) {
-            if ($previous->nodeName !== '#text' ||
-                preg_replace('/\s+/', '', $previous->nodeValue) !== '') {
-                return false;
-            }
-
-            $previous = $previous->previousSibling;
-        }
-
-        return is_null($previous);
+        return is_null($this->getNodePreviousSibling($node));
     }
 
     /**
@@ -98,14 +133,18 @@ final class HtmlRenderer
      */
     private function toElement(DOMNode $node, array $children): Components\Element|string
     {
+        if ($node instanceof DOMComment) {
+            return '';
+        }
+
         if ($node instanceof DOMText) {
             $text = preg_replace('/\s+/', ' ', $node->textContent) ?? '';
 
-            if (is_null($node->previousSibling)) {
+            if (is_null($this->getNodePreviousSibling($node))) {
                 $text = ltrim($text);
             }
 
-            if (is_null($node->nextSibling)) {
+            if (is_null($this->getNodeNextSibling($node))) {
                 $text = rtrim($text);
             }
 
