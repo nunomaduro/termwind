@@ -71,6 +71,15 @@ final class HtmlRenderer
 
         if ($node->nodeName === 'table') {
             return (new TableRenderer($node))->toElement();
+        } elseif ($node->nodeName === 'pre') {
+            $html = '';
+            foreach ($node->childNodes as $child) {
+                if ($child->ownerDocument instanceof \DOMDocument) {
+                    $html .= $child->ownerDocument->saveXML($child);
+                }
+            }
+
+            return Termwind::raw(html_entity_decode($html));
         }
 
         foreach ($node->childNodes as $child) {
@@ -90,10 +99,10 @@ final class HtmlRenderer
     private function toElement(DOMNode $node, array $children): Components\Element|string
     {
         if ($node instanceof DOMText) {
-            $trimedText = ltrim($node->textContent);
-            $text = preg_replace('/\s+/', ' ', $trimedText);
+            $trimmedText = ltrim($node->textContent);
+            $text = preg_replace('/\s+/', ' ', $trimmedText);
 
-            return is_string($text) ? $text : $trimedText;
+            return is_string($text) ? $text : $trimmedText;
         }
 
         /** @var array<string, mixed> $properties */
@@ -112,7 +121,7 @@ final class HtmlRenderer
             'li' => Termwind::li($children, $styles, $properties),
             'dl' => Termwind::dl($children, $styles, $properties),
             'dt' => Termwind::dt($children, $styles, $properties),
-            'dd' =>  Termwind::dd($children, $styles, $properties),
+            'dd' => Termwind::dd($children, $styles, $properties),
             'span' => Termwind::span($children, $styles, $properties),
             'br' => Termwind::breakLine(),
             'strong' => Termwind::span($children, $styles, $properties)->fontBold(),
