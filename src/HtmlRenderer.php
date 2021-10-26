@@ -115,6 +115,7 @@ final class HtmlRenderer
                 }
             }
 
+            /** @var \DOMElement $node */
             $line = max((int) $node->getAttribute('line'), 1);
             $startLine = max((int) $node->getAttribute('start-line'), 1);
 

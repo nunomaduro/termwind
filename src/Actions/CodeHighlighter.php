@@ -76,9 +76,9 @@ final class CodeHighlighter
     }
 
     /**
-     * Returns content split into lines with numbers
+     * Returns content split into lines with numbers.
      *
-     * @return array<int, array<int, string>>
+     * @return array<int, array<int, array{0: string|null, 1: non-empty-string}>>
      */
     private function getHighlightedLines(string $source, int $startLine): array
     {
@@ -89,7 +89,9 @@ final class CodeHighlighter
     }
 
     /**
-     * @return array<int, array<int, string>>
+     * Splits content into tokens
+     *
+     * @return array<int, array{0: string|null, 1: string}>
      */
     private function tokenize(string $source): array
     {
@@ -97,49 +99,23 @@ final class CodeHighlighter
 
         $output = [];
         $currentType = null;
+        $newType = null;
         $buffer = '';
+
 
         foreach ($tokens as $token) {
             if (is_array($token)) {
-                switch ($token[0]) {
-                    case T_WHITESPACE:
-                        break;
-
-                    case T_OPEN_TAG:
-                    case T_OPEN_TAG_WITH_ECHO:
-                    case T_CLOSE_TAG:
-                    case T_STRING:
-                    case T_VARIABLE:
-                        // Constants
-                    case T_DIR:
-                    case T_FILE:
-                    case T_METHOD_C:
-                    case T_DNUMBER:
-                    case T_LNUMBER:
-                    case T_NS_C:
-                    case T_LINE:
-                    case T_CLASS_C:
-                    case T_FUNC_C:
-                    case T_TRAIT_C:
-                        $newType = self::TOKEN_DEFAULT;
-                        break;
-
-                    case T_COMMENT:
-                    case T_DOC_COMMENT:
-                        $newType = self::TOKEN_COMMENT;
-                        break;
-
-                    case T_ENCAPSED_AND_WHITESPACE:
-                    case T_CONSTANT_ENCAPSED_STRING:
-                        $newType = self::TOKEN_STRING;
-                        break;
-
-                    case T_INLINE_HTML:
-                        $newType = self::TOKEN_HTML;
-                        break;
-
-                    default:
-                        $newType = self::TOKEN_KEYWORD;
+                if ($token[0] !== T_WHITESPACE) {
+                    $newType = match ($token[0]) {
+                        T_OPEN_TAG, T_OPEN_TAG_WITH_ECHO, T_CLOSE_TAG, T_STRING, T_VARIABLE,
+                            // Constants
+                        T_DIR, T_FILE, T_METHOD_C, T_DNUMBER, T_LNUMBER, T_NS_C,
+                        T_LINE, T_CLASS_C, T_FUNC_C, T_TRAIT_C => self::TOKEN_DEFAULT,
+                        T_COMMENT, T_DOC_COMMENT => self::TOKEN_COMMENT,
+                        T_ENCAPSED_AND_WHITESPACE, T_CONSTANT_ENCAPSED_STRING => self::TOKEN_STRING,
+                        T_INLINE_HTML => self::TOKEN_HTML,
+                        default => self::TOKEN_KEYWORD
+                    };
                 }
             } else {
                 $newType = $token === '"' ? self::TOKEN_STRING : self::TOKEN_KEYWORD;
@@ -158,13 +134,18 @@ final class CodeHighlighter
             $buffer .= is_array($token) ? $token[1] : $token;
         }
 
-        if (isset($newType)) {
+        if (! is_null($newType)) {
             $output[] = [$newType, $buffer];
         }
 
         return $output;
     }
 
+    /**
+     * @param  array<int, array{0: string|null, 1: string}>  $tokens
+     * @param  int  $startLine
+     * @return array<int, array<int, array{0: string|null, 1: non-empty-string}>>
+     */
     private function splitToLines(array $tokens, int $startLine): array
     {
         $lines = [];
@@ -190,6 +171,10 @@ final class CodeHighlighter
         return $lines;
     }
 
+    /**
+     * @param  array<int, array<int, array{0: string|null, 1: non-empty-string}>>  $tokenLines
+     * @return array<int, string>
+     */
     private function colorLines(array $tokenLines): array
     {
         $lines = [];
@@ -209,16 +194,20 @@ final class CodeHighlighter
     }
 
     /**
+     * @param  array<int, string>  $lines
      * @param  int|null  $markLine
+     * @return string
      */
-    private function lineNumbers(array $lines, $markLine = null): string
+    private function lineNumbers(array $lines, int|null $markLine = null): string
     {
-        $lineStrlen = strlen((string) (array_key_last($lines) + 1));
-        $lineStrlen = $lineStrlen < self::WIDTH ? self::WIDTH : $lineStrlen;
+        $lastLine = (int) array_key_last($lines);
+        $lineLength = strlen((string) ($lastLine + 1));
+        $lineLength = $lineLength < self::WIDTH ? self::WIDTH : $lineLength;
+
         $snippet = '';
         $mark = '  '.$this->arrow.' ';
         foreach ($lines as $i => $line) {
-            $coloredLineNumber = $this->coloredLineNumber(self::LINE_NUMBER, $i, $lineStrlen);
+            $coloredLineNumber = $this->coloredLineNumber(self::LINE_NUMBER, $i, $lineLength);
 
             if (null !== $markLine) {
                 $snippet .= ($markLine === $i + 1
@@ -227,14 +216,13 @@ final class CodeHighlighter
                 );
 
                 $coloredLineNumber = ($markLine === $i + 1 ?
-                    $this->coloredLineNumber(self::MARKED_LINE_NUMBER, $i, $lineStrlen) :
+                    $this->coloredLineNumber(self::MARKED_LINE_NUMBER, $i, $lineLength) :
                     $coloredLineNumber
                 );
             }
+
             $snippet .= $coloredLineNumber;
-
             $snippet .= $this->styleToken(self::LINE_NUMBER_DIVIDER, $this->delimiter);
-
             $snippet .= $line.PHP_EOL;
         }
 
@@ -243,12 +231,14 @@ final class CodeHighlighter
 
     private function coloredLineNumber(string $style, int $i, int $lineStrlen): string
     {
-        return $this->styleToken($style, str_pad((string) ($i + 1), $lineStrlen, ' ', STR_PAD_LEFT));
+        return $this->styleToken(
+            $style, str_pad((string) ($i + 1), $lineStrlen, ' ', STR_PAD_LEFT)
+        );
     }
 
-    private function styleToken(string $token, string $string): string
+    private function styleToken(string|null $token, string $string): string
     {
-        if (! isset(self::THEME[$token])) {
+        if (is_null($token) || ! array_key_exists($token, self::THEME)) {
             return $string;
         }
 
