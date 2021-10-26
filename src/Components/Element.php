@@ -519,7 +519,7 @@ abstract class Element
             return $callback($content);
         }
 
-        list ($text, $index) = $matches;
+        [$text, $index] = $matches;
 
         return substr_replace($content, $callback($text), $index, mb_strlen($text));
     }
