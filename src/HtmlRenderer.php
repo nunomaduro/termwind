@@ -78,7 +78,7 @@ final class HtmlRenderer
 
         /** @var array<string, mixed> $properties */
         $properties = [
-            'isFirstChild' => $node->isNodeFirstChild(),
+            'isFirstChild' => $node->isFirstChild(),
         ];
 
         $styles = $node->getClassAttribute();

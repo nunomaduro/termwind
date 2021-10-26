@@ -7,6 +7,8 @@ namespace Termwind\ValueObjects;
 use Generator;
 
 /**
+ * A value object with helper methods for working with DOM node.
+ *
  * @internal
  */
 final class Node
@@ -56,7 +58,7 @@ final class Node
      */
     public function isName(string $name): bool
     {
-        return $this->node->nodeName === $name;
+        return $this->getName() === $name;
     }
 
     /**
@@ -148,7 +150,7 @@ final class Node
     /**
      * Checks if the node is the first child.
      */
-    public function isNodeFirstChild(): bool
+    public function isFirstChild(): bool
     {
         return is_null($this->getPreviousSibling());
     }

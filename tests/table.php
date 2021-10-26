@@ -3,7 +3,7 @@
 use Termwind\HtmlRenderer;
 
 it('can render table without thead, tbody, tfoot to a string', function () {
-    $html = (new HtmlRenderer())->parse(<<<HTML
+    $html = (new HtmlRenderer())->parse(<<<'HTML'
 <table style="box">
     <tr>
         <th align="right">99921-58-10-7</th>
@@ -51,7 +51,7 @@ OUT
 });
 
 it('can render table with thead to a string', function () {
-    $html = (new HtmlRenderer())->parse(<<<HTML
+    $html = (new HtmlRenderer())->parse(<<<'HTML'
 <table>
     <thead title="Books" class="bg-red text-white px-10">
         <tr>
@@ -104,7 +104,7 @@ OUT
 });
 
 it('can render table with thead with two rows to a string', function () {
-    $html = (new HtmlRenderer())->parse(<<<HTML
+    $html = (new HtmlRenderer())->parse(<<<'HTML'
 <table>
     <thead title="Books" class="bg-red text-white px-10">
         <tr border="1">
@@ -162,7 +162,7 @@ OUT
 });
 
 it('can render table with tfoot to a string', function () {
-    $html = (new HtmlRenderer())->parse(<<<HTML
+    $html = (new HtmlRenderer())->parse(<<<'HTML'
 <table>
     <tr>
         <th align="right">99921-58-10-7</th>
@@ -213,7 +213,7 @@ OUT
 });
 
 it('can render table with tbody to a string', function () {
-    $html = (new HtmlRenderer())->parse(<<<HTML
+    $html = (new HtmlRenderer())->parse(<<<'HTML'
 <table>
     <tbody>
         <tr>
@@ -259,7 +259,7 @@ OUT
 });
 
 it('can render table with thead, tbody, tfoot to a string', function () {
-    $html = (new HtmlRenderer())->parse(<<<HTML
+    $html = (new HtmlRenderer())->parse(<<<'HTML'
 <table style="box-double">
     <thead title="Books" class="bg-red text-white px-10">
         <tr>
