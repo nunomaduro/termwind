@@ -203,7 +203,7 @@ abstract class Element
     /**
      * Adds a text color to the element.
      */
-    final public function textColor(string $color, int $variant = 0): static
+    final public function text(string $color, int $variant = 0): static
     {
         if ($variant > 0) {
             $color = $this->getColorVariant($color, $variant);
@@ -233,7 +233,7 @@ abstract class Element
     /**
      * Forces the width of the element.
      */
-    final public function width(int $content): static
+    final public function w(int $content): static
     {
         $length = mb_strlen($this->content, 'UTF-8');
 
@@ -253,7 +253,7 @@ abstract class Element
      */
     final public function wFull(): static
     {
-        return $this->width(terminal()->width());
+        return $this->w(terminal()->width());
     }
 
     /**
