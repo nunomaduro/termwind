@@ -74,11 +74,11 @@ test('truncate', function () {
     expect($html)->toBe('te... text text');
 });
 
-test('width', function () {
+test('w', function () {
     $html = parse(<<<'HTML'
         <span>
-            <span class="width-5">text-ignored</span>
-            <span class="width-10">text text</span>
+            <span class="w-5">text-ignored</span>
+            <span class="w-10">text text</span>
         </span>
     HTML);
 

@@ -233,7 +233,7 @@ abstract class Element
     /**
      * Forces the width of the element.
      */
-    final public function width(int $content): static
+    final public function w(int $content): static
     {
         $length = mb_strlen($this->content, 'UTF-8');
 
@@ -253,7 +253,7 @@ abstract class Element
      */
     final public function wFull(): static
     {
-        return $this->width(terminal()->width());
+        return $this->w(terminal()->width());
     }
 
     /**
