@@ -11,7 +11,7 @@ it('can render table without thead, tbody, tfoot to a string', function () {
         <td align="right">Dante Alighieri</td>
     </tr>
     <tr border="1">
-        <th class="bg-blue-400 text-color-red" align="right">9971-5-0210-0</th>
+        <th class="bg-blue-400 text-red" align="right">9971-5-0210-0</th>
         <td>A Tale of Two Cities</td>
         <td align="right">Charles Dickens</td>
     </tr>
@@ -49,7 +49,7 @@ OUT
 it('can render table with thead to a string', function () {
     $html = (new HtmlRenderer())->parse(<<<HTML
 <table>
-    <thead title="Books" class="bg-red text-color-white px-10">
+    <thead title="Books" class="bg-red text-white px-10">
         <tr>
             <th align="right">ISBN</th>
             <th>Title</th>
@@ -62,7 +62,7 @@ it('can render table with thead to a string', function () {
         <td align="right">Dante Alighieri</td>
     </tr>
     <tr border="1">
-        <th class="bg-blue text-color-red" align="right">9971-5-0210-0</th>
+        <th class="bg-blue text-red" align="right">9971-5-0210-0</th>
         <td>A Tale of Two Cities</td>
         <td align="right">Charles Dickens</td>
     </tr>
@@ -102,7 +102,7 @@ OUT
 it('can render table with thead with two rows to a string', function () {
     $html = (new HtmlRenderer())->parse(<<<HTML
 <table>
-    <thead title="Books" class="bg-red text-color-white px-10">
+    <thead title="Books" class="bg-red text-white px-10">
         <tr border="1">
             <th align="right">Hello</th>
             <th>World</th>
@@ -120,7 +120,7 @@ it('can render table with thead with two rows to a string', function () {
         <td align="right">Dante Alighieri</td>
     </tr>
     <tr border="1">
-        <th class="bg-blue text-color-red" align="right">9971-5-0210-0</th>
+        <th class="bg-blue text-red" align="right">9971-5-0210-0</th>
         <td>A Tale of Two Cities</td>
         <td align="right">Charles Dickens</td>
     </tr>
@@ -166,7 +166,7 @@ it('can render table with tfoot to a string', function () {
         <td align="right">Dante Alighieri</td>
     </tr>
     <tr border="1">
-        <th class="bg-blue text-color-red" align="right">9971-5-0210-0</th>
+        <th class="bg-blue text-red" align="right">9971-5-0210-0</th>
         <td>A Tale of Two Cities</td>
         <td align="right">Charles Dickens</td>
     </tr>
@@ -218,7 +218,7 @@ it('can render table with tbody to a string', function () {
             <td align="right">Dante Alighieri</td>
         </tr>
         <tr border="1">
-            <th class="bg-blue text-color-red" align="right">9971-5-0210-0</th>
+            <th class="bg-blue text-red" align="right">9971-5-0210-0</th>
             <td>A Tale of Two Cities</td>
             <td align="right">Charles Dickens</td>
         </tr>
@@ -257,7 +257,7 @@ OUT
 it('can render table with thead, tbody, tfoot to a string', function () {
     $html = (new HtmlRenderer())->parse(<<<HTML
 <table style="box-double">
-    <thead title="Books" class="bg-red text-color-white px-10">
+    <thead title="Books" class="bg-red text-white px-10">
         <tr>
             <th align="right">ISBN</th>
             <th>Title</th>
@@ -271,7 +271,7 @@ it('can render table with thead, tbody, tfoot to a string', function () {
             <td align="right">Dante Alighieri</td>
         </tr>
         <tr border="1">
-            <th class="bg-blue text-color-red" align="right">9971-5-0210-0</th>
+            <th class="bg-blue text-red" align="right">9971-5-0210-0</th>
             <td>A Tale of Two Cities</td>
             <td align="right">Charles Dickens</td>
         </tr>

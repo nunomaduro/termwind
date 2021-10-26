@@ -70,7 +70,7 @@ The `style()` function may be used to add own custom syles.
 ```php
 use function Termwind\{style};
 
-style('btn')->apply('p-4 bg-blue text-color-white');
+style('btn')->apply('p-4 bg-blue text-white');
 
 render('<div class="btn">Click me</div>');
 ```
