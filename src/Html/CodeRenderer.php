@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Termwind\Actions;
+namespace Termwind\Html;
 
+use Termwind\Components\Element;
 use Termwind\Termwind;
 
 /**
  * @internal
  */
-final class CodeHighlighter
+final class CodeRenderer
 {
     public const TOKEN_DEFAULT = 'token_default';
     public const TOKEN_COMMENT = 'token_comment';
@@ -50,16 +51,28 @@ final class CodeHighlighter
     private const NO_MARK = '    ';
 
     /**
-     * Highlights the provided content.
+     * Highlights HTML content from a given node and converts to the content element.
      */
-    public function highlight(string $content, int $line, int $startLine = 1): string
+    public function toElement(\DOMNode $node): Element
     {
-        $tokenLines = $this->getHighlightedLines(trim($content, "\n"), $startLine);
+        $html = '';
+        foreach ($node->childNodes as $child) {
+            if ($child->ownerDocument instanceof \DOMDocument) {
+                $html .= $child->ownerDocument->saveXML($child);
+            }
+        }
 
+        /** @var \DOMElement $node */
+        $line = max((int) $node->getAttribute('line'), 1);
+        $startLine = max((int) $node->getAttribute('start-line'), 1);
+
+        $html = html_entity_decode($html);
+
+        $tokenLines = $this->getHighlightedLines(trim($html, "\n"), $startLine);
         $lines = $this->colorLines($tokenLines);
         $lines = $this->lineNumbers($lines, $line);
 
-        return rtrim($lines);
+        return Termwind::div(trim($lines, "\n"));
     }
 
     /**

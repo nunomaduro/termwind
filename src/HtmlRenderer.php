@@ -8,8 +8,7 @@ use DOMComment;
 use DOMDocument;
 use DOMNode;
 use DOMText;
-use Termwind\Actions\CodeHighlighter;
-use Termwind\Html\TableRenderer;
+use Termwind\Html;
 
 /**
  * @internal
@@ -108,22 +107,7 @@ final class HtmlRenderer
         if ($node->nodeName === 'table') {
             return (new TableRenderer($node))->toElement();
         } elseif ($node->nodeName === 'code') {
-            $html = '';
-            foreach ($node->childNodes as $child) {
-                if ($child->ownerDocument instanceof \DOMDocument) {
-                    $html .= $child->ownerDocument->saveXML($child);
-                }
-            }
-
-            /** @var \DOMElement $node */
-            $line = max((int) $node->getAttribute('line'), 1);
-            $startLine = max((int) $node->getAttribute('start-line'), 1);
-
-            $html = html_entity_decode($html);
-
-            return Termwind::raw(
-                (new CodeHighlighter())->highlight($html, $line, $startLine)
-            );
+            return (new Html\CodeRenderer())->toElement($node);
         } elseif ($node->nodeName === 'pre') {
             $html = '';
             foreach ($node->childNodes as $child) {

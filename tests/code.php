@@ -19,6 +19,7 @@ HTML
     );
 
     expect($html)->toBe(<<<'HTML'
+
 <fg=red>[1m  ➜ [0m</>[1m[3m  1[0m[0m<fg=gray>▕ </><fg=blue>[1m    [0m</>[1m<?php[0m
     <fg=gray>  2</><fg=gray>▕ </>
     <fg=gray>  3</><fg=gray>▕ </>[1m    [0m<fg=gray>[3m/** @test */[0m</>
@@ -53,6 +54,7 @@ HTML
     );
 
     expect($html)->toBe(<<<'HTML'
+
     <fg=gray>  1</><fg=gray>▕ </><fg=blue>[1m    [0m</>[1m<?php[0m
     <fg=gray>  2</><fg=gray>▕ </>
     <fg=gray>  3</><fg=gray>▕ </>[1m    [0m<fg=gray>[3m/** @test */[0m</>
@@ -87,6 +89,7 @@ HTML
     );
 
     expect($html)->toBe(<<<'HTML'
+
     <fg=gray> 14</><fg=gray>▕ </><fg=blue>[1m    [0m</>[1m<?php[0m
     <fg=gray> 15</><fg=gray>▕ </>
     <fg=gray> 16</><fg=gray>▕ </>[1m    [0m<fg=gray>[3m/** @test */[0m</>
