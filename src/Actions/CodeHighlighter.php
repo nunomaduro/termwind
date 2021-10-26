@@ -22,7 +22,7 @@ final class CodeHighlighter
     private const ARROW_SYMBOL = '>';
     private const DELIMITER = '|';
     private const ARROW_SYMBOL_UTF8 = '➜';
-    private const DELIMITER_UTF8 = '▕'; // '▶';
+    private const DELIMITER_UTF8 = '▕ '; // '▶';
     private const LINE_NUMBER_DIVIDER = 'line_divider';
     private const MARKED_LINE_NUMBER = 'marked_line';
     private const WIDTH = 3;
@@ -50,19 +50,6 @@ final class CodeHighlighter
     private const NO_MARK = '    ';
 
     /**
-     * Creates an instance of the Highlighter.
-     */
-    public function __construct(bool $UTF8 = true)
-    {
-        if (! $UTF8) {
-            $this->delimiter = self::DELIMITER;
-            $this->arrow = self::ARROW_SYMBOL;
-        }
-
-        $this->delimiter .= ' ';
-    }
-
-    /**
      * Highlights the provided content.
      */
     public function highlight(string $content, int $line, int $startLine = 1): string
@@ -78,7 +65,7 @@ final class CodeHighlighter
     /**
      * Returns content split into lines with numbers.
      *
-     * @return array<int, array<int, array{0: string|null, 1: non-empty-string}>>
+     * @return array<int, array<int, array{0: string, 1: non-empty-string}>>
      */
     private function getHighlightedLines(string $source, int $startLine): array
     {
@@ -91,7 +78,7 @@ final class CodeHighlighter
     /**
      * Splits content into tokens.
      *
-     * @return array<int, array{0: string|null, 1: string}>
+     * @return array<int, array{0: string, 1: string}>
      */
     private function tokenize(string $source): array
     {
@@ -99,7 +86,7 @@ final class CodeHighlighter
 
         $output = [];
         $currentType = null;
-        $newType = null;
+        $newType = self::TOKEN_KEYWORD;
         $buffer = '';
 
         foreach ($tokens as $token) {
@@ -133,9 +120,7 @@ final class CodeHighlighter
             $buffer .= is_array($token) ? $token[1] : $token;
         }
 
-        if (! is_null($newType)) {
-            $output[] = [$newType, $buffer];
-        }
+        $output[] = [$newType, $buffer];
 
         return $output;
     }
@@ -143,9 +128,9 @@ final class CodeHighlighter
     /**
      * Splits tokens into lines.
      *
-     * @param  array<int, array{0: string|null, 1: string}>  $tokens
+     * @param  array<int, array{0: string, 1: string}>  $tokens
      * @param  int  $startLine
-     * @return array<int, array<int, array{0: string|null, 1: non-empty-string}>>
+     * @return array<int, array<int, array{0: string, 1: non-empty-string}>>
      */
     private function splitToLines(array $tokens, int $startLine): array
     {
@@ -175,7 +160,7 @@ final class CodeHighlighter
     /**
      * Applies colors to tokens according to a color schema.
      *
-     * @param  array<int, array<int, array{0: string|null, 1: non-empty-string}>>  $tokenLines
+     * @param  array<int, array<int, array{0: string, 1: non-empty-string}>>  $tokenLines
      * @return array<int, string>
      */
     private function colorLines(array $tokenLines): array
@@ -246,12 +231,8 @@ final class CodeHighlighter
     /**
      * Formats string and applies color according to a color schema.
      */
-    private function styleToken(string|null $token, string $string): string
+    private function styleToken(string $token, string $string): string
     {
-        if (is_null($token) || ! array_key_exists($token, self::THEME)) {
-            return $string;
-        }
-
         return (string) Termwind::span($string, self::THEME[$token]);
     }
 }
