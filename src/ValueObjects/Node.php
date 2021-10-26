@@ -8,7 +8,6 @@ use Generator;
 
 /**
  * @internal
- * @property \DOMNode|\DOMElement $node
  */
 final class Node
 {
@@ -18,6 +17,7 @@ final class Node
 
     /**
      * Gets child nodes of the node.
+     *
      * @return Generator<Node>
      */
     public function getChildNodes(): Generator
@@ -174,7 +174,7 @@ final class Node
     }
 
     /**
-     * Converts the node to a string
+     * Converts the node to a string.
      */
     public function __toString(): string
     {
