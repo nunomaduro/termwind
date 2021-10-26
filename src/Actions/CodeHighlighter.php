@@ -102,7 +102,6 @@ final class CodeHighlighter
         $newType = null;
         $buffer = '';
 
-
         foreach ($tokens as $token) {
             if (is_array($token)) {
                 if ($token[0] !== T_WHITESPACE) {
@@ -182,9 +181,9 @@ final class CodeHighlighter
     private function colorLines(array $tokenLines): array
     {
         $lines = [];
+
         foreach ($tokenLines as $lineCount => $tokenLine) {
             $line = '';
-
             foreach ($tokenLine as $token) {
                 [$tokenType, $tokenValue] = $token;
                 $line .= $this->styleToken($tokenType, $tokenValue);
@@ -192,7 +191,6 @@ final class CodeHighlighter
 
             $lines[$lineCount] = $line;
         }
-
 
         return $lines;
     }
