@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Termwind;
 
-use DOMComment;
 use DOMDocument;
 use DOMNode;
-use DOMText;
 use Termwind\Html\TableRenderer;
+use Termwind\ValueObjects\Node;
 
 /**
  * @internal
@@ -35,7 +34,7 @@ final class HtmlRenderer
 
         /** @var DOMNode $body */
         $body = $dom->getElementsByTagName('body')->item(0);
-        $el = $this->convert($body);
+        $el = $this->convert(new Node($body));
 
         // @codeCoverageIgnoreStart
         return is_string($el)
@@ -45,79 +44,19 @@ final class HtmlRenderer
     }
 
     /**
-     * Checks if the node is empty.
-     */
-    private function isNodeEmpty(DOMNode $node): bool
-    {
-        return $node instanceof DOMText &&
-            preg_replace('/\s+/', '', $node->nodeValue) === '';
-    }
-
-    /**
-     * Gets the previous sibling from a node.
-     */
-    private function getNodePreviousSibling(DOMNode $node): DOMNode|null
-    {
-        while ($node = $node->previousSibling) {
-            if ($this->isNodeEmpty($node)) {
-                continue;
-            }
-
-            if (! $node instanceof DOMComment) {
-                return $node;
-            }
-        }
-
-        return $node;
-    }
-
-    /**
-     * Gets the next sibling from a node.
-     */
-    private function getNodeNextSibling(DOMNode $node): DOMNode|null
-    {
-        while ($node = $node->nextSibling) {
-            if ($this->isNodeEmpty($node)) {
-                continue;
-            }
-
-            if (! $node instanceof DOMComment) {
-                return $node;
-            }
-        }
-
-        return $node;
-    }
-
-    /**
-     * Checks if the node is the first child.
-     */
-    private function isNodeFirstChild(DOMNode $node): bool
-    {
-        return is_null($this->getNodePreviousSibling($node));
-    }
-
-    /**
      * Convert a tree of DOM nodes to a tree of termwind elements.
      */
-    private function convert(DOMNode $node): Components\Element|string
+    private function convert(Node $node): Components\Element|string
     {
         $children = [];
 
-        if ($node->nodeName === 'table') {
+        if ($node->isName('table')) {
             return (new TableRenderer($node))->toElement();
-        } elseif ($node->nodeName === 'pre') {
-            $html = '';
-            foreach ($node->childNodes as $child) {
-                if ($child->ownerDocument instanceof \DOMDocument) {
-                    $html .= $child->ownerDocument->saveXML($child);
-                }
-            }
-
-            return Termwind::raw(html_entity_decode($html));
+        } elseif ($node->isName('pre')) {
+            return Termwind::raw($node->getHtml());
         }
 
-        foreach ($node->childNodes as $child) {
+        foreach ($node->getChildNodes() as $child) {
             $children[] = $this->convert($child);
         }
 
@@ -131,35 +70,20 @@ final class HtmlRenderer
      *
      * @param  array<int, Components\Element|string>  $children
      */
-    private function toElement(DOMNode $node, array $children): Components\Element|string
+    private function toElement(Node $node, array $children): Components\Element|string
     {
-        if ($node instanceof DOMComment) {
-            return '';
-        }
-
-        if ($node instanceof DOMText) {
-            $text = preg_replace('/\s+/', ' ', $node->textContent) ?? '';
-
-            if (is_null($this->getNodePreviousSibling($node))) {
-                $text = ltrim($text);
-            }
-
-            if (is_null($this->getNodeNextSibling($node))) {
-                $text = rtrim($text);
-            }
-
-            return $text;
+        if ($node->isText() || $node->isComment()) {
+            return (string) $node;
         }
 
         /** @var array<string, mixed> $properties */
         $properties = [
-            'isFirstChild' => $this->isNodeFirstChild($node),
+            'isFirstChild' => $node->isNodeFirstChild(),
         ];
 
-        /** @var \DOMElement $node */
-        $styles = $node->getAttribute('class');
+        $styles = $node->getClassAttribute();
 
-        return match ($node->nodeName) {
+        return match ($node->getName()) {
             'body' => $children[0], // Pick only the first element from the body node
             'div' => Termwind::div($children, $styles, $properties),
             'ul' => Termwind::ul($children, $styles, $properties),
