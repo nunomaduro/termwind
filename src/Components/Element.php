@@ -261,7 +261,10 @@ abstract class Element
      */
     final public function uppercase(): static
     {
-        $content = mb_strtoupper($this->content, 'UTF-8');
+        $content = $this->applyModifier(
+            $this->content,
+            fn ($text) => mb_strtoupper($text, 'UTF-8')
+        );
 
         return new static($this->output, $content, $this->properties, $this->styles);
     }
@@ -271,7 +274,10 @@ abstract class Element
      */
     final public function lowercase(): static
     {
-        $content = mb_strtolower($this->content, 'UTF-8');
+        $content = $this->applyModifier(
+            $this->content,
+            fn ($text) => mb_strtolower($text, 'UTF-8')
+        );
 
         return new static($this->output, $content, $this->properties, $this->styles);
     }
@@ -281,7 +287,10 @@ abstract class Element
      */
     final public function capitalize(): static
     {
-        $content = mb_convert_case($this->content, MB_CASE_TITLE, 'UTF-8');
+        $content = $this->applyModifier(
+            $this->content,
+            fn ($text) => mb_convert_case($text, MB_CASE_TITLE, 'UTF-8')
+        );
 
         return new static($this->output, $content, $this->properties, $this->styles);
     }
@@ -291,9 +300,12 @@ abstract class Element
      */
     final public function snakecase(): static
     {
-        $content = mb_strtolower(
-            (string) preg_replace(['/([a-z\d])([A-Z])/', '/([^_])([A-Z][a-z])/'], '$1_$2', $this->content),
-            'UTF-8'
+        $content = $this->applyModifier(
+            $this->content,
+            fn ($text) => mb_strtolower(
+                (string) preg_replace(['/([a-z\d])([A-Z])/', '/([^_])([A-Z][a-z])/'], '$1_$2', $text),
+                'UTF-8'
+            )
         );
 
         return new static($this->output, $content, $this->properties, $this->styles);
@@ -487,6 +499,29 @@ abstract class Element
         }
 
         return '%s%s%s<'.implode(';', $styles).'>%s</>%s%s';
+    }
+
+    /**
+     * Applies the modifier to the content ignoring all the escape codes.
+     */
+    private function applyModifier(string $content, \Closure $callback): string
+    {
+        preg_match_all(
+            '/(?:\\e\[\dm)+(?<match>[^\\e]+)(?:\\e\[\dm)+/',
+            $content,
+            $matches,
+            PREG_OFFSET_CAPTURE
+        );
+
+        $matches = $matches['match'][0] ?? null;
+
+        if (is_null($matches)) {
+            return $callback($content);
+        }
+
+        list ($text, $index) = $matches;
+
+        return substr_replace($content, $callback($text), $index, mb_strlen($text));
     }
 
     /**
