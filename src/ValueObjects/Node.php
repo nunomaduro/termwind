@@ -28,6 +28,14 @@ final class Node
     }
 
     /**
+     * Checks if the node is a line break.
+     */
+    public function isLineBreak(): bool
+    {
+        return $this->isName('br');
+    }
+
+    /**
      * Checks if the node is a text.
      */
     public function isText(): bool
@@ -146,19 +154,6 @@ final class Node
     }
 
     /**
-     * Gets inner text of the node including child nodes.
-     */
-    public function getInnerText(): string
-    {
-        $text = '';
-        foreach ($this->getChildNodes() as $node) {
-            $text .= (string) $node;
-        }
-
-        return $text;
-    }
-
-    /**
      * Gets the inner HTML representation of the node including child nodes.
      */
     public function getHtml(): string
@@ -174,6 +169,20 @@ final class Node
     }
 
     /**
+     * Gets inner text of the node including child nodes and line breaks.
+     */
+    public function getInnerText(): string
+    {
+        $text = '';
+        foreach ($this->getChildNodes() as $node) {
+            $separator = $node->isLineBreak() ? "\n" : ' ';
+            $text .= $separator.$node;
+        }
+
+        return $text;
+    }
+
+    /**
      * Converts the node to a string.
      */
     public function __toString(): string
@@ -182,7 +191,7 @@ final class Node
             return '';
         }
 
-        $text = preg_replace('/\s+/', ' ', $this->node->textContent) ?? '';
+        $text = preg_replace('/\s+/', ' ', $this->node->nodeValue) ?? '';
 
         if (is_null($this->getPreviousSibling())) {
             $text = ltrim($text);
