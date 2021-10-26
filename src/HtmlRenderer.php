@@ -8,7 +8,6 @@ use DOMComment;
 use DOMDocument;
 use DOMNode;
 use DOMText;
-use Termwind\Html;
 
 /**
  * @internal
