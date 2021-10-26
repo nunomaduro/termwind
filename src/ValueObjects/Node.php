@@ -7,12 +7,13 @@ namespace Termwind\ValueObjects;
 use Generator;
 
 /**
- * A value object with helper methods for working with DOM node.
- *
  * @internal
  */
 final class Node
 {
+    /**
+     * A value object with helper methods for working with DOM node.
+     */
     public function __construct(private \DOMNode $node)
     {
     }
