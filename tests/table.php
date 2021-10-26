@@ -11,7 +11,7 @@ it('can render table without thead, tbody, tfoot to a string', function () {
         <td align="right">Dante Alighieri</td>
     </tr>
     <tr border="1">
-        <th class="bg-blue-400 text-color-red px-3">9971-5-0210-0</th>
+        <th class="bg-blue-400 text-red px-3">9971-5-0210-0</th>
         <td>
 
             A Tale of Two Cities
