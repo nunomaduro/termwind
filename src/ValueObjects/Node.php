@@ -11,7 +11,7 @@ use Generator;
  */
 final class Node
 {
-    public function __construct(private \DOMElement|\DOMNode $node)
+    public function __construct(private \DOMNode $node)
     {
     }
 

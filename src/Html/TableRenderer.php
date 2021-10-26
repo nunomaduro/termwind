@@ -33,7 +33,7 @@ final class TableRenderer
     public function __construct(Node $node)
     {
         $this->output = new BufferedOutput(
-             // Content should output as is, without changes
+            // Content should output as is, without changes
             OutputInterface::VERBOSITY_NORMAL | OutputInterface::OUTPUT_RAW,
             true
         );
