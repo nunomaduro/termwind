@@ -34,7 +34,8 @@ it('can render table without thead, tbody, tfoot to a string', function () {
         <td>De Monarchia</td>
     </tr>
 </table>
-HTML);
+HTML
+    );
 
     expect($html->toString())->toBe(<<<'OUT'
 ├──────────────────────┼───────────────────────────┼──────────────────────┤
@@ -85,7 +86,8 @@ it('can render table with thead to a string', function () {
         <td>De Monarchia</td>
     </tr>
 </table>
-HTML);
+HTML
+    );
 
     expect($html->toString())->toBe(<<<'OUT'
 +----------------+---[37;41m           Books           [39;49m--------------------+
@@ -143,7 +145,8 @@ it('can render table with thead with two rows to a string', function () {
         <td>De Monarchia</td>
     </tr>
 </table>
-HTML);
+HTML
+    );
 
     expect($html->toString())->toBe(<<<'OUT'
 +----------------+---[37;41m           Books           [39;49m--------------------+
@@ -194,7 +197,8 @@ it('can render table with tfoot to a string', function () {
         </tr>
     </tfoot>
 </table>
-HTML);
+HTML
+    );
 
     expect($html->toString())->toBe(<<<'OUT'
 +----------------+---------------------------+----------------------+
@@ -242,7 +246,8 @@ it('can render table with tbody to a string', function () {
         </tr>
     </tbody>
 </table>
-HTML);
+HTML
+    );
 
     expect($html->toString())->toBe(<<<'OUT'
 +----------------+---------------------------+----------------------+
@@ -300,7 +305,8 @@ it('can render table with thead, tbody, tfoot to a string', function () {
         </tr>
     </tfoot>
 </table>
-HTML);
+HTML
+    );
 
     expect($html->toString())->toBe(<<<'OUT'
 ╔════════════════╤═══[37;41m           Books           [39;49m════════════════════╗
