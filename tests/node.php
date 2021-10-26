@@ -15,8 +15,8 @@ it('it should return empty string for dom text', function () {
 });
 
 it('it should return bar for dom element', function () {
-    $doc = new \DOMDocument("1.0");
-    $node = $doc->createElement("div");
+    $doc = new \DOMDocument('1.0');
+    $node = $doc->createElement('div');
     $el = $doc->appendChild($node);
     $el->setAttribute('foo', 'bar');
     $node = new Node($el);
