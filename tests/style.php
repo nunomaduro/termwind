@@ -4,7 +4,7 @@ use Termwind\Exceptions\StyleNotFound;
 use function Termwind\style;
 
 it('allows the creation of styles', function () {
-    style('btn')->apply('p-4 bg-blue text-color-white');
+    style('btn')->apply('p-4 bg-blue text-white');
 
     $html = parse('<a class="btn">link text</a>');
 

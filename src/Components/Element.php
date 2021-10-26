@@ -203,7 +203,7 @@ abstract class Element
     /**
      * Adds a text color to the element.
      */
-    final public function textColor(string $color, int $variant = 0): static
+    final public function text(string $color, int $variant = 0): static
     {
         if ($variant > 0) {
             $color = $this->getColorVariant($color, $variant);

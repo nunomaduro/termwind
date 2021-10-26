@@ -52,15 +52,9 @@ test('bg-color', function () {
 });
 
 test('text-color', function () {
-    $html = parse('<div class="text-color-red">text</div>');
+    $html = parse('<div class="text-red">text</div>');
 
     expect($html)->toBe('<fg=red>text</>');
-});
-
-test('text-color-number', function () {
-    $html = parse('<div class="text-color-red-400">text</div>');
-
-    expect($html)->toBe('<fg=#f87171>text</>');
 });
 
 test('truncate', function () {
@@ -163,14 +157,14 @@ test('bg-color-number', function () {
     expect($html)->toBe('<bg=#86efac>text</>');
 });
 
-test('text-color-color-number', function () {
-    $html = parse('<div class="text-color-green-300">text</div>');
+test('text-color-number', function () {
+    $html = parse('<div class="text-green-300">text</div>');
 
     expect($html)->toBe('<fg=#86efac>text</>');
 });
 
-test('invalid text-color-color-number', function () {
-    expect(fn () => parse('<div class="text-color-green-10000">text</div>'))
+test('invalid text-color-number', function () {
+    expect(fn () => parse('<div class="text-green-10000">text</div>'))
         ->toThrow(ColorNotFound::class);
 });
 

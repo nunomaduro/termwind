@@ -17,7 +17,7 @@ it('can be styled', function () {
 
     putenv('COLUMNS=10');
 
-    $html = parse('<hr class="text-color-red">');
+    $html = parse('<hr class="text-red">');
 
     expect($html)
         ->toContain($mdash)
