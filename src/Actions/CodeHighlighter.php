@@ -89,7 +89,7 @@ final class CodeHighlighter
     }
 
     /**
-     * Splits content into tokens
+     * Splits content into tokens.
      *
      * @return array<int, array{0: string|null, 1: string}>
      */
@@ -142,6 +142,8 @@ final class CodeHighlighter
     }
 
     /**
+     * Splits tokens into lines.
+     *
      * @param  array<int, array{0: string|null, 1: string}>  $tokens
      * @param  int  $startLine
      * @return array<int, array<int, array{0: string|null, 1: non-empty-string}>>
@@ -172,6 +174,8 @@ final class CodeHighlighter
     }
 
     /**
+     * Applies colors to tokens according to a color schema.
+     *
      * @param  array<int, array<int, array{0: string|null, 1: non-empty-string}>>  $tokenLines
      * @return array<int, string>
      */
@@ -194,6 +198,8 @@ final class CodeHighlighter
     }
 
     /**
+     * Prepends line numbers into lines.
+     *
      * @param  array<int, string>  $lines
      * @param  int|null  $markLine
      * @return string
@@ -229,13 +235,19 @@ final class CodeHighlighter
         return $snippet;
     }
 
-    private function coloredLineNumber(string $style, int $i, int $lineStrlen): string
+    /**
+     * Formats line number and applies color according to a color schema.
+     */
+    private function coloredLineNumber(string $token, int $lineNumber, int $length): string
     {
         return $this->styleToken(
-            $style, str_pad((string) ($i + 1), $lineStrlen, ' ', STR_PAD_LEFT)
+            $token, str_pad((string) ($lineNumber + 1), $length, ' ', STR_PAD_LEFT)
         );
     }
 
+    /**
+     * Formats string and applies color according to a color schema.
+     */
     private function styleToken(string|null $token, string $string): string
     {
         if (is_null($token) || ! array_key_exists($token, self::THEME)) {
