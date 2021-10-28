@@ -220,3 +220,26 @@ test('Invalid use of style list-none', function () {
     expect(fn () => parse('<span class="list-none">Hello <span>World</span></span>'))
         ->toThrow(InvalidStyle::class);
 });
+
+test('font-bold, italic and uppercase', function () {
+    $html = parse('<div class="font-bold italic uppercase">tExT</div>');
+
+    expect($html)->toBe("\e[3m\e[1mTEXT\e[0m\e[0m");
+});
+
+test('line-through and lowercase', function () {
+    $html = parse('<div class="line-through lowercase">TExT</div>');
+    expect($html)->toBe("\e[9mtext\e[0m");
+});
+
+test('underline and capitalize', function () {
+    $html = parse('<div class="underline capitalize">hELLO wORLD</div>');
+
+    expect($html)->toBe("\e[4mHello World\e[0m");
+});
+
+test('invisible and snakecase', function () {
+    $html = parse('<div class="invisible snakecase">textTEXT</div>');
+
+    expect($html)->toBe("\e[8mtext_text\e[0m");
+});
