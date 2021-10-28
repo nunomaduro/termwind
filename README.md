@@ -79,20 +79,23 @@ render('<div class="btn">Click me</div>');
 
 Head over to [tailwindcss.com/docs](https://tailwindcss.com/docs), and choose a class that is not implemented in Termwind. As an example, let's assume you would like to add the `lowercase` Tailwind CSS class to Termwind:
 
-1. Head over to [`src/Components/Element`](https://github.com/nunomaduro/termwind/blob/master/src/Components/Element.php#L263) and add a new method with the name `lowercase`:
+1. Head over to [`src/Components/Element`](https://github.com/nunomaduro/termwind/blob/master/src/Components/Element.php#L275) and add a new method with the name `lowercase`:
 ```php
     /**
      * Makes the element's content lowercase.
      */
     final public function lowercase(): static
     {
-        $content = mb_strtolower($this->content, 'UTF-8');
+        $content = $this->applyModifier(
+            $this->content,
+            fn ($text) => mb_strtolower($text, 'UTF-8')
+        );
 
-        return new static($this->output, $content, $this->properties);
+        return new static($this->output, $content, $this->properties, $this->styles);
     }
 ```
 
-2. Next, add a new test in [`tests/classes.php`](https://github.com/nunomaduro/termwind/blob/master/tests/classes.php#L136) to see if the `lowercase` class works as expected:
+2. Next, add a new test in [`tests/classes.php`](https://github.com/nunomaduro/termwind/blob/master/tests/classes.php#L130) to see if the `lowercase` class works as expected:
 
 ```php
 test('lowercase', function () {
