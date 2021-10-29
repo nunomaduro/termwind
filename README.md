@@ -75,6 +75,252 @@ style('btn')->apply('p-4 bg-blue text-white');
 render('<div class="btn">Click me</div>');
 ```
 
+## HTML Elements Supported
+
+All the elements have the capability to use the `class` attribute.
+
+### `<div>`
+
+The `<div>` element can be used as a block type element.
+
+**Default Styles**: `block`
+
+```php
+render(<<<'HTML'
+    <div>This is a div element.</div>
+HTML);
+```
+
+### `<p>`
+
+The `<p>` element can be used as a paragraph.
+
+**Default Styles**: `block`
+
+```php
+render(<<<'HTML'
+    <p>This is a paragraph.</p>
+HTML);
+```
+
+### `<span>`
+
+The `<span>` element can be used as a inline text container.
+
+```php
+render(<<<'HTML'
+    <p>
+        This is a CLI app built with <span class="text-green-300">Termwind</span>.
+    </p>
+HTML);
+```
+
+### `<a>`
+
+The `<a>` element can be used as an hyperlink. Tt allows to use the `href` attribute to open the link when clicked.
+
+```php
+render(<<<'HTML'
+    <p>
+        This is a CLI app built with Termwind. <a href="/">Click here to open</a>
+    </p>
+HTML);
+```
+
+### `<b>` and `<strong>`
+
+The `<b>`and `<strong>` elements can be used to mark the text as **bold**.
+
+**Default Styles**: `font-bold`
+
+```php
+render(<<<'HTML'
+    <p>
+        This is a CLI app built with <b>Termwind</b>.
+    </p>
+HTML);
+```
+
+### `<i>` and `<em>`
+
+The `<i>`and `<em>` elements can be used to mark the text as *italic*.
+
+**Default Styles**: `italic`
+
+```php
+render(<<<'HTML'
+    <p>
+        This is a CLI app built with <i>Termwind</i>.
+    </p>
+HTML);
+```
+
+### `<br>`
+
+The `<br>` element can be used to do a line break.
+
+```php
+render(<<<'HTML'
+    <p>
+        This is a CLI <br>
+        app built with Termwind.
+    </p>
+HTML);
+```
+
+### `<ul>`
+
+The `<ul>` element can be used for an unordered list. It can only accept `<li>` elements as childs, if there is another element provided it will throw an `InvalidChild` exception. 
+
+**Default Styles**: `block`, `list-disc`
+
+```php
+render(<<<'HTML'
+    <ul>
+        <li>Item 1</li>
+        <li>Item 2</li>
+    </ul>
+HTML);
+```
+
+### `<ol>`
+
+The `<ol>` element can be used for an ordered list. It can only accept `<li>` elements as childs, if there is another element provided it will throw an `InvalidChild` exception. 
+
+**Default Styles**: `block`, `list-decimal`
+
+```php
+render(<<<'HTML'
+    <ol>
+        <li>Item 1</li>
+        <li>Item 2</li>
+    </ol>
+HTML);
+```
+
+### `<li>`
+
+The `<li>` element can be used as a list item. It should only be used as a child of `<ul>` and `<ol>` elements.
+
+**Default Styles**: `block`, `list-decimal`
+
+```php
+render(<<<'HTML'
+    <ul>
+        <li>Item 1</li>
+    </ul>
+HTML);
+```
+
+### `<dl>`
+
+The `<dl>` element can be used for an description list. It can only accept `<dt>` or `<dd>` elements as childs, if there is another element provided it will throw an `InvalidChild` exception. 
+
+**Default Styles**: `block`
+
+```php
+render(<<<'HTML'
+    <dl>
+        <dt>🍃 Termwind</dt>
+        <dd>Give your CLI apps a unique look</dd>
+    </dl>
+HTML);
+```
+
+### `<dt>`
+
+The `<dt>` element can be used as a description title. It should only be used as a child of `<dl>` elements.
+
+**Default Styles**: `block`, `font-bold`
+
+```php
+render(<<<'HTML'
+    <dl>
+        <dt>🍃 Termwind</dt>
+    </dl>
+HTML);
+```
+
+### `<dd>`
+
+The `<dd>` element can be used as a description title. It should only be used as a child of `<dl>` elements.
+
+**Default Styles**: `block`, `ml-4`
+
+```php
+render(<<<'HTML'
+    <dl>
+        <dd>Give your CLI apps a unique look</dd>
+    </dl>
+HTML);
+```
+
+### `<hr>`
+
+The `<hr>` element can be used as an horizontal line.
+
+```php
+render(<<<'HTML'
+    <div>
+        <div>🍃 Termwind</div>
+        <hr>
+        <p>Give your CLI apps a unique look</p>
+    </div>
+HTML);
+```
+
+### `<table>`
+
+The `<table>` element can have columns and rows.
+
+```php
+render(<<<'HTML'
+    <table>
+        <thead>
+            <tr>
+                <th>Task</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tr>
+            <th>Termwind</th>
+            <td>✓ Done</td>
+        </tr>
+    </table>
+HTML);
+```
+
+### `<pre>`
+
+The `<pre>` element can be used as preformatted text.
+
+```php
+render(<<<'HTML'
+    <pre>
+        Text in a pre element
+        it preserves
+        both      spaces and
+        line breaks
+    </pre>
+HTML);
+```
+
+### `<code>`
+
+The `<code>` element can be used as code highligher. It accepts `line` and `start-line` attributes.
+
+```php
+render(<<<'HTML'
+    <code line="22" start-line="20">
+        try {
+            throw new \Exception('Something went wrong');
+        } catch (\Throwable $e) {
+            report($e);
+        }
+    </code>
+HTML);
+```
+
 ## How To Contribute
 
 Head over to [tailwindcss.com/docs](https://tailwindcss.com/docs), and choose a class that is not implemented in Termwind. As an example, let's assume you would like to add the `lowercase` Tailwind CSS class to Termwind:
