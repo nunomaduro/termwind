@@ -62,7 +62,6 @@ final class HtmlRenderer
             $children[] = $this->convert($child);
         }
 
-
         $children = array_filter($children, fn ($child) => $child !== '');
 
         return $this->toElement($node, $children);
