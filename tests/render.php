@@ -15,7 +15,7 @@ it('can render complex html', function () {
 it('can render strings', function () {
     $html = parse('text');
 
-    expect($html)->toBe('text');
+    expect($html)->toBe("\ntext\n");
 });
 
 it('can render to custom output', function () {
