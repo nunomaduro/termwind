@@ -106,7 +106,7 @@ final class HtmlRenderer
         if ($node->nodeName === 'table') {
             return (new Html\TableRenderer)->toElement($node);
         } elseif ($node->nodeName === 'code') {
-            return (new Html\CodeRenderer())->toElement($node);
+            return (new Html\CodeRenderer)->toElement($node);
         } elseif ($node->nodeName === 'pre') {
             $html = '';
             foreach ($node->childNodes as $child) {

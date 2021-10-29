@@ -107,7 +107,6 @@ final class CodeRenderer
                 if ($token[0] !== T_WHITESPACE) {
                     $newType = match ($token[0]) {
                         T_OPEN_TAG, T_OPEN_TAG_WITH_ECHO, T_CLOSE_TAG, T_STRING, T_VARIABLE,
-                            // Constants
                         T_DIR, T_FILE, T_METHOD_C, T_DNUMBER, T_LNUMBER, T_NS_C,
                         T_LINE, T_CLASS_C, T_FUNC_C, T_TRAIT_C => self::TOKEN_DEFAULT,
                         T_COMMENT, T_DOC_COMMENT => self::TOKEN_COMMENT,
