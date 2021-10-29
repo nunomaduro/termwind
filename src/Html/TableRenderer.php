@@ -30,7 +30,7 @@ final class TableRenderer
      */
     private BufferedOutput $output;
 
-    public function __construct(Node $node)
+    public function __construct()
     {
         $this->output = new BufferedOutput(
             // Content should output as is, without changes
@@ -39,14 +39,14 @@ final class TableRenderer
         );
 
         $this->table = new Table($this->output);
-        $this->parseTable($node);
     }
 
     /**
      * Converts table output to the content element.
      */
-    public function toElement(): Element
+    public function toElement(Node $node): Element
     {
+        $this->parseTable($node);
         $this->table->render();
 
         return Termwind::raw($this->output->fetch());
