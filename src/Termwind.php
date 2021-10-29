@@ -45,6 +45,23 @@ final class Termwind
     }
 
     /**
+     * Creates a paragraph element instance.
+     *
+     * @param  array<int, Element|string>|string  $content
+     * @param  array<string, mixed>  $properties
+     */
+    public static function paragraph(array|string $content = '', string $styles = '', array $properties = []): Components\Paragraph
+    {
+        $content = implode('', array_map(
+            fn ($element) => (string) $element, is_array($content) ? $content : [$content]
+        ));
+
+        return Components\Paragraph::fromStyles(
+            self::getRenderer(), $content, $styles, $properties
+        );
+    }
+
+    /**
      * Creates a span element instance with the given style.
      *
      * @param  array<int, Element|string>|string  $content

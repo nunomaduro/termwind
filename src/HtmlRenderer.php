@@ -88,6 +88,7 @@ final class HtmlRenderer
         return match ($node->getName()) {
             'body' => $children[0], // Pick only the first element from the body node
             'div' => Termwind::div($children, $styles, $properties),
+            'p' => Termwind::paragraph($children, $styles, $properties),
             'ul' => Termwind::ul($children, $styles, $properties),
             'ol' => Termwind::ol($children, $styles, $properties),
             'li' => Termwind::li($children, $styles, $properties),
