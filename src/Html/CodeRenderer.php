@@ -6,6 +6,7 @@ namespace Termwind\Html;
 
 use Termwind\Components\Element;
 use Termwind\Termwind;
+use Termwind\ValueObjects\Node;
 
 /**
  * @internal
@@ -53,20 +54,12 @@ final class CodeRenderer
     /**
      * Highlights HTML content from a given node and converts to the content element.
      */
-    public function toElement(\DOMNode $node): Element
+    public function toElement(Node $node): Element
     {
-        $html = '';
-        foreach ($node->childNodes as $child) {
-            if ($child->ownerDocument instanceof \DOMDocument) {
-                $html .= $child->ownerDocument->saveXML($child);
-            }
-        }
-
-        /** @var \DOMElement $node */
         $line = max((int) $node->getAttribute('line'), 1);
         $startLine = max((int) $node->getAttribute('start-line'), 1);
 
-        $html = html_entity_decode($html);
+        $html = $node->getHtml();
 
         $tokenLines = $this->getHighlightedLines(trim($html, "\n"), $startLine);
         $lines = $this->colorLines($tokenLines);

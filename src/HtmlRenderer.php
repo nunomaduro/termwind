@@ -50,11 +50,11 @@ final class HtmlRenderer
     {
         $children = [];
 
-        if ($node->nodeName === 'table') {
-            return (new TableRenderer)->toElement();
-        } elseif ($node->nodeName === 'code') {
+        if ($node->isName('table')) {
+            return (new TableRenderer)->toElement($node);
+        } elseif ($node->isName('code')) {
             return (new Html\CodeRenderer)->toElement($node);
-        } elseif ($node->nodeName === 'pre') {
+        } elseif ($node->isName('pre')) {
             return Termwind::raw($node->getHtml());
         }
 
