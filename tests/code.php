@@ -20,36 +20,36 @@ HTML
 
     expect($html)->toBe(<<<'HTML'
 
-<fg=red>[1m  ➜ [0m</>[1m[3m  1[0m[0m<fg=gray>▕ </><fg=blue>[1m    [0m</>[1m<?php[0m
-    <fg=gray>  2</><fg=gray>▕ </>
-    <fg=gray>  3</><fg=gray>▕ </>[1m    [0m<fg=gray>[3m/** @test */[0m</>
-    <fg=gray>  4</><fg=gray>▕ </><fg=gray>[3m    [0m</><fg=magenta>[1mfunction [0m</>[1msentryReport[0m<fg=magenta>[1m()[0m</>
-    <fg=gray>  5</><fg=gray>▕ </><fg=magenta>[1m    {[0m</>
-    <fg=gray>  6</><fg=gray>▕ </><fg=magenta>[1m        try {[0m</>
-    <fg=gray>  7</><fg=gray>▕ </><fg=magenta>[1m            throw new \Exception([0m</><fg=gray>'Something went wrong'</><fg=magenta>[1m);[0m</>
-    <fg=gray>  8</><fg=gray>▕ </><fg=magenta>[1m        } catch (\Throwable [0m</>[1m$e[0m<fg=magenta>[1m) {[0m</>
-    <fg=gray>  9</><fg=gray>▕ </><fg=magenta>[1m            [0m</>[1mreport[0m<fg=magenta>[1m([0m</>[1m$e[0m<fg=magenta>[1m);[0m</>
-    <fg=gray> 10</><fg=gray>▕ </><fg=magenta>[1m        }[0m</>
-    <fg=gray> 11</><fg=gray>▕ </><fg=magenta>[1m    }[0m</>
+<fg=gray>  1</><fg=gray>▕ </><fg=blue>[1m    [0m</>[1m<?php[0m
+<fg=gray>  2</><fg=gray>▕ </>
+<fg=gray>  3</><fg=gray>▕ </>[1m    [0m<fg=gray>[3m/** @test */[0m</>
+<fg=gray>  4</><fg=gray>▕ </><fg=gray>[3m    [0m</><fg=magenta>[1mfunction [0m</>[1msentryReport[0m<fg=magenta>[1m()[0m</>
+<fg=gray>  5</><fg=gray>▕ </><fg=magenta>[1m    {[0m</>
+<fg=gray>  6</><fg=gray>▕ </><fg=magenta>[1m        try {[0m</>
+<fg=gray>  7</><fg=gray>▕ </><fg=magenta>[1m            throw new \Exception([0m</><fg=gray>'Something went wrong'</><fg=magenta>[1m);[0m</>
+<fg=gray>  8</><fg=gray>▕ </><fg=magenta>[1m        } catch (\Throwable [0m</>[1m$e[0m<fg=magenta>[1m) {[0m</>
+<fg=gray>  9</><fg=gray>▕ </><fg=magenta>[1m            [0m</>[1mreport[0m<fg=magenta>[1m([0m</>[1m$e[0m<fg=magenta>[1m);[0m</>
+<fg=gray> 10</><fg=gray>▕ </><fg=magenta>[1m        }[0m</>
+<fg=gray> 11</><fg=gray>▕ </><fg=magenta>[1m    }[0m</>
 HTML
     );
 });
 
 it('renders the element with selected line', function () {
     $html = parse(<<<'HTML'
-<code line="7">
-    &lt;?php
+            <code line="7">
+                &lt;?php
 
-    /** @test */
-    function sentryReport()
-    {
-        try {
-            throw new \Exception('Something went wrong');
-        } catch (\Throwable $e) {
-            report($e);
-        }
-    }
-</code>
+                /** @test */
+                function sentryReport()
+                {
+                    try {
+                        throw new \Exception('Something went wrong');
+                    } catch (\Throwable $e) {
+                        report($e);
+                    }
+                }
+            </code>
 HTML
     );
 

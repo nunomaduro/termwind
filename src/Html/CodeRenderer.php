@@ -56,10 +56,14 @@ final class CodeRenderer
      */
     public function toElement(Node $node): Element
     {
-        $line = max((int) $node->getAttribute('line'), 1);
+        $line = max((int) $node->getAttribute('line'), 0);
         $startLine = max((int) $node->getAttribute('start-line'), 1);
 
-        $html = $node->getHtml();
+        $lines = explode("\n", $node->getHtml());
+        $extraLines = end($lines);
+
+        $lines = array_map(fn (string $line) => substr($line, strlen($extraLines)), $lines);
+        $html = implode("\n", $lines);
 
         $tokenLines = $this->getHighlightedLines(trim($html, "\n"), $startLine);
         $lines = $this->colorLines($tokenLines);
@@ -189,10 +193,10 @@ final class CodeRenderer
      * Prepends line numbers into lines.
      *
      * @param  array<int, string>  $lines
-     * @param  int|null  $markLine
+     * @param  int  $markLine
      * @return string
      */
-    private function lineNumbers(array $lines, int|null $markLine = null): string
+    private function lineNumbers(array $lines, int $markLine): string
     {
         $lastLine = (int) array_key_last($lines);
         $lineLength = strlen((string) ($lastLine + 1));
@@ -203,7 +207,7 @@ final class CodeRenderer
         foreach ($lines as $i => $line) {
             $coloredLineNumber = $this->coloredLineNumber(self::LINE_NUMBER, $i, $lineLength);
 
-            if (null !== $markLine) {
+            if (0 !== $markLine) {
                 $snippet .= ($markLine === $i + 1
                     ? $this->styleToken(self::ACTUAL_LINE_MARK, $mark)
                     : self::NO_MARK
