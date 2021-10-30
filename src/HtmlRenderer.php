@@ -7,6 +7,7 @@ namespace Termwind;
 use DOMDocument;
 use DOMNode;
 use Termwind\Html\CodeRenderer;
+use Termwind\Html\PreRenderer;
 use Termwind\Html\TableRenderer;
 use Termwind\ValueObjects\Node;
 
@@ -56,7 +57,7 @@ final class HtmlRenderer
         } elseif ($node->isName('code')) {
             return (new CodeRenderer)->toElement($node);
         } elseif ($node->isName('pre')) {
-            return Termwind::raw($node->getHtml());
+            return (new PreRenderer)->toElement($node);
         }
 
         foreach ($node->getChildNodes() as $child) {
