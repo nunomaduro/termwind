@@ -23,3 +23,39 @@ it('it should return bar for dom element', function () {
 
     expect($node->getAttribute('foo'))->toBe('bar');
 });
+
+it('gets next sibling node with empty text', function () {
+    $dom = new DOMDocument();
+
+    $html = '<?xml encoding="UTF-8"><body><div></div>     <div></div></body>';
+    $dom->loadHTML($html, LIBXML_COMPACT | LIBXML_HTML_NODEFDTD | LIBXML_NOBLANKS | LIBXML_NOXMLDECL);
+
+    $body = $dom->getElementsByTagName('body')->item(0);
+    $node = new Node($body->firstChild);
+
+    expect($node->getNextSibling()->getNextSibling())->toBeNull();
+});
+
+it('gets next sibling node with empty line', function () {
+    $dom = new DOMDocument();
+
+    $html = "<?xml encoding=\"UTF-8\"><body><div></div>\n<div></div></body>";
+    $dom->loadHTML($html, LIBXML_COMPACT | LIBXML_HTML_NODEFDTD | LIBXML_NOBLANKS | LIBXML_NOXMLDECL);
+
+    $body = $dom->getElementsByTagName('body')->item(0);
+    $node = new Node($body->firstChild);
+
+    expect($node->getNextSibling()->getNextSibling())->toBeNull();
+});
+
+it('gets next sibling node with comment', function () {
+    $dom = new DOMDocument();
+
+    $html = "<?xml encoding=\"UTF-8\"><body><div></div><!-- Hello world --><div></div></body>";
+    $dom->loadHTML($html, LIBXML_COMPACT | LIBXML_HTML_NODEFDTD | LIBXML_NOBLANKS | LIBXML_NOXMLDECL);
+
+    $body = $dom->getElementsByTagName('body')->item(0);
+    $node = new Node($body->firstChild);
+
+    expect($node->getNextSibling()->getNextSibling())->toBeNull();
+});

@@ -118,8 +118,8 @@ final class Termwind
         );
 
         $content = implode('', array_map(function ($li) use ($ul): string {
-            if (is_string($li) && preg_replace('/\s+/', '', $li) === '') {
-                return '';
+            if (is_string($li)) {
+                return $li;
             }
 
             if (! $li instanceof Components\Li) {
@@ -152,8 +152,8 @@ final class Termwind
 
         $index = 0;
         $content = implode('', array_map(function ($li) use ($ol, &$index): string {
-            if (is_string($li) && preg_replace('/\s+/', '', $li) === '') {
-                return '';
+            if (is_string($li)) {
+                return $li;
             }
 
             if (! $li instanceof Components\Li) {
@@ -197,8 +197,8 @@ final class Termwind
     public static function dl(array $content = [], string $styles = '', array $properties = []): Components\Dl
     {
         $text = implode('', array_map(function ($element): string {
-            if (is_string($element) && preg_replace('/\s+/', '', $element) === '') {
-                return '';
+            if (is_string($element)) {
+                return $element;
             }
 
             if (! $element instanceof Components\Dt && ! $element instanceof Components\Dd) {
