@@ -51,7 +51,7 @@ it('gets next sibling node with empty line', function () {
 it('gets next sibling node with comment', function () {
     $dom = new DOMDocument();
 
-    $html = "<?xml encoding=\"UTF-8\"><body><div></div><!-- Hello world --><div></div></body>";
+    $html = '<?xml encoding="UTF-8"><body><div></div><!-- Hello world --><div></div></body>';
     $dom->loadHTML($html, LIBXML_COMPACT | LIBXML_HTML_NODEFDTD | LIBXML_NOBLANKS | LIBXML_NOXMLDECL);
 
     $body = $dom->getElementsByTagName('body')->item(0);
