@@ -17,7 +17,6 @@ it('renders the element with display block as default', function () {
     expect($html)->toBe("First line\nSecond Line");
 });
 
-
 it('renders the element with display block [one empty]', function () {
     $html = parse(<<<'HTML'
         <div>
