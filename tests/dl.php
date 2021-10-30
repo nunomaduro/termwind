@@ -35,3 +35,12 @@ it('renders "dt" and "dd" elements and ignore empty spaces', function () {
 
     expect($html)->toBe("\e[1mterm\e[0m\n    details\n\e[1manother term\e[0m\n    more details");
 });
+
+it('renders "dt" and "dd" in a single row', function () {
+    $html = parse(<<<'HTML'
+<dl> <dt>term</dt> <dd>details</dd> </dl>
+HTML
+    );
+
+    expect($html)->toBe("\e[1mterm\e[0m \n    details ");
+});

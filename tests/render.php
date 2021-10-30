@@ -37,8 +37,7 @@ it('renders element inside another one', function () {
 it('renders element inside another one with extra spaces and line breaks', function () {
     $html = parse(<<<'HTML'
         <div class="bg-red">
-            Hello
-            <strong>world</strong> <a href="#">click here</a>
+            Hello <strong>world</strong> <a href="#">click here</a>
         </div>
     HTML);
 

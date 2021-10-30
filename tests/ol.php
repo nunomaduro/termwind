@@ -19,8 +19,24 @@ it('renders "li" elements and ignore empty spaces', function () {
     expect($html)->toBe('1. list text 1');
 });
 
-it('renders "li" elements without style', function () {
-    $html = parse('<ol class="list-none"> <li>list item 1.1 test</li> <li>list item 1.2 test</li> </ol>');
+it('renders "li" elements without style in a single row', function () {
+    $html = parse(<<<'HTML'
+<ol class="list-none"> <li>list item 1.1 test</li> <li>list item 1.2 test</li> <li>list item 1.3 test</li> </ol>
+HTML
+    );
 
-    expect($html)->toBe("list item 1.1 test\nlist item 1.2 test");
+    expect($html)->toBe("list item 1.1 test \nlist item 1.2 test \nlist item 1.3 test ");
+});
+
+it('renders "li" elements without style', function () {
+    $html = parse(<<<'HTML'
+<ol class="list-none">
+    <li>list item 1.1 test</li>
+    <li>list item 1.2 test</li>
+    <li>list item 1.3 test</li>
+</ol>
+HTML
+    );
+
+    expect($html)->toBe("list item 1.1 test\nlist item 1.2 test\nlist item 1.3 test");
 });
