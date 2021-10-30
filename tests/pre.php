@@ -1,20 +1,20 @@
 <?php
 
 it('renders the element', function () {
-    $content = "    <h1>Introduction</h1>
+    $content = '    <h1>Introduction</h1>
 
     <div>The body of your message.</div>
 
     Thanks,
     Laravel
 
-    © 2021 Laravel. All rights reserved.";
+    © 2021 Laravel. All rights reserved.';
 
     $html = parse("<pre>$content</pre>");
 
     expect($html)->toBe(
         "\n".implode("\n", array_map(
-            fn(string $line) => str_pad($line, 44),
+            fn (string $line) => str_pad($line, 44),
             explode("\n", $content)
         ))
     );

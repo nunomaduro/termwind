@@ -8,7 +8,10 @@ use Termwind\Components\Element;
 use Termwind\Termwind;
 use Termwind\ValueObjects\Node;
 
-class PreRenderer
+/**
+ * @internal
+ */
+final class PreRenderer
 {
     /**
      * Gets HTML content from a given node and converts to the content element.
