@@ -33,7 +33,6 @@ it('renders the element with styles', function () {
 </pre>');
 
     expect($html)->toBe("
-<bg=blue;fg=red>\e[3m\e[1m                                            \e[0m\e[0m</>
 <bg=blue;fg=red>\e[3m\e[1m    <h1>Introduction</h1>                   \e[0m\e[0m</>
 <bg=blue;fg=red>\e[3m\e[1m                                            \e[0m\e[0m</>
 <bg=blue;fg=red>\e[3m\e[1m    <div>The body of your message.</div>    \e[0m\e[0m</>
@@ -41,6 +40,5 @@ it('renders the element with styles', function () {
 <bg=blue;fg=red>\e[3m\e[1m    Thanks,                                 \e[0m\e[0m</>
 <bg=blue;fg=red>\e[3m\e[1m    Laravel                                 \e[0m\e[0m</>
 <bg=blue;fg=red>\e[3m\e[1m                                            \e[0m\e[0m</>
-<bg=blue;fg=red>\e[3m\e[1m    © 2021 Laravel. All rights reserved.   \e[0m\e[0m</>
-<bg=blue;fg=red>\e[3m\e[1m                                            \e[0m\e[0m</>");
+<bg=blue;fg=red>\e[3m\e[1m    © 2021 Laravel. All rights reserved.   \e[0m\e[0m</>");
 });
