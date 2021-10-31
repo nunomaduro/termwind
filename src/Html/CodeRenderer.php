@@ -79,6 +79,8 @@ final class CodeRenderer
 
     /**
      * Finds extra spaces which should be removed from HTML.
+     *
+     * @param  array<int, string>  $lines
      */
     private function findExtraSpaces(array $lines): string
     {
