@@ -64,8 +64,9 @@ final class CodeRenderer
         $extraSpaces = $this->findExtraSpaces($lines);
 
         if ($extraSpaces !== '') {
-            $lines = array_map(static fn (string $line): string
-                => str_starts_with($line, $extraSpaces) ? substr($line, strlen($extraSpaces)) : $line, $lines);
+            $lines = array_map(static function (string $line) use ($extraSpaces): string {
+                return str_starts_with($line, $extraSpaces) ? substr($line, strlen($extraSpaces)) : $line;
+            }, $lines);
             $html = implode("\n", $lines);
         }
 
