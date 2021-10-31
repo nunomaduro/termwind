@@ -59,17 +59,39 @@ final class CodeRenderer
         $line = max((int) $node->getAttribute('line'), 0);
         $startLine = max((int) $node->getAttribute('start-line'), 1);
 
-        $lines = explode("\n", $node->getHtml());
-        $extraLines = end($lines);
+        $html = $node->getHtml();
+        $lines = explode("\n", $html);
+        $extraSpaces = $this->findExtraSpaces($lines);
 
-        $lines = array_map(fn (string $line) => substr($line, strlen($extraLines)), $lines);
-        $html = implode("\n", $lines);
+        if ($extraSpaces !== '') {
+            $lines = array_map(static fn (string $line): string
+                => str_starts_with($line, $extraSpaces) ? substr($line, strlen($extraSpaces)) : $line, $lines);
+            $html = implode("\n", $lines);
+        }
 
         $tokenLines = $this->getHighlightedLines(trim($html, "\n"), $startLine);
         $lines = $this->colorLines($tokenLines);
         $lines = $this->lineNumbers($lines, $line);
 
         return Termwind::div(trim($lines, "\n"));
+    }
+
+    /**
+     * Finds extra spaces which should be removed from HTML.
+     */
+    private function findExtraSpaces(array $lines): string
+    {
+        foreach ($lines as $line) {
+            if ($line === '') {
+                continue;
+            }
+
+            if (preg_replace('/\s+/', '', $line) === '') {
+                return $line;
+            }
+        }
+
+        return '';
     }
 
     /**
