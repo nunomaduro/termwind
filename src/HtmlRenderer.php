@@ -101,6 +101,7 @@ final class HtmlRenderer
             'strong', 'b' => Termwind::span($children, $styles, $properties)->fontBold(),
             'em', 'i' => Termwind::span($children, $styles, $properties)->italic(),
             'u' => Termwind::span($children, $styles, $properties)->underline(),
+            's' => Termwind::span($children, $styles, $properties)->lineThrough(),
             'a' => Termwind::anchor($children, $styles, $properties)->href($node->getAttribute('href')),
             'hr' => Termwind::hr($styles, $properties),
             default => Termwind::div($children, $styles, $properties),
