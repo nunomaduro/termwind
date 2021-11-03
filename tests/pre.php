@@ -12,15 +12,15 @@ it('renders the element', function () {
 
     $html = parse("<pre>$content</pre>");
 
-    expect($html)->toBe("
-    <h1>Introduction</h1>".str_repeat(' ', 19)."
-".str_repeat(' ', 44)."
-    <div>The body of your message.</div>".str_repeat(' ', 4)."
-".str_repeat(' ', 44)."
-    Thanks,".str_repeat(' ', 33)."
-    Laravel".str_repeat(' ', 33)."
-".str_repeat(' ', 44)."
-    © 2021 Laravel. All rights reserved.".str_repeat(' ', 3)
+    expect($html)->toBe('
+    <h1>Introduction</h1>'.str_repeat(' ', 19).'
+'.str_repeat(' ', 44).'
+    <div>The body of your message.</div>'.str_repeat(' ', 4).'
+'.str_repeat(' ', 44).'
+    Thanks,'.str_repeat(' ', 33).'
+    Laravel'.str_repeat(' ', 33).'
+'.str_repeat(' ', 44).'
+    © 2021 Laravel. All rights reserved.'.str_repeat(' ', 3)
     );
 });
 
