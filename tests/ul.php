@@ -34,3 +34,12 @@ it('renders "li" elements without style', function () {
 
     expect($html)->toBe("list text 1\nlist text 2");
 });
+
+it('renders "li" elements without style in a single row', function () {
+    $html = parse(<<<'HTML'
+<ul class="list-none"> <li>list item 1.1 test</li> <li>list item 1.2 test</li> <li>list item 1.3 test</li> </ul>
+HTML
+    );
+
+    expect($html)->toBe("list item 1.1 test \nlist item 1.2 test \nlist item 1.3 test ");
+});

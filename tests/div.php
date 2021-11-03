@@ -9,10 +9,21 @@ it('renders the element', function () {
 it('renders the element with display block as default', function () {
     $html = parse(<<<'HTML'
         <div>
+            <div>First line</div>
+            <div>Second Line</div>
+        </div>
+    HTML);
+
+    expect($html)->toBe("First line\nSecond Line");
+});
+
+it('renders the element with display block [one empty]', function () {
+    $html = parse(<<<'HTML'
+        <div>
             <div></div>
             <div>Second Line</div>
         </div>
     HTML);
 
-    expect($html)->toBe(" \nSecond Line");
+    expect($html)->toBe("\nSecond Line");
 });

@@ -194,6 +194,14 @@ final class Node
             return '';
         }
 
+        if ($this->node->nodeValue === ' ') {
+            return ' ';
+        }
+
+        if ($this->isEmpty()) {
+            return '';
+        }
+
         $text = preg_replace('/\s+/', ' ', $this->node->nodeValue) ?? '';
 
         if (is_null($this->getPreviousSibling())) {
