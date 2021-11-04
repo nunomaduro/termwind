@@ -157,7 +157,7 @@ HTML);
 
 ### `<s>`
 
-The `<s>`  element can be used to add ~~line through~~ the text.
+The `<s>`  element can be used to add a ~~line through~~ the text.
 
 **Default Styles**: `line-through`
 
