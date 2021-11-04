@@ -143,7 +143,7 @@ HTML);
 
 ### `<i>` and `<em>`
 
-The `<i>`and `<em>` elements can be used to mark the text as *italic*.
+The `<i>` and `<em>` elements can be used to mark the text as *italic*.
 
 **Default Styles**: `italic`
 
@@ -151,6 +151,20 @@ The `<i>`and `<em>` elements can be used to mark the text as *italic*.
 render(<<<'HTML'
     <p>
         This is a CLI app built with <i>Termwind</i>.
+    </p>
+HTML);
+```
+
+### `<s>`
+
+The `<s>`  element can be used to add ~~line through~~ the text.
+
+**Default Styles**: `line-through`
+
+```php
+render(<<<'HTML'
+    <p>
+        This is a CLI app built with <s>Termwind</s>.
     </p>
 HTML);
 ```
