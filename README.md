@@ -75,6 +75,24 @@ style('btn')->apply('p-4 bg-blue text-white');
 render('<div class="btn">Click me</div>');
 ```
 
+## Classes Supported
+
+All the classes supported use exactly the same logic that is available on [tailwindcss.com/docs](https://tailwindcss.com/docs).
+
+* **[Background Color](https://tailwindcss.com/docs/background-color):** `bg-{color}-{variant}`
+* **[Text Color](https://tailwindcss.com/docs/text-color):** `text-{color}-{variant}`
+* **[Font Weight](https://tailwindcss.com/docs/font-weight#class-reference):** `font-bold`
+* **[Font Style](https://tailwindcss.com/docs/font-style#italics):** `italic`
+* **[Text Decoration](https://tailwindcss.com/docs/text-decoration):** `underline`, `line-through`
+* **[Text Transform](https://tailwindcss.com/docs/text-transform):** `uppercase`, `lowercase`, `capitalize`, `snakecase`
+* **[Text Overflow](https://tailwindcss.com/docs/text-overflow):** `truncate`
+* **[Margin](https://tailwindcss.com/docs/margin):** `m-{margin}`, `ml-{leftMargin}`, `mr-{rightMargin}`, `mt-{topMargin}`, `mb-{bottomMargin}`, `mx-{horizontalMargin}`, `my-{verticalMargin}`.
+* **[Padding](https://tailwindcss.com/docs/padding):** `p-{padding}`, `pl-{leftPadding}`, `pr-{rightPadding}`, `pt-{topPadding}`, `pb-{bottomPadding}`, `px-{horizontalPadding}`.
+* **[Width](https://tailwindcss.com/docs/width):** `w-{width}`, `w-full`
+* **[Visibility](https://tailwindcss.com/docs/visibility):** `invisible`
+* **[Display](https://tailwindcss.com/docs/display):** `block`
+* **[List Style](https://tailwindcss.com/docs/list-style-type):** `list-disc`, `list-decimal`, `list-square`, `list-none`
+
 ## HTML Elements Supported
 
 All the elements have the capability to use the `class` attribute.
