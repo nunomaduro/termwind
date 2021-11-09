@@ -31,6 +31,10 @@ final class HtmlRenderer
     {
         $dom = new DOMDocument();
 
+        if (strip_tags($html) === $html) {
+            return Termwind::span($html);
+        }
+
         $html = '<?xml encoding="UTF-8">'.trim($html);
         $dom->loadHTML($html, LIBXML_COMPACT | LIBXML_HTML_NODEFDTD | LIBXML_NOBLANKS | LIBXML_NOXMLDECL);
 
