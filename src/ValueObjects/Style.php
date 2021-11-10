@@ -6,8 +6,8 @@ namespace Termwind\ValueObjects;
 
 use Closure;
 use Termwind\Actions\StyleToMethod;
-use Termwind\Exceptions\InvalidColor;
 use Termwind\Components\Element;
+use Termwind\Exceptions\InvalidColor;
 
 /**
  * @internal
