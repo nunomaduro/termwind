@@ -11,7 +11,7 @@ it('can render table without thead, tbody, tfoot to a string', function () {
         <td align="right">Dante Alighieri</td>
     </tr>
     <tr border="1">
-        <th class="bg-blue-400 text-red px-3">9971-5-0210-0</th>
+        <th class="px-3">9971-5-0210-0</th>
         <td>
 
             A Tale of Two Cities
@@ -36,11 +36,10 @@ it('can render table without thead, tbody, tfoot to a string', function () {
 </table>
 HTML
     );
-
     expect($html->toString())->toBe(<<<'OUT'
 ├──────────────────────┼───────────────────────────┼──────────────────────┤
 │       [1m 99921-58-10-7[0m │  Divine Comedy            │      Dante Alighieri │
-│[31;46m [1m    9971-5-0210-0   [0m [39;49m│  A Tale of Two Cities     │      Charles Dickens │
+│ [1m    9971-5-0210-0   [0m │  A Tale of Two Cities     │      Charles Dickens │
 ├──────────────────────┼───────────────────────────┼──────────────────────┤
 │       [1m 960-425-059-0[0m │  The Lord of the Rings    │     J. R. R. Tolkien │
 [39;49m│       [1m 80-902734-1-6[0m │  And Then There Were None │      Dante Alighieri │[39;49m
