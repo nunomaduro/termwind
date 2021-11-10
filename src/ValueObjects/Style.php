@@ -6,6 +6,7 @@ namespace Termwind\ValueObjects;
 
 use Closure;
 use Termwind\Actions\StyleToMethod;
+use Termwind\Exceptions\InvalidColor;
 use Termwind\Components\Element;
 
 /**
@@ -18,7 +19,7 @@ final class Style
      *
      * @param Closure(Element $element, string|int ...$argument): Element  $callback
      */
-    public function __construct(private Closure $callback)
+    public function __construct(private Closure $callback, private string $color = '')
     {
         // ..
     }
@@ -35,6 +36,26 @@ final class Style
 
             return StyleToMethod::multiple($element, $styles);
         };
+    }
+
+    /**
+     * Sets the color to the style.
+     */
+    public function color(string $color): void
+    {
+        if (preg_match('/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/', $color) < 1) {
+            throw new InvalidColor(sprintf('The color %s is invalid.', $color));
+        }
+
+        $this->color = $color;
+    }
+
+    /**
+     * Gets the color.
+     */
+    public function getColor(): string
+    {
+        return $this->color;
     }
 
     /**

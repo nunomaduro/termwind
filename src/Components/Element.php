@@ -9,6 +9,7 @@ use Termwind\Actions\StyleToMethod;
 use Termwind\Enums\Color;
 use Termwind\Exceptions\ColorNotFound;
 use Termwind\Exceptions\InvalidStyle;
+use Termwind\Repositories\Styles;
 use function Termwind\terminal;
 
 /**
@@ -57,11 +58,9 @@ abstract class Element
      */
     final public function bg(string $color, int $variant = 0): static
     {
-        if ($variant > 0) {
-            $color = $this->getColorVariant($color, $variant);
-        }
-
-        return $this->with(['colors' => ['bg' => $color]]);
+        return $this->with(['colors' => [
+            'bg' => $this->getColorVariant($color, $variant),
+        ]]);
     }
 
     /**
@@ -205,12 +204,8 @@ abstract class Element
      */
     final public function text(string $color, int $variant = 0): static
     {
-        if ($variant > 0) {
-            $color = $this->getColorVariant($color, $variant);
-        }
-
         return $this->with(['colors' => [
-            'fg' => $color,
+            'fg' => $this->getColorVariant($color, $variant),
         ]]);
     }
 
@@ -529,7 +524,15 @@ abstract class Element
      */
     private function getColorVariant(string $color, int $variant): string
     {
-        $colorConstant = mb_strtoupper($color.'_'.$variant, 'UTF-8');
+        if ($variant > 0) {
+            $color .= '-'.$variant;
+        }
+
+        if (Styles::has($color)) {
+            return Styles::get($color)->getColor();
+        }
+
+        $colorConstant = mb_strtoupper(str_replace('-', '_', $color), 'UTF-8');
 
         if (! defined(Color::class."::$colorConstant")) {
             throw new ColorNotFound($colorConstant);
