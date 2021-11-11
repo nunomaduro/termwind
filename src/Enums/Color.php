@@ -6,9 +6,9 @@ namespace Termwind\Enums;
 
 final class Color
 {
-    public const BLACK = '#000';
+    public const BLACK = 'black';
 
-    public const WHITE = '#fff';
+    public const WHITE = 'white';
 
     public const SLATE_50 = '#f8fafc';
     public const SLATE_100 = '#f1f5f9';
@@ -21,6 +21,7 @@ final class Color
     public const SLATE_800 = '#1e293b';
     public const SLATE_900 = '#0f172a';
 
+    public const GRAY = 'gray';
     public const GRAY_50 = '#f9fafb';
     public const GRAY_100 = '#f3f4f6';
     public const GRAY_200 = '#e5e7eb';
@@ -65,6 +66,7 @@ final class Color
     public const STONE_800 = '#292524';
     public const STONE_900 = '#1c1917';
 
+    public const RED = 'red';
     public const RED_50 = '#fef2f2';
     public const RED_100 = '#fee2e2';
     public const RED_200 = '#fecaca';
@@ -76,6 +78,7 @@ final class Color
     public const RED_800 = '#991b1b';
     public const RED_900 = '#7f1d1d';
 
+    public const ORANGE = 'orange';
     public const ORANGE_50 = '#fff7ed';
     public const ORANGE_100 = '#ffedd5';
     public const ORANGE_200 = '#fed7aa';
@@ -98,6 +101,7 @@ final class Color
     public const AMBER_800 = '#92400e';
     public const AMBER_900 = '#78350f';
 
+    public const YELLOW = 'yellow';
     public const YELLOW_50 = '#fefce8';
     public const YELLOW_100 = '#fef9c3';
     public const YELLOW_200 = '#fef08a';
@@ -120,6 +124,7 @@ final class Color
     public const LIME_800 = '#3f6212';
     public const LIME_900 = '#365314';
 
+    public const GREEN = 'green';
     public const GREEN_50 = '#f0fdf4';
     public const GREEN_100 = '#dcfce7';
     public const GREEN_200 = '#bbf7d0';
@@ -153,6 +158,7 @@ final class Color
     public const TEAL_800 = '#115e59';
     public const TEAL_900 = '#134e4a';
 
+    public const CYAN = 'cyan';
     public const CYAN_50 = '#ecfeff';
     public const CYAN_100 = '#cffafe';
     public const CYAN_200 = '#a5f3fc';
@@ -175,6 +181,7 @@ final class Color
     public const SKY_800 = '#075985';
     public const SKY_900 = '#0c4a6e';
 
+    public const BLUE = 'blue';
     public const BLUE_50 = '#eff6ff';
     public const BLUE_100 = '#dbeafe';
     public const BLUE_200 = '#bfdbfe';
@@ -251,4 +258,6 @@ final class Color
     public const ROSE_700 = '#be123c';
     public const ROSE_800 = '#9f1239';
     public const ROSE_900 = '#881337';
+
+    public const MAGENTA = 'magenta';
 }
