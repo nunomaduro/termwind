@@ -65,12 +65,13 @@ class UsersCommand extends Command
 
 ### `style()`
 
-The `style()` function may be used to add own custom syles.
+The `style()` function may be used to add own custom syles and also update colors.
 
 ```php
 use function Termwind\{style};
 
-style('btn')->apply('p-4 bg-blue text-white');
+style('green-300')->color('#bada55');
+style('btn')->apply('p-4 bg-green-300 text-white');
 
 render('<div class="btn">Click me</div>');
 ```
