@@ -241,8 +241,6 @@ test('line-through and lowercase', function () {
 test('underline and capitalize', function () {
     $html = parse('<div class="underline capitalize">hELLO wORLD</div>');
 
-    echo $html;
-
     expect($html)->toBe("\e[4mHello World\e[0m");
 });
 
