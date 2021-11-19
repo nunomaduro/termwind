@@ -11,7 +11,7 @@ it('renders the element', function () {
 it('renders the element with <b> tag', function () {
     $html = parse('<b>text</b>');
 
-    expect($html)->toBe("<options=bold>text</>");
+    expect($html)->toBe('<options=bold>text</>');
 });
 
 it('renders the element with <strong> tag', function () {

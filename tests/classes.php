@@ -6,7 +6,7 @@ use Termwind\Exceptions\InvalidStyle;
 test('font bold', function () {
     $html = parse('<div class="font-bold">text</div>');
 
-    expect($html)->toBe("<options=bold>text</>");
+    expect($html)->toBe('<options=bold>text</>');
 });
 
 test('strong', function () {

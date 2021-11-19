@@ -555,7 +555,7 @@ final class Styles
 
         $options = array_keys($this->properties['options'] ?? []);
         if ($options !== []) {
-            $styles[] = "options=".implode(',', $options);
+            $styles[] = 'options='.implode(',', $options);
         }
 
         // If there are no styles we don't need extra tags
