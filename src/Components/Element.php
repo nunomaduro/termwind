@@ -10,6 +10,7 @@ use Termwind\ValueObjects\Styles;
 
 /**
  * @internal
+ *
  * @method Element inheritFromStyles(Styles $styles)
  * @method Element fontBold()
  * @method Element italic()

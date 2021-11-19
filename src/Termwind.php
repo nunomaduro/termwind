@@ -298,7 +298,7 @@ final class Termwind
      * Convert child elements to a string.
      *
      * @param  array<int, string|Element>|string  $elements
-     * @param  null|Closure(mixed): string  $callback $callback
+     * @param  null|Closure(mixed): string  $callback  $callback
      */
     private static function prepareElements($elements, string $styles = '', Closure|null $callback = null): string
     {

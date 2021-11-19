@@ -6,5 +6,4 @@ namespace Termwind\Components;
 
 final class Anchor extends Element
 {
-
 }

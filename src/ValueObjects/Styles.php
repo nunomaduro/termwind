@@ -66,7 +66,7 @@ final class Styles
     }
 
     /**
-     * Gets default styles
+     * Gets default styles.
      *
      * @return string[]
      */

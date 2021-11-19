@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Termwind\Html;
@@ -16,7 +17,6 @@ final class InheritStyles
      * Applies styles from parent element to child elements.
      *
      * @param  array<int, Element|string>  $elements
-     *
      * @return array<int, Element|string>
      */
     public function __invoke(array $elements, string $styles = ''): array
