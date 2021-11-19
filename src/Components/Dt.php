@@ -6,5 +6,5 @@ namespace Termwind\Components;
 
 final class Dt extends Element
 {
-    public $defaultStyles = ['block', 'font-bold'];
+    protected static array $defaultStyles = ['block', 'font-bold'];
 }

@@ -6,5 +6,5 @@ namespace Termwind\Components;
 
 final class Ol extends Element
 {
-    public $defaultStyles = ['block', 'list-decimal'];
+    protected static array $defaultStyles = ['block', 'list-decimal'];
 }

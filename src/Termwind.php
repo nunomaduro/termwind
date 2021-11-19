@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Termwind;
 
+use Closure;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Termwind\Components\Element;
 use Termwind\Exceptions\InvalidChild;
+use Termwind\Html\InheritStyles;
 
 /**
  * @internal
@@ -35,9 +37,7 @@ final class Termwind
      */
     public static function div(array|string $content = '', string $styles = '', array $properties = []): Components\Div
     {
-        $content = implode('', array_map(
-            fn ($element) => (string) $element, is_array($content) ? $content : [$content]
-        ));
+        $content = self::prepareElements($content, $styles);
 
         return Components\Div::fromStyles(
             self::getRenderer(), $content, $styles, $properties
@@ -52,9 +52,7 @@ final class Termwind
      */
     public static function paragraph(array|string $content = '', string $styles = '', array $properties = []): Components\Paragraph
     {
-        $content = implode('', array_map(
-            fn ($element) => (string) $element, is_array($content) ? $content : [$content]
-        ));
+        $content = self::prepareElements($content, $styles);
 
         return Components\Paragraph::fromStyles(
             self::getRenderer(), $content, $styles, $properties
@@ -69,9 +67,7 @@ final class Termwind
      */
     public static function span(array|string $content = '', string $styles = '', array $properties = []): Components\Span
     {
-        $content = implode('', array_map(
-            fn ($element) => (string) $element, is_array($content) ? $content : [$content]
-        ));
+        $content = self::prepareElements($content, $styles);
 
         return Components\Span::fromStyles(
             self::getRenderer(), $content, $styles, $properties
@@ -84,7 +80,7 @@ final class Termwind
     public static function raw(string $content = ''): Components\Raw
     {
         return Components\Raw::fromStyles(
-            self::getRenderer(), $content, ''
+            self::getRenderer(), $content
         );
     }
 
@@ -96,9 +92,7 @@ final class Termwind
      */
     public static function anchor(array|string $content = '', string $styles = '', array $properties = []): Components\Anchor
     {
-        $content = implode('', array_map(
-            fn ($element) => (string) $element, is_array($content) ? $content : [$content]
-        ));
+        $content = self::prepareElements($content, $styles);
 
         return Components\Anchor::fromStyles(
             self::getRenderer(), $content, $styles, $properties
@@ -117,23 +111,27 @@ final class Termwind
             self::getRenderer(), '', $styles, $properties
         );
 
-        $content = implode('', array_map(function ($li) use ($ul): string {
-            if (is_string($li)) {
-                return $li;
-            }
+        $content = self::prepareElements(
+            $content,
+            $styles,
+            static function ($li) use ($ul): string {
+                if (is_string($li)) {
+                    return $li;
+                }
 
-            if (! $li instanceof Components\Li) {
-                throw new InvalidChild('Unordered lists only accept `li` as child');
-            }
+                if (! $li instanceof Components\Li) {
+                    throw new InvalidChild('Unordered lists only accept `li` as child');
+                }
 
-            return (string) match (true) {
-                $li->hasStyle('list-none') => $li,
-                $ul->hasStyle('list-none') => $li->addStyle('list-none'),
-                $ul->hasStyle('list-square') => $li->addStyle('list-square'),
-                $ul->hasStyle('list-disc') => $li->addStyle('list-disc'),
-                default => $li->addStyle('list-none'),
-            };
-        }, $content));
+                return (string) match (true) {
+                    $li->hasStyle('list-none') => $li,
+                    $ul->hasStyle('list-none') => $li->addStyle('list-none'),
+                    $ul->hasStyle('list-square') => $li->addStyle('list-square'),
+                    $ul->hasStyle('list-disc') => $li->addStyle('list-disc'),
+                    default => $li->addStyle('list-none'),
+                };
+            }
+        );
 
         return $ul->setContent($content);
     }
@@ -151,22 +149,27 @@ final class Termwind
         );
 
         $index = 0;
-        $content = implode('', array_map(function ($li) use ($ol, &$index): string {
-            if (is_string($li)) {
-                return $li;
-            }
 
-            if (! $li instanceof Components\Li) {
-                throw new InvalidChild('Ordered lists only accept `li` as child');
-            }
+        $content = self::prepareElements(
+            $content,
+            $styles,
+            static function ($li) use ($ol, &$index): string {
+                if (is_string($li)) {
+                    return $li;
+                }
 
-            return (string) match (true) {
-                $li->hasStyle('list-none') => $li->addStyle('list-none'),
-                $ol->hasStyle('list-none') => $li->addStyle('list-none'),
-                $ol->hasStyle('list-decimal') => $li->addStyle('list-decimal-'.(++$index)),
-                default => $li->addStyle('list-none'),
-            };
-        }, $content));
+                if (! $li instanceof Components\Li) {
+                    throw new InvalidChild('Ordered lists only accept `li` as child');
+                }
+
+                return (string) match (true) {
+                    $li->hasStyle('list-none') => $li->addStyle('list-none'),
+                    $ol->hasStyle('list-none') => $li->addStyle('list-none'),
+                    $ol->hasStyle('list-decimal') => $li->addStyle('list-decimal-'.(++$index)),
+                    default => $li->addStyle('list-none'),
+                };
+            }
+        );
 
         return $ol->setContent($content);
     }
@@ -179,9 +182,7 @@ final class Termwind
      */
     public static function li(array|string $content = '', string $styles = '', array $properties = []): Components\Li
     {
-        $content = implode('', array_map(
-            fn ($element) => (string) $element, is_array($content) ? $content : [$content]
-        ));
+        $content = self::prepareElements($content, $styles);
 
         return Components\Li::fromStyles(
             self::getRenderer(), $content, $styles, $properties
@@ -196,20 +197,24 @@ final class Termwind
      */
     public static function dl(array $content = [], string $styles = '', array $properties = []): Components\Dl
     {
-        $text = implode('', array_map(function ($element): string {
-            if (is_string($element)) {
-                return $element;
-            }
+        $content = self::prepareElements(
+            $content,
+            $styles,
+            static function ($element): string {
+                if (is_string($element)) {
+                    return $element;
+                }
 
-            if (! $element instanceof Components\Dt && ! $element instanceof Components\Dd) {
-                throw new InvalidChild('Description lists only accept `dt` and `dd` as children');
-            }
+                if (! $element instanceof Components\Dt && ! $element instanceof Components\Dd) {
+                    throw new InvalidChild('Description lists only accept `dt` and `dd` as children');
+                }
 
-            return (string) $element;
-        }, $content));
+                return (string) $element;
+            }
+        );
 
         return Components\Dl::fromStyles(
-            self::getRenderer(), $text, $styles, $properties
+            self::getRenderer(), $content, $styles, $properties
         );
     }
 
@@ -221,9 +226,7 @@ final class Termwind
      */
     public static function dt(array|string $content = '', string $styles = '', array $properties = []): Components\Dt
     {
-        $content = implode('', array_map(
-            fn ($element) => (string) $element, is_array($content) ? $content : [$content]
-        ));
+        $content = self::prepareElements($content, $styles);
 
         return Components\Dt::fromStyles(
             self::getRenderer(), $content, $styles, $properties
@@ -238,9 +241,7 @@ final class Termwind
      */
     public static function dd(array|string $content = '', string $styles = '', array $properties = []): Components\Dd
     {
-        $content = implode('', array_map(
-            fn ($element) => (string) $element, is_array($content) ? $content : [$content]
-        ));
+        $content = self::prepareElements($content, $styles);
 
         return Components\Dd::fromStyles(
             self::getRenderer(), $content, $styles, $properties
@@ -277,5 +278,34 @@ final class Termwind
     private static function getRenderer(): OutputInterface
     {
         return self::$renderer ??= new ConsoleOutput();
+    }
+
+    /**
+     * Adds root styles to child elements.
+     *
+     * @param  array<int, string|Element>|string  $content
+     * @param  string  $styles
+     * @return array<int, string|Element>
+     */
+    private static function inheritStyles($content, string $styles = ''): array
+    {
+        $content = is_array($content) ? $content : [$content];
+
+        return (new InheritStyles())($content, $styles);
+    }
+
+    /**
+     * Convert child elements to a string.
+     *
+     * @param  array<int, string|Element>|string  $elements
+     * @param  null|Closure(mixed): string  $callback $callback
+     */
+    private static function prepareElements($elements, string $styles = '', Closure|null $callback = null): string
+    {
+        if ($callback === null) {
+            $callback = static fn ($element) => (string) $element;
+        }
+
+        return implode('', array_map($callback, self::inheritStyles($elements, $styles)));
     }
 }
