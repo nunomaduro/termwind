@@ -37,13 +37,13 @@ final class CodeRenderer
     private const THEME = [
         self::TOKEN_STRING => 'text-gray',
         self::TOKEN_COMMENT => 'text-gray italic',
-        self::TOKEN_KEYWORD => 'text-magenta font-bold',
-        self::TOKEN_DEFAULT => 'font-bold',
-        self::TOKEN_HTML => 'text-blue font-bold',
+        self::TOKEN_KEYWORD => 'text-magenta strong',
+        self::TOKEN_DEFAULT => 'strong',
+        self::TOKEN_HTML => 'text-blue strong',
 
-        self::ACTUAL_LINE_MARK => 'text-red font-bold',
+        self::ACTUAL_LINE_MARK => 'text-red strong',
         self::LINE_NUMBER => 'text-gray',
-        self::MARKED_LINE_NUMBER => 'italic font-bold',
+        self::MARKED_LINE_NUMBER => 'italic strong',
         self::LINE_NUMBER_DIVIDER => 'text-gray',
     ];
 

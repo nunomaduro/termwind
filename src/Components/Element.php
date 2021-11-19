@@ -6,6 +6,7 @@ namespace Termwind\Components;
 
 use Symfony\Component\Console\Output\OutputInterface;
 use Termwind\Actions\StyleToMethod;
+use Termwind\Html\InheritStyles;
 use Termwind\ValueObjects\Styles;
 
 /**
@@ -13,6 +14,7 @@ use Termwind\ValueObjects\Styles;
  *
  * @method Element inheritFromStyles(Styles $styles)
  * @method Element fontBold()
+ * @method Element strong()
  * @method Element italic()
  * @method Element underline()
  * @method Element lineThrough()
@@ -29,10 +31,12 @@ abstract class Element
 
     /**
      * Creates an element instance.
+     *
+     * @param  array<int, Element|string>|string  $content
      */
     final public function __construct(
         protected OutputInterface $output,
-        protected string $content,
+        protected array|string $content,
         Styles|null $styles = null
     ) {
         $this->styles = $styles ?? new Styles(defaultStyles: static::$defaultStyles);
@@ -42,9 +46,10 @@ abstract class Element
     /**
      * Creates an element instance with the given styles.
      *
+     * @param  array<int, Element|string>|string  $content
      * @param  array<string, mixed>  $properties
      */
-    final public static function fromStyles(OutputInterface $output, string $content, string $styles = '', array $properties = []): static
+    final public static function fromStyles(OutputInterface $output, array|string $content, string $styles = '', array $properties = []): static
     {
         $element = new static($output, $content);
         if ($properties !== []) {
@@ -61,6 +66,11 @@ abstract class Element
      */
     public function toString(): string
     {
+        if (is_array($this->content)) {
+            $inheritance = new InheritStyles();
+            $this->content = implode('', $inheritance($this->content, $this->styles));
+        }
+
         return $this->styles->format($this->content);
     }
 
@@ -75,17 +85,17 @@ abstract class Element
             if (str_starts_with($name, 'get') || str_starts_with($name, 'has')) {
                 return $result;
             }
-
-            return $this;
         }
 
-        throw new \BadMethodCallException("Method {$name} is not found.");
+        return $this;
     }
 
     /**
      * Sets the content of the element.
+     *
+     * @param  array<int, Element|string>|string  $content
      */
-    final public function setContent(string $content): static
+    final public function setContent(array|string $content): static
     {
         return new static($this->output, $content, $this->styles);
     }

@@ -22,7 +22,8 @@ it('can render strings', function () {
 it('can render style modifier with text modifier', function () {
     $html = parse(<<<'HTML'
         <div class="bg-white underline uppercase">Hello world</div>
-    HTML);
+    HTML
+    );
 
     expect($html)->toBe("<bg=white>\e[4mHELLO WORLD\e[0m</>");
 });
@@ -82,7 +83,30 @@ it('inherit styles', function () {
             <span class="mr-1">Hello</span>
             <strong class="text-blue">world</strong>
         </div>
-    HTML);
+    HTML
+    );
 
     expect($html)->toBe("<bg=#fca5a5;fg=white>          Hello <fg=blue;bg=#fca5a5>\e[1mworld\e[0m</>          </>");
+});
+
+it('extend colors', function () {
+    $html = parse(<<<'HTML'
+        <div class="my-1 ml-3 px-2 bg-green-300 text-black">
+            🍃 Termwind now have the capability to <b>extend</b> colors!
+        </div>
+    HTML
+    );
+
+    expect($html)->toBe("\n   <bg=#86efac;fg=black>  🍃 Termwind now have the capability to <bg=#86efac;fg=black;options=bold>extend</> colors!  </>\n");
+});
+
+it('complex extend colors', function () {
+    $html = parse(<<<'HTML'
+         <div class="my-1 ml-3 px-2 bg-green-300 text-black">
+            Termwind <span class="text-red-500"><span class="text-blue-300">now <span class="text-indigo-500">have</span> the</span> capability</span> to extend colors!
+        </div>
+    HTML
+    );
+
+    expect($html)->toBe("\n   <bg=#86efac;fg=black>  Termwind <fg=#ef4444;bg=#86efac><fg=#93c5fd;bg=#86efac>now <fg=#6366f1;bg=#86efac>have</> the</> capability</> to extend colors!  </>\n");
 });

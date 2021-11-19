@@ -10,9 +10,10 @@ it('accepts multiple elements', function () {
             <dt>another term</dt>
             <dd>more details</dd>
         </dl>
-    HTML);
+    HTML
+    );
 
-    expect($dl)->toBe("\e[1mterm\e[0m\n    details\n\e[1manother term\e[0m\n    more details");
+    expect($dl)->toBe("<options=bold>term</>\n    details\n<options=bold>another term</>\n    more details");
 });
 
 it('renders only "dt" and "dd" as children', function () {
@@ -31,16 +32,17 @@ it('renders "dt" and "dd" elements and ignore empty spaces', function () {
             <dd>more details</dd>
 
         </dl>
-    HTML);
+    HTML
+    );
 
-    expect($html)->toBe("\e[1mterm\e[0m\n    details\n\e[1manother term\e[0m\n    more details");
+    expect($html)->toBe("<options=bold>term</>\n    details\n<options=bold>another term</>\n    more details");
 });
 
 it('renders "dt" and "dd" in a single row', function () {
     $html = parse(<<<'HTML'
-<dl> <dt>term</dt> <dd>details</dd> </dl>
-HTML
+        <dl> <dt>term</dt> <dd>details</dd> </dl>
+    HTML
     );
 
-    expect($html)->toBe("\e[1mterm\e[0m \n    details ");
+    expect($html)->toBe("<options=bold>term</> \n    details ");
 });

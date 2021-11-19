@@ -9,7 +9,6 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Termwind\Components\Element;
 use Termwind\Exceptions\InvalidChild;
-use Termwind\Html\InheritStyles;
 
 /**
  * @internal
@@ -76,8 +75,10 @@ final class Termwind
 
     /**
      * Creates an element instance with raw content.
+     *
+     * @param  array<int, Element|string>|string  $content
      */
-    public static function raw(string $content = ''): Components\Raw
+    public static function raw(array|string $content = ''): Components\Raw
     {
         return Components\Raw::fromStyles(
             self::getRenderer(), $content
@@ -114,7 +115,7 @@ final class Termwind
         $content = self::prepareElements(
             $content,
             $styles,
-            static function ($li) use ($ul): string {
+            static function ($li) use ($ul): string|Element {
                 if (is_string($li)) {
                     return $li;
                 }
@@ -123,7 +124,7 @@ final class Termwind
                     throw new InvalidChild('Unordered lists only accept `li` as child');
                 }
 
-                return (string) match (true) {
+                return match (true) {
                     $li->hasStyle('list-none') => $li,
                     $ul->hasStyle('list-none') => $li->addStyle('list-none'),
                     $ul->hasStyle('list-square') => $li->addStyle('list-square'),
@@ -153,7 +154,7 @@ final class Termwind
         $content = self::prepareElements(
             $content,
             $styles,
-            static function ($li) use ($ol, &$index): string {
+            static function ($li) use ($ol, &$index): string|Element {
                 if (is_string($li)) {
                     return $li;
                 }
@@ -162,7 +163,7 @@ final class Termwind
                     throw new InvalidChild('Ordered lists only accept `li` as child');
                 }
 
-                return (string) match (true) {
+                return match (true) {
                     $li->hasStyle('list-none') => $li->addStyle('list-none'),
                     $ol->hasStyle('list-none') => $li->addStyle('list-none'),
                     $ol->hasStyle('list-decimal') => $li->addStyle('list-decimal-'.(++$index)),
@@ -200,7 +201,7 @@ final class Termwind
         $content = self::prepareElements(
             $content,
             $styles,
-            static function ($element): string {
+            static function ($element): string|Element {
                 if (is_string($element)) {
                     return $element;
                 }
@@ -209,7 +210,7 @@ final class Termwind
                     throw new InvalidChild('Description lists only accept `dt` and `dd` as children');
                 }
 
-                return (string) $element;
+                return $element;
             }
         );
 
@@ -281,31 +282,20 @@ final class Termwind
     }
 
     /**
-     * Adds root styles to child elements.
-     *
-     * @param  array<int, string|Element>|string  $content
-     * @param  string  $styles
-     * @return array<int, string|Element>
-     */
-    private static function inheritStyles($content, string $styles = ''): array
-    {
-        $content = is_array($content) ? $content : [$content];
-
-        return (new InheritStyles())($content, $styles);
-    }
-
-    /**
      * Convert child elements to a string.
      *
      * @param  array<int, string|Element>|string  $elements
-     * @param  null|Closure(mixed): string  $callback  $callback
+     *
+     * @return array<int, string|Element>
      */
-    private static function prepareElements($elements, string $styles = '', Closure|null $callback = null): string
+    private static function prepareElements($elements, string $styles = '', Closure|null $callback = null): array
     {
         if ($callback === null) {
-            $callback = static fn ($element) => (string) $element;
+            $callback = static fn ($element): string|Element => $element;
         }
 
-        return implode('', array_map($callback, self::inheritStyles($elements, $styles)));
+        $elements = is_array($elements) ? $elements : [$elements];
+
+        return array_map($callback, $elements);
     }
 }

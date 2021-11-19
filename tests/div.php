@@ -12,7 +12,8 @@ it('renders the element with display block as default', function () {
             <div>First line</div>
             <div>Second Line</div>
         </div>
-    HTML);
+    HTML
+    );
 
     expect($html)->toBe("First line\nSecond Line");
 });
@@ -23,7 +24,8 @@ it('renders the element with display block [one empty]', function () {
             <div></div>
             <div>Second Line</div>
         </div>
-    HTML);
+    HTML
+    );
 
     expect($html)->toBe("\nSecond Line");
 });

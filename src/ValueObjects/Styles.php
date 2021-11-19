@@ -46,16 +46,6 @@ final class Styles
     }
 
     /**
-     * Creates an instance with the given styles.
-     */
-    final public static function fromStyles(string $styles): self
-    {
-        $formatter = new self();
-
-        return StyleToMethod::multiple($formatter, $styles);
-    }
-
-    /**
      * @param  Element  $element
      * @return $this
      */
@@ -170,6 +160,16 @@ final class Styles
      * Adds a bold style to the element.
      */
     final public function fontBold(): self
+    {
+        return $this->with(['options' => [
+            'bold' => true,
+        ]]);
+    }
+
+    /**
+     * Adds a bold style to the element.
+     */
+    final public function strong(): self
     {
         $this->styleModifiers[__METHOD__] = static fn ($text): string => sprintf("\e[1m%s\e[0m", $text);
 
@@ -462,12 +462,11 @@ final class Styles
      */
     final public function list(string $type, int $index = 0): self
     {
-        if ($this->element === null) {
-            return $this;
-        }
-
         if (! $this->element instanceof Ul && ! $this->element instanceof Ol && ! $this->element instanceof Li) {
-            throw new InvalidStyle(sprintf('Style list-none cannot be used with %s', $this->element::class));
+            throw new InvalidStyle(sprintf(
+                'Style list-none cannot be used with %s',
+                $this->element !== null ? $this->element::class : 'unknown element'
+            ));
         }
 
         if (! $this->element instanceof Li) {
@@ -485,7 +484,7 @@ final class Styles
     /**
      * Adds the given properties to the element.
      *
-     * @param  array<string, array<int|string, int|string>>  $properties
+     * @param  array<string, mixed>  $properties
      */
     public function with(array $properties): self
     {
@@ -552,6 +551,11 @@ final class Styles
 
                 $styles[] = "$option=$content";
             }
+        }
+
+        $options = array_keys($this->properties['options'] ?? []);
+        if ($options !== []) {
+            $styles[] = "options=".implode(',', $options);
         }
 
         // If there are no styles we don't need extra tags
