@@ -243,3 +243,9 @@ test('invisible and snakecase', function () {
 
     expect($html)->toBe("\e[8mtext_text\e[0m");
 });
+
+test('append-text', function () {
+    $html = parse('<div class="append-world">hello</div>');
+
+    expect($html)->toBe('helloworld');
+});
