@@ -130,10 +130,6 @@ final class Styles
      */
     final public function inheritFromStyles(Styles $styles): self
     {
-        if (! $styles->hasInheritableStyles() || ! $this->hasInheritableStyles()) {
-            return $this;
-        }
-
         foreach (['bg', 'fg'] as $colorType) {
             $value = (array) ($this->properties['colors'][$colorType] ?? []);
             $parentValue = (array) ($styles->properties['colors'][$colorType] ?? []);
