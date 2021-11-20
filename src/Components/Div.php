@@ -6,5 +6,5 @@ namespace Termwind\Components;
 
 final class Div extends Element
 {
-    public $defaultStyles = ['block'];
+    protected static array $defaultStyles = ['block'];
 }

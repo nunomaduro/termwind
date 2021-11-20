@@ -160,7 +160,7 @@ final class TableRenderer
 
                 $class = $child->getClassAttribute();
                 if ($child->isName('th')) {
-                    $class .= ' font-bold';
+                    $class .= ' strong';
                 }
 
                 $text = strip_tags((string) Termwind::span($child->getInnerText(), $class));

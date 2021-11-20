@@ -14,6 +14,6 @@ final class Raw extends Element
      */
     public function toString(): string
     {
-        return $this->content;
+        return is_array($this->content) ? implode('', $this->content) : $this->content;
     }
 }

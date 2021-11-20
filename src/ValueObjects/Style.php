@@ -6,7 +6,6 @@ namespace Termwind\ValueObjects;
 
 use Closure;
 use Termwind\Actions\StyleToMethod;
-use Termwind\Components\Element;
 use Termwind\Exceptions\InvalidColor;
 
 /**
@@ -17,7 +16,7 @@ final class Style
     /**
      * Creates a new value object instance.
      *
-     * @param Closure(Element $element, string|int ...$argument): Element  $callback
+     * @param Closure(Styles $styles, string|int ...$argument): Styles  $callback
      */
     public function __construct(private Closure $callback, private string $color = '')
     {
@@ -25,16 +24,19 @@ final class Style
     }
 
     /**
-     * Apply the given set of styles to the element.
+     * Apply the given set of styles to the styles.
      */
     public function apply(string $styles): void
     {
         $callback = clone $this->callback;
 
-        $this->callback = static function (Element $element, string|int ...$arguments) use ($callback, $styles): Element {
-            $element = $callback($element, ...$arguments);
+        $this->callback = static function (
+            Styles $formatter,
+            string|int ...$arguments
+        ) use ($callback, $styles): Styles {
+            $formatter = $callback($formatter, ...$arguments);
 
-            return StyleToMethod::multiple($element, $styles);
+            return StyleToMethod::multiple($formatter, $styles);
         };
     }
 
@@ -59,13 +61,10 @@ final class Style
     }
 
     /**
-     * Styles the given element with this style.
-     *
-     * @param  Element  $element
-     * @return Element
+     * Styles the given formatter with this style.
      */
-    public function __invoke(Element $element, string|int ...$arguments): Element
+    public function __invoke(Styles $styles, string|int ...$arguments): Styles
     {
-        return ($this->callback)($element, ...$arguments);
+        return ($this->callback)($styles, ...$arguments);
     }
 }

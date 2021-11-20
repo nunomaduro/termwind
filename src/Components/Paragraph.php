@@ -6,5 +6,5 @@ namespace Termwind\Components;
 
 final class Paragraph extends Element
 {
-    public $defaultStyles = ['block', 'my-1'];
+    protected static array $defaultStyles = ['block', 'my-1'];
 }

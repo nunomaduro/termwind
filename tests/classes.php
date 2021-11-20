@@ -6,6 +6,12 @@ use Termwind\Exceptions\InvalidStyle;
 test('font bold', function () {
     $html = parse('<div class="font-bold">text</div>');
 
+    expect($html)->toBe('<options=bold>text</>');
+});
+
+test('strong', function () {
+    $html = parse('<div class="strong">text</div>');
+
     expect($html)->toBe("\e[1mtext\e[0m");
 });
 
@@ -224,7 +230,7 @@ test('Invalid use of style list-none', function () {
 test('font-bold, italic and uppercase', function () {
     $html = parse('<div class="font-bold italic uppercase">tExT</div>');
 
-    expect($html)->toBe("\e[3m\e[1mTEXT\e[0m\e[0m");
+    expect($html)->toBe("<options=bold>\e[3mTEXT\e[0m</>");
 });
 
 test('line-through and lowercase', function () {
@@ -242,4 +248,10 @@ test('invisible and snakecase', function () {
     $html = parse('<div class="invisible snakecase">textTEXT</div>');
 
     expect($html)->toBe("\e[8mtext_text\e[0m");
+});
+
+test('append-text', function () {
+    $html = parse('<div class="append-world">hello</div>');
+
+    expect($html)->toBe('helloworld');
 });

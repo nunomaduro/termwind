@@ -6,9 +6,9 @@ namespace Termwind;
 
 use Closure;
 use Symfony\Component\Console\Output\OutputInterface;
-use Termwind\Components\Element;
-use Termwind\Repositories\Styles;
+use Termwind\Repositories\Styles as StyleRepository;
 use Termwind\ValueObjects\Style;
+use Termwind\ValueObjects\Styles;
 
 if (! function_exists('renderUsing')) {
     /**
@@ -24,11 +24,11 @@ if (! function_exists('style')) {
     /**
      * Creates a new style.
      *
-     * @param (Closure(Element $renderable, string|int ...$arguments): Element)|null $callback
+     * @param (Closure(Styles $renderable, string|int ...$arguments): Styles)|null $callback
      */
     function style(string $name, Closure $callback = null): Style
     {
-        return Styles::create($name, $callback);
+        return StyleRepository::create($name, $callback);
     }
 }
 
