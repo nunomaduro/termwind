@@ -110,3 +110,17 @@ it('complex extend colors', function () {
 
     expect($html)->toBe("\n   <bg=#86efac;fg=black>  Termwind <fg=#ef4444;bg=#86efac><fg=#93c5fd;bg=#86efac>now <fg=#6366f1;bg=#86efac>have</> the</> capability</> to extend colors!  </>\n");
 });
+
+it('can inherit styles within multiple levels', function () {
+    $html = parse(<<<'HTML'
+        <div class="bg-red-700 p-5 my-1 mx-2">
+            <div class="text-blue-300 ml-2">
+                <div>
+                    <div><b>Termwind</b> is great!</div>
+                </div>
+            </div>
+        </div>
+    HTML
+    );
+
+    expect($html)->toBe("\n  <bg=#b91c1c>       <fg=#93c5fd;bg=#b91c1c><bg=#b91c1c;fg=#93c5fd><bg=#b91c1c;fg=#93c5fd><bg=#b91c1c;fg=#93c5fd;options=bold>Termwind</> is great!</></></>     </>  \n");
