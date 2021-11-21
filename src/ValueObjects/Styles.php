@@ -346,7 +346,7 @@ final class Styles
     final public function w(int $content): self
     {
         $this->textModifiers[__METHOD__] = static function ($text, $textAlign) use ($content): string {
-            $length = mb_strlen($text, 'UTF-8');
+            $length = mb_strlen(preg_replace("/\<[\w\=\#\/]+\>/", '', $text), 'UTF-8');
 
             if ($length <= $content) {
                 if ($textAlign === 'right') {

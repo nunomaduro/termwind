@@ -256,6 +256,17 @@ test('invisible and snakecase', function () {
     expect($html)->toBe("\e[8mtext_text\e[0m");
 });
 
+test('width, bg, text-right', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-15 text-right">
+            <span class="bg-green-500">Pass</span>
+            <span class="text-gray-200">Some Text</span>
+        </div>
+    HTML);
+
+    expect($html)->toBe("  <bg=#22c55e>Pass</><fg=#e5e7eb>Some Text</>");
+});
+
 test('append-text', function () {
     $html = parse('<div class="append-world">hello</div>');
 
