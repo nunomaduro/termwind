@@ -311,7 +311,7 @@ final class Styles
      */
     final public function text(string $value, int $variant = 0): self
     {
-        if (in_array($value, ['left', 'right'])) {
+        if (in_array($value, ['left', 'right'], true)) {
             return $this->with(['styles' => [
                 'text-align' => $value,
             ]]);
