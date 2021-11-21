@@ -351,6 +351,7 @@ final class Styles
 
             if ($length <= $content) {
                 $space = $content - $length;
+
                 return match ($styles['text-align'] ?? '') {
                     'right' => str_repeat(' ', $space).$text,
                     'center' => str_repeat(' ', (int) floor($space / 2)).$text.str_repeat(' ', (int) ceil($space / 2)),
