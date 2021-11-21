@@ -368,17 +368,27 @@ final class Styles
     /**
      * Forces the width of the element.
      */
-    final public function w(int $content): self
+    final public function w(int|string $width): self
     {
-        $this->textModifiers[__METHOD__] = static function ($text, $styles) use ($content): string {
-            if ($content === terminal()->width()) {
-                $content -= ($styles['ml'] ?? 0) + ($styles['mr'] ?? 0);
+        if (is_string($width)) {
+            preg_match('/(\d+)\/(\d+)/', $width, $matches);
+
+            if (count($matches) !== 3 || $matches[2] === "0") {
+                throw new InvalidStyle(sprintf('Style [%s] is invalid.', "w-$width"));
+            }
+
+            $width = (int) floor(terminal()->width() * $matches[1] / $matches[2]);
+        }
+
+        $this->textModifiers[__METHOD__] = static function ($text, $styles) use ($width): string {
+            if ($width === terminal()->width()) {
+                $width -= ($styles['ml'] ?? 0) + ($styles['mr'] ?? 0);
             }
 
             $length = mb_strlen(preg_replace("/\<[\w=#\/\;,]+\>/", '', $text), 'UTF-8');
 
-            if ($length <= $content) {
-                $space = $content - $length;
+            if ($length <= $width) {
+                $space = $width - $length;
 
                 return match ($styles['text-align'] ?? '') {
                     'right' => str_repeat(' ', $space).$text,
@@ -387,7 +397,7 @@ final class Styles
                 };
             }
 
-            return rtrim(mb_strimwidth($text, 0, $content, '', 'UTF-8'));
+            return rtrim(mb_strimwidth($text, 0, $width, '', 'UTF-8'));
         };
 
         return $this;

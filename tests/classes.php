@@ -97,6 +97,26 @@ test('w', function () {
     expect($html)->toBe('text-text text ');
 });
 
+test('w-division', function () {
+    putenv('COLUMNS=20');
+    $html = parse(<<<'HTML'
+        <span>
+            <span class="w-1/2">text</span>
+            <span class="w-1/2">text</span>
+        </span>
+    HTML);
+
+    expect($html)->toBe('text      text      ');
+});
+
+test('invalid w-division', function () {
+    expect(fn () => parse('<span class="w-invalid">text</span>'))
+        ->toThrow(InvalidStyle::class);
+
+    expect(fn () => parse('<span class="w-1/0">text</span>'))
+        ->toThrow(InvalidStyle::class);
+});
+
 test('ml', function () {
     $html = parse('<div class="ml-2">text</div>');
 
