@@ -321,6 +321,7 @@ final class Styles
 
             if ($length < 1) {
                 $margins = (int) ($styles['ml'] ?? 0) + ($styles['mr'] ?? 0);
+
                 return str_repeat('─', terminal()->width() - $margins);
             }
 
