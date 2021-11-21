@@ -18,7 +18,7 @@ it('can be styled', function () {
     expect($html)->toBe('<fg=red>'.str_repeat('─', 10).'</>');
 });
 
-it('accepts the margins and remove from the length', function () {
+it('accepts the margins and remove from the length if w-full', function () {
     putenv('COLUMNS=10');
 
     $html = parse('<hr class="mx-1 text-red">');
@@ -29,7 +29,7 @@ it('accepts the margins and remove from the length', function () {
 it('accepts width', function () {
     putenv('COLUMNS=10');
 
-    $html = parse('<hr class="w-5 text-red">');
+    $html = parse('<hr class="w-5 mx-2 text-red">');
 
-    expect($html)->toBe('<fg=red>'.str_repeat('─', 5).'</>');
+    expect($html)->toBe('  <fg=red>'.str_repeat('─', 5).'</>  ');
 });

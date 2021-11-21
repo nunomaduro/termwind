@@ -318,13 +318,13 @@ final class Styles
 
         $this->styleModifiers[__METHOD__] = static function ($text, $styles): string {
             $length = mb_strlen(preg_replace("/\<[\w=#\/\;,]+\>/", '', $text), 'UTF-8');
-            $margins = (int) ($styles['ml'] ?? 0) + ($styles['mr'] ?? 0);
 
             if ($length < 1) {
+                $margins = (int) ($styles['ml'] ?? 0) + ($styles['mr'] ?? 0);
                 return str_repeat('─', terminal()->width() - $margins);
             }
 
-            return str_repeat('─', $length - $margins);
+            return str_repeat('─', $length);
         };
 
         return $this;
@@ -370,7 +370,10 @@ final class Styles
     final public function w(int $content): self
     {
         $this->textModifiers[__METHOD__] = static function ($text, $styles) use ($content): string {
-            $content -= ($styles['ml'] ?? 0) + ($styles['mr'] ?? 0);
+            if ($content === terminal()->width()) {
+                $content -= ($styles['ml'] ?? 0) + ($styles['mr'] ?? 0);
+            }
+
             $length = mb_strlen(preg_replace("/\<[\w=#\/\;,]+\>/", '', $text), 'UTF-8');
 
             if ($length <= $content) {
