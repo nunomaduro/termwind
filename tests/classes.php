@@ -267,6 +267,19 @@ test('width, bg, text-right', function () {
     expect($html)->toBe('  <bg=#22c55e>Pass</><fg=#e5e7eb>Some Text</>');
 });
 
+test('w-full, bg, margin and text-right', function () {
+    putenv('COLUMNS=20');
+
+    $html = parse(<<<'HTML'
+        <div class="ml-2 mr-2 w-full text-right">
+            <span class="bg-green-500">Pass</span>
+            <span>Some Text</span>
+        </div>
+    HTML);
+
+    expect($html)->toBe('     <bg=#22c55e>Pass</>Some Text  ');
+});
+
 test('append-text', function () {
     $html = parse('<div class="append-world">hello</div>');
 

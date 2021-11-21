@@ -29,7 +29,7 @@ final class Styles
      * Creates a Style formatter instance.
      *
      * @param  array<string, mixed>  $properties
-     * @param  array<string, Closure(string, string): string>  $textModifiers
+     * @param  array<string, Closure(string, array<string, string|int>): string>  $textModifiers
      * @param  array<string, Closure(string): string>  $styleModifiers
      * @param  string[]  $defaultStyles
      */
@@ -345,11 +345,12 @@ final class Styles
      */
     final public function w(int $content): self
     {
-        $this->textModifiers[__METHOD__] = static function ($text, $textAlign) use ($content): string {
+        $this->textModifiers[__METHOD__] = static function ($text, $styles) use ($content): string {
+            $content -= ($styles['ml'] ?? 0) + ($styles['mr'] ?? 0);
             $length = mb_strlen(preg_replace("/\<[\w\=\#\/]+\>/", '', $text), 'UTF-8');
 
             if ($length <= $content) {
-                if ($textAlign === 'right') {
+                if (($styles['text-align'] ?? '') === 'right') {
                     return str_repeat(' ', $content - $length).$text;
                 }
 
@@ -513,13 +514,12 @@ final class Styles
     final public function format(string $content): string
     {
         $display = $this->properties['styles']['display'] ?? 'inline';
-        $textAlign = $this->properties['styles']['text-align'] ?? 'left';
 
         /** @var bool $isFirstChild */
         $isFirstChild = $this->properties['isFirstChild'] ?? false;
 
         foreach ($this->textModifiers as $modifier) {
-            $content = $modifier($content, $textAlign);
+            $content = $modifier($content, $this->properties['styles'] ?? []);
         }
 
         foreach ($this->styleModifiers as $modifier) {
