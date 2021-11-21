@@ -139,6 +139,11 @@ test('m', function () {
     expect($html)->toBe("\n\n  text  \n\n");
 });
 
+test('border-t', function () {
+    expect(fn () => parse('<div class="border-t">text</div>'))
+        ->toThrow(InvalidStyle::class);
+});
+
 test('uppercase', function () {
     $html = parse('<div class="uppercase">text</div>');
 

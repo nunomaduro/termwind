@@ -5,16 +5,17 @@ declare(strict_types=1);
 namespace Termwind\ValueObjects;
 
 use Closure;
-use Termwind\Actions\StyleToMethod;
-use Termwind\Components\Element;
+use Termwind\Enums\Color;
+use Termwind\Components\Hr;
 use Termwind\Components\Li;
 use Termwind\Components\Ol;
 use Termwind\Components\Ul;
-use Termwind\Enums\Color;
-use Termwind\Exceptions\ColorNotFound;
-use Termwind\Exceptions\InvalidStyle;
-use Termwind\Repositories\Styles as StyleRepository;
 use function Termwind\terminal;
+use Termwind\Components\Element;
+use Termwind\Actions\StyleToMethod;
+use Termwind\Exceptions\InvalidStyle;
+use Termwind\Exceptions\ColorNotFound;
+use Termwind\Repositories\Styles as StyleRepository;
 
 /**
  * @internal
@@ -30,7 +31,7 @@ final class Styles
      *
      * @param  array<string, mixed>  $properties
      * @param  array<string, Closure(string, array<string, string|int>): string>  $textModifiers
-     * @param  array<string, Closure(string): string>  $styleModifiers
+     * @param  array<string, Closure(string, array<string, string|int>): string>  $styleModifiers
      * @param  string[]  $defaultStyles
      */
     final public function __construct(
@@ -307,6 +308,29 @@ final class Styles
     }
 
     /**
+     * Adds a border on top of each element.
+     */
+    final public function borderT(int $width = 1): self
+    {
+        if (! $this->element instanceof Hr) {
+            throw new InvalidStyle('`border-t` can only be used on an "hr" element.');
+        }
+
+        $this->styleModifiers[__METHOD__] = static function ($text, $styles): string {
+            $length = mb_strlen(preg_replace("/\<[\w=#\/\;,]+\>/", '', $text), 'UTF-8');
+            $margins = (int) ($styles['ml'] ?? 0) + ($styles['mr'] ?? 0);
+
+            if ($length < 1) {
+                return str_repeat('─', terminal()->width() - $margins);
+            }
+
+            return str_repeat('─', $length - $margins);
+        };
+
+        return $this;
+    }
+
+    /**
      * Adds a text alignment or color to the element.
      */
     final public function text(string $value, int $variant = 0): self
@@ -525,7 +549,7 @@ final class Styles
         }
 
         foreach ($this->styleModifiers as $modifier) {
-            $content = $modifier($content);
+            $content = $modifier($content, $this->properties['styles'] ?? []);
         }
 
         return sprintf(

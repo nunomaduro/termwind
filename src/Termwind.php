@@ -256,10 +256,8 @@ final class Termwind
      */
     public static function hr(string $styles = '', array $properties = []): Components\Hr
     {
-        $width = terminal()->width();
-
         return Components\Hr::fromStyles(
-            self::getRenderer(), str_repeat(html_entity_decode('&mdash;'), $width), $styles, $properties
+            self::getRenderer(), '', $styles, $properties
         );
     }
 
