@@ -261,4 +261,3 @@ test('append-text', function () {
 
     expect($html)->toBe('helloworld');
 });
-

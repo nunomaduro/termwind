@@ -313,7 +313,7 @@ final class Styles
     {
         if (in_array($value, ['left', 'right'])) {
             return $this->with(['styles' => [
-                'text-align' => $value
+                'text-align' => $value,
             ]]);
         }
 
