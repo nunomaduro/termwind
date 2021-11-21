@@ -87,6 +87,7 @@ All the classes supported use exactly the same logic that is available on [tailw
 * **[Text Decoration](https://tailwindcss.com/docs/text-decoration):** `underline`, `line-through`
 * **[Text Transform](https://tailwindcss.com/docs/text-transform):** `uppercase`, `lowercase`, `capitalize`, `snakecase`
 * **[Text Overflow](https://tailwindcss.com/docs/text-overflow):** `truncate`
+* **[Text Alignment](https://tailwindcss.com/docs/text-align):** `text-left`, `text-center`, `text-right`
 * **[Margin](https://tailwindcss.com/docs/margin):** `m-{margin}`, `ml-{leftMargin}`, `mr-{rightMargin}`, `mt-{topMargin}`, `mb-{bottomMargin}`, `mx-{horizontalMargin}`, `my-{verticalMargin}`.
 * **[Padding](https://tailwindcss.com/docs/padding):** `p-{padding}`, `pl-{leftPadding}`, `pr-{rightPadding}`, `pt-{topPadding}`, `pb-{bottomPadding}`, `px-{horizontalPadding}`.
 * **[Width](https://tailwindcss.com/docs/width):** `w-{width}`, `w-full`
