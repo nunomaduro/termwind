@@ -26,7 +26,6 @@ it('accepts the margins and remove from the length', function () {
     expect($html)->toBe(' <fg=red>'.str_repeat('─', 8).'</> ');
 });
 
-
 it('accepts width', function () {
     putenv('COLUMNS=10');
 

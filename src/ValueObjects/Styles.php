@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace Termwind\ValueObjects;
 
 use Closure;
-use Termwind\Enums\Color;
+use Termwind\Actions\StyleToMethod;
+use Termwind\Components\Element;
 use Termwind\Components\Hr;
 use Termwind\Components\Li;
 use Termwind\Components\Ol;
 use Termwind\Components\Ul;
-use function Termwind\terminal;
-use Termwind\Components\Element;
-use Termwind\Actions\StyleToMethod;
-use Termwind\Exceptions\InvalidStyle;
+use Termwind\Enums\Color;
 use Termwind\Exceptions\ColorNotFound;
+use Termwind\Exceptions\InvalidStyle;
 use Termwind\Repositories\Styles as StyleRepository;
+use function Termwind\terminal;
 
 /**
  * @internal
