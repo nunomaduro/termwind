@@ -347,7 +347,7 @@ final class Styles
     {
         $this->textModifiers[__METHOD__] = static function ($text, $styles) use ($content): string {
             $content -= ($styles['ml'] ?? 0) + ($styles['mr'] ?? 0);
-            $length = mb_strlen(preg_replace("/\<[\w\=\#\/]+\>/", '', $text), 'UTF-8');
+            $length = mb_strlen(preg_replace("/\<[\w=#\/\;,]+\>/", '', $text), 'UTF-8');
 
             if ($length <= $content) {
                 if (($styles['text-align'] ?? '') === 'right') {
