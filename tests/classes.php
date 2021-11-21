@@ -264,7 +264,7 @@ test('width, bg, text-right', function () {
         </div>
     HTML);
 
-    expect($html)->toBe("  <bg=#22c55e>Pass</><fg=#e5e7eb>Some Text</>");
+    expect($html)->toBe('  <bg=#22c55e>Pass</><fg=#e5e7eb>Some Text</>');
 });
 
 test('append-text', function () {
