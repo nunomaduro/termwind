@@ -311,7 +311,7 @@ final class Styles
      */
     final public function text(string $value, int $variant = 0): self
     {
-        if (in_array($value, ['left', 'right'], true)) {
+        if (in_array($value, ['left', 'right', 'center'], true)) {
             return $this->with(['styles' => [
                 'text-align' => $value,
             ]]);
@@ -350,11 +350,12 @@ final class Styles
             $length = mb_strlen(preg_replace("/\<[\w=#\/\;,]+\>/", '', $text), 'UTF-8');
 
             if ($length <= $content) {
-                if (($styles['text-align'] ?? '') === 'right') {
-                    return str_repeat(' ', $content - $length).$text;
-                }
-
-                return $text.str_repeat(' ', $content - $length);
+                $space = $content - $length;
+                return match ($styles['text-align'] ?? '') {
+                    'right' => str_repeat(' ', $space).$text,
+                    'center' => str_repeat(' ', (int) floor($space / 2)).$text.str_repeat(' ', (int) ceil($space / 2)),
+                    default => $text.str_repeat(' ', $space),
+                };
             }
 
             return rtrim(mb_strimwidth($text, 0, $content, '', 'UTF-8'));

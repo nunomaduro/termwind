@@ -69,6 +69,12 @@ test('text-right', function () {
     expect($html)->toBe('      text');
 });
 
+test('text-center', function () {
+    $html = parse('<div class="w-9 text-center">text</div>');
+
+    expect($html)->toBe('  text   ');
+});
+
 test('truncate', function () {
     $html = parse(<<<'HTML'
         <span>
