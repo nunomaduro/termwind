@@ -63,6 +63,12 @@ test('text-color', function () {
     expect($html)->toBe('<fg=red>text</>');
 });
 
+test('text-right', function () {
+    $html = parse('<div class="w-10 text-right">text</div>');
+
+    expect($html)->toBe('      text');
+});
+
 test('truncate', function () {
     $html = parse(<<<'HTML'
         <span>
@@ -255,3 +261,4 @@ test('append-text', function () {
 
     expect($html)->toBe('helloworld');
 });
+

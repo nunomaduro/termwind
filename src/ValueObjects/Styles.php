@@ -29,7 +29,7 @@ final class Styles
      * Creates a Style formatter instance.
      *
      * @param  array<string, mixed>  $properties
-     * @param  array<string, Closure(string): string>  $textModifiers
+     * @param  array<string, Closure(string, string): string>  $textModifiers
      * @param  array<string, Closure(string): string>  $styleModifiers
      * @param  string[]  $defaultStyles
      */
@@ -307,12 +307,18 @@ final class Styles
     }
 
     /**
-     * Adds a text color to the element.
+     * Adds a text alignment or color to the element.
      */
-    final public function text(string $color, int $variant = 0): self
+    final public function text(string $value, int $variant = 0): self
     {
+        if (in_array($value, ['left', 'right'])) {
+            return $this->with(['styles' => [
+                'text-align' => $value
+            ]]);
+        }
+
         return $this->with(['colors' => [
-            'fg' => $this->getColorVariant($color, $variant),
+            'fg' => $this->getColorVariant($value, $variant),
         ]]);
     }
 
@@ -339,10 +345,14 @@ final class Styles
      */
     final public function w(int $content): self
     {
-        $this->textModifiers[__METHOD__] = static function ($text) use ($content): string {
+        $this->textModifiers[__METHOD__] = static function ($text, $textAlign) use ($content): string {
             $length = mb_strlen($text, 'UTF-8');
 
             if ($length <= $content) {
+                if ($textAlign === 'right') {
+                    return str_repeat(' ', $content - $length).$text;
+                }
+
                 return $text.str_repeat(' ', $content - $length);
             }
 
@@ -503,12 +513,13 @@ final class Styles
     final public function format(string $content): string
     {
         $display = $this->properties['styles']['display'] ?? 'inline';
+        $textAlign = $this->properties['styles']['text-align'] ?? 'left';
 
         /** @var bool $isFirstChild */
         $isFirstChild = $this->properties['isFirstChild'] ?? false;
 
         foreach ($this->textModifiers as $modifier) {
-            $content = $modifier($content);
+            $content = $modifier($content, $textAlign);
         }
 
         foreach ($this->styleModifiers as $modifier) {
