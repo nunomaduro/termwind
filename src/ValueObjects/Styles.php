@@ -373,7 +373,7 @@ final class Styles
         if (is_string($width)) {
             preg_match('/(\d+)\/(\d+)/', $width, $matches);
 
-            if (count($matches) !== 3 || $matches[2] === "0") {
+            if (count($matches) !== 3 || $matches[2] === '0') {
                 throw new InvalidStyle(sprintf('Style [%s] is invalid.', "w-$width"));
             }
 
