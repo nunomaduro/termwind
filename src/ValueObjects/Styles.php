@@ -266,29 +266,21 @@ final class Styles
     /**
      * Adds the given padding left to the element.
      */
-    final public function pl(int $padding): self
+    final public function pl(int $padding): static
     {
-        $this->textModifiers[__METHOD__] = static fn ($text): string => sprintf(
-            '%s%s',
-            str_repeat(' ', $padding),
-            $text
-        );
-
-        return $this;
+        return $this->with(['styles' => [
+            'pl' => $padding,
+        ]]);
     }
 
     /**
      * Adds the given padding right.
      */
-    final public function pr(int $padding): self
+    final public function pr(int $padding): static
     {
-        $this->textModifiers[__METHOD__] = static fn ($text): string => sprintf(
-            '%s%s',
-            $text,
-            str_repeat(' ', $padding)
-        );
-
-        return $this;
+        return $this->with(['styles' => [
+            'pr' => $padding,
+        ]]);
     }
 
     /**
@@ -384,6 +376,8 @@ final class Styles
             if ($width === terminal()->width()) {
                 $width -= ($styles['ml'] ?? 0) + ($styles['mr'] ?? 0);
             }
+
+            $width -= ($styles['pl'] ?? 0) + ($styles['pr'] ?? 0);
 
             $length = mb_strlen(preg_replace("/\<[\w=#\/\;,]+\>/", '', $text), 'UTF-8');
 
@@ -571,7 +565,9 @@ final class Styles
             $display === 'block' && ! $isFirstChild ? "\n" : '',
             str_repeat("\n", (int) ($this->properties['styles']['mt'] ?? 0)),
             str_repeat(' ', (int) ($this->properties['styles']['ml'] ?? 0)),
+            str_repeat(' ', (int) ($this->properties['styles']['pl'] ?? 0)),
             $content,
+            str_repeat(' ', (int) ($this->properties['styles']['pr'] ?? 0)),
             str_repeat(' ', (int) ($this->properties['styles']['mr'] ?? 0)),
             str_repeat("\n", (int) ($this->properties['styles']['mb'] ?? 0)),
         );
@@ -607,10 +603,10 @@ final class Styles
 
         // If there are no styles we don't need extra tags
         if ($styles === []) {
-            return '%s%s%s%s%s%s';
+            return '%s%s%s%s%s%s%s%s';
         }
 
-        return '%s%s%s<'.implode(';', $styles).'>%s</>%s%s';
+        return '%s%s%s<'.implode(';', $styles).'>%s%s%s</>%s%s';
     }
 
     /**
