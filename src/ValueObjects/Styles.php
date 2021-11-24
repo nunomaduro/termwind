@@ -30,7 +30,7 @@ final class Styles
      * Creates a Style formatter instance.
      *
      * @param  array<string, mixed>  $properties
-     * @param  array<string, Closure(string, array<string, string|int>): string>  $textModifiers
+     * @param  array<string, Closure(string, array<string, string|int>, array<string, int[]>): string>  $textModifiers
      * @param  array<string, Closure(string, array<string, string|int>): string>  $styleModifiers
      * @param  string[]  $defaultStyles
      */
@@ -123,7 +123,11 @@ final class Styles
         return ($this->properties['colors']['bg'] ?? []) !== []
             || ($this->properties['colors']['fg'] ?? []) !== []
             || ($this->properties['options'] ?? []) !== []
-            || ($this->properties['href'] ?? []) !== [];
+            || ($this->properties['href'] ?? []) !== []
+            || ($this->properties['styles']['ml'] ?? 0) > 0
+            || ($this->properties['styles']['mr'] ?? 0) > 0
+            || ($this->properties['styles']['pl'] ?? 0) > 0
+            || ($this->properties['styles']['pr'] ?? 0) > 0;
     }
 
     /**
@@ -131,6 +135,15 @@ final class Styles
      */
     final public function inheritFromStyles(Styles $styles): self
     {
+        foreach (['ml', 'mr', 'pl', 'pr'] as $margin) {
+            $this->properties['parentStyles'][$margin] = array_merge(
+                $this->properties['parentStyles'][$margin] ?? [],
+                $styles->properties['parentStyles'][$margin] ?? []
+            );
+
+            $this->properties['parentStyles'][$margin][] = $styles->properties['styles'][$margin] ?? 0;
+        }
+
         foreach (['bg', 'fg'] as $colorType) {
             $value = (array) ($this->properties['colors'][$colorType] ?? []);
             $parentValue = (array) ($styles->properties['colors'][$colorType] ?? []);
@@ -362,23 +375,12 @@ final class Styles
      */
     final public function w(int|string $width): self
     {
-        if (is_string($width)) {
-            preg_match('/(\d+)\/(\d+)/', $width, $matches);
-
-            if (count($matches) !== 3 || $matches[2] === '0') {
-                throw new InvalidStyle(sprintf('Style [%s] is invalid.', "w-$width"));
-            }
-
-            $width = (int) floor(terminal()->width() * $matches[1] / $matches[2]);
-        }
-
-        $this->textModifiers[__METHOD__] = static function ($text, $styles) use ($width): string {
-            if ($width === terminal()->width()) {
-                $width -= ($styles['ml'] ?? 0) + ($styles['mr'] ?? 0);
+        $this->textModifiers[__METHOD__] = static function ($text, $styles, $parentStyles) use ($width): string {
+            if (is_string($width)) {
+                $width = self::calcWidthFromFraction($width, $styles, $parentStyles);
             }
 
             $width -= ($styles['pl'] ?? 0) + ($styles['pr'] ?? 0);
-
             $length = mb_strlen(preg_replace("/\<[\w=#\/\;,]+\>/", '', $text), 'UTF-8');
 
             if ($length <= $width) {
@@ -402,7 +404,7 @@ final class Styles
      */
     final public function wFull(): static
     {
-        return $this->w(terminal()->width());
+        return $this->w('1/1');
     }
 
     /**
@@ -553,7 +555,11 @@ final class Styles
         $isFirstChild = $this->properties['isFirstChild'] ?? false;
 
         foreach ($this->textModifiers as $modifier) {
-            $content = $modifier($content, $this->properties['styles'] ?? []);
+            $content = $modifier(
+                $content,
+                $this->properties['styles'] ?? [],
+                $this->properties['parentStyles'] ?? []
+            );
         }
 
         foreach ($this->styleModifiers as $modifier) {
@@ -629,5 +635,29 @@ final class Styles
         }
 
         return constant(Color::class."::$colorConstant");
+    }
+
+    /**
+     * Calculates the width based on the fraction provided.
+     *
+     * @param  array<string, int>  $styles
+     * @param  array<string, int[]>  $parentStyles
+     */
+    private static function calcWidthFromFraction(string $fraction, array $styles, array $parentStyles): int
+    {
+        $width = terminal()->width();
+        $width -= array_sum($parentStyles['ml'] ?? []) + array_sum($parentStyles['mr'] ?? []);
+        $width -= array_sum($parentStyles['pl'] ?? []) + array_sum($parentStyles['pr'] ?? []);
+
+        preg_match('/(\d+)\/(\d+)/', $fraction, $matches);
+
+        if (count($matches) !== 3 || $matches[2] === '0') {
+            throw new InvalidStyle(sprintf('Style [%s] is invalid.', "w-$fraction"));
+        }
+
+        $width = (int) floor($width * $matches[1] / $matches[2]);
+        $width -= ($styles['ml'] ?? 0) + ($styles['mr'] ?? 0);
+
+        return $width;
     }
 }

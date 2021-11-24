@@ -125,3 +125,20 @@ it('can inherit styles within multiple levels', function () {
 
     expect($html)->toBe("\n  <bg=#b91c1c>       <fg=#93c5fd;bg=#b91c1c><bg=#b91c1c;fg=#93c5fd><bg=#b91c1c;fg=#93c5fd><bg=#b91c1c;fg=#93c5fd;options=bold>Termwind</> is great!</></></>     </>  \n");
 });
+
+it('can inherit margins and paddings', function () {
+    putenv('COLUMNS=20');
+
+    $html = parse(<<<'HTML'
+        <div class="px-1">
+            <div class="mx-1">
+                <div class="mx-1">
+                    <span class="w-1/2 mr-1 px-1">A</span>
+                    <span class="w-1/2 ml-1 px-1">B</span>
+                </div>
+            </div>
+        </div>
+    HTML);
+
+    expect($html)->toBe('    A       B       ');
+});
