@@ -126,6 +126,17 @@ it('can inherit styles within multiple levels', function () {
     expect($html)->toBe("\n  <bg=#b91c1c>       <fg=#93c5fd;bg=#b91c1c><bg=#b91c1c;fg=#93c5fd><bg=#b91c1c;fg=#93c5fd><bg=#b91c1c;fg=#93c5fd;options=bold>Termwind</> is great!</></></>     </>  \n");
 });
 
+it('trims the text properly when having bg and text colors', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-5">
+            <span class="bg-green-500">P<b>a</b>ss</span>
+            <span class="text-gray-200">A this should not show</span>
+        </div>
+    HTML);
+
+    expect($html)->toBe('<bg=#22c55e>P<bg=#22c55e;options=bold>a</>ss</><fg=#e5e7eb>A</>');
+});
+
 it('can inherit margins and paddings', function () {
     putenv('COLUMNS=20');
 

@@ -376,6 +376,7 @@ final class Styles
     final public function w(int|string $width): self
     {
         $this->textModifiers[__METHOD__] = static function ($text, $styles, $parentStyles) use ($width): string {
+
             if (is_string($width)) {
                 $width = self::calcWidthFromFraction($width, $styles, $parentStyles);
             }
@@ -393,7 +394,7 @@ final class Styles
                 };
             }
 
-            return rtrim(mb_strimwidth($text, 0, $width, '', 'UTF-8'));
+            return self::trimText($text, $width);
         };
 
         return $this;
@@ -659,5 +660,21 @@ final class Styles
         $width -= ($styles['ml'] ?? 0) + ($styles['mr'] ?? 0);
 
         return $width;
+    }
+
+    /**
+     * It trims the text properly ignoring all `<bg;fg;options>` tags added.
+     */
+    private static function trimText(string $text, int $width): string
+    {
+        $regex = "/\<[\w=#\/\;,]+\>/";
+        preg_match_all($regex, $text, $matches, PREG_OFFSET_CAPTURE);
+        $text = rtrim(mb_strimwidth(preg_replace($regex, '', $text) ?? '', 0, $width, '', 'UTF-8'));
+
+        foreach ($matches[0] ?? [] as [$part, $index]) {
+            $text = mb_substr($text, 0, $index, 'UTF-8') . $part . mb_substr($text, $index, null, 'UTF-8');
+        }
+
+        return $text;
     }
 }
