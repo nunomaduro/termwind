@@ -375,9 +375,9 @@ final class Styles
      */
     final public function w(int|string $width): self
     {
-        $this->textModifiers[__METHOD__] = static function ($text, $styles, $parent) use ($width): string {
+        $this->textModifiers[__METHOD__] = static function ($text, $styles, $parentStyles) use ($width): string {
             if (is_string($width)) {
-                $width = self::calcWidthFromFraction($width, $styles, $parent);
+                $width = self::calcWidthFromFraction($width, $styles, $parentStyles);
             }
 
             $width -= ($styles['pl'] ?? 0) + ($styles['pr'] ?? 0);
