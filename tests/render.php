@@ -140,5 +140,5 @@ it('can inherit margins and paddings', function () {
         </div>
     HTML);
 
-    expect($html)->toBe("    A       B       ");
+    expect($html)->toBe('    A       B       ');
 });
