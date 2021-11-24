@@ -137,6 +137,17 @@ it('trims the text properly when having bg and text colors', function () {
     expect($html)->toBe('<bg=#22c55e>P<bg=#22c55e;options=bold>a</>ss</><fg=#e5e7eb>A</>');
 });
 
+it('trims the text properly when having escape codes', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-5">
+            <span class="line-through">Pass</span>
+            <span class="text-gray-200">A this should not show</span>
+        </div>
+    HTML);
+
+    expect($html)->toBe("\e[9mPass\e[0m<fg=#e5e7eb>A</>");
+});
+
 it('can inherit margins and paddings', function () {
     putenv('COLUMNS=20');
 

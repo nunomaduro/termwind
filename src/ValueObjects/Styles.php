@@ -662,11 +662,12 @@ final class Styles
     }
 
     /**
-     * It trims the text properly ignoring all `<bg;fg;options>` tags added.
+     * It trims the text properly ignoring all escape codes and
+     * `<bg;fg;options>` tags.
      */
     private static function trimText(string $text, int $width): string
     {
-        $regex = "/\<[\w=#\/\;,]+\>/";
+        $regex = "/\<[\w=#\/\;,]+\>|\\e\[\d+m/";
         preg_match_all($regex, $text, $matches, PREG_OFFSET_CAPTURE);
         $text = rtrim(mb_strimwidth(preg_replace($regex, '', $text) ?? '', 0, $width, '', 'UTF-8'));
 
