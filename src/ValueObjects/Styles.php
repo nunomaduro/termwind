@@ -376,7 +376,6 @@ final class Styles
     final public function w(int|string $width): self
     {
         $this->textModifiers[__METHOD__] = static function ($text, $styles, $parentStyles) use ($width): string {
-
             if (is_string($width)) {
                 $width = self::calcWidthFromFraction($width, $styles, $parentStyles);
             }
@@ -672,7 +671,7 @@ final class Styles
         $text = rtrim(mb_strimwidth(preg_replace($regex, '', $text) ?? '', 0, $width, '', 'UTF-8'));
 
         foreach ($matches[0] ?? [] as [$part, $index]) {
-            $text = mb_substr($text, 0, $index, 'UTF-8') . $part . mb_substr($text, $index, null, 'UTF-8');
+            $text = mb_substr($text, 0, $index, 'UTF-8').$part.mb_substr($text, $index, null, 'UTF-8');
         }
 
         return $text;
