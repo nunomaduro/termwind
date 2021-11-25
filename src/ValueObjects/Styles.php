@@ -153,6 +153,10 @@ final class Styles
             }
         }
 
+        $this->properties['options']['bold'] = $this->properties['options']['bold']
+            ?? $styles->properties['options']['bold']
+            ?? false;
+
         return $this;
     }
 
@@ -602,7 +606,11 @@ final class Styles
             }
         }
 
-        $options = array_keys($this->properties['options'] ?? []);
+        $options = array_keys(array_filter(
+            $this->properties['options'] ?? [],
+            fn ($option) => $option === true
+        ));
+
         if ($options !== []) {
             $styles[] = 'options='.implode(',', $options);
         }

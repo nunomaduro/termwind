@@ -164,3 +164,14 @@ it('can inherit margins and paddings', function () {
 
     expect($html)->toBe('    A       B       ');
 });
+
+it('can inherit font-bold', function () {
+    $html = parse(<<<'HTML'
+        <div class="font-bold text-red-500">
+            <div>A</div>
+            <div>B</div>
+        </div>
+    HTML);
+
+    expect($html)->toBe("<fg=#ef4444;options=bold><fg=#ef4444;options=bold>A</>\n<fg=#ef4444;options=bold>B</></>");
+});
