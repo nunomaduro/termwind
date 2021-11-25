@@ -82,7 +82,7 @@ All the classes supported use exactly the same logic that is available on [tailw
 
 * **[Background Color](https://tailwindcss.com/docs/background-color):** `bg-{color}-{variant}`
 * **[Text Color](https://tailwindcss.com/docs/text-color):** `text-{color}-{variant}`
-* **[Font Weight](https://tailwindcss.com/docs/font-weight#class-reference):** `font-bold`
+* **[Font Weight](https://tailwindcss.com/docs/font-weight#class-reference):** `font-bold`, `font-normal`
 * **[Font Style](https://tailwindcss.com/docs/font-style#italics):** `italic`
 * **[Text Decoration](https://tailwindcss.com/docs/text-decoration):** `underline`, `line-through`
 * **[Text Transform](https://tailwindcss.com/docs/text-transform):** `uppercase`, `lowercase`, `capitalize`, `snakecase`
