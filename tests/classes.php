@@ -9,6 +9,16 @@ test('font bold', function () {
     expect($html)->toBe('<options=bold>text</>');
 });
 
+test('font normal', function () {
+    $html = parse(<<<'HTML'
+        <div class="font-bold">
+            <div class="font-normal">text</div>
+        </div>
+    HTML);
+
+    expect($html)->toBe('<options=bold><options=,>text</></>');
+});
+
 test('strong', function () {
     $html = parse('<div class="strong">text</div>');
 

@@ -153,9 +153,12 @@ final class Styles
             }
         }
 
-        $this->properties['options']['bold'] = $this->properties['options']['bold']
-            ?? $styles->properties['options']['bold']
-            ?? false;
+        if (! is_null($this->properties['options']['bold'] ?? null) ||
+            ! is_null($styles->properties['options']['bold'] ?? null)) {
+            $this->properties['options']['bold'] = $this->properties['options']['bold']
+                ?? $styles->properties['options']['bold']
+                ?? false;
+        }
 
         return $this;
     }
@@ -177,6 +180,16 @@ final class Styles
     {
         return $this->with(['options' => [
             'bold' => true,
+        ]]);
+    }
+
+    /**
+     * Removes the bold style on the element.
+     */
+    final public function fontNormal(): self
+    {
+        return $this->with(['options' => [
+            'bold' => false,
         ]]);
     }
 
@@ -606,13 +619,15 @@ final class Styles
             }
         }
 
-        $options = array_keys(array_filter(
-            $this->properties['options'] ?? [],
-            fn ($option) => $option === true
-        ));
+        $options = $this->properties['options'] ?? [];
 
         if ($options !== []) {
-            $styles[] = 'options='.implode(',', $options);
+            $options = array_keys(array_filter(
+                $options, fn ($option) => $option === true
+            ));
+            $styles[] = count($options) > 0
+                ? 'options='.implode(',', $options)
+                : 'options=,';
         }
 
         // If there are no styles we don't need extra tags
