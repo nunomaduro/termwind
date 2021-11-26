@@ -216,3 +216,19 @@ it('can inherit font-bold', function () {
 
     expect($html)->toBe("<fg=#ef4444;options=bold><fg=#ef4444;options=bold>A</>\n<fg=#ef4444;options=bold>B</></>");
 });
+
+it('renders a div and table', function () {
+    $html = parse(<<<'HTML'
+        <div>
+            <div>Results:</div>
+            <table>
+                <tr>
+                    <td>A</td>
+                    <td>B</td>
+                </tr>
+            </table>
+        </div>
+    HTML);
+
+    expect($html)->toBe("Results:\n+----+----+\n|  A |  B |\n+----+----+\n");
+});

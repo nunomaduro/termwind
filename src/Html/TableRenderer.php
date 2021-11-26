@@ -49,7 +49,9 @@ final class TableRenderer
         $this->parseTable($node);
         $this->table->render();
 
-        return Termwind::raw($this->output->fetch());
+        return Termwind::div($this->output->fetch(), '', [
+            'isFirstChild' => $node->isFirstChild(),
+        ]);
     }
 
     /**
