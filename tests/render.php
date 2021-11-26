@@ -165,6 +165,37 @@ it('can inherit margins and paddings', function () {
     expect($html)->toBe('    A       B       ');
 });
 
+it('can inherit width on multiple levels', function () {
+    putenv('COLUMNS=30');
+
+    $html = parse(<<<'HTML'
+        <div class="w-full">
+            <div class="w-24 bg-white mx-2">
+                <div class="mx-1">
+                    <div class="mx-1 px-1">
+                        <span class="w-1/2 px-1 mx-1 bg-red">A</span>
+                        <span class="w-1/2 px-1 mx-1 bg-blue">B</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    HTML);
+
+    expect($html)->toBe('  <bg=white> <bg=white> <bg=white>  <bg=red> A     </>  <bg=blue> B     </>  </> </> </>    ');
+});
+
+it('can inherit width on multiple lines', function () {
+
+    $html = parse(<<<'HTML'
+        <div class="w-10">
+            <div class="w-full bg-red">AAAAAAAAAA</div>
+            <div class="w-full bg-blue">BBBBBBBBBB</div>
+        </div>
+    HTML);
+
+    expect($html)->toBe("<bg=red>AAAAAAAAAA</>\n<bg=blue>BBBBBBBBBB</>");
+});
+
 it('can inherit font-bold', function () {
     $html = parse(<<<'HTML'
         <div class="font-bold text-red-500">

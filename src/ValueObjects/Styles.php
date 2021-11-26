@@ -22,6 +22,11 @@ use function Termwind\terminal;
  */
 final class Styles
 {
+    /**
+     * Finds all the styling on a strin
+     */
+    private const STYLING_REGEX = "/\<[\w=#\/\;,]+\>|\\e\[\d+m/";
+
     /** @var array<int, string> */
     private array $styles = [];
     private ?Element $element = null;
@@ -127,7 +132,8 @@ final class Styles
             || ($this->properties['styles']['ml'] ?? 0) > 0
             || ($this->properties['styles']['mr'] ?? 0) > 0
             || ($this->properties['styles']['pl'] ?? 0) > 0
-            || ($this->properties['styles']['pr'] ?? 0) > 0;
+            || ($this->properties['styles']['pr'] ?? 0) > 0
+            || ($this->properties['styles']['width'] ?? 0) > 0;
     }
 
     /**
@@ -135,13 +141,13 @@ final class Styles
      */
     final public function inheritFromStyles(Styles $styles): self
     {
-        foreach (['ml', 'mr', 'pl', 'pr'] as $margin) {
-            $this->properties['parentStyles'][$margin] = array_merge(
-                $this->properties['parentStyles'][$margin] ?? [],
-                $styles->properties['parentStyles'][$margin] ?? []
+        foreach (['ml', 'mr', 'pl', 'pr', 'width'] as $style) {
+            $this->properties['parentStyles'][$style] = array_merge(
+                $this->properties['parentStyles'][$style] ?? [],
+                $styles->properties['parentStyles'][$style] ?? []
             );
 
-            $this->properties['parentStyles'][$margin][] = $styles->properties['styles'][$margin] ?? 0;
+            $this->properties['parentStyles'][$style][] = $styles->properties['styles'][$style] ?? 0;
         }
 
         foreach (['bg', 'fg'] as $colorType) {
@@ -339,7 +345,7 @@ final class Styles
         }
 
         $this->styleModifiers[__METHOD__] = static function ($text, $styles): string {
-            $length = mb_strlen(preg_replace("/\<[\w=#\/\;,]+\>/", '', $text), 'UTF-8');
+            $length = mb_strlen(preg_replace(self::STYLING_REGEX, '', $text), 'UTF-8');
 
             if ($length < 1) {
                 $margins = (int) ($styles['ml'] ?? 0) + ($styles['mr'] ?? 0);
@@ -390,30 +396,11 @@ final class Styles
     /**
      * Forces the width of the element.
      */
-    final public function w(int|string $width): self
+    final public function w(int|string $width): static
     {
-        $this->textModifiers[__METHOD__] = static function ($text, $styles, $parentStyles) use ($width): string {
-            if (is_string($width)) {
-                $width = self::calcWidthFromFraction($width, $styles, $parentStyles);
-            }
-
-            $width -= ($styles['pl'] ?? 0) + ($styles['pr'] ?? 0);
-            $length = mb_strlen(preg_replace("/\<[\w=#\/\;,]+\>/", '', $text), 'UTF-8');
-
-            if ($length <= $width) {
-                $space = $width - $length;
-
-                return match ($styles['text-align'] ?? '') {
-                    'right' => str_repeat(' ', $space).$text,
-                    'center' => str_repeat(' ', (int) floor($space / 2)).$text.str_repeat(' ', (int) ceil($space / 2)),
-                    default => $text.str_repeat(' ', $space),
-                };
-            }
-
-            return self::trimText($text, $width);
-        };
-
-        return $this;
+        return $this->with(['styles' => [
+            'width' => $width,
+        ]]);
     }
 
     /**
@@ -579,6 +566,8 @@ final class Styles
             );
         }
 
+        $content = $this->applyWidth($content);
+
         foreach ($this->styleModifiers as $modifier) {
             $content = $modifier($content, $this->properties['styles'] ?? []);
         }
@@ -639,6 +628,46 @@ final class Styles
     }
 
     /**
+     * It applies the correct width for the content.
+     */
+    private function applyWidth(string $content): string
+    {
+        $styles = $this->properties['styles'] ?? [];
+        $width = $styles['width'] ?? 0;
+
+        if ($width < 1) {
+            return $content;
+        }
+
+        if (is_string($width)) {
+            $width = self::calcWidthFromFraction(
+                $width,
+                $styles,
+                $this->properties['parentStyles'] ?? []
+            );
+        }
+
+        $width -= ($styles['pl'] ?? 0) + ($styles['pr'] ?? 0);
+        $length = mb_strlen(preg_replace(self::STYLING_REGEX, '', $content) ?? '', 'UTF-8');
+
+        preg_match_all("/\n+/", $content, $matches);
+        $width *= count($matches[0] ?? []) + 1;
+        $width += count($matches[0] ?? []);
+
+        if ($length <= $width) {
+            $space = $width - $length;
+
+            return match ($styles['text-align'] ?? '') {
+                'right' => str_repeat(' ', $space).$content,
+                'center' => str_repeat(' ', (int) floor($space / 2)).$content.str_repeat(' ', (int) ceil($space / 2)),
+                default => $content.str_repeat(' ', $space),
+            };
+        }
+
+        return self::trimText($content, $width);
+    }
+
+    /**
      * Get the constant variant color from Color class.
      */
     private function getColorVariant(string $color, int $variant): string
@@ -664,13 +693,11 @@ final class Styles
      * Calculates the width based on the fraction provided.
      *
      * @param  array<string, int>  $styles
-     * @param  array<string, int[]>  $parentStyles
+     * @param  array<string, array<int, int|string>>  $parentStyles
      */
     private static function calcWidthFromFraction(string $fraction, array $styles, array $parentStyles): int
     {
-        $width = terminal()->width();
-        $width -= array_sum($parentStyles['ml'] ?? []) + array_sum($parentStyles['mr'] ?? []);
-        $width -= array_sum($parentStyles['pl'] ?? []) + array_sum($parentStyles['pr'] ?? []);
+        $width = self::getParentWidth($parentStyles);
 
         preg_match('/(\d+)\/(\d+)/', $fraction, $matches);
 
@@ -685,14 +712,44 @@ final class Styles
     }
 
     /**
+     * Gets the width of the parent element.
+     *
+     * @param  array<string, array<int|string>>  $styles
+     */
+    private static function getParentWidth(array $styles): int
+    {
+        $width = terminal()->width();
+
+        foreach ($styles['width'] ?? [] as $index => $parentWidth) {
+            $margins = (int) $styles['ml'][$index] + (int) $styles['mr'][$index];
+
+            if ($parentWidth < 1) {
+                $parentWidth = $width;
+            } else if (is_int($parentWidth)) {
+                $parentWidth += $margins;
+            }
+
+            preg_match('/(\d+)\/(\d+)/', (string) $parentWidth, $matches);
+
+            $width = count($matches) !== 3
+                ? (int) $parentWidth
+                : (int) floor($width * $matches[1] / $matches[2]);
+
+            $width -= $margins;
+            $width -= (int) $styles['pl'][$index] + (int) $styles['pr'][$index];
+        }
+
+        return $width;
+    }
+
+    /**
      * It trims the text properly ignoring all escape codes and
      * `<bg;fg;options>` tags.
      */
     private static function trimText(string $text, int $width): string
     {
-        $regex = "/\<[\w=#\/\;,]+\>|\\e\[\d+m/";
-        preg_match_all($regex, $text, $matches, PREG_OFFSET_CAPTURE);
-        $text = rtrim(mb_strimwidth(preg_replace($regex, '', $text) ?? '', 0, $width, '', 'UTF-8'));
+        preg_match_all(self::STYLING_REGEX, $text, $matches, PREG_OFFSET_CAPTURE);
+        $text = rtrim(mb_strimwidth(preg_replace(self::STYLING_REGEX, '', $text) ?? '', 0, $width, '', 'UTF-8'));
 
         foreach ($matches[0] ?? [] as [$part, $index]) {
             $text = mb_substr($text, 0, $index, 'UTF-8').$part.mb_substr($text, $index, null, 'UTF-8');
