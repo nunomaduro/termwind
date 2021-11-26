@@ -185,7 +185,6 @@ it('can inherit width on multiple levels', function () {
 });
 
 it('can inherit width on multiple lines', function () {
-
     $html = parse(<<<'HTML'
         <div class="w-10">
             <div class="w-full bg-red">AAAAAAAAAA</div>

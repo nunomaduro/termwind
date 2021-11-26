@@ -23,7 +23,7 @@ use function Termwind\terminal;
 final class Styles
 {
     /**
-     * Finds all the styling on a strin
+     * Finds all the styling on a string.
      */
     private const STYLING_REGEX = "/\<[\w=#\/\;,]+\>|\\e\[\d+m/";
 
@@ -725,7 +725,7 @@ final class Styles
 
             if ($parentWidth < 1) {
                 $parentWidth = $width;
-            } else if (is_int($parentWidth)) {
+            } elseif (is_int($parentWidth)) {
                 $parentWidth += $margins;
             }
 
