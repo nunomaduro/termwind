@@ -554,9 +554,7 @@ final class Styles
     final public function format(string $content): string
     {
         $display = $this->properties['styles']['display'] ?? 'inline';
-
-        /** @var bool $isFirstChild */
-        $isFirstChild = $this->properties['isFirstChild'] ?? false;
+        $isFirstChild = (bool) $this->properties['isFirstChild'] ?? false;
 
         foreach ($this->textModifiers as $modifier) {
             $content = $modifier(
@@ -572,15 +570,17 @@ final class Styles
             $content = $modifier($content, $this->properties['styles'] ?? []);
         }
 
+        [$marginLeft, $marginRight] = $this->getMargins();
+
         return sprintf(
             $this->getFormatString(),
             $display === 'block' && ! $isFirstChild ? "\n" : '',
             str_repeat("\n", (int) ($this->properties['styles']['mt'] ?? 0)),
-            str_repeat(' ', (int) ($this->properties['styles']['ml'] ?? 0)),
+            str_repeat(' ', $marginLeft),
             str_repeat(' ', (int) ($this->properties['styles']['pl'] ?? 0)),
             $content,
             str_repeat(' ', (int) ($this->properties['styles']['pr'] ?? 0)),
-            str_repeat(' ', (int) ($this->properties['styles']['mr'] ?? 0)),
+            str_repeat(' ', $marginRight),
             str_repeat("\n", (int) ($this->properties['styles']['mb'] ?? 0)),
         );
     }
@@ -625,6 +625,29 @@ final class Styles
         }
 
         return '%s%s%s<'.implode(';', $styles).'>%s%s%s</>%s%s';
+    }
+
+    /**
+     * Get the margins applied to the element.
+     *
+     * @return array{0: int, 1: int}
+     */
+    private function getMargins(): array
+    {
+        $left = $this->properties['styles']['ml'] ?? 0;
+        $right = $this->properties['styles']['mr'] ?? 0;
+        $parentLeft = array_sum($this->properties['parentStyles']['ml'] ?? []);
+        $parentRight = array_sum($this->properties['parentStyles']['mr'] ?? []);
+
+        $display = $this->properties['styles']['display'] ?? 'inline';
+        $isFirstChild = (bool) $this->properties['isFirstChild'] ?? false;
+
+        if ($display === 'block' && $parentLeft + $parentRight > 0 && ! $isFirstChild) {
+            $left += $parentLeft;
+            $right += $parentRight;
+        }
+
+        return [$left, $right];
     }
 
     /**
