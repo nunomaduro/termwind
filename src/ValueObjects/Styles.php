@@ -571,6 +571,7 @@ final class Styles
         }
 
         [$marginLeft, $marginRight] = $this->getMargins();
+        $content = preg_replace('/\n/', "\n".str_repeat(' ', $marginLeft), $content);
 
         return sprintf(
             $this->getFormatString(),
@@ -634,20 +635,10 @@ final class Styles
      */
     private function getMargins(): array
     {
-        $left = $this->properties['styles']['ml'] ?? 0;
-        $right = $this->properties['styles']['mr'] ?? 0;
-        $parentLeft = array_sum($this->properties['parentStyles']['ml'] ?? []);
-        $parentRight = array_sum($this->properties['parentStyles']['mr'] ?? []);
-
-        $display = $this->properties['styles']['display'] ?? 'inline';
-        $isFirstChild = (bool) $this->properties['isFirstChild'] ?? false;
-
-        if ($display === 'block' && $parentLeft + $parentRight > 0 && ! $isFirstChild) {
-            $left += $parentLeft;
-            $right += $parentRight;
-        }
-
-        return [$left, $right];
+        return [
+            $this->properties['styles']['ml'] ?? 0,
+            $this->properties['styles']['mr'] ?? 0,
+        ];
     }
 
     /**

@@ -219,7 +219,7 @@ it('can inherit font-bold', function () {
 
 it('renders a div and table', function () {
     $html = parse(<<<'HTML'
-        <div>
+        <div class="ml-2">
             <div>Results:</div>
             <table>
                 <tr>
@@ -230,5 +230,5 @@ it('renders a div and table', function () {
         </div>
     HTML);
 
-    expect($html)->toBe("Results:\n+----+----+\n|  A |  B |\n+----+----+");
+    expect($html)->toBe("  Results:\n  +----+----+\n  |  A |  B |\n  +----+----+");
 });

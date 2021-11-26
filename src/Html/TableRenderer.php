@@ -49,7 +49,7 @@ final class TableRenderer
         $this->parseTable($node);
         $this->table->render();
 
-        $content = preg_replace('/\n$/', '', $this->output->fetch());
+        $content = preg_replace('/\n$/', '', $this->output->fetch()) ?? '';
 
         return Termwind::div($content, '', [
             'isFirstChild' => $node->isFirstChild(),
