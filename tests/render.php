@@ -230,5 +230,5 @@ it('renders a div and table', function () {
         </div>
     HTML);
 
-    expect($html)->toBe("Results:\n+----+----+\n|  A |  B |\n+----+----+\n");
+    expect($html)->toBe("Results:\n+----+----+\n|  A |  B |\n+----+----+");
 });
