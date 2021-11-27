@@ -571,7 +571,8 @@ final class Styles
         }
 
         [$marginLeft, $marginRight] = $this->getMargins();
-        $content = preg_replace('/\n/', "\n".str_repeat(' ', $marginLeft), $content);
+        $content = (string) preg_replace('/\n/', "\n".str_repeat(' ', $marginLeft), $content);
+        $content = preg_replace('/\r[ \t]?/', "\n", $content);
 
         return sprintf(
             $this->getFormatString(),

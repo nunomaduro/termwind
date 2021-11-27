@@ -11,6 +11,6 @@ final class BreakLine extends Element
      */
     public function toString(): string
     {
-        return parent::toString()."\n";
+        return parent::toString()."\r";
     }
 }
