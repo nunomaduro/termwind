@@ -571,17 +571,25 @@ final class Styles
         }
 
         [$marginLeft, $marginRight] = $this->getMargins();
-        $content = (string) preg_replace('/\n/', "\n".str_repeat(' ', $marginLeft), $content);
-        $content = preg_replace('/\r[ \t]?/', "\n", $content);
+        [$paddingLeft, $paddingRight] = $this->getPaddings();
+
+        $content = preg_replace('/\r[ \t]?/', "\n",
+            (string) preg_replace(
+                '/\n/',
+                str_repeat(' ', $marginRight + $paddingRight)
+                ."\n".
+                str_repeat(' ', $marginLeft + $paddingLeft),
+            $content)
+        );
 
         return sprintf(
             $this->getFormatString(),
             $display === 'block' && ! $isFirstChild ? "\n" : '',
             str_repeat("\n", (int) ($this->properties['styles']['mt'] ?? 0)),
             str_repeat(' ', $marginLeft),
-            str_repeat(' ', (int) ($this->properties['styles']['pl'] ?? 0)),
+            str_repeat(' ', $paddingLeft),
             $content,
-            str_repeat(' ', (int) ($this->properties['styles']['pr'] ?? 0)),
+            str_repeat(' ', $paddingRight),
             str_repeat(' ', $marginRight),
             str_repeat("\n", (int) ($this->properties['styles']['mb'] ?? 0)),
         );
@@ -639,6 +647,19 @@ final class Styles
         return [
             $this->properties['styles']['ml'] ?? 0,
             $this->properties['styles']['mr'] ?? 0,
+        ];
+    }
+
+    /**
+     * Get the paddings applied to the element.
+     *
+     * @return array{0: int, 1: int}
+     */
+    private function getPaddings(): array
+    {
+        return [
+            $this->properties['styles']['pl'] ?? 0,
+            $this->properties['styles']['pr'] ?? 0,
         ];
     }
 

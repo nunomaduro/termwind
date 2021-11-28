@@ -195,6 +195,17 @@ it('can inherit margins on multiple lines', function () {
     expect($html)->toBe("  <bg=red>AAAAAAAAAA</>\n  <bg=blue>BBBBBBBBBB</>");
 });
 
+it('can inherit padding on multiple lines', function () {
+    $html = parse(<<<'HTML'
+        <div class="pl-2">
+            <div class="bg-red">AAAAAAAAAA</div>
+            <div class="bg-blue">BBBBBBBBBB</div>
+        </div>
+    HTML);
+
+    expect($html)->toBe("  <bg=red>AAAAAAAAAA</>\n  <bg=blue>BBBBBBBBBB</>");
+});
+
 it('can inherit width on multiple lines', function () {
     $html = parse(<<<'HTML'
         <div class="w-10">
