@@ -49,7 +49,7 @@ render(<<<'HTML'
     </div>
 HTML);
 
-// dynamic and live html
+// Dynamic html content
 live(fn () => '<strong>' . date('s') . '<strong/>')->refreshEvery(seconds: 1);
 
 // Laravel or Symfony console commands...
@@ -92,10 +92,10 @@ $live = live(function () {
     return "<p>$seconds</p>";
 });
 
-$live->render(); // Resolves the closure, and renders the returned html.
-$live->clear(); // Removes the previous rendered html of the terminal.
-$live->refresh(); // Clear, and render the html.
-$live->refreshEvery($seconds); // Clear, and render the html, every X amount of seconds.
+$live->render(); // Re-runs the given closure, and renders its output.
+$live->clear(); // Removes all previous rendered html.
+$live->refresh(); // Refreshes the previous rendered html.
+$live->refreshEvery($seconds); // Refreshes the previous rendered html, every X amount of seconds.
 ```
 
 ## Classes Supported
