@@ -96,6 +96,11 @@ $live->render(); // Re-runs the given closure, and renders its output.
 $live->clear(); // Removes all previous rendered html.
 $live->refresh(); // Refreshes the previous rendered html.
 $live->refreshEvery($seconds); // Refreshes the previous rendered html, every X amount of seconds.
+
+// In addition, you may control when the `refreshEvery` should stop, by calling the `RefreshEvent::stop` method.
+live(function (RefreshEvent $event) {
+    return $event->stop();
+})->refreshEvery(seconds: 1);
 ```
 
 ## Classes Supported
