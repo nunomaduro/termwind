@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Termwind;
 
 use Closure;
-use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\ConsoleSectionOutput;
 use Termwind\Events\RefreshEvent;
 
@@ -20,10 +19,9 @@ final class Live
     public function __construct(
         private Terminal $terminal,
         private ConsoleSectionOutput $output,
-        private HtmlRenderer         $renderer,
-        private Closure              $htmlResolver
-    )
-    {
+        private HtmlRenderer $renderer,
+        private Closure $htmlResolver
+    ) {
         // ..
     }
 
@@ -34,7 +32,6 @@ final class Live
     {
         $this->output->clear();
     }
-
 
     /**
      * Renders the live html.

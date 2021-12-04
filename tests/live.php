@@ -1,13 +1,12 @@
 <?php
 
-use Symfony\Component\Console\Output\ConsoleSectionOutput;
-use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Output\ConsoleSectionOutput;
 use Termwind\Events\RefreshEvent;
 use Termwind\Exceptions\InvalidRenderer;
 use function Termwind\live;
 use function Termwind\renderUsing;
-use Termwind\Live;
 
 beforeEach(function () {
     renderUsing($this->output = Mockery::mock(ConsoleOutput::class));
@@ -16,7 +15,7 @@ beforeEach(function () {
 it('requires symfony console output', function () {
     renderUsing(new BufferedOutput());
 
-    live(fn() => 'foo');
+    live(fn () => 'foo');
 })->throws(InvalidRenderer::class);
 
 it('renders the closure result', function () {
@@ -24,7 +23,7 @@ it('renders the closure result', function () {
     $section->shouldReceive('write')->once()->with('foo');
     $this->output->shouldReceive('section')->once()->andReturn($section);
 
-    live(fn() => 'foo');
+    live(fn () => 'foo');
 });
 
 it('clears the previous closure result', function () {
@@ -33,7 +32,7 @@ it('clears the previous closure result', function () {
     $section->shouldReceive('clear')->once();
     $this->output->shouldReceive('section')->once()->andReturn($section);
 
-    live(fn() => 'foo')->clear();
+    live(fn () => 'foo')->clear();
 });
 
 it('re-renders the closure result', function () {
@@ -41,7 +40,7 @@ it('re-renders the closure result', function () {
     $section->shouldReceive('write')->twice()->with('foo');
     $this->output->shouldReceive('section')->once()->andReturn($section);
 
-    live(fn() => 'foo')->render();
+    live(fn () => 'foo')->render();
 });
 
 it('may be refreshed', function () {
@@ -50,7 +49,7 @@ it('may be refreshed', function () {
     $section->shouldReceive('clear')->once();
     $this->output->shouldReceive('section')->once()->andReturn($section);
 
-    live(fn() => 'foo')->refresh();
+    live(fn () => 'foo')->refresh();
 });
 
 it('may be refreshed every X seconds', function () {
