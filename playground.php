@@ -1,15 +1,15 @@
 <?php
 
-require_once __DIR__.'/vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
-use function Termwind\{render};
+use function Termwind\{live};
 
-render(<<<'HTML'
-    <div>
-        <div class="w-full bg-green-300"></div>
-        <div class="text-white ml-2">
-            🍃 Termwind now supports `w-full`
-        </div>
-        <div class="w-full bg-green-400"></div>
-    </div>
-HTML);
+$counter = 0;
+
+$counter = 0;
+
+$live = live(function () {
+    $seconds = date('s');
+
+    return "<p>$seconds</p>";
+})->refreshEvery(1);

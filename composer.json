@@ -17,6 +17,7 @@
     "require-dev": {
         "ergebnis/phpstan-rules": "^0.15.3",
         "pestphp/pest": "^1.20.0",
+        "pestphp/pest-plugin-mock": "^1.0",
         "phpstan/phpstan": "^0.12.99",
         "phpstan/phpstan-strict-rules": "^0.12.11",
         "styleci/cli": "^1.2",

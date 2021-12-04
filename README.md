@@ -49,6 +49,9 @@ render(<<<'HTML'
     </div>
 HTML);
 
+// dynamic and live html
+live(fn () => '<strong>' . date('s') . '<strong/>')->refreshEvery(seconds: 1);
+
 // Laravel or Symfony console commands...
 class UsersCommand extends Command
 {
@@ -65,7 +68,7 @@ class UsersCommand extends Command
 
 ### `style()`
 
-The `style()` function may be used to add own custom syles and also update colors.
+The `style()` function may be used to add own custom styles and also update colors.
 
 ```php
 use function Termwind\{style};
@@ -74,6 +77,25 @@ style('green-300')->color('#bada55');
 style('btn')->apply('p-4 bg-green-300 text-white');
 
 render('<div class="btn">Click me</div>');
+```
+
+### `live()`
+
+The `live()` function may be used to make a particular section of the terminal dynamic.
+
+```php
+use function Termwind\{live};
+
+$live = live(function () {
+    $seconds = date('s');
+
+    return "<p>$seconds</p>";
+});
+
+$live->render(); // Resolves the closure, and renders the returned html.
+$live->clear(); // Removes the previous rendered html of the terminal.
+$live->refresh(); // Clear, and render the html.
+$live->refreshEvery($seconds); // Clear, and render the html, every X amount of seconds.
 ```
 
 ## Classes Supported

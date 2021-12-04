@@ -39,4 +39,12 @@ final class Terminal
     {
         return $this->terminal->getHeight();
     }
+
+    /**
+     * Freezes the terminal for the given amount of seconds.
+     */
+    public function freeze(int $seconds): void
+    {
+        sleep($seconds);
+    }
 }

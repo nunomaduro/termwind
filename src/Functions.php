@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Termwind;
 
 use Closure;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
+use Termwind\Exceptions\InvalidRenderer;
 use Termwind\Repositories\Styles as StyleRepository;
 use Termwind\ValueObjects\Style;
 use Termwind\ValueObjects\Styles;
 
-if (! function_exists('renderUsing')) {
+if (!function_exists('renderUsing')) {
     /**
      * Sets the renderer implementation.
      */
@@ -20,7 +22,7 @@ if (! function_exists('renderUsing')) {
     }
 }
 
-if (! function_exists('style')) {
+if (!function_exists('style')) {
     /**
      * Creates a new style.
      *
@@ -32,7 +34,7 @@ if (! function_exists('style')) {
     }
 }
 
-if (! function_exists('render')) {
+if (!function_exists('render')) {
     /**
      * Render HTML to a string.
      */
@@ -42,12 +44,34 @@ if (! function_exists('render')) {
     }
 }
 
-if (! function_exists('terminal')) {
+if (!function_exists('terminal')) {
     /**
      * Returns a Terminal instance.
      */
     function terminal(): Terminal
     {
         return new Terminal;
+    }
+}
+
+if (!function_exists('live')) {
+    /**
+     * Render HTML to a string, and keeps the html live.
+     */
+    function live(Closure $htmlResolver): Live
+    {
+        $output = Termwind::getRenderer();
+
+        if (! $output instanceof ConsoleOutput) {
+            throw new InvalidRenderer(
+                'The renderer must be an instance of Symfony\'s ConsoleOutput',
+            );
+        }
+
+        $live = new Live(terminal(), $output->section(), new HtmlRenderer(), $htmlResolver);
+
+        $live->render();
+
+        return $live;
     }
 }
