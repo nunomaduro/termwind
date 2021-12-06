@@ -7,6 +7,7 @@ it('renders the element', function () {
 
     expect($html)->toBe("\r");
 });
+
 it('renders the text with line-breaks', function () {
     $html = parse("<div>line<br/>\n break</div>");
 
