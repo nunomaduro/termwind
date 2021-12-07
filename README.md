@@ -137,7 +137,7 @@ HTML);
 
 ### `<a>`
 
-The `<a>` element can be used as an hyperlink. Tt allows to use the `href` attribute to open the link when clicked.
+The `<a>` element can be used as an hyperlink. It allows to use the `href` attribute to open the link when clicked.
 
 ```php
 render(<<<'HTML'
