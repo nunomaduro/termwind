@@ -39,4 +39,12 @@ final class Terminal
     {
         return $this->terminal->getHeight();
     }
+
+    /**
+     * Clears the terminal screen.
+     */
+    public function clear(): void
+    {
+        Termwind::getRenderer()->write("\ec");
+    }
 }

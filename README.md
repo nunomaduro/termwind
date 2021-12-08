@@ -76,6 +76,14 @@ style('btn')->apply('p-4 bg-green-300 text-white');
 render('<div class="btn">Click me</div>');
 ```
 
+### `terminal()`
+
+The `terminal()` function returns an instance of the [Terminal](https://github.com/nunomaduro/termwind/blob/master/src/Terminal.php) class, with the following methods:
+
+* `->width()`: Returns the full width of the terminal.
+* `->height()`: Returns the full height of the terminal.
+* `->clear()`: It clears the terminal screen.
+
 ## Classes Supported
 
 All the classes supported use exactly the same logic that is available on [tailwindcss.com/docs](https://tailwindcss.com/docs).

@@ -17,3 +17,9 @@ it('can get the height of the terminal', function () {
 
     expect($height)->toBe(30);
 });
+
+it('can clear the screen', function () {
+    terminal()->clear();
+
+    expect($this->output->fetch())->toBe("\ec");
+});
