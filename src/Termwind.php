@@ -274,7 +274,7 @@ final class Termwind
     /**
      * Gets the current renderer instance.
      */
-    private static function getRenderer(): OutputInterface
+    public static function getRenderer(): OutputInterface
     {
         return self::$renderer ??= new ConsoleOutput();
     }

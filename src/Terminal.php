@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Termwind;
 
 use Symfony\Component\Console\Terminal as ConsoleTerminal;
+use Termwind\Termwind;
 
 /**
  * @internal
@@ -38,5 +39,13 @@ final class Terminal
     public function height(): int
     {
         return $this->terminal->getHeight();
+    }
+
+    /**
+     * Clears the terminal screen.
+     */
+    public function clear(): void
+    {
+        Termwind::getRenderer()->write("\ec");
     }
 }
