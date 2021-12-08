@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Termwind;
 
 use Symfony\Component\Console\Terminal as ConsoleTerminal;
-use Termwind\Termwind;
 
 /**
  * @internal
