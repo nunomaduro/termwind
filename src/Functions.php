@@ -10,7 +10,7 @@ use Termwind\Repositories\Styles as StyleRepository;
 use Termwind\ValueObjects\Style;
 use Termwind\ValueObjects\Styles;
 
-if (! function_exists('renderUsing')) {
+if (! function_exists('Termwind\renderUsing')) {
     /**
      * Sets the renderer implementation.
      */
@@ -20,7 +20,7 @@ if (! function_exists('renderUsing')) {
     }
 }
 
-if (! function_exists('style')) {
+if (! function_exists('Termwind\style')) {
     /**
      * Creates a new style.
      *
@@ -32,7 +32,7 @@ if (! function_exists('style')) {
     }
 }
 
-if (! function_exists('render')) {
+if (! function_exists('Termwind\render')) {
     /**
      * Render HTML to a string.
      */
@@ -42,7 +42,7 @@ if (! function_exists('render')) {
     }
 }
 
-if (! function_exists('terminal')) {
+if (! function_exists('Termwind\terminal')) {
     /**
      * Returns a Terminal instance.
      */
