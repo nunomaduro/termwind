@@ -243,3 +243,17 @@ it('renders a div and table', function () {
 
     expect($html)->toBe("  Results:\n  +----+----+\n  |  A |  B |\n  +----+----+");
 });
+
+it('renders an emoji correctly with line-breaks correctly', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-8">
+            <div class="w-full mb-1"></div>
+            <div class="w-full">
+                <span class="mr-1 px-1 text-red-500">⚽️</span>
+                <span>A</span>
+            </div>
+        </div>
+    HTML);
+
+    expect($html)->toBe("        \n\n<fg=#ef4444> ⚽️ </> A");
+});

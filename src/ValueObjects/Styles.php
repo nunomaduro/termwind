@@ -788,7 +788,7 @@ final class Styles
         $text = rtrim(mb_strimwidth(preg_replace(self::STYLING_REGEX, '', $text) ?? '', 0, $width, '', 'UTF-8'));
 
         foreach ($matches[0] ?? [] as [$part, $index]) {
-            $text = mb_substr($text, 0, $index, 'UTF-8').$part.mb_substr($text, $index, null, 'UTF-8');
+            $text = substr($text, 0, $index).$part.substr($text, $index, null);
         }
 
         return $text;
