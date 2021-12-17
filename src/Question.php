@@ -9,7 +9,6 @@ use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\StreamableInputInterface;
 use Symfony\Component\Console\Question\Question as SymfonyQuestion;
 use Termwind\Helpers\QuestionHelper;
-use Termwind\HtmlRenderer;
 
 /**
  * @internal
