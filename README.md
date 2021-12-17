@@ -76,6 +76,22 @@ style('btn')->apply('p-4 bg-green-300 text-white');
 render('<div class="btn">Click me</div>');
 ```
 
+### `ask()`
+
+The `ask()` function may be used prompt the user with a question.
+
+```php
+use function Termwind\{ask};
+
+$answer = ask(<<<HTML
+    <span class="mt-1 ml-2 mr-1 bg-green px-1 text-black">
+        What is your name?
+    </span>
+HTML);
+```
+
+The `return` provided from the ask method will be the answer provided from the user.
+
 ### `terminal()`
 
 The `terminal()` function returns an instance of the [Terminal](https://github.com/nunomaduro/termwind/blob/master/src/Terminal.php) class, with the following methods:
