@@ -6,6 +6,7 @@ namespace Termwind;
 
 use Closure;
 use Symfony\Component\Console\Output\OutputInterface;
+use Termwind\Question;
 use Termwind\Repositories\Styles as StyleRepository;
 use Termwind\ValueObjects\Style;
 use Termwind\ValueObjects\Styles;
@@ -49,5 +50,15 @@ if (! function_exists('Termwind\terminal')) {
     function terminal(): Terminal
     {
         return new Terminal;
+    }
+}
+
+if ( !function_exists('Termwind\ask')) {
+    /**
+     * Renders a prompt to the user.
+     */
+    function ask(string $question): string|null
+    {
+        return (new Question)->ask($question);
     }
 }

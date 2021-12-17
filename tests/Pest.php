@@ -21,3 +21,17 @@ function parse(string $html): string
 
     return $html->toString();
 }
+
+/**
+ * Gets a input stream resource from a string.
+ *
+ * @return resource
+ */
+function getInputStream(string $input = 'answer')
+{
+    $stream = fopen('php://memory', 'r+', false);
+    fwrite($stream, $input);
+    rewind($stream);
+
+    return $stream;
+}
