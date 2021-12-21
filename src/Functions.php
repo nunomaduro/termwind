@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Termwind;
 
 use Closure;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
+use Termwind\Exceptions\InvalidRenderer;
 use Termwind\Repositories\Styles as StyleRepository;
 use Termwind\ValueObjects\Style;
 use Termwind\ValueObjects\Styles;
@@ -59,5 +61,27 @@ if (! function_exists('Termwind\ask')) {
     function ask(string $question): string|null
     {
         return (new Question)->ask($question);
+    }
+}
+
+if (! function_exists('live')) {
+    /**
+     * Render HTML to a string, and keeps the html live.
+     */
+    function live(Closure $htmlResolver): Live
+    {
+        $output = Termwind::getRenderer();
+
+        if (! $output instanceof ConsoleOutput) {
+            throw new InvalidRenderer(
+                'The renderer must be an instance of Symfony\'s ConsoleOutput',
+            );
+        }
+
+        $live = new Live(terminal(), $output->section(), new HtmlRenderer(), $htmlResolver);
+
+        $live->render();
+
+        return $live;
     }
 }

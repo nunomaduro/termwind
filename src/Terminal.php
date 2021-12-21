@@ -47,4 +47,12 @@ final class Terminal
     {
         Termwind::getRenderer()->write("\ec");
     }
+
+    /**
+     * Freezes the terminal for the given amount of seconds.
+     */
+    public function freeze(int $seconds): void
+    {
+        sleep($seconds);
+    }
 }
