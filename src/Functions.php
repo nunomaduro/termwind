@@ -9,6 +9,7 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Termwind\Exceptions\InvalidRenderer;
 use Termwind\Repositories\Styles as StyleRepository;
+use Termwind\Select;
 use Termwind\ValueObjects\Style;
 use Termwind\ValueObjects\Styles;
 
@@ -83,5 +84,27 @@ if (! function_exists('live')) {
         $live->render();
 
         return $live;
+    }
+}
+
+if (! function_exists('Termwind\select')) {
+    /**
+     * Renders a prompt to the user with the capability to select an option.
+     *
+     * @param  array<int, array<string, mixed>>  $options
+     */
+    function select(Closure $htmlResolver, array $options): Select
+    {
+        $output = Termwind::getRenderer();
+
+        if (! $output instanceof ConsoleOutput) {
+            throw new InvalidRenderer(
+                'The renderer must be an instance of Symfony\'s ConsoleOutput',
+            );
+        }
+
+        $select = new Select(terminal(), $output, $options, $htmlResolver);
+
+        return $select;
     }
 }

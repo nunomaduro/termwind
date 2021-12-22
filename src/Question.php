@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Termwind;
 
+use Closure;
 use Symfony\Component\Console\Helper\QuestionHelper as SymfonyQuestionHelper;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\StreamableInputInterface;
 use Symfony\Component\Console\Question\Question as SymfonyQuestion;
 use Termwind\Helpers\QuestionHelper;
+use function Termwind\live;
 
 /**
  * @internal
