@@ -127,6 +127,16 @@ test('invalid w-division', function () {
         ->toThrow(InvalidStyle::class);
 });
 
+test('max-w', function () {
+    putenv('COLUMNS=10');
+
+    $html = parse(<<<'HTML'
+        <div class="w-full max-w-5">text-ignored</div>
+    HTML);
+
+    expect($html)->toBe('text-');
+});
+
 test('ml', function () {
     $html = parse('<div class="ml-2">text</div>');
 

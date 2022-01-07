@@ -412,6 +412,16 @@ final class Styles
     }
 
     /**
+     * Defines a maximum width of an element.
+     */
+    final public function maxW(int|string $width): static
+    {
+        return $this->with(['styles' => [
+            'maxWidth' => $width,
+        ]]);
+    }
+
+    /**
      * Makes the element's content uppercase.
      */
     final public function uppercase(): self
@@ -670,6 +680,7 @@ final class Styles
     {
         $styles = $this->properties['styles'] ?? [];
         $width = $styles['width'] ?? 0;
+        $maxWidth = $styles['maxWidth'] ?? 0;
 
         if ($width < 1) {
             return $content;
@@ -681,6 +692,10 @@ final class Styles
                 $styles,
                 $this->properties['parentStyles'] ?? []
             );
+        }
+
+        if ($maxWidth > 0) {
+            $width = min($styles['maxWidth'], $width);
         }
 
         $width -= ($styles['pl'] ?? 0) + ($styles['pr'] ?? 0);
