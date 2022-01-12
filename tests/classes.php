@@ -55,6 +55,28 @@ test('px', function () {
     expect($html)->toBe('  text  ');
 });
 
+test('pt', function () {
+    $html = parse('<div class="pt-1">text</div>');
+    expect($html)->toBe("    \ntext");
+});
+
+test('pb', function () {
+    $html = parse('<div class="pb-1">text</div>');
+
+    expect($html)->toBe("text\n    ");
+});
+
+test('py', function () {
+    $html = parse('<div class="py-1">text</div>');
+
+    expect($html)->toBe("    \ntext\n    ");
+});
+
+test('p', function () {
+    $html = parse('<div class="p-1">text</div>');
+    expect($html)->toBe("      \n text \n      ");
+});
+
 test('bg', function () {
     $html = parse('<div class="bg-red">text</div>');
 

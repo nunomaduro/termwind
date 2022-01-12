@@ -5,11 +5,9 @@ require_once __DIR__.'/vendor/autoload.php';
 use function Termwind\render;
 
 render(<<<'HTML'
-    <div>
-        <div class="w-full bg-green-300"></div>
-        <div class="text-white ml-2">
-            🍃 Termwind now supports `w-full`
+    <div class="my-1 mx-2">
+        <div class="text-white bg-green-800 px-4 py-1">
+            Termwind now supports <b>`py`</b>
         </div>
-        <div class="w-full bg-green-400"></div>
     </div>
 HTML);
