@@ -372,9 +372,8 @@ final class Styles
             throw new InvalidStyle('`border-t` can only be used on an "hr" element.');
         }
 
-        $this->styleModifiers[__METHOD__] = static function ($text, $styles): string {
-            $length = mb_strlen(preg_replace(self::STYLING_REGEX, '', $text), 'UTF-8');
-
+        $this->styleModifiers[__METHOD__] = function ($text, $styles): string {
+            $length = $this->getLength($text);
             if ($length < 1) {
                 $margins = (int) ($styles['ml'] ?? 0) + ($styles['mr'] ?? 0);
 
@@ -706,7 +705,7 @@ final class Styles
         }
 
         $width -= ($styles['pl'] ?? 0) + ($styles['pr'] ?? 0);
-        $length = mb_strlen(preg_replace(self::STYLING_REGEX, '', $content) ?? '', 'UTF-8');
+        $length = $this->getLength($content);
 
         preg_match_all("/\n+/", $content, $matches);
         $width *= count($matches[0] ?? []) + 1;
@@ -756,7 +755,7 @@ final class Styles
 
         $empty = str_replace(
             $content,
-            str_repeat(' ', mb_strlen(preg_replace(self::STYLING_REGEX, '', $content), 'UTF-8')),
+            str_repeat(' ', $this->getLength($content)),
             $formatted
         );
 
@@ -770,13 +769,13 @@ final class Styles
         }
 
         if ($paddingTop > 0) {
-            $items[] = $empty . "\n";
+            $items[] = $empty."\n";
         }
 
         $items[] = $formatted;
 
         if ($paddingBottom > 0) {
-            $items[] = "\n" . $empty;
+            $items[] = "\n".$empty;
         }
 
         if ($marginBottom > 0) {
@@ -784,6 +783,14 @@ final class Styles
         }
 
         return implode('', $items);
+    }
+
+    /**
+     * Get the length of the text provided without the styling tags.
+     */
+    private function getLength(string $text): int
+    {
+        return mb_strlen(preg_replace(self::STYLING_REGEX, '', $text) ?? '', 'UTF-8');
     }
 
     /**
