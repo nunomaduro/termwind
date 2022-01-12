@@ -72,6 +72,11 @@ test('py', function () {
     expect($html)->toBe("    \ntext\n    ");
 });
 
+test('p', function () {
+    $html = parse('<div class="p-1">text</div>');
+    expect($html)->toBe("      \n text \n      ");
+});
+
 test('bg', function () {
     $html = parse('<div class="bg-red">text</div>');
 
