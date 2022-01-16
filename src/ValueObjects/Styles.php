@@ -133,7 +133,9 @@ final class Styles
             || ($this->properties['styles']['mr'] ?? 0) > 0
             || ($this->properties['styles']['pl'] ?? 0) > 0
             || ($this->properties['styles']['pr'] ?? 0) > 0
-            || ($this->properties['styles']['width'] ?? 0) > 0;
+            || ($this->properties['styles']['width'] ?? 0) > 0
+            || ($this->properties['styles']['space-y'] ?? 0) > 0
+            || ($this->properties['styles']['space-x'] ?? 0) > 0;
     }
 
     /**
@@ -141,7 +143,7 @@ final class Styles
      */
     final public function inheritFromStyles(Styles $styles): self
     {
-        foreach (['ml', 'mr', 'pl', 'pr', 'width'] as $style) {
+        foreach (['ml', 'mr', 'pl', 'pr', 'width', 'space-y', 'space-x'] as $style) {
             $this->properties['parentStyles'][$style] = array_merge(
                 $this->properties['parentStyles'][$style] ?? [],
                 $styles->properties['parentStyles'][$style] ?? []
@@ -361,6 +363,26 @@ final class Styles
     final public function p(int $padding): self
     {
         return $this->pt($padding)->pr($padding)->pb($padding)->pl($padding);
+    }
+
+    /**
+     * Adds the given vertical margin to the childs, ignoring the first child.
+     */
+    final public function spaceY(int $space): self
+    {
+        return $this->with(['styles' => [
+            'space-y' => $space,
+        ]]);
+    }
+
+    /**
+     * Adds the given horizontal margin to the childs, ignoring the first child.
+     */
+    final public function spaceX(int $space): self
+    {
+        return $this->with(['styles' => [
+            'space-x' => $space,
+        ]]);
     }
 
     /**
@@ -656,11 +678,19 @@ final class Styles
      */
     private function getMargins(): array
     {
+        $isFirstChild = (bool) $this->properties['isFirstChild'] ?? false;
+
+        $spaceY = $this->properties['parentStyles']['space-y'] ?? [];
+        $spaceY = ! $isFirstChild ? end($spaceY) : 0;
+
+        $spaceX = $this->properties['parentStyles']['space-x'] ?? [];
+        $spaceX = ! $isFirstChild ? end($spaceX) : 0;
+
         return [
-            $this->properties['styles']['mt'] ?? 0,
+            $spaceY > 0 ? $spaceY : $this->properties['styles']['mt'] ?? 0,
             $this->properties['styles']['mr'] ?? 0,
             $this->properties['styles']['mb'] ?? 0,
-            $this->properties['styles']['ml'] ?? 0,
+            $spaceX > 0 ? $spaceX : $this->properties['styles']['ml'] ?? 0,
         ];
     }
 
@@ -760,6 +790,7 @@ final class Styles
         );
 
         $items = [];
+
         if ($display === 'block' && ! $isFirstChild) {
             $items[] = "\n";
         }

@@ -114,6 +114,7 @@ All the classes supported use exactly the same logic that is available on [tailw
 * **[Text Alignment](https://tailwindcss.com/docs/text-align):** `text-left`, `text-center`, `text-right`
 * **[Margin](https://tailwindcss.com/docs/margin):** `m-{margin}`, `ml-{leftMargin}`, `mr-{rightMargin}`, `mt-{topMargin}`, `mb-{bottomMargin}`, `mx-{horizontalMargin}`, `my-{verticalMargin}`.
 * **[Padding](https://tailwindcss.com/docs/padding):** `p-{padding}`, `pl-{leftPadding}`, `pr-{rightPadding}`, `pt-{topPadding}`, `pb-{bottomPadding}`, `px-{horizontalPadding}`, `py-{verticalPadding}`.
+* **[Space](https://tailwindcss.com/docs/space):** `space-y-{space}`, `space-x-{space}`.
 * **[Width](https://tailwindcss.com/docs/width):** `w-{width}`, `w-full`
 * **[Max Width](https://tailwindcss.com/docs/max-width):** `max-w-{width}`
 * **[Visibility](https://tailwindcss.com/docs/visibility):** `invisible`
