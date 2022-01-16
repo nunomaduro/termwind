@@ -77,6 +77,18 @@ test('p', function () {
     expect($html)->toBe("      \n text \n      ");
 });
 
+test('space-x', function () {
+    $html = parse(<<<HTML
+        <div class="space-x-2">
+            <span>1</span>
+            <span>2</span>
+            <span>3</span>
+        </div>
+    HTML);
+
+    expect($html)->toBe('1  2  3');
+});
+
 test('bg', function () {
     $html = parse('<div class="bg-red">text</div>');
 
