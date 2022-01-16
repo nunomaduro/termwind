@@ -366,7 +366,7 @@ final class Styles
     }
 
     /**
-     * Adds the given vertical margin to the childs, ignoring the first child
+     * Adds the given vertical margin to the childs, ignoring the first child.
      */
     final public function spaceY(int $space): self
     {
@@ -376,7 +376,7 @@ final class Styles
     }
 
     /**
-     * Adds the given horizontal margin to the childs, ignoring the first child
+     * Adds the given horizontal margin to the childs, ignoring the first child.
      */
     final public function spaceX(int $space): self
     {
