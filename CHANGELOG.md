@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.3.0 (2022-01-12)](https://github.com/pestphp/pest/compare/v1.2.0...v1.3.0)
+### Added
+- Add `ask()` method. by @xiCO2k in https://github.com/nunomaduro/termwind/pull/112
+- Add `max-w-{width}` class. by @xiCO2k in https://github.com/nunomaduro/termwind/pull/111
+- Add support for `py`, `pt` and `pb`. by @xiCO2k in https://github.com/nunomaduro/termwind/pull/113
+
 ## [v1.2.0 (2021-12-16)](https://github.com/pestphp/pest/compare/v1.1.0...v1.2.0)
 ### Added
 - Add `terminal()->clear()` method. by @xiCO2k in https://github.com/nunomaduro/termwind/pull/107

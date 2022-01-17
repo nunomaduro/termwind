@@ -133,7 +133,9 @@ final class Styles
             || ($this->properties['styles']['mr'] ?? 0) > 0
             || ($this->properties['styles']['pl'] ?? 0) > 0
             || ($this->properties['styles']['pr'] ?? 0) > 0
-            || ($this->properties['styles']['width'] ?? 0) > 0;
+            || ($this->properties['styles']['width'] ?? 0) > 0
+            || ($this->properties['styles']['space-y'] ?? 0) > 0
+            || ($this->properties['styles']['space-x'] ?? 0) > 0;
     }
 
     /**
@@ -141,7 +143,7 @@ final class Styles
      */
     final public function inheritFromStyles(Styles $styles): self
     {
-        foreach (['ml', 'mr', 'pl', 'pr', 'width'] as $style) {
+        foreach (['ml', 'mr', 'pl', 'pr', 'width', 'space-y', 'space-x'] as $style) {
             $this->properties['parentStyles'][$style] = array_merge(
                 $this->properties['parentStyles'][$style] ?? [],
                 $styles->properties['parentStyles'][$style] ?? []
@@ -324,7 +326,35 @@ final class Styles
      */
     final public function px(int $padding): self
     {
-        return $this->p($padding);
+        return $this->pl($padding)->pr($padding);
+    }
+
+    /**
+     * Adds the given padding top.
+     */
+    final public function pt(int $padding): static
+    {
+        return $this->with(['styles' => [
+            'pt' => $padding,
+        ]]);
+    }
+
+    /**
+     * Adds the given padding bottom.
+     */
+    final public function pb(int $padding): static
+    {
+        return $this->with(['styles' => [
+            'pb' => $padding,
+        ]]);
+    }
+
+    /**
+     * Adds the given vertical padding.
+     */
+    final public function py(int $padding): self
+    {
+        return $this->pt($padding)->pb($padding);
     }
 
     /**
@@ -332,7 +362,27 @@ final class Styles
      */
     final public function p(int $padding): self
     {
-        return $this->pl($padding)->pr($padding);
+        return $this->pt($padding)->pr($padding)->pb($padding)->pl($padding);
+    }
+
+    /**
+     * Adds the given vertical margin to the childs, ignoring the first child.
+     */
+    final public function spaceY(int $space): self
+    {
+        return $this->with(['styles' => [
+            'space-y' => $space,
+        ]]);
+    }
+
+    /**
+     * Adds the given horizontal margin to the childs, ignoring the first child.
+     */
+    final public function spaceX(int $space): self
+    {
+        return $this->with(['styles' => [
+            'space-x' => $space,
+        ]]);
     }
 
     /**
@@ -344,9 +394,8 @@ final class Styles
             throw new InvalidStyle('`border-t` can only be used on an "hr" element.');
         }
 
-        $this->styleModifiers[__METHOD__] = static function ($text, $styles): string {
-            $length = mb_strlen(preg_replace(self::STYLING_REGEX, '', $text), 'UTF-8');
-
+        $this->styleModifiers[__METHOD__] = function ($text, $styles): string {
+            $length = $this->getLength($text);
             if ($length < 1) {
                 $margins = (int) ($styles['ml'] ?? 0) + ($styles['mr'] ?? 0);
 
@@ -409,6 +458,16 @@ final class Styles
     final public function wFull(): static
     {
         return $this->w('1/1');
+    }
+
+    /**
+     * Defines a maximum width of an element.
+     */
+    final public function maxW(int|string $width): static
+    {
+        return $this->with(['styles' => [
+            'maxWidth' => $width,
+        ]]);
     }
 
     /**
@@ -553,9 +612,6 @@ final class Styles
      */
     final public function format(string $content): string
     {
-        $display = $this->properties['styles']['display'] ?? 'inline';
-        $isFirstChild = (bool) $this->properties['isFirstChild'] ?? false;
-
         foreach ($this->textModifiers as $modifier) {
             $content = $modifier(
                 $content,
@@ -570,29 +626,7 @@ final class Styles
             $content = $modifier($content, $this->properties['styles'] ?? []);
         }
 
-        [$marginLeft, $marginRight] = $this->getMargins();
-        [$paddingLeft, $paddingRight] = $this->getPaddings();
-
-        $content = preg_replace('/\r[ \t]?/', "\n",
-            (string) preg_replace(
-                '/\n/',
-                str_repeat(' ', $marginRight + $paddingRight)
-                ."\n".
-                str_repeat(' ', $marginLeft + $paddingLeft),
-            $content)
-        );
-
-        return sprintf(
-            $this->getFormatString(),
-            $display === 'block' && ! $isFirstChild ? "\n" : '',
-            str_repeat("\n", (int) ($this->properties['styles']['mt'] ?? 0)),
-            str_repeat(' ', $marginLeft),
-            str_repeat(' ', $paddingLeft),
-            $content,
-            str_repeat(' ', $paddingRight),
-            str_repeat(' ', $marginRight),
-            str_repeat("\n", (int) ($this->properties['styles']['mb'] ?? 0)),
-        );
+        return $this->applyStyling($content);
     }
 
     /**
@@ -631,10 +665,10 @@ final class Styles
 
         // If there are no styles we don't need extra tags
         if ($styles === []) {
-            return '%s%s%s%s%s%s%s%s';
+            return '%s%s%s%s%s';
         }
 
-        return '%s%s%s<'.implode(';', $styles).'>%s%s%s</>%s%s';
+        return '%s<'.implode(';', $styles).'>%s%s%s</>%s';
     }
 
     /**
@@ -644,9 +678,19 @@ final class Styles
      */
     private function getMargins(): array
     {
+        $isFirstChild = (bool) $this->properties['isFirstChild'] ?? false;
+
+        $spaceY = $this->properties['parentStyles']['space-y'] ?? [];
+        $spaceY = ! $isFirstChild ? end($spaceY) : 0;
+
+        $spaceX = $this->properties['parentStyles']['space-x'] ?? [];
+        $spaceX = ! $isFirstChild ? end($spaceX) : 0;
+
         return [
-            $this->properties['styles']['ml'] ?? 0,
+            $spaceY > 0 ? $spaceY : $this->properties['styles']['mt'] ?? 0,
             $this->properties['styles']['mr'] ?? 0,
+            $this->properties['styles']['mb'] ?? 0,
+            $spaceX > 0 ? $spaceX : $this->properties['styles']['ml'] ?? 0,
         ];
     }
 
@@ -658,8 +702,10 @@ final class Styles
     private function getPaddings(): array
     {
         return [
-            $this->properties['styles']['pl'] ?? 0,
+            $this->properties['styles']['pt'] ?? 0,
             $this->properties['styles']['pr'] ?? 0,
+            $this->properties['styles']['pb'] ?? 0,
+            $this->properties['styles']['pl'] ?? 0,
         ];
     }
 
@@ -670,6 +716,7 @@ final class Styles
     {
         $styles = $this->properties['styles'] ?? [];
         $width = $styles['width'] ?? 0;
+        $maxWidth = $styles['maxWidth'] ?? 0;
 
         if ($width < 1) {
             return $content;
@@ -683,8 +730,12 @@ final class Styles
             );
         }
 
+        if ($maxWidth > 0) {
+            $width = min($styles['maxWidth'], $width);
+        }
+
         $width -= ($styles['pl'] ?? 0) + ($styles['pr'] ?? 0);
-        $length = mb_strlen(preg_replace(self::STYLING_REGEX, '', $content) ?? '', 'UTF-8');
+        $length = $this->getLength($content);
 
         preg_match_all("/\n+/", $content, $matches);
         $width *= count($matches[0] ?? []) + 1;
@@ -701,6 +752,76 @@ final class Styles
         }
 
         return self::trimText($content, $width);
+    }
+
+    /**
+     * It applies the styling for the content.
+     */
+    private function applyStyling(string $content): string
+    {
+        $display = $this->properties['styles']['display'] ?? 'inline';
+        $isFirstChild = (bool) $this->properties['isFirstChild'] ?? false;
+
+        [$marginTop, $marginRight, $marginBottom, $marginLeft] = $this->getMargins();
+        [$paddingTop, $paddingRight, $paddingBottom, $paddingLeft] = $this->getPaddings();
+
+        $content = (string) preg_replace('/\r[ \t]?/', "\n",
+            (string) preg_replace(
+                '/\n/',
+                str_repeat(' ', $marginRight + $paddingRight)
+                ."\n".
+                str_repeat(' ', $marginLeft + $paddingLeft),
+            $content)
+        );
+
+        $formatted = sprintf(
+            $this->getFormatString(),
+            str_repeat(' ', $marginLeft),
+            str_repeat(' ', $paddingLeft),
+            $content,
+            str_repeat(' ', $paddingRight),
+            str_repeat(' ', $marginRight),
+        );
+
+        $empty = str_replace(
+            $content,
+            str_repeat(' ', $this->getLength($content)),
+            $formatted
+        );
+
+        $items = [];
+
+        if ($display === 'block' && ! $isFirstChild) {
+            $items[] = "\n";
+        }
+
+        if ($marginTop > 0) {
+            $items[] = str_repeat("\n", $marginTop);
+        }
+
+        if ($paddingTop > 0) {
+            $items[] = $empty."\n";
+        }
+
+        $items[] = $formatted;
+
+        if ($paddingBottom > 0) {
+            $items[] = "\n".$empty;
+        }
+
+        if ($marginBottom > 0) {
+            $items[] = str_repeat("\n", $marginBottom);
+        }
+
+        return implode('', $items);
+    }
+
+    /**
+     * Get the length of the text provided without the styling tags.
+     */
+    private function getLength(string $text): int
+    {
+        return mb_strlen(preg_replace(self::STYLING_REGEX, '', $text) ?? '', 'UTF-8');
     }
 
     /**

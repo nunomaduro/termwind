@@ -55,6 +55,52 @@ test('px', function () {
     expect($html)->toBe('  text  ');
 });
 
+test('pt', function () {
+    $html = parse('<div class="pt-1">text</div>');
+    expect($html)->toBe("    \ntext");
+});
+
+test('pb', function () {
+    $html = parse('<div class="pb-1">text</div>');
+
+    expect($html)->toBe("text\n    ");
+});
+
+test('py', function () {
+    $html = parse('<div class="py-1">text</div>');
+
+    expect($html)->toBe("    \ntext\n    ");
+});
+
+test('p', function () {
+    $html = parse('<div class="p-1">text</div>');
+    expect($html)->toBe("      \n text \n      ");
+});
+
+test('space-y', function () {
+    $html = parse(<<<'HTML'
+        <div class="space-y-2">
+            <div>1</div>
+            <div>2</div>
+            <div>3</div>
+        </div>
+    HTML);
+
+    expect($html)->toBe("1\n\n\n2\n\n\n3");
+});
+
+test('space-x', function () {
+    $html = parse(<<<'HTML'
+        <div class="space-x-2">
+            <span>1</span>
+            <span>2</span>
+            <span>3</span>
+        </div>
+    HTML);
+
+    expect($html)->toBe('1  2  3');
+});
+
 test('bg', function () {
     $html = parse('<div class="bg-red">text</div>');
 
@@ -125,6 +171,16 @@ test('invalid w-division', function () {
 
     expect(fn () => parse('<span class="w-1/0">text</span>'))
         ->toThrow(InvalidStyle::class);
+});
+
+test('max-w', function () {
+    putenv('COLUMNS=10');
+
+    $html = parse(<<<'HTML'
+        <div class="w-full max-w-5">text-ignored</div>
+    HTML);
+
+    expect($html)->toBe('text-');
 });
 
 test('ml', function () {

@@ -113,7 +113,7 @@ it('can extend with multiple childs and colors', function () {
 
 it('can inherit styles within multiple levels', function () {
     $html = parse(<<<'HTML'
-        <div class="bg-red-700 p-5 my-1 mx-2">
+        <div class="bg-red-700 px-5 my-1 mx-2">
             <div class="text-blue-300 ml-2">
                 <div>
                     <div><b>Termwind</b> is great!</div>
