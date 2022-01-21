@@ -28,7 +28,7 @@ final class Select
     public function __construct(
         private Terminal $terminal,
         private ConsoleOutput $output,
-        private array $options,
+        private Closure|array $options,
         private Closure $htmlResolver,
         private int $activeIndex = 0
     ) {
@@ -57,7 +57,7 @@ final class Select
             new HtmlRenderer(),
             fn() => call_user_func(
                 $this->htmlResolver,
-                $this->options,
+                $this->getOptions(),
                 $this->getActive()
             )
         );
@@ -78,7 +78,7 @@ final class Select
 
             $this->activeIndex = match ($key) {
                 self::KEY_UP => max(0, --$this->activeIndex),
-                self::KEY_DOWN => min(count($this->options) - 1, ++$this->activeIndex),
+                self::KEY_DOWN => min(count($this->getOptions()) - 1, ++$this->activeIndex),
                 default => $this->activeIndex,
             };
 
@@ -102,15 +102,41 @@ final class Select
      */
     public function getActive(): array
     {
-        return $this->options[$this->activeIndex];
+        return $this->getOptions()[$this->activeIndex];
+    }
+
+    public function getOptions(): array
+    {
+        if ($this->options instanceof \Closure) {
+            return call_user_func($this->options);
+        }
+
+        return $this->options;
     }
 
     /**
      * Sets a callback to run on the infinite loop, to determine if it needs
      * to refresh the content.
      */
-    public function shouldRefreshIf(Closure $callback): void
+    public function shouldRefreshIf(Closure $callback): self
     {
         $this->refreshCallback = $callback;
+
+        return $this;
+    }
+
+    public function refreshEvery(int $seconds = 0): self
+    {
+        $actualTime = time();
+        $this->shouldRefreshIf(function () use (&$actualTime, $seconds) {
+            if (time() - $actualTime >= $seconds) {
+                $actualTime = time();
+                return true;
+            }
+
+            return false;
+        });
+
+        return $this;
     }
 }

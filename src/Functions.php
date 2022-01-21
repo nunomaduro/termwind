@@ -91,9 +91,9 @@ if (! function_exists('Termwind\select')) {
     /**
      * Renders a prompt to the user with the capability to select an option.
      *
-     * @param  array<int, array<string, mixed>>  $options
+     * @param  array<int, array<string, mixed>>|Closure  $options
      */
-    function select(Closure $htmlResolver, array $options): Select
+    function select(Closure $htmlResolver, array|Closure $options): Select
     {
         $output = Termwind::getRenderer();
 
