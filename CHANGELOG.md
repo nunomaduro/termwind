@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.4.0 (2022-01-26)](https://github.com/pestphp/pest/compare/v1.3.0...v1.4.0)
+### Added
+- Add support for `space-y` and `space-x`. by @xiCO2k in https://github.com/nunomaduro/termwind/pull/115
+
 ## [v1.3.0 (2022-01-12)](https://github.com/pestphp/pest/compare/v1.2.0...v1.3.0)
 ### Added
 - Add `ask()` method. by @xiCO2k in https://github.com/nunomaduro/termwind/pull/112
