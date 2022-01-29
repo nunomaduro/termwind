@@ -13,3 +13,13 @@ it('renders the href property', function () {
 
     expect($html)->toBe('<href=url>link text</>');
 });
+
+it('renders an element with width', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-10">
+            <a href="https://github.com/nunomaduro/termwind">click here</a>
+        </div>
+    HTML);
+
+    expect($html)->toBe('<href=https://github.com/nunomaduro/termwind>click here</>');
+});

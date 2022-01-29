@@ -25,7 +25,7 @@ final class Styles
     /**
      * Finds all the styling on a string.
      */
-    private const STYLING_REGEX = "/\<[\w=#\/\;,]+\>|\\e\[\d+m/";
+    private const STYLING_REGEX = "/\<[\w=#\/\;,:.&,%?]+\>|\\e\[\d+m/";
 
     /** @var array<int, string> */
     private array $styles = [];
