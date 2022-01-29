@@ -5,9 +5,12 @@ require_once __DIR__.'/vendor/autoload.php';
 use function Termwind\render;
 
 render(<<<'HTML'
-    <div class="my-1 mx-2 text-black">
-        <div class="bg-green-600 px-4 py-1">
-            Termwind now supports `py`, `pt` and `pb`
-        </div>
+    <div class="w-30 max-w-12 bg-green-600">
+        <span class="w-1/2 text-left">
+            Left
+        </span>
+        <span class="w-1/2 text-right">
+            Right
+        </span>
     </div>
 HTML);
