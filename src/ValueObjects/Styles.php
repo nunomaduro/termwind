@@ -143,7 +143,7 @@ final class Styles
      */
     final public function inheritFromStyles(Styles $styles): self
     {
-        foreach (['ml', 'mr', 'pl', 'pr', 'width', 'space-y', 'space-x'] as $style) {
+        foreach (['ml', 'mr', 'pl', 'pr', 'width', 'maxWidth', 'space-y', 'space-x'] as $style) {
             $this->properties['parentStyles'][$style] = array_merge(
                 $this->properties['parentStyles'][$style] ?? [],
                 $styles->properties['parentStyles'][$style] ?? []
@@ -878,6 +878,7 @@ final class Styles
         $width = terminal()->width();
 
         foreach ($styles['width'] ?? [] as $index => $parentWidth) {
+            $maxWidth = (int) $styles['maxWidth'][$index] ?? 0;
             $margins = (int) $styles['ml'][$index] + (int) $styles['mr'][$index];
 
             if ($parentWidth < 1) {
@@ -891,6 +892,10 @@ final class Styles
             $width = count($matches) !== 3
                 ? (int) $parentWidth
                 : (int) floor($width * $matches[1] / $matches[2]);
+
+            if ($maxWidth > 0) {
+                $width = min($maxWidth, $width);
+            }
 
             $width -= $margins;
             $width -= (int) $styles['pl'][$index] + (int) $styles['pr'][$index];
