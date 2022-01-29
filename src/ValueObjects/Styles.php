@@ -25,7 +25,7 @@ final class Styles
     /**
      * Finds all the styling on a string.
      */
-    private const STYLING_REGEX = "/\<[\w=#\/\;,]+\>|\\e\[\d+m/";
+    private const STYLING_REGEX = "/\<[\w=#\/\;,:.&,%?]+\>|\\e\[\d+m/";
 
     /** @var array<int, string> */
     private array $styles = [];
@@ -134,8 +134,8 @@ final class Styles
             || ($this->properties['styles']['pl'] ?? 0) > 0
             || ($this->properties['styles']['pr'] ?? 0) > 0
             || ($this->properties['styles']['width'] ?? 0) > 0
-            || ($this->properties['styles']['space-y'] ?? 0) > 0
-            || ($this->properties['styles']['space-x'] ?? 0) > 0;
+            || ($this->properties['styles']['spaceY'] ?? 0) > 0
+            || ($this->properties['styles']['spaceX'] ?? 0) > 0;
     }
 
     /**
@@ -143,7 +143,7 @@ final class Styles
      */
     final public function inheritFromStyles(Styles $styles): self
     {
-        foreach (['ml', 'mr', 'pl', 'pr', 'width', 'space-y', 'space-x'] as $style) {
+        foreach (['ml', 'mr', 'pl', 'pr', 'width', 'maxWidth', 'spaceY', 'spaceX'] as $style) {
             $this->properties['parentStyles'][$style] = array_merge(
                 $this->properties['parentStyles'][$style] ?? [],
                 $styles->properties['parentStyles'][$style] ?? []
@@ -371,7 +371,7 @@ final class Styles
     final public function spaceY(int $space): self
     {
         return $this->with(['styles' => [
-            'space-y' => $space,
+            'spaceY' => $space,
         ]]);
     }
 
@@ -381,7 +381,7 @@ final class Styles
     final public function spaceX(int $space): self
     {
         return $this->with(['styles' => [
-            'space-x' => $space,
+            'spaceX' => $space,
         ]]);
     }
 
@@ -680,10 +680,10 @@ final class Styles
     {
         $isFirstChild = (bool) $this->properties['isFirstChild'] ?? false;
 
-        $spaceY = $this->properties['parentStyles']['space-y'] ?? [];
+        $spaceY = $this->properties['parentStyles']['spaceY'] ?? [];
         $spaceY = ! $isFirstChild ? end($spaceY) : 0;
 
-        $spaceX = $this->properties['parentStyles']['space-x'] ?? [];
+        $spaceX = $this->properties['parentStyles']['spaceX'] ?? [];
         $spaceX = ! $isFirstChild ? end($spaceX) : 0;
 
         return [
@@ -878,6 +878,7 @@ final class Styles
         $width = terminal()->width();
 
         foreach ($styles['width'] ?? [] as $index => $parentWidth) {
+            $maxWidth = (int) $styles['maxWidth'][$index] ?? 0;
             $margins = (int) $styles['ml'][$index] + (int) $styles['mr'][$index];
 
             if ($parentWidth < 1) {
@@ -891,6 +892,10 @@ final class Styles
             $width = count($matches) !== 3
                 ? (int) $parentWidth
                 : (int) floor($width * $matches[1] / $matches[2]);
+
+            if ($maxWidth > 0) {
+                $width = min($maxWidth, $width);
+            }
 
             $width -= $margins;
             $width -= (int) $styles['pl'][$index] + (int) $styles['pr'][$index];

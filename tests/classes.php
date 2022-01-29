@@ -364,6 +364,17 @@ test('width, bg, text-right', function () {
     expect($html)->toBe('  <bg=#22c55e>Pass</><fg=#e5e7eb>Some Text</>');
 });
 
+test('max-w with fraction childs', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-20 max-w-12">
+            <span class="w-1/2">Left</span>
+            <span class="w-1/2 text-right">Right</span>
+        </div>
+    HTML);
+
+    expect($html)->toBe('Left   Right');
+});
+
 test('w-full, bg, margin, text-color, text-right and font-bold', function () {
     putenv('COLUMNS=20');
 
