@@ -6,6 +6,7 @@ namespace Termwind;
 
 use Closure;
 use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Termwind\Repositories\Styles as StyleRepository;
 use Termwind\ValueObjects\Style;
@@ -27,7 +28,7 @@ if (! function_exists('Termwind\hideOutput')) {
      */
     function hideOutput(): void
     {
-        renderUsing(new BufferedOutput());
+        renderUsing(new NullOutput());
     }
 }
 
