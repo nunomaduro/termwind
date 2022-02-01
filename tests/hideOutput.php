@@ -1,8 +1,8 @@
 <?php
 use Symfony\Component\Console\Output\BufferedOutput;
-use Termwind\Termwind;
 use function Termwind\hideOutput;
 use function Termwind\renderUsing;
+use Termwind\Termwind;
 
 beforeEach(fn () => renderUsing(null));
 
