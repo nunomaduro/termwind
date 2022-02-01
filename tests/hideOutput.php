@@ -1,4 +1,5 @@
 <?php
+
 use Symfony\Component\Console\Output\BufferedOutput;
 use function Termwind\hideOutput;
 use function Termwind\renderUsing;
