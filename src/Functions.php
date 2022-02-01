@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Termwind;
 
 use Closure;
-use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Termwind\Repositories\Styles as StyleRepository;
