@@ -72,6 +72,7 @@ final class Select
             if ($key === self::KEY_ENTER) {
                 $this->cursor->show();
                 shell_exec(sprintf('stty %s', $sttyMode));
+                stream_set_blocking($stdin, true);
 
                 return true;
             }
