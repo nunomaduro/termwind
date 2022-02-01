@@ -100,6 +100,27 @@ The `terminal()` function returns an instance of the [Terminal](https://github.c
 * `->height()`: Returns the full height of the terminal.
 * `->clear()`: It clears the terminal screen.
 
+### `hideOutput()`
+
+The `hideOutput()` function allows to hide the output for the CLI. This can be used while running tests,
+since the CLI output will not be useful.
+
+```php
+use function Termwind\hideOutput;
+
+// With Pest
+beforeEach(fn () => hideOutput());
+
+// With PHPUnit
+class ExampleTest extends TestCase
+{
+    public function setUp(): void
+    {
+        hideOutput();
+    }
+}
+```
+
 ## Classes Supported
 
 All the classes supported use exactly the same logic that is available on [tailwindcss.com/docs](https://tailwindcss.com/docs).

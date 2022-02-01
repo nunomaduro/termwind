@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Termwind;
 
 use Closure;
+use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Termwind\Repositories\Styles as StyleRepository;
 use Termwind\ValueObjects\Style;
@@ -17,6 +18,16 @@ if (! function_exists('Termwind\renderUsing')) {
     function renderUsing(OutputInterface|null $renderer): void
     {
         Termwind::renderUsing($renderer);
+    }
+}
+
+if (! function_exists('Termwind\hideOutput')) {
+    /**
+     * Hides the output for the CLI.
+     */
+    function hideOutput(): void
+    {
+        renderUsing(new BufferedOutput());
     }
 }
 

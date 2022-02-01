@@ -6,10 +6,9 @@ use function Termwind\render;
 
 render(<<<'HTML'
     <div class="w-30 max-w-12 bg-green-600">
-        <span class="w-1/2 text-left">
+        <span>
             Left
-        </span>
-        <span class="w-1/2 text-right">
+        </span> <span>
             Right
         </span>
     </div>
