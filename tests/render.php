@@ -255,5 +255,16 @@ it('renders an emoji correctly with line-breaks correctly', function () {
         </div>
     HTML);
 
-    expect($html)->toBe("        \n\n<fg=#ef4444> ⚽️ </> A");
+    expect($html)->toBe("        \n\n<fg=#ef4444> ⚽️ </> A  ");
+});
+
+it('renders multiple chains of w-full with margins and text-alignment', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-10">
+            <div class="w-full">Test</div>
+            <div class="mt-2 w-full text-right">Test 2</div>
+        </div>
+    HTML);
+
+    expect($html)->toBe("Test      \n\n\n    Test 2");
 });
