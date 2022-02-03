@@ -738,8 +738,9 @@ final class Styles
         $length = $this->getLength($content);
 
         preg_match_all("/\n+/", $content, $matches);
+
         $width *= count($matches[0] ?? []) + 1;
-        $width += count($matches[0] ?? []);
+        $width += mb_strlen($matches[0][0] ?? '', 'UTF-8');
 
         if ($length <= $width) {
             $space = $width - $length;
