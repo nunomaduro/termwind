@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.4.3 (2022-02-03)](https://github.com/nunomaduro/termwind/compare/v1.4.2...v1.4.3)
+### Fixed
+- Fixes bug having multiple margins while using `width` with `my` by @xiCO2k in https://github.com/nunomaduro/termwind/pull/120
+
 ## [v1.4.2 (2022-01-29)](https://github.com/nunomaduro/termwind/compare/v1.4.1...v1.4.2)
 ### Fixed
 - `max-w` with `w-{fraction}` childs by @xiCO2k in https://github.com/nunomaduro/termwind/pull/118
