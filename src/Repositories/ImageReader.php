@@ -17,7 +17,7 @@ class ImageReader
     public function __construct(string $imagePath, int $maxWidth, int $maxHeight)
     {
 
-        $inMemoryPath = tempnam("/tmp", $imagePath);
+        $inMemoryPath = tempnam('/tmp', $imagePath);
         $img = file_get_contents($imagePath);
         file_put_contents($inMemoryPath, $img);
 
