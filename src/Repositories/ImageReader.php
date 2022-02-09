@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Termwind\Repositories;
@@ -16,7 +17,6 @@ class ImageReader
 
     public function __construct(string $imagePath, int $maxWidth, int $maxHeight)
     {
-
         $inMemoryPath = tempnam('/tmp', $imagePath);
         $img = file_get_contents($imagePath);
         file_put_contents($inMemoryPath, $img);
@@ -65,6 +65,7 @@ class ImageReader
     public function getScaledDimensions(int $maxWidth, int $maxHeight): array
     {
         [$width, $height] = getimagesize($this->imagePath);
+
         return $this->calculate($width, $height, $maxWidth, $maxHeight);
     }
 
@@ -79,6 +80,7 @@ class ImageReader
         $r = ($rgb >> 16) & 0xFF;
         $g = ($rgb >> 8) & 0xFF;
         $b = $rgb & 0xFF;
+
         return new Rgb($r, $g, $b);
     }
 
