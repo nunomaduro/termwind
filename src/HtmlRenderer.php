@@ -7,6 +7,7 @@ namespace Termwind;
 use DOMDocument;
 use DOMNode;
 use Termwind\Html\CodeRenderer;
+use Termwind\Html\ImageRenderer;
 use Termwind\Html\PreRenderer;
 use Termwind\Html\TableRenderer;
 use Termwind\ValueObjects\Node;
@@ -62,6 +63,8 @@ final class HtmlRenderer
             return (new CodeRenderer)->toElement($node);
         } elseif ($node->isName('pre')) {
             return (new PreRenderer)->toElement($node);
+        } elseif ($node->isName('timage')) {
+            return (new ImageRenderer)->toElement($node);
         }
 
         foreach ($node->getChildNodes() as $child) {
