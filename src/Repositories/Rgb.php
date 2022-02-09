@@ -5,7 +5,7 @@ namespace Termwind\Repositories;
 
 /**
  * This code was originally posted in a comment by @hallboav of this blog post:
- * https://symfony.com/blog/new-in-symfony-5-2-true-colors-in-the-console
+ * https://symfony.com/blog/new-in-symfony-5-2-true-colors-in-the-console.
  *
  * @internal
  */
