@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Termwind\Repositories;
 
 use GdImage;
-use JetBrains\PhpStorm\Pure;
 use Symfony\Component\Mime\MimeTypes;
 
 /**
@@ -22,10 +21,10 @@ class ImageReader
         $img = file_get_contents($imagePath);
         file_put_contents($inMemoryPath, $img);
 
-        if (!is_file($inMemoryPath)) {
+        if (! is_file($inMemoryPath)) {
             throw new \InvalidArgumentException(sprintf('Image "%s" does not exist', $imagePath));
         }
-        if (!is_readable($inMemoryPath)) {
+        if (! is_readable($inMemoryPath)) {
             throw new \InvalidArgumentException(sprintf('Image "%s" is not readable', $imagePath));
         }
 
@@ -74,7 +73,7 @@ class ImageReader
      * @param int $y
      * @return Rgb
      */
-    #[Pure] public function getImagePixel(int $x, int $y): Rgb
+    public function getImagePixel(int $x, int $y): Rgb
     {
         $rgb = imagecolorat($this->image, $x, $y);
         $r = ($rgb >> 16) & 0xFF;
@@ -96,8 +95,8 @@ class ImageReader
         }
 
         return [
-            (int)round($newWidth),
-            (int)round($newHeight),
+            (int) round($newWidth),
+            (int) round($newHeight),
         ];
     }
 }
