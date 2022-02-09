@@ -22,9 +22,9 @@ final class ImageRenderer
     {
         $imagePath = $node->getAttribute('image-path');
 
-        $width = max((int)$node->getAttribute('width'), 10);
+        $width = max((int) $node->getAttribute('width'), 10);
 
-        $height = max((int)$node->getAttribute('height'), 10);
+        $height = max((int) $node->getAttribute('height'), 10);
 
         $terminal = new Terminal();
 
