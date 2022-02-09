@@ -69,8 +69,8 @@ class ImageReader
     }
 
     /**
-     * @param int $x
-     * @param int $y
+     * @param  int  $x
+     * @param  int  $y
      * @return Rgb
      */
     public function getImagePixel(int $x, int $y): Rgb
