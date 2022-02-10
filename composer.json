@@ -16,6 +16,8 @@
     },
     "require-dev": {
         "ergebnis/phpstan-rules": "^0.15.3",
+        "illuminate/console": "^8.0|^9.0",
+        "illuminate/support": "^8.0|^9.0",
         "pestphp/pest": "^1.21.0",
         "pestphp/pest-plugin-mock": "^1.0",
         "phpstan/phpstan": "^0.12.99",
@@ -41,7 +43,10 @@
     "prefer-stable": true,
     "config": {
         "sort-packages": true,
-        "preferred-install": "dist"
+        "preferred-install": "dist",
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     },
     "scripts": {
         "test:types": "phpstan analyse --ansi",
@@ -50,5 +55,12 @@
             "@test:types",
             "@test:unit"
         ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Termwind\\Laravel\\TermwindServiceProvider"
+            ]
+        }
     }
 }
