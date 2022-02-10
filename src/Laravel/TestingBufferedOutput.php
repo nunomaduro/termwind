@@ -8,7 +8,8 @@ use Illuminate\Console\OutputStyle;
 use Illuminate\Contracts\Foundation\Application;
 use Symfony\Component\Console\Output\BufferedOutput;
 
-final class TestingBufferedOutput extends BufferedOutput {
+final class TestingBufferedOutput extends BufferedOutput
+{
 
     /* @phpstan-ignore-next-line */
     public function __construct(private Application $app)
