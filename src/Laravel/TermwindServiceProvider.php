@@ -15,10 +15,8 @@ final class TermwindServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        if ($this->app->runningUnitTests()) {
-            $this->app->resolving(OutputStyle::class, function ($style): void {
-                Termwind::renderUsing($style->getOutput());
-            });
-        }
+        $this->app->resolving(OutputStyle::class, function ($style): void {
+            Termwind::renderUsing($style->getOutput());
+        });
     }
 }
