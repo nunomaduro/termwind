@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Termwind\Laravel;
 
+use Illuminate\Console\OutputStyle;
 use Illuminate\Support\ServiceProvider;
 use Termwind\Termwind;
 
@@ -15,7 +16,9 @@ final class TermwindServiceProvider extends ServiceProvider
     public function register(): void
     {
         if ($this->app->runningUnitTests()) {
-            Termwind::renderUsing(new TestingBufferedOutput($this->app));
+            $this->app->resolving(OutputStyle::class, function ($style): void {
+                Termwind::renderUsing($style->getOutput());
+            });
         }
     }
 }
