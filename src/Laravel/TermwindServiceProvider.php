@@ -11,7 +11,7 @@ use Termwind\Termwind;
 final class TermwindServiceProvider extends ServiceProvider
 {
     /**
-     * Sets the the renderer used for unit testing.
+     * Sets the correct renderer to be used.
      */
     public function register(): void
     {
