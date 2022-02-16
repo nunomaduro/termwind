@@ -65,7 +65,7 @@ class UsersCommand extends Command
 
 ### `style()`
 
-The `style()` function may be used to add own custom syles and also update colors.
+The `style()` function may be used to add own custom styles and also update colors.
 
 ```php
 use function Termwind\{style};
