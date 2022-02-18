@@ -22,7 +22,7 @@ final class StyleToMethod
     /**
      * Defines the Media Query Breakpoints.
      */
-    public const MEDIA_QUERIES_BREAKPOINTS = [
+    public const MEDIA_QUERY_BREAKPOINTS = [
         'sm' => 64,
         'md' => 76,
         'lg' => 102,
@@ -110,7 +110,7 @@ final class StyleToMethod
      */
     private static function sortStyles(array $styles): array
     {
-        $keys = array_keys(self::MEDIA_QUERIES_BREAKPOINTS);
+        $keys = array_keys(self::MEDIA_QUERY_BREAKPOINTS);
 
         usort($styles, function ($a, $b) use ($keys) {
             $existsA = (bool) preg_match(self::MEDIA_QUERIES_REGEX, $a, $matchesA);
@@ -143,7 +143,7 @@ final class StyleToMethod
 
         [, $size, $method] = $matches;
 
-        if ((new Terminal)->width() >= self::MEDIA_QUERIES_BREAKPOINTS[$size]) {
+        if ((new Terminal)->width() >= self::MEDIA_QUERY_BREAKPOINTS[$size]) {
             return $method;
         }
 
