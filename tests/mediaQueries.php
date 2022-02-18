@@ -15,7 +15,7 @@ it('supports styling', function ($name) {
 it('renders based on the size even if the styles are in the wrong order', function () {
     putenv('COLUMNS=64');
 
-    $html = parse(<<<HTML
+    $html = parse(<<<'HTML'
         <div class="md:bg-blue lg:bg-purple sm:bg-red bg-green">
             Test
         </div>

@@ -6,8 +6,8 @@ namespace Termwind\Actions;
 
 use Termwind\Exceptions\StyleNotFound;
 use Termwind\Repositories\Styles as StyleRepository;
+use Termwind\Terminal;
 use Termwind\ValueObjects\Styles;
-use function Termwind\terminal;
 
 /**
  * @internal
@@ -143,7 +143,7 @@ final class StyleToMethod
 
         [, $size, $method] = $matches;
 
-        if (terminal()->width() >= self::MEDIA_QUERIES_BREAKPOINTS[$size]) {
+        if ((new Terminal)->width() >= self::MEDIA_QUERIES_BREAKPOINTS[$size]) {
             return $method;
         }
 

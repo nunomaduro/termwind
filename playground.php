@@ -2,7 +2,7 @@
 
 require_once __DIR__.'/vendor/autoload.php';
 
-use function Termwind\{render, terminal};
+use function Termwind\render;
 
 render(<<<'HTML'
     <div class="mx-2 my-1 space-y-1">
