@@ -3,7 +3,7 @@
 use Termwind\Actions\StyleToMethod;
 
 it('supports styling', function ($name) {
-    putenv('COLUMNS=' . StyleToMethod::MEDIA_QUERIES_BREAKPOINTS[$name]);
+    putenv('COLUMNS='.StyleToMethod::MEDIA_QUERIES_BREAKPOINTS[$name]);
 
     $html = parse(<<<HTML
         <div class="w-full {$name}:w-1"></div>
@@ -22,5 +22,4 @@ it('renders based on the size even if the styles are in the wrong order', functi
     HTML);
 
     expect($html)->toBe('<bg=red>Test</>');
-
 });
