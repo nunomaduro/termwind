@@ -121,6 +121,26 @@ All the classes supported use exactly the same logic that is available on [tailw
 * **[Display](https://tailwindcss.com/docs/display):** `block`
 * **[List Style](https://tailwindcss.com/docs/list-style-type):** `list-disc`, `list-decimal`, `list-square`, `list-none`
 
+## Responsive Design
+
+Like TailwindCSS we also support [Responsive Design](https://tailwindcss.com/docs/responsive-design#customizing-breakpoints) media queries and this are the breakpoints supported:
+
+* **`sm`**: 64 spaces (640px)
+* **`md`**: 76 spaces (768px)
+* **`lg`**: 102 spaces (1024px)
+* **`xl`**: 128 spaces (1280px)
+* **`2xl`**: 153 spaces (1536px)
+
+```php
+render(<<<'HTML'
+    <div class="bg-blue-500 sm:bg-red-600">
+        If bg is blue is sm, if red > than sm breakpoint.
+    </div>
+HTML);
+```
+
+All the sizes for the CLI are based on Font Size 15.
+
 ## HTML Elements Supported
 
 All the elements have the capability to use the `class` attribute.
