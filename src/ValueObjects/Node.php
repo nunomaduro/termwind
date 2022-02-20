@@ -23,7 +23,7 @@ final class Node
      */
     public function getValue(): string
     {
-        return is_string($this->node->nodeValue) ? $this->node->nodeValue : '';
+        return $this->node->nodeValue ?? '';
     }
 
     /**
