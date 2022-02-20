@@ -49,7 +49,7 @@ final class Question
     /**
      * Renders a prompt to the user.
      */
-    public function ask(string $question): string|null
+    public function ask(string $question): mixed
     {
         $html = (new HtmlRenderer)->parse($question)->toString();
 

@@ -674,11 +674,11 @@ final class Styles
     /**
      * Get the margins applied to the element.
      *
-     * @return array{0: int, 1: int}
+     * @return array{0: int, 1: int, 2: int, 3: int}
      */
     private function getMargins(): array
     {
-        $isFirstChild = (bool) $this->properties['isFirstChild'] ?? false;
+        $isFirstChild = (bool) $this->properties['isFirstChild'];
 
         $spaceY = $this->properties['parentStyles']['spaceY'] ?? [];
         $spaceY = ! $isFirstChild ? end($spaceY) : 0;
@@ -697,7 +697,7 @@ final class Styles
     /**
      * Get the paddings applied to the element.
      *
-     * @return array{0: int, 1: int}
+     * @return array{0: int, 1: int, 2: int, 3: int}
      */
     private function getPaddings(): array
     {
@@ -761,7 +761,7 @@ final class Styles
     private function applyStyling(string $content): string
     {
         $display = $this->properties['styles']['display'] ?? 'inline';
-        $isFirstChild = (bool) $this->properties['isFirstChild'] ?? false;
+        $isFirstChild = (bool) $this->properties['isFirstChild'];
 
         [$marginTop, $marginRight, $marginBottom, $marginLeft] = $this->getMargins();
         [$paddingTop, $paddingRight, $paddingBottom, $paddingLeft] = $this->getPaddings();
@@ -879,7 +879,7 @@ final class Styles
         $width = terminal()->width();
 
         foreach ($styles['width'] ?? [] as $index => $parentWidth) {
-            $maxWidth = (int) $styles['maxWidth'][$index] ?? 0;
+            $maxWidth = (int) $styles['maxWidth'][$index];
             $margins = (int) $styles['ml'][$index] + (int) $styles['mr'][$index];
 
             if ($parentWidth < 1) {

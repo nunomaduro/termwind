@@ -56,7 +56,7 @@ if (! function_exists('Termwind\ask')) {
     /**
      * Renders a prompt to the user.
      */
-    function ask(string $question): string|null
+    function ask(string $question): mixed
     {
         return (new Question)->ask($question);
     }
