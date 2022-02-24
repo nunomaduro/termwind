@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.6.0 (2022-02-24)](https://github.com/nunomaduro/termwind/compare/v1.5.0...v1.6.0)
+### Added
+- Add `MediaQuery` Support by @xiCO2k in https://github.com/nunomaduro/termwind/pull/126
+- Upgrade `PHPStan` to v1.0 by @xiCO2k in https://github.com/nunomaduro/termwind/pull/127
+
 ## [v1.5.0 (2022-02-14)](https://github.com/nunomaduro/termwind/compare/v1.4.3...v1.5.0)
 ### Added
 - Adds Laravel `TermwindServiceProvider` by @xiCO2k in https://github.com/nunomaduro/termwind/pull/123
