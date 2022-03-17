@@ -605,6 +605,7 @@ final class Styles
     final public function href(string $href): self
     {
         $href = str_replace('%', '%%', $href);
+
         return $this->with(['href' => array_filter([$href])]);
     }
 
