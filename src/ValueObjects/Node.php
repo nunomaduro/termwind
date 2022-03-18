@@ -39,14 +39,6 @@ final class Node
     }
 
     /**
-     * Checks if the node is a line break.
-     */
-    public function isLineBreak(): bool
-    {
-        return $this->isName('br');
-    }
-
-    /**
      * Checks if the node is a text.
      */
     public function isText(): bool
@@ -177,20 +169,6 @@ final class Node
         }
 
         return html_entity_decode($html);
-    }
-
-    /**
-     * Gets inner text of the node including child nodes and line breaks.
-     */
-    public function getInnerText(): string
-    {
-        $text = '';
-        foreach ($this->getChildNodes() as $node) {
-            $separator = $node->isLineBreak() ? "\n" : ' ';
-            $text .= $separator.$node;
-        }
-
-        return $text;
     }
 
     /**
