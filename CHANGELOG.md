@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.6.2 (2022-03-18](https://github.com/nunomaduro/termwind/compare/v1.6.1...v1.6.2)
+### Fixed
+- Fixes support for HTML tags on TableCells by @xiCO2k in https://github.com/nunomaduro/termwind/pull/128
+
 ## [v1.6.1 (2022-03-17)](https://github.com/nunomaduro/termwind/compare/v1.6.0...v1.6.1)
 ### Fixed
 - `href` needes to be escaped by @xiCO2k in [9771606](https://github.com/nunomaduro/termwind/commit/ffa0e9f2d9f74df7839055a122aad2e9d9771606)
