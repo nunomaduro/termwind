@@ -3,7 +3,7 @@
 use Termwind\HtmlRenderer;
 
 it('can render table without thead, tbody, tfoot to a string', function () {
-    $html = (new HtmlRenderer())->parse(<<<'HTML'
+    $html = parse(<<<'HTML'
 <table style="box">
     <tr>
         <th align="right">99921-58-10-7</th>
@@ -36,21 +36,22 @@ it('can render table without thead, tbody, tfoot to a string', function () {
 </table>
 HTML
     );
-    expect($html->toString())->toBe(<<<'OUT'
-├──────────────────────┼───────────────────────────┼──────────────────────┤
-│       [1m 99921-58-10-7[0m │  Divine Comedy            │      Dante Alighieri │
-│    [1m 9971-5-0210-0[0m    │  A Tale of Two Cities     │      Charles Dickens │
-├──────────────────────┼───────────────────────────┼──────────────────────┤
-│       [1m 960-425-059-0[0m │  The Lord of the Rings    │     J. R. R. Tolkien │
-[39;49m│       [1m 80-902734-1-6[0m │  And Then There Were None │      Dante Alighieri │[39;49m
-│       [1m 978-052156781[0m │  De Monarchia             │  spans multiple rows │
-└──────────────────────┴───────────────────────────┴──────────────────────┘
+
+    expect($html)->toBe(<<<OUT
+├─────────────────────┼──────────────────────────┼─────────────────────┤
+│       \e[1m99921-58-10-7\e[0m │ Divine Comedy            │     Dante Alighieri │
+│    \e[1m9971-5-0210-0\e[0m    │ A Tale of Two Cities     │     Charles Dickens │
+├─────────────────────┼──────────────────────────┼─────────────────────┤
+│       \e[1m960-425-059-0\e[0m │ The Lord of the Rings    │    J. R. R. Tolkien │
+\e[39;49m│       \e[1m80-902734-1-6\e[0m │ And Then There Were None │     Dante Alighieri │\e[39;49m
+│       \e[1m978-052156781\e[0m │ De Monarchia             │ spans multiple rows │
+└─────────────────────┴──────────────────────────┴─────────────────────┘
 OUT
     );
 });
 
 it('can render table with thead to a string', function () {
-    $html = (new HtmlRenderer())->parse(<<<'HTML'
+    $html = parse(<<<'HTML'
 <table>
     <thead title="Books" class="bg-red text-white px-10">
         <tr>
@@ -87,23 +88,23 @@ it('can render table with thead to a string', function () {
 HTML
     );
 
-    expect($html->toString())->toBe(<<<'OUT'
-+----------------+---[37;41m           Books           [39;49m--------------------+
-|          [1m ISBN[0m | [1m Title[0m                    | [1m Author[0m              |
-+----------------+---------------------------+----------------------+
-| [1m 99921-58-10-7[0m |  Divine Comedy            |      Dante Alighieri |
-|[31;44m [1m 9971-5-0210-0[0m [39;49m|  A Tale of Two Cities     |      Charles Dickens |
-+----------------+---------------------------+----------------------+
-| [1m 960-425-059-0[0m |  The Lord of the Rings    |     J. R. R. Tolkien |
-[39;49m| [1m 80-902734-1-6[0m |  And Then There Were None |      Dante Alighieri |[39;49m
-| [1m 978-052156781[0m |  De Monarchia             |  spans multiple rows |
-+----------------+---------------------------+----------------------+
+    expect($html)->toBe(<<<OUT
++---------------+--\e[37;41m           Books           \e[39;49m-------------------+
+|          \e[1mISBN\e[0m | \e[1mTitle\e[0m                    | \e[1mAuthor\e[0m              |
++---------------+--------------------------+---------------------+
+| \e[1m99921-58-10-7\e[0m | Divine Comedy            |     Dante Alighieri |
+| \e[31;44m\e[1m9971-5-0210-0\e[0m\e[39;49m | A Tale of Two Cities     |     Charles Dickens |
++---------------+--------------------------+---------------------+
+| \e[1m960-425-059-0\e[0m | The Lord of the Rings    |    J. R. R. Tolkien |
+\e[39;49m| \e[1m80-902734-1-6\e[0m | And Then There Were None |     Dante Alighieri |\e[39;49m
+| \e[1m978-052156781\e[0m | De Monarchia             | spans multiple rows |
++---------------+--------------------------+---------------------+
 OUT
     );
 });
 
 it('can render table with thead with two rows to a string', function () {
-    $html = (new HtmlRenderer())->parse(<<<'HTML'
+    $html = parse(<<<'HTML'
 <table>
     <thead title="Books" class="bg-red text-white px-10">
         <tr border="1">
@@ -145,23 +146,23 @@ it('can render table with thead with two rows to a string', function () {
 HTML
     );
 
-    expect($html->toString())->toBe(<<<'OUT'
-+----------------+---[37;41m           Books           [39;49m--------------------+
-|          [1m ISBN[0m | [1m Title[0m                    | [1m Author[0m              |
-+----------------+---------------------------+----------------------+
-| [1m 99921-58-10-7[0m |  Divine Comedy            |      Dante Alighieri |
-|[31;44m [1m 9971-5-0210-0[0m [39;49m|  A Tale of Two Cities     |      Charles Dickens |
-+----------------+---------------------------+----------------------+
-| [1m 960-425-059-0[0m |  The Lord of the Rings    |     J. R. R. Tolkien |
-[39;49m| [1m 80-902734-1-6[0m |  And Then There Were None |      Dante Alighieri |[39;49m
-| [1m 978-052156781[0m |  De Monarchia             |  spans multiple rows |
-+----------------+---------------------------+----------------------+
+    expect($html)->toBe(<<<OUT
++---------------+--\e[37;41m           Books           \e[39;49m-------------------+
+|          \e[1mISBN\e[0m | \e[1mTitle\e[0m                    | \e[1mAuthor\e[0m              |
++---------------+--------------------------+---------------------+
+| \e[1m99921-58-10-7\e[0m | Divine Comedy            |     Dante Alighieri |
+| \e[31;44m\e[1m9971-5-0210-0\e[0m\e[39;49m | A Tale of Two Cities     |     Charles Dickens |
++---------------+--------------------------+---------------------+
+| \e[1m960-425-059-0\e[0m | The Lord of the Rings    |    J. R. R. Tolkien |
+\e[39;49m| \e[1m80-902734-1-6\e[0m | And Then There Were None |     Dante Alighieri |\e[39;49m
+| \e[1m978-052156781\e[0m | De Monarchia             | spans multiple rows |
++---------------+--------------------------+---------------------+
 OUT
     );
 });
 
 it('can render table with tfoot to a string', function () {
-    $html = (new HtmlRenderer())->parse(<<<'HTML'
+    $html = parse(<<<'HTML'
 <table>
     <tr>
         <th align="right">99921-58-10-7</th>
@@ -196,23 +197,23 @@ it('can render table with tfoot to a string', function () {
 HTML
     );
 
-    expect($html->toString())->toBe(<<<'OUT'
-+----------------+---------------------------+----------------------+
-| [1m 99921-58-10-7[0m |  Divine Comedy            |      Dante Alighieri |
-|[31;44m [1m 9971-5-0210-0[0m [39;49m|  A Tale of Two Cities     |      Charles Dickens |
-+----------------+---------------------------+----------------------+
-| [1m 960-425-059-0[0m |  The Lord of the Rings    |     J. R. R. Tolkien |
-[39;49m| [1m 80-902734-1-6[0m |  And Then There Were None |      Dante Alighieri |[39;49m
-| [1m 978-052156781[0m |  De Monarchia             |  spans multiple rows |
-+----------------+---------------------------+----------------------+
-| [1m This value spans 3 columns.[0m                                      |
-+----------------+------     [44m Page 1/2 [49m     -+----------------------+
+    expect($html)->toBe(<<<OUT
++---------------+--------------------------+---------------------+
+| \e[1m99921-58-10-7\e[0m | Divine Comedy            |     Dante Alighieri |
+| \e[31;44m\e[1m9971-5-0210-0\e[0m\e[39;49m | A Tale of Two Cities     |     Charles Dickens |
++---------------+--------------------------+---------------------+
+| \e[1m960-425-059-0\e[0m | The Lord of the Rings    |    J. R. R. Tolkien |
+\e[39;49m| \e[1m80-902734-1-6\e[0m | And Then There Were None |     Dante Alighieri |\e[39;49m
+| \e[1m978-052156781\e[0m | De Monarchia             | spans multiple rows |
++---------------+--------------------------+---------------------+
+| \e[1mThis value spans 3 columns.\e[0m                                    |
++---------------+------     \e[44m Page 1/2 \e[49m     +---------------------+
 OUT
     );
 });
 
 it('can render table with tbody to a string', function () {
-    $html = (new HtmlRenderer())->parse(<<<'HTML'
+    $html = parse(<<<'HTML'
 <table>
     <tbody>
         <tr>
@@ -244,21 +245,21 @@ it('can render table with tbody to a string', function () {
 HTML
     );
 
-    expect($html->toString())->toBe(<<<'OUT'
-+----------------+---------------------------+----------------------+
-| [1m 99921-58-10-7[0m |  Divine Comedy            |      Dante Alighieri |
-|[31;44m [1m 9971-5-0210-0[0m [39;49m|  A Tale of Two Cities     |      Charles Dickens |
-+----------------+---------------------------+----------------------+
-| [1m 960-425-059-0[0m |  The Lord of the Rings    |     J. R. R. Tolkien |
-[39;49m| [1m 80-902734-1-6[0m |  And Then There Were None |      Dante Alighieri |[39;49m
-| [1m 978-052156781[0m |  De Monarchia             |  spans multiple rows |
-+----------------+---------------------------+----------------------+
+    expect($html)->toBe(<<<OUT
++---------------+--------------------------+---------------------+
+| \e[1m99921-58-10-7\e[0m | Divine Comedy            |     Dante Alighieri |
+| \e[31;44m\e[1m9971-5-0210-0\e[0m\e[39;49m | A Tale of Two Cities     |     Charles Dickens |
++---------------+--------------------------+---------------------+
+| \e[1m960-425-059-0\e[0m | The Lord of the Rings    |    J. R. R. Tolkien |
+\e[39;49m| \e[1m80-902734-1-6\e[0m | And Then There Were None |     Dante Alighieri |\e[39;49m
+| \e[1m978-052156781\e[0m | De Monarchia             | spans multiple rows |
++---------------+--------------------------+---------------------+
 OUT
     );
 });
 
 it('can render table with thead, tbody, tfoot to a string', function () {
-    $html = (new HtmlRenderer())->parse(<<<'HTML'
+    $html = parse(<<<'HTML'
 <table style="box-double">
     <thead title="Books" class="bg-red text-white px-10">
         <tr>
@@ -302,19 +303,37 @@ it('can render table with thead, tbody, tfoot to a string', function () {
 HTML
     );
 
-    expect($html->toString())->toBe(<<<'OUT'
-╔════════════════╤═══[37;41m           Books           [39;49m════════════════════╗
-║          [1m ISBN[0m │ [1m Title[0m                    │ [1m Author[0m              ║
-╠════════════════╪═══════════════════════════╪══════════════════════╣
-║ [1m 99921-58-10-7[0m │  Divine Comedy            │      Dante Alighieri ║
-║[31;44m [1m 9971-5-0210-0[0m [39;49m│  A Tale of Two Cities     │      Charles Dickens ║
-╟────────────────┼───────────────────────────┼──────────────────────╢
-║ [1m 960-425-059-0[0m │  The Lord of the Rings    │     J. R. R. Tolkien ║
-[39;49m║ [1m 80-902734-1-6[0m │  And Then There Were None │      Dante Alighieri ║[39;49m
-║ [1m 978-052156781[0m │  De Monarchia             │  spans multiple rows ║
-╟────────────────┼───────────────────────────┼──────────────────────╢
-║ [1m This value spans 3 columns.[0m                                      ║
-╚════════════════╧══════     [44m Page 1/2 [49m     ═╧══════════════════════╝
+    expect($html)->toBe(<<<OUT
+╔═══════════════╤══\e[37;41m           Books           \e[39;49m═══════════════════╗
+║          \e[1mISBN\e[0m │ \e[1mTitle\e[0m                    │ \e[1mAuthor\e[0m              ║
+╠═══════════════╪══════════════════════════╪═════════════════════╣
+║ \e[1m99921-58-10-7\e[0m │ Divine Comedy            │     Dante Alighieri ║
+║ \e[31;44m\e[1m9971-5-0210-0\e[0m\e[39;49m │ A Tale of Two Cities     │     Charles Dickens ║
+╟───────────────┼──────────────────────────┼─────────────────────╢
+║ \e[1m960-425-059-0\e[0m │ The Lord of the Rings    │    J. R. R. Tolkien ║
+\e[39;49m║ \e[1m80-902734-1-6\e[0m │ And Then There Were None │     Dante Alighieri ║\e[39;49m
+║ \e[1m978-052156781\e[0m │ De Monarchia             │ spans multiple rows ║
+╟───────────────┼──────────────────────────┼─────────────────────╢
+║ \e[1mThis value spans 3 columns.\e[0m                                    ║
+╚═══════════════╧══════     \e[44m Page 1/2 \e[49m     ╧═════════════════════╝
 OUT
     );
+});
+
+it('can render an <a> inside of a table', function () {
+    $html = parse(<<<'HTML'
+        <table>
+            <tr>
+                <td>
+                    <a href="url">Test</a>
+                </td>
+            </tr>
+        </table>
+    HTML);
+
+    expect($html)->toBe(<<<OUT
+    +------+
+    | \e]8;;url\e\Test\e]8;;\e\ |
+    +------+
+    OUT);
 });
