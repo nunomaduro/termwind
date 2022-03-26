@@ -33,3 +33,10 @@ it('accepts width', function () {
 
     expect($html)->toBe('  <fg=red>'.str_repeat('─', 5).'</>  ');
 });
+
+it('respects the parent width', function () {
+    putenv('COLUMNS=10');
+
+    $html = parse('<div class="mx-2"><hr /></div>');
+    expect($html)->toBe('  '.str_repeat('─', 6).'  ');
+});
