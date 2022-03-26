@@ -136,7 +136,7 @@ final class Styles
             || ($this->properties['styles']['width'] ?? 0) > 0
             || ($this->properties['styles']['spaceY'] ?? 0) > 0
             || ($this->properties['styles']['spaceX'] ?? 0) > 0
-            || ($this->properties['styles']['spaceBetween'] ?? false) === true;
+            || ($this->properties['styles']['justifyBetween'] ?? false) === true;
     }
 
     /**
@@ -153,7 +153,7 @@ final class Styles
             $this->properties['parentStyles'][$style][] = $styles->properties['styles'][$style] ?? 0;
         }
 
-        $this->properties['parentStyles']['spaceBetween'] = $styles->properties['styles']['spaceBetween'] ?? false;
+        $this->properties['parentStyles']['justifyBetween'] = $styles->properties['styles']['justifyBetween'] ?? false;
 
         foreach (['bg', 'fg'] as $colorType) {
             $value = (array) ($this->properties['colors'][$colorType] ?? []);
@@ -546,10 +546,10 @@ final class Styles
         ]]);
     }
 
-    final public function spaceBetween(): self
+    final public function justifyBetween(): self
     {
         return $this->with(['styles' => [
-            'spaceBetween' => true,
+            'justifyBetween' => true,
         ]]);
     }
 

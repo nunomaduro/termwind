@@ -394,9 +394,9 @@ test('append-text', function () {
     expect($html)->toBe('helloworld');
 });
 
-test('space-between', function () {
+test('justify-between', function () {
     $html = parse(<<<'HTML'
-        <div class="w-11 space-between">
+        <div class="w-11 justify-between">
             <span>A</span>
             <span>B</span>
             <span>C</span>
@@ -406,9 +406,9 @@ test('space-between', function () {
     expect($html)->toBe('A    B    C');
 });
 
-test('space-between with no space available to add', function () {
+test('justify-between with no space available to add', function () {
     $html = parse(<<<'HTML'
-        <div class="w-3 space-between">
+        <div class="w-3 justify-between">
             <span>A</span>
             <span>B</span>
             <span>C</span>
