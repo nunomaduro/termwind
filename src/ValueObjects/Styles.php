@@ -546,6 +546,9 @@ final class Styles
         ]]);
     }
 
+    /**
+     * Justifies childs along the element with an equal amount of space between.
+     */
     final public function justifyBetween(): self
     {
         return $this->with(['styles' => [
