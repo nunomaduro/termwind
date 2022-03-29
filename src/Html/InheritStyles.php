@@ -21,7 +21,9 @@ final class InheritStyles
      */
     public function __invoke(array $elements, Styles $styles): array
     {
-        if (! $styles->hasInheritableStyles()) {
+        $elements = array_values($elements);
+
+        if (! $styles->hasInheritableStyles() || count($elements) < 1) {
             return $elements;
         }
 
@@ -31,6 +33,30 @@ final class InheritStyles
             }
 
             $element->inheritFromStyles($styles);
+        }
+
+        if ((bool) ($styles->getProperties()['styles']['justifyBetween'] ?? false)) {
+            /** @var Element[] $elements */
+            $totalWidth = (int) array_reduce($elements, fn ($carry, $element) => $carry += $element->getLength(), 0);
+            $parentWidth = Styles::getParentWidth($elements[0]->getProperties()['parentStyles'] ?? []);
+            $justifyBetween = ($parentWidth - $totalWidth) / (count($elements) - 1);
+
+            if ($justifyBetween < 1) {
+                return $elements;
+            }
+
+            $arr = [];
+            foreach ($elements as $index => &$element) {
+                if ($index !== 0) {
+                    // Since there is no float pixel, on the last one it should round up...
+                    $length = $index === count($elements) - 1 ? ceil($justifyBetween) : floor($justifyBetween);
+                    $arr[] = str_repeat(' ', (int) $length);
+                }
+
+                $arr[] = $element;
+            }
+
+            return $arr;
         }
 
         return $elements;

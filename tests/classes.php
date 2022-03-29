@@ -393,3 +393,27 @@ test('append-text', function () {
 
     expect($html)->toBe('helloworld');
 });
+
+test('justify-between', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-11 justify-between">
+            <span>A</span>
+            <span>B</span>
+            <span>C</span>
+        </div>
+    HTML);
+
+    expect($html)->toBe('A    B    C');
+});
+
+test('justify-between with no space available to add', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-3 justify-between">
+            <span>A</span>
+            <span>B</span>
+            <span>C</span>
+        </div>
+    HTML);
+
+    expect($html)->toBe('ABC');
+});

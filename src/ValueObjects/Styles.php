@@ -135,7 +135,8 @@ final class Styles
             || ($this->properties['styles']['pr'] ?? 0) > 0
             || ($this->properties['styles']['width'] ?? 0) > 0
             || ($this->properties['styles']['spaceY'] ?? 0) > 0
-            || ($this->properties['styles']['spaceX'] ?? 0) > 0;
+            || ($this->properties['styles']['spaceX'] ?? 0) > 0
+            || ($this->properties['styles']['justifyBetween'] ?? false) === true;
     }
 
     /**
@@ -151,6 +152,8 @@ final class Styles
 
             $this->properties['parentStyles'][$style][] = $styles->properties['styles'][$style] ?? 0;
         }
+
+        $this->properties['parentStyles']['justifyBetween'] = $styles->properties['styles']['justifyBetween'] ?? false;
 
         foreach (['bg', 'fg'] as $colorType) {
             $value = (array) ($this->properties['colors'][$colorType] ?? []);
@@ -544,6 +547,16 @@ final class Styles
     }
 
     /**
+     * Justifies childs along the element with an equal amount of space between.
+     */
+    final public function justifyBetween(): self
+    {
+        return $this->with(['styles' => [
+            'justifyBetween' => true,
+        ]]);
+    }
+
+    /**
      * Prepends text to the content.
      */
     final public function prepend(string $string): self
@@ -822,9 +835,13 @@ final class Styles
     /**
      * Get the length of the text provided without the styling tags.
      */
-    private function getLength(string $text): int
+    public function getLength(string $text = null): int
     {
-        return mb_strlen(preg_replace(self::STYLING_REGEX, '', $text) ?? '', 'UTF-8');
+        return mb_strlen(preg_replace(
+            self::STYLING_REGEX,
+            '',
+            $text ?? $this->element?->toString() ?? ''
+        ) ?? '', 'UTF-8');
     }
 
     /**
@@ -876,10 +893,9 @@ final class Styles
      *
      * @param  array<string, array<int|string>>  $styles
      */
-    private static function getParentWidth(array $styles): int
+    public static function getParentWidth(array $styles): int
     {
         $width = terminal()->width();
-
         foreach ($styles['width'] ?? [] as $index => $parentWidth) {
             $maxWidth = (int) $styles['maxWidth'][$index];
             $margins = (int) $styles['ml'][$index] + (int) $styles['mr'][$index];
