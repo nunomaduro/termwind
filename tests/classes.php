@@ -429,3 +429,15 @@ test('justify-evenly', function () {
 
     expect($html)->toBe('  A  B  C  ');
 });
+
+test('justify-evenly with no space available to add', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-3 justify-evenly">
+            <span>A</span>
+            <span>B</span>
+            <span>C</span>
+        </div>
+    HTML);
+
+    expect($html)->toBe('ABC');
+});
