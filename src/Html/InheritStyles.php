@@ -89,7 +89,7 @@ final class InheritStyles
         }
 
         $arr = [];
-        foreach ($elements as $index => &$element) {
+        foreach ($elements as &$element) {
             $arr[] = str_repeat(' ', (int) floor($space));
             $arr[] = $element;
         }
