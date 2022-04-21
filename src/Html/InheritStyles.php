@@ -59,6 +59,32 @@ final class InheritStyles
             return $arr;
         }
 
+        if ((bool) ($styles->getProperties()['styles']['justifyEvenly'] ?? false)) {
+            /** @var Element[] $elements */
+            $totalWidth = (int) array_reduce($elements, fn ($carry, $element) => $carry += $element->getLength(), 0);
+            $parentWidth = Styles::getParentWidth($elements[0]->getProperties()['parentStyles'] ?? []);
+            $justifyEvenly = ($parentWidth - $totalWidth) / (count($elements) + 1);
+
+            if ($justifyEvenly < 1) {
+                return $elements;
+            }
+
+            $arr = [];
+            foreach ($elements as $index => &$element) {
+                // Since there is no float pixel, on the last one it should round up...
+                $length = $index === count($elements) - 1 ? ceil($justifyEvenly) : floor($justifyEvenly);
+
+                $arr[] = str_repeat(' ', (int) $length);
+                $arr[] = $element;
+
+                if ($index === count($elements) - 1) {
+                    $arr[] = str_repeat(' ', (int) $length);
+                }
+            }
+
+            return $arr;
+        }
+
         return $elements;
     }
 }
