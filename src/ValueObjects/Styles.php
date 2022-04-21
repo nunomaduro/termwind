@@ -557,6 +557,17 @@ final class Styles
     }
 
     /**
+     * Justifies childs along the element with an equal amount of space between
+     * each item and half around.
+     */
+    final public function justifyAround(): self
+    {
+        return $this->with(['styles' => [
+            'justifyContent' => 'around',
+        ]]);
+    }
+
+    /**
      * Justifies childs along the element with an equal amount of space around each item.
      */
     final public function justifyEvenly(): self

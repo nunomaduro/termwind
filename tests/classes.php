@@ -441,3 +441,28 @@ test('justify-evenly with no space available to add', function () {
 
     expect($html)->toBe('ABC');
 });
+
+
+test('justify-around', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-11 justify-around">
+            <span>A</span>
+            <span>B</span>
+            <span>C</span>
+        </div>
+    HTML);
+
+    expect($html)->toBe(' A   B   C ');
+});
+
+test('justify-around with no space available to add', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-3 justify-around">
+            <span>A</span>
+            <span>B</span>
+            <span>C</span>
+        </div>
+    HTML);
+
+    expect($html)->toBe('ABC');
+});

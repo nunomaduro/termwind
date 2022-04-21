@@ -38,6 +38,7 @@ final class InheritStyles
         return match ($styles->getProperties()['styles']['justifyContent'] ?? false) {
             'between' => $this->applyJustifyBetween($elements),
             'evenly' => $this->applyJustifyEvenly($elements),
+            'around' => $this->applyJustifyAround($elements),
             default => $elements,
         };
     }
@@ -88,17 +89,42 @@ final class InheritStyles
         }
 
         $arr = [];
-        $length = floor($space);
         foreach ($elements as $index => &$element) {
-            $arr[] = str_repeat(' ', (int) $length);
+            $arr[] = str_repeat(' ', (int) floor($space));
             $arr[] = $element;
-
-            if ($index === count($elements) - 1) {
-                // Since there is no float pixel, on the last one it should round up...
-                $length = ceil($space);
-                $arr[] = str_repeat(' ', (int) $length);
-            }
         }
+
+        $arr[] = str_repeat(' ', (int) ceil($space));
+
+        return $arr;
+    }
+
+    /**
+     * Applies the space around the elements.
+     *
+     * @param  array<int, Element|string>  $elements
+     * @return array<int, Element|string>
+     */
+    private function applyJustifyAround(array $elements): array
+    {
+        [$totalWidth, $parentWidth] = $this->getWidthFromElements($elements);
+        $space = ($parentWidth - $totalWidth) / count($elements);
+
+        if ($space < 1) {
+            return $elements;
+        }
+
+        $arr = [str_repeat(' ', (int) (floor($space) / 2))];
+
+        foreach ($elements as $index => &$element) {
+            if ($index !== 0) {
+                $arr[] = str_repeat(' ', (int) ceil($space));
+            }
+
+            $arr[] = $element;
+        }
+
+        $arr[] = str_repeat(' ', (int) (floor($space) / 2));
 
         return $arr;
     }
