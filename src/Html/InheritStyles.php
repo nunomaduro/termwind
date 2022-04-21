@@ -70,14 +70,14 @@ final class InheritStyles
             }
 
             $arr = [];
+            $length = floor($justifyEvenly);
             foreach ($elements as $index => &$element) {
-                // Since there is no float pixel, on the last one it should round up...
-                $length = $index === count($elements) - 1 ? ceil($justifyEvenly) : floor($justifyEvenly);
-
                 $arr[] = str_repeat(' ', (int) $length);
                 $arr[] = $element;
 
                 if ($index === count($elements) - 1) {
+                    // Since there is no float pixel, on the last one it should round up...
+                    $length = ceil($justifyEvenly);
                     $arr[] = str_repeat(' ', (int) $length);
                 }
             }
