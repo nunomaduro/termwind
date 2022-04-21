@@ -442,7 +442,6 @@ test('justify-evenly with no space available to add', function () {
     expect($html)->toBe('ABC');
 });
 
-
 test('justify-around', function () {
     $html = parse(<<<'HTML'
         <div class="w-11 justify-around">
