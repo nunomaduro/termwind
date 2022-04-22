@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.8.0 (2022-04-22](https://github.com/nunomaduro/termwind/compare/v1.7.0...v1.8.0)
+### Added
+- Add `justify-around` and `justify-evenly` classes by @xiCO2k in https://github.com/nunomaduro/termwind/pull/133
+
 ## [v1.7.0 (2022-03-30](https://github.com/nunomaduro/termwind/compare/v1.6.2...v1.7.0)
 ### Added
 - Add `justify-between` class in https://github.com/nunomaduro/termwind/pull/129
