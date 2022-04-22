@@ -136,7 +136,7 @@ final class Styles
             || ($this->properties['styles']['width'] ?? 0) > 0
             || ($this->properties['styles']['spaceY'] ?? 0) > 0
             || ($this->properties['styles']['spaceX'] ?? 0) > 0
-            || ($this->properties['styles']['justifyBetween'] ?? false) === true;
+            || ($this->properties['styles']['justifyContent'] ?? false) !== false;
     }
 
     /**
@@ -153,7 +153,7 @@ final class Styles
             $this->properties['parentStyles'][$style][] = $styles->properties['styles'][$style] ?? 0;
         }
 
-        $this->properties['parentStyles']['justifyBetween'] = $styles->properties['styles']['justifyBetween'] ?? false;
+        $this->properties['parentStyles']['justifyContent'] = $styles->properties['styles']['justifyContent'] ?? false;
 
         foreach (['bg', 'fg'] as $colorType) {
             $value = (array) ($this->properties['colors'][$colorType] ?? []);
@@ -552,7 +552,28 @@ final class Styles
     final public function justifyBetween(): self
     {
         return $this->with(['styles' => [
-            'justifyBetween' => true,
+            'justifyContent' => 'between',
+        ]]);
+    }
+
+    /**
+     * Justifies childs along the element with an equal amount of space between
+     * each item and half around.
+     */
+    final public function justifyAround(): self
+    {
+        return $this->with(['styles' => [
+            'justifyContent' => 'around',
+        ]]);
+    }
+
+    /**
+     * Justifies childs along the element with an equal amount of space around each item.
+     */
+    final public function justifyEvenly(): self
+    {
+        return $this->with(['styles' => [
+            'justifyContent' => 'evenly',
         ]]);
     }
 
