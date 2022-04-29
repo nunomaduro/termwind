@@ -119,7 +119,7 @@ All the classes supported use exactly the same logic that is available on [tailw
 * **[Max Width](https://tailwindcss.com/docs/max-width):** `max-w-{width}`
 * **[Justify Content](https://tailwindcss.com/docs/justify-content):** `justify-between`, `justify-around`, `justify-evenly`
 * **[Visibility](https://tailwindcss.com/docs/visibility):** `invisible`
-* **[Display](https://tailwindcss.com/docs/display):** `block`
+* **[Display](https://tailwindcss.com/docs/display):** `block`, `hidden`
 * **[List Style](https://tailwindcss.com/docs/list-style-type):** `list-disc`, `list-decimal`, `list-square`, `list-none`
 
 ## Responsive Design

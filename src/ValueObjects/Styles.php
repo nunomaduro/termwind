@@ -537,6 +537,16 @@ final class Styles
     }
 
     /**
+     * Do not display element's content.
+     */
+    final public function hidden(): self
+    {
+        return $this->with(['styles' => [
+            'display' => 'hidden',
+        ]]);
+    }
+
+    /**
      * Makes a line break before the element's content.
      */
     final public function block(): self
@@ -797,6 +807,11 @@ final class Styles
     private function applyStyling(string $content): string
     {
         $display = $this->properties['styles']['display'] ?? 'inline';
+
+        if ($display === 'hidden') {
+            return '';
+        }
+
         $isFirstChild = (bool) $this->properties['isFirstChild'];
 
         [$marginTop, $marginRight, $marginBottom, $marginLeft] = $this->getMargins();

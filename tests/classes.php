@@ -465,3 +465,11 @@ test('justify-around with no space available to add', function () {
 
     expect($html)->toBe('ABC');
 });
+
+test('hidden', function () {
+    $html = parse(<<<'HTML'
+        <div class="hidden">test</div>
+    HTML);
+
+    expect($html)->toBe('');
+});
