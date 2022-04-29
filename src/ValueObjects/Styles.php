@@ -121,25 +121,6 @@ final class Styles
     }
 
     /**
-     * Checks if formatter has styles.
-     */
-    final public function hasInheritableStyles(): bool
-    {
-        return ($this->properties['colors']['bg'] ?? []) !== []
-            || ($this->properties['colors']['fg'] ?? []) !== []
-            || ($this->properties['options'] ?? []) !== []
-            || ($this->properties['href'] ?? []) !== []
-            || ($this->properties['styles']['ml'] ?? 0) > 0
-            || ($this->properties['styles']['mr'] ?? 0) > 0
-            || ($this->properties['styles']['pl'] ?? 0) > 0
-            || ($this->properties['styles']['pr'] ?? 0) > 0
-            || ($this->properties['styles']['width'] ?? 0) > 0
-            || ($this->properties['styles']['spaceY'] ?? 0) > 0
-            || ($this->properties['styles']['spaceX'] ?? 0) > 0
-            || ($this->properties['styles']['justifyContent'] ?? false) !== false;
-    }
-
-    /**
      * Inherit styles from given Styles object.
      */
     final public function inheritFromStyles(Styles $styles): self

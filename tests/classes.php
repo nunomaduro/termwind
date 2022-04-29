@@ -418,6 +418,22 @@ test('justify-between with no space available to add', function () {
     expect($html)->toBe('ABC');
 });
 
+test('justify-between inherit with parent without classes', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-9 mx-1">
+            <div>
+                <div class="justify-between">
+                    <span>A</span>
+                    <span>B</span>
+                    <span>C</span>
+                </div>
+            </div>
+        </div>
+    HTML);
+
+    expect($html)->toBe(' A   B   C ');
+});
+
 test('justify-evenly', function () {
     $html = parse(<<<'HTML'
         <div class="w-11 justify-evenly">

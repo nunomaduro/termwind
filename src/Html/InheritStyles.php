@@ -23,10 +23,6 @@ final class InheritStyles
     {
         $elements = array_values($elements);
 
-        if (! $styles->hasInheritableStyles() || count($elements) < 1) {
-            return $elements;
-        }
-
         foreach ($elements as &$element) {
             if (is_string($element)) {
                 $element = Termwind::raw($element);
