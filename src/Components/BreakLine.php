@@ -17,6 +17,10 @@ final class BreakLine extends Element
             return '';
         }
 
+        if ($display === 'block') {
+            return parent::toString();
+        }
+
         return parent::toString()."\r";
     }
 }
