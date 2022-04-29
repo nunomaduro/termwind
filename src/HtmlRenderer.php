@@ -102,7 +102,7 @@ final class HtmlRenderer
             'dt' => Termwind::dt($children, $styles, $properties),
             'dd' => Termwind::dd($children, $styles, $properties),
             'span' => Termwind::span($children, $styles, $properties),
-            'br' => Termwind::breakLine(),
+            'br' => Termwind::breakLine($styles, $properties),
             'strong' => Termwind::span($children, $styles, $properties)->strong(),
             'b' => Termwind::span($children, $styles, $properties)->fontBold(),
             'em', 'i' => Termwind::span($children, $styles, $properties)->italic(),

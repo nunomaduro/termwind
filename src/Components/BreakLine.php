@@ -11,6 +11,12 @@ final class BreakLine extends Element
      */
     public function toString(): string
     {
+        $display = $this->styles->getProperties()['styles']['display'] ?? 'inline';
+
+        if ($display === 'hidden') {
+            return '';
+        }
+
         return parent::toString()."\r";
     }
 }
