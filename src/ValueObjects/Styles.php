@@ -569,6 +569,16 @@ final class Styles
     }
 
     /**
+     * Justifies childs along the center of the container’s main axis.
+     */
+    final public function justifyCenter(): self
+    {
+        return $this->with(['styles' => [
+            'justifyContent' => 'center',
+        ]]);
+    }
+
+    /**
      * Prepends text to the content.
      */
     final public function prepend(string $string): self
