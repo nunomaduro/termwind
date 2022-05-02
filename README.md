@@ -117,7 +117,7 @@ All the classes supported use exactly the same logic that is available on [tailw
 * **[Space](https://tailwindcss.com/docs/space):** `space-y-{space}`, `space-x-{space}`.
 * **[Width](https://tailwindcss.com/docs/width):** `w-{width}`, `w-full`
 * **[Max Width](https://tailwindcss.com/docs/max-width):** `max-w-{width}`
-* **[Justify Content](https://tailwindcss.com/docs/justify-content):** `justify-between`, `justify-around`, `justify-evenly`
+* **[Justify Content](https://tailwindcss.com/docs/justify-content):** `justify-between`, `justify-around`, `justify-evenly`, `justify-center`
 * **[Visibility](https://tailwindcss.com/docs/visibility):** `invisible`
 * **[Display](https://tailwindcss.com/docs/display):** `block`, `hidden`
 * **[List Style](https://tailwindcss.com/docs/list-style-type):** `list-disc`, `list-decimal`, `list-square`, `list-none`

@@ -35,6 +35,7 @@ final class InheritStyles
             'between' => $this->applyJustifyBetween($elements),
             'evenly' => $this->applyJustifyEvenly($elements),
             'around' => $this->applyJustifyAround($elements),
+            'center' => $this->applyJustifyCenter($elements),
             default => $elements,
         };
     }
@@ -123,6 +124,28 @@ final class InheritStyles
         $arr[] = str_repeat(' ', (int) (floor($space) / 2));
 
         return $arr;
+    }
+
+    /**
+     * Applies the space on before first element and after last element.
+     *
+     * @param  array<int, Element|string>  $elements
+     * @return array<int, Element|string>
+     */
+    private function applyJustifyCenter(array $elements): array
+    {
+        [$totalWidth, $parentWidth] = $this->getWidthFromElements($elements);
+        $space = $parentWidth - $totalWidth;
+
+        if ($space < 1) {
+            return $elements;
+        }
+
+        return [
+            str_repeat(' ', (int) (floor($space) / 2)),
+            ...$elements,
+            str_repeat(' ', (int) (ceil($space) / 2)),
+        ];
     }
 
     /**

@@ -482,6 +482,30 @@ test('justify-around with no space available to add', function () {
     expect($html)->toBe('ABC');
 });
 
+test('justify-center', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-11 justify-center">
+            <span>A</span>
+            <span>B</span>
+            <span>C</span>
+        </div>
+    HTML);
+
+    expect($html)->toBe('    ABC    ');
+});
+
+test('justify-centr with no space available to add', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-3 justify-center">
+            <span>A</span>
+            <span>B</span>
+            <span>C</span>
+        </div>
+    HTML);
+
+    expect($html)->toBe('ABC');
+});
+
 test('hidden', function () {
     $html = parse(<<<'HTML'
         <div class="hidden">test</div>
