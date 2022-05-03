@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.9.0 (2022-05-03](https://github.com/nunomaduro/termwind/compare/v1.8.0...v1.9.0)
+### Added
+- Add `hidden` class by @xiCO2k in https://github.com/nunomaduro/termwind/pull/134
+- Add `justify-center` class by @xiCO2k in https://github.com/nunomaduro/termwind/pull/135
+
+### Fixed
+- Fixed `justify-*` round calculations by @xiCO2k in https://github.com/nunomaduro/termwind/pull/136
+- Fixed `<br>` with classes in [eb2132f](https://github.com/nunomaduro/termwind/commit/eb2132f43d3d7b59c9daa07c13bf7c08d26eda5b)
+- Fixed inheritance issues on `justify-*` classes [d050cba](https://github.com/nunomaduro/termwind/commit/d050cba3079efecaaf7ac5bc0b3626b66575903f)
+
 ## [v1.8.0 (2022-04-22](https://github.com/nunomaduro/termwind/compare/v1.7.0...v1.8.0)
 ### Added
 - Add `justify-around` and `justify-evenly` classes by @xiCO2k in https://github.com/nunomaduro/termwind/pull/133
