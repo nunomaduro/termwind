@@ -91,7 +91,8 @@ final class InheritStyles
             $arr[] = $element;
         }
 
-        $arr[] = str_repeat(' ', (int) ceil($space));
+        $decimals = ceil(($space - floor($space)) * (count($elements) + 1));
+        $arr[] = str_repeat(' ', (int) (floor($space) + $decimals));
 
         return $arr;
     }
@@ -111,19 +112,22 @@ final class InheritStyles
             return $elements;
         }
 
-        $arr = [str_repeat(' ', (int) (floor($space) / 2))];
+        $contentSize = $totalWidth;
 
         foreach ($elements as $index => &$element) {
             if ($index !== 0) {
                 $arr[] = str_repeat(' ', (int) ceil($space));
+                $contentSize += ceil($space);
             }
 
             $arr[] = $element;
         }
 
-        $arr[] = str_repeat(' ', (int) (floor($space) / 2));
-
-        return $arr;
+        return [
+            str_repeat(' ', (int) floor(($parentWidth - $contentSize) / 2)),
+            ...$arr,
+            str_repeat(' ', (int) ceil(($parentWidth - $contentSize) / 2)),
+        ];
     }
 
     /**
@@ -142,9 +146,9 @@ final class InheritStyles
         }
 
         return [
-            str_repeat(' ', (int) (floor($space) / 2)),
+            str_repeat(' ', (int) floor($space / 2)),
             ...$elements,
-            str_repeat(' ', (int) (ceil($space) / 2)),
+            str_repeat(' ', (int) ceil($space / 2)),
         ];
     }
 
