@@ -113,6 +113,7 @@ final class InheritStyles
         }
 
         $contentSize = $totalWidth;
+        $arr = [];
 
         foreach ($elements as $index => &$element) {
             if ($index !== 0) {
