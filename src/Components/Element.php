@@ -19,6 +19,7 @@ use Termwind\ValueObjects\Styles;
  * @method Element underline()
  * @method Element lineThrough()
  * @method int getLength()
+ * @method int getInnerWidth()
  * @method array getProperties()
  * @method Element href(string $href)
  * @method bool hasStyle(string $style)

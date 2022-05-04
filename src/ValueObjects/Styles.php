@@ -538,6 +538,26 @@ final class Styles
     }
 
     /**
+     * Makes an element eligible to work with flex-1 element's style.
+     */
+    final public function flex(): self
+    {
+        return $this->with(['styles' => [
+            'display' => 'flex',
+        ]]);
+    }
+
+    /**
+     * Makes an element grow and shrink as needed, ignoring the initial size.
+     */
+    final public function flex1(): self
+    {
+        return $this->with(['styles' => [
+            'flex-1' => true,
+        ]]);
+    }
+
+    /**
      * Justifies childs along the element with an equal amount of space between.
      */
     final public function justifyBetween(): self
@@ -834,7 +854,7 @@ final class Styles
 
         $items = [];
 
-        if ($display === 'block' && ! $isFirstChild) {
+        if (in_array($display, ['block', 'flex'], true) && ! $isFirstChild) {
             $items[] = "\n";
         }
 
@@ -869,6 +889,17 @@ final class Styles
             '',
             $text ?? $this->element?->toString() ?? ''
         ) ?? '', 'UTF-8');
+    }
+
+    /**
+     * Get the length of the element without margins.
+     */
+    public function getInnerWidth(): int
+    {
+        $innerLength = $this->getLength();
+        [, $marginRight, , $marginLeft] = $this->getMargins();
+
+        return $innerLength - $marginLeft - $marginRight;
     }
 
     /**
