@@ -506,6 +506,17 @@ test('justify-centr with no space available to add', function () {
     expect($html)->toBe('ABC');
 });
 
+test('flex', function () {
+    $html = parse(<<<'HTML'
+        <div>
+            <div class="flex">Hello</div>
+            <div class="flex">World</div>
+        </div>
+    HTML);
+
+    expect($html)->toBe("Hello\nWorld");
+});
+
 test('flex and flex-1', function () {
     $html = parse(<<<'HTML'
         <div class="flex w-10">
