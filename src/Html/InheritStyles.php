@@ -32,7 +32,6 @@ final class InheritStyles
         }
 
         /** @var Element[] $elements */
-
         if (($styles->getProperties()['styles']['display'] ?? 'inline') === 'flex') {
             $elements = $this->applyFlex($elements);
         }
