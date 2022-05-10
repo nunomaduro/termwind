@@ -31,6 +31,11 @@ final class InheritStyles
             $element->inheritFromStyles($styles);
         }
 
+        /** @var Element[] $elements */
+        if (($styles->getProperties()['styles']['display'] ?? 'inline') === 'flex') {
+            $elements = $this->applyFlex($elements);
+        }
+
         return match ($styles->getProperties()['styles']['justifyContent'] ?? false) {
             'between' => $this->applyJustifyBetween($elements),
             'evenly' => $this->applyJustifyEvenly($elements),
@@ -41,9 +46,41 @@ final class InheritStyles
     }
 
     /**
+     * Applies flex-1 to child elements with the class.
+     *
+     * @param  array<int, Element>  $elements
+     * @return array<int, Element>
+     */
+    private function applyFlex(array $elements): array
+    {
+        [$totalWidth, $parentWidth] = $this->getWidthFromElements($elements);
+
+        $width = array_reduce($elements, function ($carry, $element) {
+            return $carry += $element->hasStyle('flex-1') ? $element->getInnerWidth() : 0;
+        }, $parentWidth - $totalWidth);
+
+        $flexed = array_values(array_filter(
+            $elements, fn ($element) => $element->hasStyle('flex-1')
+        ));
+
+        foreach ($flexed as $index => &$element) {
+            $float = $width / count($flexed);
+            $elementWidth = floor($float);
+
+            if ($index === count($flexed) - 1) {
+                $elementWidth += ($float - floor($float)) * count($flexed);
+            }
+
+            $element->addStyle("w-{$elementWidth}");
+        }
+
+        return $elements;
+    }
+
+    /**
      * Applies the space between the elements.
      *
-     * @param  array<int, Element|string>  $elements
+     * @param  array<int, Element>  $elements
      * @return array<int, Element|string>
      */
     private function applyJustifyBetween(array $elements): array
@@ -73,7 +110,7 @@ final class InheritStyles
     /**
      * Applies the space between and around the elements.
      *
-     * @param  array<int, Element|string>  $elements
+     * @param  array<int, Element>  $elements
      * @return array<int, Element|string>
      */
     private function applyJustifyEvenly(array $elements): array
@@ -100,7 +137,7 @@ final class InheritStyles
     /**
      * Applies the space around the elements.
      *
-     * @param  array<int, Element|string>  $elements
+     * @param  array<int, Element>  $elements
      * @return array<int, Element|string>
      */
     private function applyJustifyAround(array $elements): array
@@ -134,7 +171,7 @@ final class InheritStyles
     /**
      * Applies the space on before first element and after last element.
      *
-     * @param  array<int, Element|string>  $elements
+     * @param  array<int, Element>  $elements
      * @return array<int, Element|string>
      */
     private function applyJustifyCenter(array $elements): array
@@ -156,12 +193,11 @@ final class InheritStyles
     /**
      * Gets the total width for the elements and their parent width.
      *
-     * @param  array<int, Element|string>  $elements
+     * @param  array<int, Element>  $elements
      * @return int[]
      */
     private function getWidthFromElements(array $elements)
     {
-        /** @var Element[] $elements */
         $totalWidth = (int) array_reduce($elements, fn ($carry, $element) => $carry += $element->getLength(), 0);
         $parentWidth = Styles::getParentWidth($elements[0]->getProperties()['parentStyles'] ?? []);
 
