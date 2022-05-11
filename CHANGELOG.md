@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.10.0 (2022-05-11](https://github.com/nunomaduro/termwind/compare/v1.9.0...v1.10.0)
+### Added
+- Add `flex` and `flex-1` classes by @xiCO2k in https://github.com/nunomaduro/termwind/pull/137
+- Add `content-repeat-['.']` class by @xiCO2k in https://github.com/nunomaduro/termwind/pull/138
+
 ## [v1.9.0 (2022-05-03](https://github.com/nunomaduro/termwind/compare/v1.8.0...v1.9.0)
 ### Added
 - Add `hidden` class by @xiCO2k in https://github.com/nunomaduro/termwind/pull/134
