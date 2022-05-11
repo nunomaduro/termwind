@@ -598,11 +598,14 @@ final class Styles
         ]]);
     }
 
+    /**
+     * Repeats the string given until it fills all the content.
+     */
     final public function contentRepeat(string $string): self
     {
-        $string = preg_replace("/\[?'?([^'|\]]+)'?\]?/", '$1', $string);
+        $string = preg_replace("/\[?'?([^'|\]]+)'?\]?/", '$1', $string) ?? '';
 
-        $this->textModifiers[__METHOD__] = static fn (): string => str_repeat($string, terminal()->width());
+        $this->textModifiers[__METHOD__] = static fn (): string => str_repeat($string, (int) floor(terminal()->width() / mb_strlen($string, 'UTF-8')));
 
         return $this;
     }
