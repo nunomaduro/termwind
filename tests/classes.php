@@ -557,5 +557,3 @@ test('content-repeat', function () {
 
     expect($html)->toBe(str_repeat('. -', 3));
 });
-
-

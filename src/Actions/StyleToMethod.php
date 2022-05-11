@@ -141,7 +141,7 @@ final class StyleToMethod
         for ($i = 0; $i < $length; $i++) {
             if ($str[$i] === '[') {
                 $inBrackets = true;
-            } else if ($str[$i] === ']') {
+            } elseif ($str[$i] === ']') {
                 $inBrackets = false;
             }
 
@@ -172,13 +172,13 @@ final class StyleToMethod
         for ($i = 0; $i < $length; $i++) {
             if ($method[$i] === '[') {
                 $inBrackets = true;
-            } else if ($method[$i] === ']') {
+            } elseif ($method[$i] === ']') {
                 $inBrackets = false;
             }
 
             $isLastChar = $i === $length - 1;
 
-            if (($method[$i] === '-' || $isLastChar) && ! $inBrackets)  {
+            if (($method[$i] === '-' || $isLastChar) && ! $inBrackets) {
                 $items[] = trim(substr($method, $start, ($i + ($isLastChar ? 1 : 0)) - $start));
                 $start = $i + 1;
             }
