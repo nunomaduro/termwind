@@ -45,13 +45,10 @@ final class StyleToMethod
      */
     public static function multiple(Styles $styles, string $stylesString): Styles
     {
-        $stylesString = array_merge($styles->defaultStyles(), explode(' ', $stylesString));
-
-        $stylesString = array_filter($stylesString, static function ($style): bool {
-            return $style !== '';
-        });
-
-        $stylesString = self::sortStyles($stylesString);
+        $stylesString = self::sortStyles(array_merge(
+            $styles->defaultStyles(),
+            array_filter((array) preg_split('/(?![^\[]*\])\s/', $stylesString))
+        ));
 
         foreach ($stylesString as $style) {
             $styles = (new self($styles, $style))->__invoke();
@@ -77,7 +74,7 @@ final class StyleToMethod
             return $this->styles;
         }
 
-        $method = explode('-', $method);
+        $method = array_filter((array) preg_split('/(?![^\[]*\])-/', $method));
         $method = array_slice($method, 0, count($method) - count($arguments));
 
         $methodName = implode(' ', $method);

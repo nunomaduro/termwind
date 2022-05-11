@@ -549,3 +549,11 @@ test('hidden', function () {
 
     expect($html)->toBe('');
 });
+
+test('content-repeat', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-9 content-repeat-['. -']"></div>
+    HTML);
+
+    expect($html)->toBe(str_repeat('. -', 3));
+});
