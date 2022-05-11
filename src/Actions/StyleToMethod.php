@@ -133,7 +133,7 @@ final class StyleToMethod
     /**
      * Applies the media query if exists.
      */
-    public function applyMediaQuery(string $method): string
+    private function applyMediaQuery(string $method): string
     {
         preg_match(self::MEDIA_QUERIES_REGEX, $method, $matches);
 
