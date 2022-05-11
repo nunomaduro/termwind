@@ -122,6 +122,7 @@ All the classes supported use exactly the same logic that is available on [tailw
 * **[Display](https://tailwindcss.com/docs/display):** `block`, `flex`, `hidden`
 * **[Flex](https://tailwindcss.com/docs/flex):** `flex-1`
 * **[List Style](https://tailwindcss.com/docs/list-style-type):** `list-disc`, `list-decimal`, `list-square`, `list-none`
+* **[Content](https://tailwindcss.com/docs/content):** `content-repeat-['.']`
 
 ## Responsive Design
 
