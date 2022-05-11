@@ -598,6 +598,15 @@ final class Styles
         ]]);
     }
 
+    final public function contentRepeat(string $string): self
+    {
+        $string = preg_replace("/\[?'?([^'|\]]+)'?\]?/", '$1', $string);
+
+        $this->textModifiers[__METHOD__] = static fn (): string => str_repeat($string, terminal()->width());
+
+        return $this;
+    }
+
     /**
      * Prepends text to the content.
      */
