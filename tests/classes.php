@@ -153,6 +153,14 @@ test('w', function () {
     expect($html)->toBe('text-text text ');
 });
 
+test('w-0', function () {
+    $html = parse(<<<'HTML'
+        <span class="w-0">ABC</span>
+    HTML);
+
+    expect($html)->toBe('');
+});
+
 test('w-division', function () {
     putenv('COLUMNS=20');
     $html = parse(<<<'HTML'

@@ -74,7 +74,11 @@ final class StyleToMethod
             return $this->styles;
         }
 
-        $method = array_filter((array) preg_split('/(?![^\[]*\])-/', $method));
+        $method = array_filter(
+            (array) preg_split('/(?![^\[]*\])-/', $method),
+            fn ($item) => $item !== false
+        );
+
         $method = array_slice($method, 0, count($method) - count($arguments));
 
         $methodName = implode(' ', $method);

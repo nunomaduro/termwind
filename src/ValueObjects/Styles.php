@@ -784,11 +784,15 @@ final class Styles
     private function applyWidth(string $content): string
     {
         $styles = $this->properties['styles'] ?? [];
-        $width = $styles['width'] ?? 0;
+        $width = $styles['width'] ?? -1;
         $maxWidth = $styles['maxWidth'] ?? 0;
 
-        if ($width < 1) {
+        if ($width < 0) {
             return $content;
+        }
+
+        if ($width === 0) {
+            return '';
         }
 
         if (is_string($width)) {
