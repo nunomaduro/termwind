@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.10.1 (2022-05-11](https://github.com/nunomaduro/termwind/compare/v1.10.0...v1.10.1)
+### Fixed
+- Allow `w-0` to be set by @xiCO2k in [89f4b87](https://github.com/nunomaduro/termwind/commit/89f4b87becc2483d2dbd9daa90f01a8b6472e141)
+
 ## [v1.10.0 (2022-05-11](https://github.com/nunomaduro/termwind/compare/v1.9.0...v1.10.0)
 ### Added
 - Add `flex` and `flex-1` classes by @xiCO2k in https://github.com/nunomaduro/termwind/pull/137
