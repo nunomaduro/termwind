@@ -153,6 +153,14 @@ test('w', function () {
     expect($html)->toBe('text-text text ');
 });
 
+test('w-0', function () {
+    $html = parse(<<<'HTML'
+        <span class="w-0">ABC</span>
+    HTML);
+
+    expect($html)->toBe('');
+});
+
 test('w-division', function () {
     putenv('COLUMNS=20');
     $html = parse(<<<'HTML'
@@ -392,4 +400,168 @@ test('append-text', function () {
     $html = parse('<div class="append-world">hello</div>');
 
     expect($html)->toBe('helloworld');
+});
+
+test('justify-between', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-11 justify-between">
+            <span>A</span>
+            <span>B</span>
+            <span>C</span>
+        </div>
+    HTML);
+
+    expect($html)->toBe('A    B    C');
+});
+
+test('justify-between with no space available to add', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-3 justify-between">
+            <span>A</span>
+            <span>B</span>
+            <span>C</span>
+        </div>
+    HTML);
+
+    expect($html)->toBe('ABC');
+});
+
+test('justify-between inherit with parent without classes', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-9 mx-1">
+            <div>
+                <div class="justify-between">
+                    <span>A</span>
+                    <span>B</span>
+                    <span>C</span>
+                </div>
+            </div>
+        </div>
+    HTML);
+
+    expect($html)->toBe(' A   B   C ');
+});
+
+test('justify-evenly', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-11 justify-evenly">
+            <span>A</span>
+            <span>B</span>
+            <span>C</span>
+        </div>
+    HTML);
+
+    expect($html)->toBe('  A  B  C  ');
+});
+
+test('justify-evenly with no space available to add', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-3 justify-evenly">
+            <span>A</span>
+            <span>B</span>
+            <span>C</span>
+        </div>
+    HTML);
+
+    expect($html)->toBe('ABC');
+});
+
+test('justify-around', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-11 justify-around">
+            <span>A</span>
+            <span>B</span>
+            <span>C</span>
+        </div>
+    HTML);
+
+    expect($html)->toBe(' A   B   C ');
+});
+
+test('justify-around with no space available to add', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-3 justify-around">
+            <span>A</span>
+            <span>B</span>
+            <span>C</span>
+        </div>
+    HTML);
+
+    expect($html)->toBe('ABC');
+});
+
+test('justify-center', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-11 justify-center">
+            <span>A</span>
+            <span>B</span>
+            <span>C</span>
+        </div>
+    HTML);
+
+    expect($html)->toBe('    ABC    ');
+});
+
+test('justify-centr with no space available to add', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-3 justify-center">
+            <span>A</span>
+            <span>B</span>
+            <span>C</span>
+        </div>
+    HTML);
+
+    expect($html)->toBe('ABC');
+});
+
+test('flex', function () {
+    $html = parse(<<<'HTML'
+        <div>
+            <div class="flex">Hello</div>
+            <div class="flex">World</div>
+        </div>
+    HTML);
+
+    expect($html)->toBe("Hello\nWorld");
+});
+
+test('flex and flex-1', function () {
+    $html = parse(<<<'HTML'
+        <div class="flex w-10">
+            <span>A</span>
+            <span class="flex-1"></span>
+            <span>B</span>
+        </div>
+    HTML);
+
+    expect($html)->toBe('A        B');
+});
+
+test('flex with multiple flex-1', function () {
+    $html = parse(<<<'HTML'
+        <div class="flex w-11">
+            <span class="flex-1"></span>
+            <span>-</span>
+            <span class="flex-1"></span>
+            <span>-</span>
+        </div>
+    HTML);
+
+    expect($html)->toBe('    -     -');
+});
+
+test('hidden', function () {
+    $html = parse(<<<'HTML'
+        <div class="hidden">test</div>
+    HTML);
+
+    expect($html)->toBe('');
+});
+
+test('content-repeat', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-9 content-repeat-['. -']"></div>
+    HTML);
+
+    expect($html)->toBe(str_repeat('. -', 3));
 });

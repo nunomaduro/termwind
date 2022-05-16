@@ -37,12 +37,12 @@ composer require nunomaduro/termwind
 use function Termwind\{render};
 
 // single line html...
-render('<div class="p-1 bg-green-300">Termwind</div>');
+render('<div class="px-1 bg-green-300">Termwind</div>');
 
 // multi-line html...
 render(<<<'HTML'
     <div>
-        <div class="p-1 bg-green-300">Termwind</div>
+        <div class="px-1 bg-green-600">Termwind</div>
         <em class="ml-1">
           Give your CLI apps a unique look
         </em>
@@ -65,7 +65,7 @@ class UsersCommand extends Command
 
 ### `style()`
 
-The `style()` function may be used to add own custom syles and also update colors.
+The `style()` function may be used to add own custom styles and also update colors.
 
 ```php
 use function Termwind\{style};
@@ -117,9 +117,32 @@ All the classes supported use exactly the same logic that is available on [tailw
 * **[Space](https://tailwindcss.com/docs/space):** `space-y-{space}`, `space-x-{space}`.
 * **[Width](https://tailwindcss.com/docs/width):** `w-{width}`, `w-full`
 * **[Max Width](https://tailwindcss.com/docs/max-width):** `max-w-{width}`
+* **[Justify Content](https://tailwindcss.com/docs/justify-content):** `justify-between`, `justify-around`, `justify-evenly`, `justify-center`
 * **[Visibility](https://tailwindcss.com/docs/visibility):** `invisible`
-* **[Display](https://tailwindcss.com/docs/display):** `block`
+* **[Display](https://tailwindcss.com/docs/display):** `block`, `flex`, `hidden`
+* **[Flex](https://tailwindcss.com/docs/flex):** `flex-1`
 * **[List Style](https://tailwindcss.com/docs/list-style-type):** `list-disc`, `list-decimal`, `list-square`, `list-none`
+* **[Content](https://tailwindcss.com/docs/content):** `content-repeat-['.']`
+
+## Responsive Design
+
+Like TailwindCSS we also support [Responsive Design](https://tailwindcss.com/docs/responsive-design#customizing-breakpoints) media queries and this are the breakpoints supported:
+
+* **`sm`**: 64 spaces (640px)
+* **`md`**: 76 spaces (768px)
+* **`lg`**: 102 spaces (1024px)
+* **`xl`**: 128 spaces (1280px)
+* **`2xl`**: 153 spaces (1536px)
+
+```php
+render(<<<'HTML'
+    <div class="bg-blue-500 sm:bg-red-600">
+        If bg is blue is sm, if red > than sm breakpoint.
+    </div>
+HTML);
+```
+
+All the sizes for the CLI are based on Font Size 15.
 
 ## HTML Elements Supported
 

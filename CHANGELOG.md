@@ -4,6 +4,57 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.10.1 (2022-05-11](https://github.com/nunomaduro/termwind/compare/v1.10.0...v1.10.1)
+### Fixed
+- Allow `w-0` to be set by @xiCO2k in [89f4b87](https://github.com/nunomaduro/termwind/commit/89f4b87becc2483d2dbd9daa90f01a8b6472e141)
+
+## [v1.10.0 (2022-05-11](https://github.com/nunomaduro/termwind/compare/v1.9.0...v1.10.0)
+### Added
+- Add `flex` and `flex-1` classes by @xiCO2k in https://github.com/nunomaduro/termwind/pull/137
+- Add `content-repeat-['.']` class by @xiCO2k in https://github.com/nunomaduro/termwind/pull/138
+
+## [v1.9.0 (2022-05-03](https://github.com/nunomaduro/termwind/compare/v1.8.0...v1.9.0)
+### Added
+- Add `hidden` class by @xiCO2k in https://github.com/nunomaduro/termwind/pull/134
+- Add `justify-center` class by @xiCO2k in https://github.com/nunomaduro/termwind/pull/135
+
+### Fixed
+- Fixed `justify-*` round calculations by @xiCO2k in https://github.com/nunomaduro/termwind/pull/136
+- Fixed `<br>` with classes in [eb2132f](https://github.com/nunomaduro/termwind/commit/eb2132f43d3d7b59c9daa07c13bf7c08d26eda5b)
+- Fixed inheritance issues on `justify-*` classes [d050cba](https://github.com/nunomaduro/termwind/commit/d050cba3079efecaaf7ac5bc0b3626b66575903f)
+
+## [v1.8.0 (2022-04-22](https://github.com/nunomaduro/termwind/compare/v1.7.0...v1.8.0)
+### Added
+- Add `justify-around` and `justify-evenly` classes by @xiCO2k in https://github.com/nunomaduro/termwind/pull/133
+
+## [v1.7.0 (2022-03-30](https://github.com/nunomaduro/termwind/compare/v1.6.2...v1.7.0)
+### Added
+- Add `justify-between` class in https://github.com/nunomaduro/termwind/pull/129
+
+### Fixed
+- `<hr />` width not repecting parent width by @xiCO2k in https://github.com/nunomaduro/termwind/pull/130
+
+## [v1.6.2 (2022-03-18](https://github.com/nunomaduro/termwind/compare/v1.6.1...v1.6.2)
+### Fixed
+- Fixes support for HTML tags on TableCells by @xiCO2k in https://github.com/nunomaduro/termwind/pull/128
+
+## [v1.6.1 (2022-03-17)](https://github.com/nunomaduro/termwind/compare/v1.6.0...v1.6.1)
+### Fixed
+- `href` needes to be escaped by @xiCO2k in [9771606](https://github.com/nunomaduro/termwind/commit/ffa0e9f2d9f74df7839055a122aad2e9d9771606)
+
+## [v1.6.0 (2022-02-24)](https://github.com/nunomaduro/termwind/compare/v1.5.0...v1.6.0)
+### Added
+- Add `MediaQuery` Support by @xiCO2k in https://github.com/nunomaduro/termwind/pull/126
+- Upgrade `PHPStan` to v1.0 by @xiCO2k in https://github.com/nunomaduro/termwind/pull/127
+
+## [v1.5.0 (2022-02-14)](https://github.com/nunomaduro/termwind/compare/v1.4.3...v1.5.0)
+### Added
+- Adds Laravel `TermwindServiceProvider` by @xiCO2k in https://github.com/nunomaduro/termwind/pull/123
+
+## [v1.4.3 (2022-02-03)](https://github.com/nunomaduro/termwind/compare/v1.4.2...v1.4.3)
+### Fixed
+- Fixes bug having multiple margins while using `width` with `my` by @xiCO2k in https://github.com/nunomaduro/termwind/pull/120
+
 ## [v1.4.2 (2022-01-29)](https://github.com/nunomaduro/termwind/compare/v1.4.1...v1.4.2)
 ### Fixed
 - `max-w` with `w-{fraction}` childs by @xiCO2k in https://github.com/nunomaduro/termwind/pull/118

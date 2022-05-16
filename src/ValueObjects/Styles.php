@@ -25,7 +25,7 @@ final class Styles
     /**
      * Finds all the styling on a string.
      */
-    private const STYLING_REGEX = "/\<[\w=#\/\;,:.&,%?]+\>|\\e\[\d+m/";
+    public const STYLING_REGEX = "/\<[\w=#\/\;,:.&,%?]+\>|\\e\[\d+m/";
 
     /** @var array<int, string> */
     private array $styles = [];
@@ -121,24 +121,6 @@ final class Styles
     }
 
     /**
-     * Checks if formatter has styles.
-     */
-    final public function hasInheritableStyles(): bool
-    {
-        return ($this->properties['colors']['bg'] ?? []) !== []
-            || ($this->properties['colors']['fg'] ?? []) !== []
-            || ($this->properties['options'] ?? []) !== []
-            || ($this->properties['href'] ?? []) !== []
-            || ($this->properties['styles']['ml'] ?? 0) > 0
-            || ($this->properties['styles']['mr'] ?? 0) > 0
-            || ($this->properties['styles']['pl'] ?? 0) > 0
-            || ($this->properties['styles']['pr'] ?? 0) > 0
-            || ($this->properties['styles']['width'] ?? 0) > 0
-            || ($this->properties['styles']['spaceY'] ?? 0) > 0
-            || ($this->properties['styles']['spaceX'] ?? 0) > 0;
-    }
-
-    /**
      * Inherit styles from given Styles object.
      */
     final public function inheritFromStyles(Styles $styles): self
@@ -151,6 +133,8 @@ final class Styles
 
             $this->properties['parentStyles'][$style][] = $styles->properties['styles'][$style] ?? 0;
         }
+
+        $this->properties['parentStyles']['justifyContent'] = $styles->properties['styles']['justifyContent'] ?? false;
 
         foreach (['bg', 'fg'] as $colorType) {
             $value = (array) ($this->properties['colors'][$colorType] ?? []);
@@ -399,7 +383,7 @@ final class Styles
             if ($length < 1) {
                 $margins = (int) ($styles['ml'] ?? 0) + ($styles['mr'] ?? 0);
 
-                return str_repeat('─', terminal()->width() - $margins);
+                return str_repeat('─', self::getParentWidth($this->properties['parentStyles'] ?? []) - $margins);
             }
 
             return str_repeat('─', $length);
@@ -534,6 +518,16 @@ final class Styles
     }
 
     /**
+     * Do not display element's content.
+     */
+    final public function hidden(): self
+    {
+        return $this->with(['styles' => [
+            'display' => 'hidden',
+        ]]);
+    }
+
+    /**
      * Makes a line break before the element's content.
      */
     final public function block(): self
@@ -541,6 +535,79 @@ final class Styles
         return $this->with(['styles' => [
             'display' => 'block',
         ]]);
+    }
+
+    /**
+     * Makes an element eligible to work with flex-1 element's style.
+     */
+    final public function flex(): self
+    {
+        return $this->with(['styles' => [
+            'display' => 'flex',
+        ]]);
+    }
+
+    /**
+     * Makes an element grow and shrink as needed, ignoring the initial size.
+     */
+    final public function flex1(): self
+    {
+        return $this->with(['styles' => [
+            'flex-1' => true,
+        ]]);
+    }
+
+    /**
+     * Justifies childs along the element with an equal amount of space between.
+     */
+    final public function justifyBetween(): self
+    {
+        return $this->with(['styles' => [
+            'justifyContent' => 'between',
+        ]]);
+    }
+
+    /**
+     * Justifies childs along the element with an equal amount of space between
+     * each item and half around.
+     */
+    final public function justifyAround(): self
+    {
+        return $this->with(['styles' => [
+            'justifyContent' => 'around',
+        ]]);
+    }
+
+    /**
+     * Justifies childs along the element with an equal amount of space around each item.
+     */
+    final public function justifyEvenly(): self
+    {
+        return $this->with(['styles' => [
+            'justifyContent' => 'evenly',
+        ]]);
+    }
+
+    /**
+     * Justifies childs along the center of the container’s main axis.
+     */
+    final public function justifyCenter(): self
+    {
+        return $this->with(['styles' => [
+            'justifyContent' => 'center',
+        ]]);
+    }
+
+    /**
+     * Repeats the string given until it fills all the content.
+     */
+    final public function contentRepeat(string $string): self
+    {
+        $string = preg_replace("/\[?'?([^'|\]]+)'?\]?/", '$1', $string) ?? '';
+
+        $this->textModifiers[__METHOD__] = static fn (): string => str_repeat($string, (int) floor(terminal()->width() / mb_strlen($string, 'UTF-8')));
+
+        return $this;
     }
 
     /**
@@ -604,6 +671,8 @@ final class Styles
      */
     final public function href(string $href): self
     {
+        $href = str_replace('%', '%%', $href);
+
         return $this->with(['href' => array_filter([$href])]);
     }
 
@@ -674,11 +743,11 @@ final class Styles
     /**
      * Get the margins applied to the element.
      *
-     * @return array{0: int, 1: int}
+     * @return array{0: int, 1: int, 2: int, 3: int}
      */
     private function getMargins(): array
     {
-        $isFirstChild = (bool) $this->properties['isFirstChild'] ?? false;
+        $isFirstChild = (bool) $this->properties['isFirstChild'];
 
         $spaceY = $this->properties['parentStyles']['spaceY'] ?? [];
         $spaceY = ! $isFirstChild ? end($spaceY) : 0;
@@ -697,7 +766,7 @@ final class Styles
     /**
      * Get the paddings applied to the element.
      *
-     * @return array{0: int, 1: int}
+     * @return array{0: int, 1: int, 2: int, 3: int}
      */
     private function getPaddings(): array
     {
@@ -715,11 +784,15 @@ final class Styles
     private function applyWidth(string $content): string
     {
         $styles = $this->properties['styles'] ?? [];
-        $width = $styles['width'] ?? 0;
+        $width = $styles['width'] ?? -1;
         $maxWidth = $styles['maxWidth'] ?? 0;
 
-        if ($width < 1) {
+        if ($width < 0) {
             return $content;
+        }
+
+        if ($width === 0) {
+            return '';
         }
 
         if (is_string($width)) {
@@ -738,8 +811,9 @@ final class Styles
         $length = $this->getLength($content);
 
         preg_match_all("/\n+/", $content, $matches);
+
         $width *= count($matches[0] ?? []) + 1;
-        $width += count($matches[0] ?? []);
+        $width += mb_strlen($matches[0][0] ?? '', 'UTF-8');
 
         if ($length <= $width) {
             $space = $width - $length;
@@ -760,7 +834,12 @@ final class Styles
     private function applyStyling(string $content): string
     {
         $display = $this->properties['styles']['display'] ?? 'inline';
-        $isFirstChild = (bool) $this->properties['isFirstChild'] ?? false;
+
+        if ($display === 'hidden') {
+            return '';
+        }
+
+        $isFirstChild = (bool) $this->properties['isFirstChild'];
 
         [$marginTop, $marginRight, $marginBottom, $marginLeft] = $this->getMargins();
         [$paddingTop, $paddingRight, $paddingBottom, $paddingLeft] = $this->getPaddings();
@@ -791,7 +870,7 @@ final class Styles
 
         $items = [];
 
-        if ($display === 'block' && ! $isFirstChild) {
+        if (in_array($display, ['block', 'flex'], true) && ! $isFirstChild) {
             $items[] = "\n";
         }
 
@@ -819,9 +898,24 @@ final class Styles
     /**
      * Get the length of the text provided without the styling tags.
      */
-    private function getLength(string $text): int
+    public function getLength(string $text = null): int
     {
-        return mb_strlen(preg_replace(self::STYLING_REGEX, '', $text) ?? '', 'UTF-8');
+        return mb_strlen(preg_replace(
+            self::STYLING_REGEX,
+            '',
+            $text ?? $this->element?->toString() ?? ''
+        ) ?? '', 'UTF-8');
+    }
+
+    /**
+     * Get the length of the element without margins.
+     */
+    public function getInnerWidth(): int
+    {
+        $innerLength = $this->getLength();
+        [, $marginRight, , $marginLeft] = $this->getMargins();
+
+        return $innerLength - $marginLeft - $marginRight;
     }
 
     /**
@@ -873,12 +967,11 @@ final class Styles
      *
      * @param  array<string, array<int|string>>  $styles
      */
-    private static function getParentWidth(array $styles): int
+    public static function getParentWidth(array $styles): int
     {
         $width = terminal()->width();
-
         foreach ($styles['width'] ?? [] as $index => $parentWidth) {
-            $maxWidth = (int) $styles['maxWidth'][$index] ?? 0;
+            $maxWidth = (int) $styles['maxWidth'][$index];
             $margins = (int) $styles['ml'][$index] + (int) $styles['mr'][$index];
 
             if ($parentWidth < 1) {

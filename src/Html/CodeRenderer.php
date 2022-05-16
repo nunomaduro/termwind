@@ -21,8 +21,6 @@ final class CodeRenderer
     public const ACTUAL_LINE_MARK = 'actual_line_mark';
     public const LINE_NUMBER = 'line_number';
 
-    private const ARROW_SYMBOL = '>';
-    private const DELIMITER = '|';
     private const ARROW_SYMBOL_UTF8 = '➜';
     private const DELIMITER_UTF8 = '▕ '; // '▶';
     private const LINE_NUMBER_DIVIDER = 'line_divider';

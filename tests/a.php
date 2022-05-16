@@ -14,6 +14,12 @@ it('renders the href property', function () {
     expect($html)->toBe('<href=url>link text</>');
 });
 
+it('renders the href with %', function () {
+    $html = parse('<a href="someurlwith%s">link text</a>');
+
+    expect($html)->toBe('<href=someurlwith%s>link text</>');
+});
+
 it('renders an element with width', function () {
     $html = parse(<<<'HTML'
         <div class="w-10">
