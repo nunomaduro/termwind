@@ -47,4 +47,12 @@ final class Terminal
     {
         sleep($seconds);
     }
+
+    /**
+     * Clears the terminal screen.
+     */
+    public function clear(): void
+    {
+        Termwind::getRenderer()->write("\ec");
+    }
 }

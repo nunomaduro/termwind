@@ -113,7 +113,7 @@ it('can extend with multiple childs and colors', function () {
 
 it('can inherit styles within multiple levels', function () {
     $html = parse(<<<'HTML'
-        <div class="bg-red-700 p-5 my-1 mx-2">
+        <div class="bg-red-700 px-5 my-1 mx-2">
             <div class="text-blue-300 ml-2">
                 <div>
                     <div><b>Termwind</b> is great!</div>
@@ -241,5 +241,30 @@ it('renders a div and table', function () {
         </div>
     HTML);
 
-    expect($html)->toBe("  Results:\n  +----+----+\n  |  A |  B |\n  +----+----+");
+    expect($html)->toBe("  Results:\n  +---+---+\n  | A | B |\n  +---+---+");
+});
+
+it('renders an emoji correctly with line-breaks correctly', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-8">
+            <div class="w-full mb-1"></div>
+            <div class="w-full">
+                <span class="mr-1 px-1 text-red-500">⚽️</span>
+                <span>A</span>
+            </div>
+        </div>
+    HTML);
+
+    expect($html)->toBe("        \n\n<fg=#ef4444> ⚽️ </> A  ");
+});
+
+it('renders multiple chains of w-full with margins and text-alignment', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-10">
+            <div class="w-full">Test</div>
+            <div class="mt-2 w-full text-right">Test 2</div>
+        </div>
+    HTML);
+
+    expect($html)->toBe("Test      \n\n\n    Test 2");
 });

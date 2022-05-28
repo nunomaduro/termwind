@@ -12,8 +12,10 @@ use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Termwind\Components\Element;
+use Termwind\HtmlRenderer;
 use Termwind\Termwind;
 use Termwind\ValueObjects\Node;
+use Termwind\ValueObjects\Styles;
 
 /**
  * @internal
@@ -163,16 +165,23 @@ final class TableRenderer
                 $align = $child->getAttribute('align');
 
                 $class = $child->getClassAttribute();
+
                 if ($child->isName('th')) {
                     $class .= ' strong';
                 }
 
-                $text = strip_tags((string) Termwind::span($child->getInnerText(), $class));
+                $text = (string) (new HtmlRenderer)->parse(
+                    trim(preg_replace('/<br\s?+\/?>/', "\n", $child->getHtml()) ?? '')
+                );
+
+                if ((bool) preg_match(Styles::STYLING_REGEX, $text)) {
+                    $class .= ' font-normal';
+                }
 
                 $row[] = new TableCell(
                 // I need only spaces after applying margin, padding and width except tags.
                 // There is no place for tags, they broke cell formatting.
-                    $text,
+                    (string) Termwind::span($text, $class),
                     [
                         // Gets rowspan and colspan from tr and td tag attributes
                         'colspan' => max((int) $child->getAttribute('colspan'), 1),

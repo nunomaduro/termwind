@@ -36,7 +36,7 @@ final class HtmlRenderer
         }
 
         $html = '<?xml encoding="UTF-8">'.trim($html);
-        $dom->loadHTML($html, LIBXML_COMPACT | LIBXML_HTML_NODEFDTD | LIBXML_NOBLANKS | LIBXML_NOXMLDECL);
+        $dom->loadHTML($html, LIBXML_NOERROR | LIBXML_COMPACT | LIBXML_HTML_NODEFDTD | LIBXML_NOBLANKS | LIBXML_NOXMLDECL);
 
         /** @var DOMNode $body */
         $body = $dom->getElementsByTagName('body')->item(0);
@@ -102,7 +102,7 @@ final class HtmlRenderer
             'dt' => Termwind::dt($children, $styles, $properties),
             'dd' => Termwind::dd($children, $styles, $properties),
             'span' => Termwind::span($children, $styles, $properties),
-            'br' => Termwind::breakLine(),
+            'br' => Termwind::breakLine($styles, $properties),
             'strong' => Termwind::span($children, $styles, $properties)->strong(),
             'b' => Termwind::span($children, $styles, $properties)->fontBold(),
             'em', 'i' => Termwind::span($children, $styles, $properties)->italic(),

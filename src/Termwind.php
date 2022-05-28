@@ -263,11 +263,13 @@ final class Termwind
 
     /**
      * Creates an break line element instance.
+     *
+     * @param  array<string, mixed>  $properties
      */
-    public static function breakLine(): Components\BreakLine
+    public static function breakLine(string $styles = '', array $properties = []): Components\BreakLine
     {
         return Components\BreakLine::fromStyles(
-            self::getRenderer(), '', '',
+            self::getRenderer(), '', $styles, $properties
         );
     }
 

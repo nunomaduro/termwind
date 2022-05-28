@@ -37,12 +37,12 @@ composer require nunomaduro/termwind
 use function Termwind\{render};
 
 // single line html...
-render('<div class="p-1 bg-green-300">Termwind</div>');
+render('<div class="px-1 bg-green-300">Termwind</div>');
 
 // multi-line html...
 render(<<<'HTML'
     <div>
-        <div class="p-1 bg-green-300">Termwind</div>
+        <div class="px-1 bg-green-600">Termwind</div>
         <em class="ml-1">
           Give your CLI apps a unique look
         </em>
@@ -103,6 +103,30 @@ live(function (RefreshEvent $event) {
 })->refreshEvery(seconds: 1);
 ```
 
+### `ask()`
+
+The `ask()` function may be used prompt the user with a question.
+
+```php
+use function Termwind\{ask};
+
+$answer = ask(<<<HTML
+    <span class="mt-1 ml-2 mr-1 bg-green px-1 text-black">
+        What is your name?
+    </span>
+HTML);
+```
+
+The `return` provided from the ask method will be the answer provided from the user.
+
+### `terminal()`
+
+The `terminal()` function returns an instance of the [Terminal](https://github.com/nunomaduro/termwind/blob/master/src/Terminal.php) class, with the following methods:
+
+* `->width()`: Returns the full width of the terminal.
+* `->height()`: Returns the full height of the terminal.
+* `->clear()`: It clears the terminal screen.
+
 ## Classes Supported
 
 All the classes supported use exactly the same logic that is available on [tailwindcss.com/docs](https://tailwindcss.com/docs).
@@ -116,11 +140,36 @@ All the classes supported use exactly the same logic that is available on [tailw
 * **[Text Overflow](https://tailwindcss.com/docs/text-overflow):** `truncate`
 * **[Text Alignment](https://tailwindcss.com/docs/text-align):** `text-left`, `text-center`, `text-right`
 * **[Margin](https://tailwindcss.com/docs/margin):** `m-{margin}`, `ml-{leftMargin}`, `mr-{rightMargin}`, `mt-{topMargin}`, `mb-{bottomMargin}`, `mx-{horizontalMargin}`, `my-{verticalMargin}`.
-* **[Padding](https://tailwindcss.com/docs/padding):** `p-{padding}`, `pl-{leftPadding}`, `pr-{rightPadding}`, `pt-{topPadding}`, `pb-{bottomPadding}`, `px-{horizontalPadding}`.
+* **[Padding](https://tailwindcss.com/docs/padding):** `p-{padding}`, `pl-{leftPadding}`, `pr-{rightPadding}`, `pt-{topPadding}`, `pb-{bottomPadding}`, `px-{horizontalPadding}`, `py-{verticalPadding}`.
+* **[Space](https://tailwindcss.com/docs/space):** `space-y-{space}`, `space-x-{space}`.
 * **[Width](https://tailwindcss.com/docs/width):** `w-{width}`, `w-full`
+* **[Max Width](https://tailwindcss.com/docs/max-width):** `max-w-{width}`
+* **[Justify Content](https://tailwindcss.com/docs/justify-content):** `justify-between`, `justify-around`, `justify-evenly`, `justify-center`
 * **[Visibility](https://tailwindcss.com/docs/visibility):** `invisible`
-* **[Display](https://tailwindcss.com/docs/display):** `block`
+* **[Display](https://tailwindcss.com/docs/display):** `block`, `flex`, `hidden`
+* **[Flex](https://tailwindcss.com/docs/flex):** `flex-1`
 * **[List Style](https://tailwindcss.com/docs/list-style-type):** `list-disc`, `list-decimal`, `list-square`, `list-none`
+* **[Content](https://tailwindcss.com/docs/content):** `content-repeat-['.']`
+
+## Responsive Design
+
+Like TailwindCSS we also support [Responsive Design](https://tailwindcss.com/docs/responsive-design#customizing-breakpoints) media queries and this are the breakpoints supported:
+
+* **`sm`**: 64 spaces (640px)
+* **`md`**: 76 spaces (768px)
+* **`lg`**: 102 spaces (1024px)
+* **`xl`**: 128 spaces (1280px)
+* **`2xl`**: 153 spaces (1536px)
+
+```php
+render(<<<'HTML'
+    <div class="bg-blue-500 sm:bg-red-600">
+        If bg is blue is sm, if red > than sm breakpoint.
+    </div>
+HTML);
+```
+
+All the sizes for the CLI are based on Font Size 15.
 
 ## HTML Elements Supported
 
@@ -164,7 +213,7 @@ HTML);
 
 ### `<a>`
 
-The `<a>` element can be used as an hyperlink. Tt allows to use the `href` attribute to open the link when clicked.
+The `<a>` element can be used as an hyperlink. It allows to use the `href` attribute to open the link when clicked.
 
 ```php
 render(<<<'HTML'
@@ -382,36 +431,6 @@ render(<<<'HTML'
 HTML);
 ```
 
-## How To Contribute
-
-Head over to [tailwindcss.com/docs](https://tailwindcss.com/docs), and choose a class that is not implemented in Termwind. As an example, let's assume you would like to add the `lowercase` Tailwind CSS class to Termwind:
-
-1. Head over to [`src/Components/Element`](https://github.com/nunomaduro/termwind/blob/master/src/Components/Element.php#L275) and add a new method with the name `lowercase`:
-```php
-    /**
-     * Makes the element's content lowercase.
-     */
-    final public function lowercase(): static
-    {
-        $content = $this->applyModifier(
-            $this->content,
-            fn ($text) => mb_strtolower($text, 'UTF-8')
-        );
-
-        return new static($this->output, $content, $this->properties, $this->styles);
-    }
-```
-
-2. Next, add a new test in [`tests/classes.php`](https://github.com/nunomaduro/termwind/blob/master/tests/classes.php#L130) to see if the `lowercase` class works as expected:
-
-```php
-test('lowercase', function () {
-    $html = parse('<div class="lowercase">tEXT</div>');
-
-    expect($html)->toBe('text');
-});
-```
-
-3. Pull request the code, and that's it.
+---
 
 Termwind is an open-sourced software licensed under the **[MIT license](https://opensource.org/licenses/MIT)**.

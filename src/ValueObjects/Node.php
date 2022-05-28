@@ -19,6 +19,14 @@ final class Node
     }
 
     /**
+     * Gets the value of the node.
+     */
+    public function getValue(): string
+    {
+        return $this->node->nodeValue ?? '';
+    }
+
+    /**
      * Gets child nodes of the node.
      *
      * @return Generator<Node>
@@ -28,14 +36,6 @@ final class Node
         foreach ($this->node->childNodes as $node) {
             yield new static($node);
         }
-    }
-
-    /**
-     * Checks if the node is a line break.
-     */
-    public function isLineBreak(): bool
-    {
-        return $this->isName('br');
     }
 
     /**
@@ -95,7 +95,7 @@ final class Node
      */
     public function isEmpty(): bool
     {
-        return $this->isText() && preg_replace('/\s+/', '', $this->node->nodeValue) === '';
+        return $this->isText() && preg_replace('/\s+/', '', $this->getValue()) === '';
     }
 
     /**
@@ -172,20 +172,6 @@ final class Node
     }
 
     /**
-     * Gets inner text of the node including child nodes and line breaks.
-     */
-    public function getInnerText(): string
-    {
-        $text = '';
-        foreach ($this->getChildNodes() as $node) {
-            $separator = $node->isLineBreak() ? "\n" : ' ';
-            $text .= $separator.$node;
-        }
-
-        return $text;
-    }
-
-    /**
      * Converts the node to a string.
      */
     public function __toString(): string
@@ -194,7 +180,7 @@ final class Node
             return '';
         }
 
-        if ($this->node->nodeValue === ' ') {
+        if ($this->getValue() === ' ') {
             return ' ';
         }
 
@@ -202,7 +188,7 @@ final class Node
             return '';
         }
 
-        $text = preg_replace('/\s+/', ' ', $this->node->nodeValue) ?? '';
+        $text = preg_replace('/\s+/', ' ', $this->getValue()) ?? '';
 
         if (is_null($this->getPreviousSibling())) {
             $text = ltrim($text);
