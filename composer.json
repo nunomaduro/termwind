@@ -12,17 +12,19 @@
     "require": {
         "php": "^8.0",
         "ext-mbstring": "*",
-        "symfony/console": "^5.3.0"
+        "symfony/console": "^5.3.0|^6.0.0"
     },
     "require-dev": {
-        "ergebnis/phpstan-rules": "^0.15.3",
-        "pestphp/pest": "^1.20.0",
+        "ergebnis/phpstan-rules": "^1.0.",
+        "illuminate/console": "^8.0|^9.0",
+        "illuminate/support": "^8.0|^9.0",
+        "pestphp/pest": "^1.21.0",
         "pestphp/pest-plugin-mock": "^1.0",
-        "phpstan/phpstan": "^0.12.99",
-        "phpstan/phpstan-strict-rules": "^0.12.11",
-        "styleci/cli": "^1.2",
-        "symfony/var-dumper": "^5.2.7",
-        "thecodingmachine/phpstan-strict-rules": "^0.12.1"
+        "phpstan/phpstan": "^1.4.6",
+        "phpstan/phpstan-strict-rules": "^1.1.0",
+        "styleci/cli": "^1.2.0",
+        "symfony/var-dumper": "^5.2.7|^6.0.0",
+        "thecodingmachine/phpstan-strict-rules": "^1.0.0"
     },
     "autoload": {
         "psr-4": {
