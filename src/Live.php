@@ -73,10 +73,9 @@ final class Live
                 break;
             }
 
-            $this->output->clear();
-
             $html = $this->renderer->parse((string) $html);
 
+            $this->output->clear();
             $this->output->write($html->toString());
         }
 
