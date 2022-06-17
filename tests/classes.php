@@ -139,7 +139,23 @@ test('truncate', function () {
         </span>
     HTML);
 
-    expect($html)->toBe('te...text text');
+    expect($html)->toBe('text…text text');
+});
+
+test('truncate without params', function () {
+    $html = parse(<<<'HTML'
+        <span class="truncate w-5">truncate</span>
+    HTML);
+
+    expect($html)->toBe('trun…');
+});
+
+test('truncate without params and width', function () {
+    $html = parse(<<<'HTML'
+        <span class="truncate">text</span>
+    HTML);
+
+    expect($html)->toBe('text');
 });
 
 test('w', function () {
