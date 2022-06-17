@@ -158,6 +158,14 @@ test('truncate without params and width', function () {
     expect($html)->toBe('text');
 });
 
+test('truncate with styled childs', function () {
+    $html = parse(<<<'HTML'
+        <span class="truncate w-12">text with <span class="bg-gray">style</span></span>
+    HTML);
+
+    expect($html)->toBe('text with <bg=gray>s</>…');
+});
+
 test('w', function () {
     $html = parse(<<<'HTML'
         <span>

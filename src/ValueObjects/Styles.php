@@ -413,7 +413,7 @@ final class Styles
      */
     final public function truncate(int $limit = 0, string $end = '…'): self
     {
-        $this->textModifiers[__METHOD__] = static function ($text, $styles) use ($limit, $end): string {
+        $this->textModifiers[__METHOD__] = function ($text, $styles) use ($limit, $end): string {
             $limit = $limit > 0 ? $limit : ($styles['width'] ?? 0);
             if ($limit === 0) {
                 return $text;
@@ -421,11 +421,11 @@ final class Styles
 
             $limit -= mb_strwidth($end, 'UTF-8');
 
-            if (mb_strwidth($text, 'UTF-8') <= $limit) {
+            if ($this->getLength($text) <= $limit) {
                 return $text;
             }
 
-            return rtrim(mb_strimwidth($text, 0, $limit, '', 'UTF-8')).$end;
+            return rtrim(self::trimText($text, $limit).$end);
         };
 
         return $this;
