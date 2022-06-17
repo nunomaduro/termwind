@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.11.1 (2022-06-17](https://github.com/nunomaduro/termwind/compare/v1.11.0...v1.11.1)
+### Fixed
+- `truncate` only truncates text and not the styling by @xiCO2k in (https://github.com/nunomaduro/termwind/commit/840a9e9d8809603f11d19fe5336270eb96a8d3a8)
+
 ## [v1.11.0 (2022-06-17](https://github.com/nunomaduro/termwind/compare/v1.10.1...v1.11.0)
 ### Fixed
 - Allow `truncate` to be used without params by @xiCO2k in (https://github.com/nunomaduro/termwind/pull/139)
