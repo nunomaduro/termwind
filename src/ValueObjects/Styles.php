@@ -29,6 +29,7 @@ final class Styles
 
     /** @var array<int, string> */
     private array $styles = [];
+
     private ?Element $element = null;
 
     /**
@@ -123,7 +124,7 @@ final class Styles
     /**
      * Inherit styles from given Styles object.
      */
-    final public function inheritFromStyles(Styles $styles): self
+    final public function inheritFromStyles(self $styles): self
     {
         foreach (['ml', 'mr', 'pl', 'pr', 'width', 'maxWidth', 'spaceY', 'spaceX'] as $style) {
             $this->properties['parentStyles'][$style] = array_merge(
