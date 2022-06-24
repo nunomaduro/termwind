@@ -31,5 +31,8 @@ jobs:
       - name: Install PHP dependencies
         run: composer update --${{ matrix.dependency-version }} --no-interaction --no-progress
 
+      - name: Coding Style Tests
+        run: php vendor/bin/pint --test
+
       - name: Integration Tests
         run: php vendor/bin/pest --colors=always

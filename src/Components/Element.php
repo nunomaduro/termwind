@@ -29,6 +29,7 @@ abstract class Element
 {
     /** @var string[] */
     protected static array $defaultStyles = [];
+
     protected Styles $styles;
 
     /**

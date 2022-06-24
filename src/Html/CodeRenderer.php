@@ -14,17 +14,27 @@ use Termwind\ValueObjects\Node;
 final class CodeRenderer
 {
     public const TOKEN_DEFAULT = 'token_default';
+
     public const TOKEN_COMMENT = 'token_comment';
+
     public const TOKEN_STRING = 'token_string';
+
     public const TOKEN_HTML = 'token_html';
+
     public const TOKEN_KEYWORD = 'token_keyword';
+
     public const ACTUAL_LINE_MARK = 'actual_line_mark';
+
     public const LINE_NUMBER = 'line_number';
 
     private const ARROW_SYMBOL_UTF8 = '➜';
+
     private const DELIMITER_UTF8 = '▕ '; // '▶';
+
     private const LINE_NUMBER_DIVIDER = 'line_divider';
+
     private const MARKED_LINE_NUMBER = 'marked_line';
+
     private const WIDTH = 3;
 
     /**
@@ -46,7 +56,9 @@ final class CodeRenderer
     ];
 
     private string $delimiter = self::DELIMITER_UTF8;
+
     private string $arrow = self::ARROW_SYMBOL_UTF8;
+
     private const NO_MARK = '    ';
 
     /**
