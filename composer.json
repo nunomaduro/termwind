@@ -22,7 +22,6 @@
         "pestphp/pest-plugin-mock": "^1.0",
         "phpstan/phpstan": "^1.4.6",
         "phpstan/phpstan-strict-rules": "^1.1.0",
-        "styleci/cli": "^1.2.0",
         "symfony/var-dumper": "^5.2.7|^6.0.0",
         "thecodingmachine/phpstan-strict-rules": "^1.0.0"
     },
