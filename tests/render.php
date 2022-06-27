@@ -1,6 +1,8 @@
 <?php
 
-use function Termwind\{render};
+use Symfony\Component\Console\Output\OutputInterface;
+use function Termwind\render;
+use function Termwind\renderUsing;
 
 it('can render complex html', function () {
     $html = parse(<<<'HTML'
@@ -267,4 +269,56 @@ it('renders multiple chains of w-full with margins and text-alignment', function
     HTML);
 
     expect($html)->toBe("Test      \n\n\n    Test 2");
+});
+
+it('defaults to VERBOSITY_NORMAL', function () {
+    $output = Mockery::mock(OutputInterface::class);
+
+    $output->shouldReceive('writeln')
+        ->once()
+        ->with('Foo Bar', OutputInterface::OUTPUT_NORMAL);
+
+    renderUsing($output);
+
+    render('Foo Bar');
+});
+
+it('allows to use custom verbosities', function () {
+    $output = Mockery::mock(OutputInterface::class);
+
+    $output->shouldReceive('writeln')
+        ->once()
+        ->with('Foo Bar', OutputInterface::VERBOSITY_DEBUG);
+
+    renderUsing($output);
+
+    render('Foo Bar', OutputInterface::VERBOSITY_DEBUG);
+});
+
+it('do not display debug messages when verbosity is normal', function () {
+    // default: $this->output->setVerbosity(OutputInterface::VERBOSITY_NORMAL);
+
+    $html = render(<<<'HTML'
+            <div class="bg-white">
+                <a class="ml-2">link text</a><a class="ml-2" href="link">link text</a>
+            </div>
+        HTML,
+        OutputInterface::VERBOSITY_DEBUG,
+    );
+
+    expect($this->output->fetch())->toBe('');
+});
+
+it('displays debug messages when verbosity is debug', function () {
+    $this->output->setVerbosity(OutputInterface::VERBOSITY_DEBUG);
+
+    $html = render(<<<'HTML'
+            <div class="bg-white">
+                <a class="ml-2">link text</a><a class="ml-2" href="link">link text</a>
+            </div>
+        HTML,
+        OutputInterface::VERBOSITY_DEBUG,
+    );
+
+    expect($this->output->fetch())->toBe("  link text  link text\n");
 });

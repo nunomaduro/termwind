@@ -106,9 +106,9 @@ abstract class Element
     /**
      * Renders the string representation of the element on the output.
      */
-    final public function render(): void
+    final public function render(int $options): void
     {
-        $this->output->writeln($this->toString());
+        $this->output->writeln($this->toString(), $options);
     }
 
     /**

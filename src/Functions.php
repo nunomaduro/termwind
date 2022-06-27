@@ -36,9 +36,9 @@ if (! function_exists('Termwind\render')) {
     /**
      * Render HTML to a string.
      */
-    function render(string $html): void
+    function render(string $html, int $options = OutputInterface::OUTPUT_NORMAL): void
     {
-        (new HtmlRenderer)->render($html);
+        (new HtmlRenderer)->render($html, $options);
     }
 }
 

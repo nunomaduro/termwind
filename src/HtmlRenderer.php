@@ -19,9 +19,9 @@ final class HtmlRenderer
     /**
      * Renders the given html.
      */
-    public function render(string $html): void
+    public function render(string $html, int $options): void
     {
-        $this->parse($html)->render();
+        $this->parse($html)->render($options);
     }
 
     /**
