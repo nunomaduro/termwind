@@ -574,6 +574,34 @@ test('flex with multiple flex-1', function () {
     expect($html)->toBe('    -     -');
 });
 
+test('flex, flex-1 and content above column size', function () {
+    putenv('COLUMNS=10');
+
+    $html = parse(<<<'HTML'
+        <div class="flex">
+            <span>a</span>
+            <span class="flex-1">-</span>
+            <span>over column size</span>
+        </div>
+    HTML);
+
+    expect($html)->toBe('a-over column size');
+});
+
+test('flex, flex-1 with content-repeat and content above column size', function () {
+    putenv('COLUMNS=10');
+
+    $html = parse(<<<'HTML'
+        <div class="flex">
+            <span>a</span>
+            <span class="flex-1 content-repeat-[.]"></span>
+            <span>over column size</span>
+        </div>
+    HTML);
+
+    expect($html)->toBe('aover column size');
+});
+
 test('hidden', function () {
     $html = parse(<<<'HTML'
         <div class="hidden">test</div>
