@@ -990,7 +990,7 @@ final class Styles
     {
         $width = terminal()->width();
         foreach ($styles['width'] ?? [] as $index => $parentWidth) {
-            $minWidth = (int) $styles['minWidth'][$index] ?? -1;
+            $minWidth = (int) $styles['minWidth'][$index];
             $maxWidth = (int) $styles['maxWidth'][$index];
             $margins = (int) $styles['ml'][$index] + (int) $styles['mr'][$index];
 
