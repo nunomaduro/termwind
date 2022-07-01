@@ -205,6 +205,19 @@ test('invalid w-division', function () {
         ->toThrow(InvalidStyle::class);
 });
 
+test('min-w', function () {
+    putenv('COLUMNS=10');
+
+    $html = parse(<<<'HTML'
+        <div class="flex">
+            <span class="flex-1 content-repeat-[.] min-w-1"></span>
+            <span>Over size content</span>
+        </div>
+    HTML);
+
+    expect($html)->toBe('.Over size content');
+});
+
 test('max-w', function () {
     putenv('COLUMNS=10');
 
