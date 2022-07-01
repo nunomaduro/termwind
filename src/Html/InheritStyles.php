@@ -55,15 +55,19 @@ final class InheritStyles
     {
         [$totalWidth, $parentWidth] = $this->getWidthFromElements($elements);
 
-        $width = array_reduce($elements, function ($carry, $element) {
+        $width = max(0, array_reduce($elements, function ($carry, $element) {
             return $carry += $element->hasStyle('flex-1') ? $element->getInnerWidth() : 0;
-        }, $parentWidth - $totalWidth);
+        }, $parentWidth - $totalWidth));
 
         $flexed = array_values(array_filter(
             $elements, fn ($element) => $element->hasStyle('flex-1')
         ));
 
         foreach ($flexed as $index => &$element) {
+            if ($width === 0 && ! ($element->getProperties()['styles']['contentRepeat'] ?? false)) {
+                continue;
+            }
+
             $float = $width / count($flexed);
             $elementWidth = floor($float);
 

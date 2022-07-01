@@ -613,7 +613,9 @@ final class Styles
 
         $this->textModifiers[__METHOD__] = static fn (): string => str_repeat($string, (int) floor(terminal()->width() / mb_strlen($string, 'UTF-8')));
 
-        return $this;
+        return $this->with(['styles' => [
+            'contentRepeat' => true,
+        ]]);
     }
 
     /**
