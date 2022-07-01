@@ -126,7 +126,7 @@ final class Styles
      */
     final public function inheritFromStyles(self $styles): self
     {
-        foreach (['ml', 'mr', 'pl', 'pr', 'width', 'maxWidth', 'spaceY', 'spaceX'] as $style) {
+        foreach (['ml', 'mr', 'pl', 'pr', 'width', 'minWidth', 'maxWidth', 'spaceY', 'spaceX'] as $style) {
             $this->properties['parentStyles'][$style] = array_merge(
                 $this->properties['parentStyles'][$style] ?? [],
                 $styles->properties['parentStyles'][$style] ?? []
@@ -448,6 +448,16 @@ final class Styles
     final public function wFull(): static
     {
         return $this->w('1/1');
+    }
+
+    /**
+     * Defines a minimum width of an element.
+     */
+    final public function minW(int|string $width): static
+    {
+        return $this->with(['styles' => [
+            'minWidth' => $width,
+        ]]);
     }
 
     /**
@@ -792,7 +802,8 @@ final class Styles
     private function applyWidth(string $content): string
     {
         $styles = $this->properties['styles'] ?? [];
-        $width = $styles['width'] ?? -1;
+        $minWidth = $styles['minWidth'] ?? -1;
+        $width = max($styles['width'] ?? -1, $minWidth);
         $maxWidth = $styles['maxWidth'] ?? 0;
 
         if ($width < 0) {
@@ -979,8 +990,11 @@ final class Styles
     {
         $width = terminal()->width();
         foreach ($styles['width'] ?? [] as $index => $parentWidth) {
+            $minWidth = (int) $styles['minWidth'][$index] ?? -1;
             $maxWidth = (int) $styles['maxWidth'][$index];
             $margins = (int) $styles['ml'][$index] + (int) $styles['mr'][$index];
+
+            $parentWidth = max($parentWidth, $minWidth);
 
             if ($parentWidth < 1) {
                 $parentWidth = $width;
