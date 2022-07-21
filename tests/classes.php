@@ -410,6 +410,16 @@ test('invisible and snakecase', function () {
     expect($html)->toBe("\e[8mtext_text\e[0m");
 });
 
+test('width with styled children, where output includes color with dash', function() {
+    $html = parse(<<<'HTML'
+        <div class="w-10">
+            <span class="bg-brightgreen">text</span>
+        </div>
+    HTML);
+
+    expect($html)->toBe('<bg=bright-green>text</>      ');
+});
+
 test('width, bg, text-right', function () {
     $html = parse(<<<'HTML'
         <div class="w-15 text-right">
