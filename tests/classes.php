@@ -107,6 +107,12 @@ test('bg', function () {
     expect($html)->toBe('<bg=red>text</>');
 });
 
+test('bg-bright', function () {
+    $html = parse('<div class="bg-brightred">text</div>');
+
+    expect($html)->toBe('<bg=bright-red>text</>');
+});
+
 test('bg-color', function () {
     $html = parse('<div class="bg-red-400">text</div>');
 
@@ -117,6 +123,12 @@ test('text-color', function () {
     $html = parse('<div class="text-red">text</div>');
 
     expect($html)->toBe('<fg=red>text</>');
+});
+
+test('text-color-bright', function () {
+    $html = parse('<div class="text-brightred">text</div>');
+
+    expect($html)->toBe('<fg=bright-red>text</>');
 });
 
 test('text-right', function () {
