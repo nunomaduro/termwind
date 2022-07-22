@@ -18,7 +18,7 @@
         "ergebnis/phpstan-rules": "^1.0.",
         "illuminate/console": "^8.0|^9.0",
         "illuminate/support": "^8.0|^9.0",
-        "laravel/pint": "^0.2.0",
+        "laravel/pint": "^1.0.0",
         "pestphp/pest": "^1.21.0",
         "pestphp/pest-plugin-mock": "^1.0",
         "phpstan/phpstan": "^1.4.6",
