@@ -15,7 +15,7 @@ use Symfony\Component\Console\Question\Question;
 final class QuestionHelper extends SymfonyQuestionHelper
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function writePrompt(OutputInterface $output, Question $question): void
     {
