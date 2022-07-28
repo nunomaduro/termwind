@@ -197,6 +197,14 @@ test('w-division', function () {
     expect($html)->toBe('text      text      ');
 });
 
+test('w-auto', function () {
+    $html = parse(<<<'HTML'
+        <span class="w-auto">text</span>
+    HTML);
+
+    expect($html)->toBe('text');
+});
+
 test('invalid w-division', function () {
     expect(fn () => parse('<span class="w-invalid">text</span>'))
         ->toThrow(InvalidStyle::class);
