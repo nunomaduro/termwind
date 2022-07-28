@@ -104,26 +104,26 @@ The `terminal()` function returns an instance of the [Terminal](https://github.c
 
 All the classes supported use exactly the same logic that is available on [tailwindcss.com/docs](https://tailwindcss.com/docs).
 
-* **[Background Color](https://tailwindcss.com/docs/background-color):** `bg-{color}-{variant}`
-* **[Text Color](https://tailwindcss.com/docs/text-color):** `text-{color}-{variant}`
-* **[Font Weight](https://tailwindcss.com/docs/font-weight#class-reference):** `font-bold`, `font-normal`
-* **[Font Style](https://tailwindcss.com/docs/font-style#italics):** `italic`
-* **[Text Decoration](https://tailwindcss.com/docs/text-decoration):** `underline`, `line-through`
-* **[Text Transform](https://tailwindcss.com/docs/text-transform):** `uppercase`, `lowercase`, `capitalize`, `snakecase`
-* **[Text Overflow](https://tailwindcss.com/docs/text-overflow):** `truncate`
-* **[Text Alignment](https://tailwindcss.com/docs/text-align):** `text-left`, `text-center`, `text-right`
+* **[Background Color](https://tailwindcss.com/docs/background-color):** `bg-{color}-{variant}`.
+* **[Text Color](https://tailwindcss.com/docs/text-color):** `text-{color}-{variant}`.
+* **[Font Weight](https://tailwindcss.com/docs/font-weight#class-reference):** `font-bold`, `font-normal`.
+* **[Font Style](https://tailwindcss.com/docs/font-style#italics):** `italic`.
+* **[Text Decoration](https://tailwindcss.com/docs/text-decoration):** `underline`, `line-through`.
+* **[Text Transform](https://tailwindcss.com/docs/text-transform):** `uppercase`, `lowercase`, `capitalize`, `snakecase`.
+* **[Text Overflow](https://tailwindcss.com/docs/text-overflow):** `truncate`.
+* **[Text Alignment](https://tailwindcss.com/docs/text-align):** `text-left`, `text-center`, `text-right`.
 * **[Margin](https://tailwindcss.com/docs/margin):** `m-{margin}`, `ml-{leftMargin}`, `mr-{rightMargin}`, `mt-{topMargin}`, `mb-{bottomMargin}`, `mx-{horizontalMargin}`, `my-{verticalMargin}`.
 * **[Padding](https://tailwindcss.com/docs/padding):** `p-{padding}`, `pl-{leftPadding}`, `pr-{rightPadding}`, `pt-{topPadding}`, `pb-{bottomPadding}`, `px-{horizontalPadding}`, `py-{verticalPadding}`.
 * **[Space](https://tailwindcss.com/docs/space):** `space-y-{space}`, `space-x-{space}`.
-* **[Width](https://tailwindcss.com/docs/width):** `w-{width}`, `w-full`, `w-auto`
-* **[Min Width](https://tailwindcss.com/docs/min-width):** `min-w-{width}`
-* **[Max Width](https://tailwindcss.com/docs/max-width):** `max-w-{width}`
-* **[Justify Content](https://tailwindcss.com/docs/justify-content):** `justify-between`, `justify-around`, `justify-evenly`, `justify-center`
-* **[Visibility](https://tailwindcss.com/docs/visibility):** `invisible`
-* **[Display](https://tailwindcss.com/docs/display):** `block`, `flex`, `hidden`
-* **[Flex](https://tailwindcss.com/docs/flex):** `flex-1`
-* **[List Style](https://tailwindcss.com/docs/list-style-type):** `list-disc`, `list-decimal`, `list-square`, `list-none`
-* **[Content](https://tailwindcss.com/docs/content):** `content-repeat-['.']`
+* **[Width](https://tailwindcss.com/docs/width):** `w-{width}`, `w-full`, `w-auto`.
+* **[Min Width](https://tailwindcss.com/docs/min-width):** `min-w-{width}`.
+* **[Max Width](https://tailwindcss.com/docs/max-width):** `max-w-{width}`.
+* **[Justify Content](https://tailwindcss.com/docs/justify-content):** `justify-between`, `justify-around`, `justify-evenly`, `justify-center`.
+* **[Visibility](https://tailwindcss.com/docs/visibility):** `invisible`.
+* **[Display](https://tailwindcss.com/docs/display):** `block`, `flex`, `hidden`.
+* **[Flex](https://tailwindcss.com/docs/flex):** `flex-1`.
+* **[List Style](https://tailwindcss.com/docs/list-style-type):** `list-disc`, `list-decimal`, `list-square`, `list-none`.
+* **[Content](https://tailwindcss.com/docs/content):** `content-repeat-['.']`.
 
 ## Responsive Design
 
