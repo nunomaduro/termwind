@@ -138,6 +138,8 @@ final class Color
 
     public const RED_900 = '#7f1d1d';
 
+    public const ORANGE = '#f97316';
+
     public const ORANGE_50 = '#fff7ed';
 
     public const ORANGE_100 = '#ffedd5';
