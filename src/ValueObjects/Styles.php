@@ -869,7 +869,7 @@ final class Styles
                 str_repeat(' ', $marginRight + $paddingRight)
                 ."\n".
                 str_repeat(' ', $marginLeft + $paddingLeft),
-            $content)
+                $content)
         );
 
         $formatted = sprintf(

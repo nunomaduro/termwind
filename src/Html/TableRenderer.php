@@ -179,8 +179,8 @@ final class TableRenderer
                 }
 
                 $row[] = new TableCell(
-                // I need only spaces after applying margin, padding and width except tags.
-                // There is no place for tags, they broke cell formatting.
+                    // I need only spaces after applying margin, padding and width except tags.
+                    // There is no place for tags, they broke cell formatting.
                     (string) Termwind::span($text, $class),
                     [
                         // Gets rowspan and colspan from tr and td tag attributes
