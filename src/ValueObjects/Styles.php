@@ -451,6 +451,16 @@ final class Styles
     }
 
     /**
+     * Removes the width set on the element.
+     */
+    final public function wAuto(): static
+    {
+        return $this->with(['styles' => [
+            'width' => null,
+        ]]);
+    }
+
+    /**
      * Defines a minimum width of an element.
      */
     final public function minW(int|string $width): static

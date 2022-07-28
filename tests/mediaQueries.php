@@ -23,3 +23,13 @@ it('renders based on the size even if the styles are in the wrong order', functi
 
     expect($html)->toBe('<bg=red>Test</>');
 });
+
+it('resets the width when the breakpoint is reached', function () {
+    putenv('COLUMNS=64');
+
+    $html = parse(<<<'HTML'
+        <div class="w-2 sm:w-auto">text</div>
+    HTML);
+
+    expect($html)->toBe('text');
+});
