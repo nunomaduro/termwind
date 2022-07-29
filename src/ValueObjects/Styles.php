@@ -415,12 +415,17 @@ final class Styles
     final public function truncate(int $limit = 0, string $end = '…'): self
     {
         $this->textModifiers[__METHOD__] = function ($text, $styles) use ($limit, $end): string {
-            $limit = $limit > 0 ? $limit : ($styles['width'] ?? 0);
+            $width = $styles['width'] ?? 0;
+            [, $paddingRight, , $paddingLeft] = $this->getPaddings();
+            $width -= $paddingRight + $paddingLeft;
+
+            $limit = $limit > 0 ? $limit : $width;
             if ($limit === 0) {
                 return $text;
             }
 
             $limit -= mb_strwidth($end, 'UTF-8');
+
 
             if ($this->getLength($text) <= $limit) {
                 return $text;
