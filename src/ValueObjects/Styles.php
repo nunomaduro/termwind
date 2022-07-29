@@ -426,7 +426,6 @@ final class Styles
 
             $limit -= mb_strwidth($end, 'UTF-8');
 
-
             if ($this->getLength($text) <= $limit) {
                 return $text;
             }
