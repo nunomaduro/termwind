@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.14.0 (2022-08-01](https://github.com/nunomaduro/termwind/compare/v1.13.0...v1.14.0)
+### Added
+- Add support for `w-auto`. by @xiCO2k in https://github.com/nunomaduro/termwind/pull/148
+- Add full ANSI color support by @AdamGaskins in https://github.com/nunomaduro/termwind/pull/147
+
+### Fixed
+- Fixes bug when using `truncate` with paddings by @xiCO2k in https://github.com/nunomaduro/termwind/pull/149
+- Fixes `orange` color by @AdamGaskins and @xiCO2k in https://github.com/nunomaduro/termwind/pull/146 and [4d36921](https://github.com/nunomaduro/termwind/commit/4d36921692248b8d5532d1230f98f59e32896f04)
+
 ## [v1.13.0 (2022-07-01](https://github.com/nunomaduro/termwind/compare/v1.12.0...v1.13.0)
 ### Added
 - Add `min-w-{width}` class by @xiCO2k in (https://github.com/nunomaduro/termwind/pull/143)
