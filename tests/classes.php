@@ -178,6 +178,14 @@ test('truncate with styled childs', function () {
     expect($html)->toBe('text with <bg=gray>s</>…');
 });
 
+test('truncate with paddings', function () {
+    $html = parse(<<<'HTML'
+        <span class="truncate w-5 px-1">text</span>
+    HTML);
+
+    expect($html)->toBe(' te… ');
+});
+
 test('w', function () {
     $html = parse(<<<'HTML'
         <span>
