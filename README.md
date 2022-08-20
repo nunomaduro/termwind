@@ -78,7 +78,7 @@ render('<div class="btn">Click me</div>');
 
 ### `ask()`
 
-The `ask()` function may be used prompt the user with a question.
+The `ask()` function may be used to prompt the user with a question.
 
 ```php
 use function Termwind\{ask};
@@ -175,7 +175,7 @@ HTML);
 
 ### `<span>`
 
-The `<span>` element can be used as a inline text container.
+The `<span>` element can be used as an inline text container.
 
 ```php
 render(<<<'HTML'
@@ -187,7 +187,7 @@ HTML);
 
 ### `<a>`
 
-The `<a>` element can be used as an hyperlink. It allows to use the `href` attribute to open the link when clicked.
+The `<a>` element can be used as a hyperlink. It allows to use the `href` attribute to open the link when clicked.
 
 ```php
 render(<<<'HTML'
@@ -298,7 +298,7 @@ HTML);
 
 ### `<dl>`
 
-The `<dl>` element can be used for an description list. It can only accept `<dt>` or `<dd>` elements as childs, if there is another element provided it will throw an `InvalidChild` exception. 
+The `<dl>` element can be used for a description list. It can only accept `<dt>` or `<dd>` elements as childs, if there is another element provided it will throw an `InvalidChild` exception. 
 
 **Default Styles**: `block`
 
@@ -341,7 +341,7 @@ HTML);
 
 ### `<hr>`
 
-The `<hr>` element can be used as an horizontal line.
+The `<hr>` element can be used as a horizontal line.
 
 ```php
 render(<<<'HTML'
@@ -391,7 +391,7 @@ HTML);
 
 ### `<code>`
 
-The `<code>` element can be used as code highligher. It accepts `line` and `start-line` attributes.
+The `<code>` element can be used as code highlighter. It accepts `line` and `start-line` attributes.
 
 ```php
 render(<<<'HTML'
