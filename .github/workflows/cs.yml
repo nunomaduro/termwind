@@ -1,14 +1,14 @@
-name: Tests
+name: Coding Style
 
 on: ['push', 'pull_request']
 
 jobs:
-  ci:
+  cs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php: ['8.0', '8.1']
-        dependency-version: [prefer-lowest, prefer-stable]
+        php: ['8.1']
+        dependency-version: [prefer-stable]
 
     name: PHP ${{ matrix.php }} - ${{ matrix.dependency-version }} - ${{ matrix.parallel }}
 
@@ -23,13 +23,8 @@ jobs:
           tools: composer:v2
           coverage: none
 
-      - name: Setup Problem Matches
-        run: |
-          echo "::add-matcher::${{ runner.tool_cache }}/php.json"
-          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
-
       - name: Install PHP dependencies
         run: composer update --${{ matrix.dependency-version }} --no-interaction --no-progress
 
-      - name: Integration Tests
-        run: php vendor/bin/pest --colors=always
+      - name: Run Pint
+        run: php vendor/bin/pint --test -v
