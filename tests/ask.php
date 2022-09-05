@@ -1,8 +1,5 @@
 <?php
 
-use Symfony\Component\Console\Formatter\NullOutputFormatter;
-use Symfony\Component\Console\Helper\SymfonyQuestionHelper;
-use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\StreamableInputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question as SymfonyQuestion;
