@@ -48,15 +48,23 @@ final class Question
 
     /**
      * Renders a prompt to the user.
+     *
+     * @param  iterable<array-key, string>|null  $autocomplete
      */
-    public function ask(string $question): mixed
+    public function ask(string $question, iterable $autocomplete = null): mixed
     {
         $html = (new HtmlRenderer)->parse($question)->toString();
+
+        $question = new SymfonyQuestion($html);
+
+        if ($autocomplete !== null) {
+            $question->setAutocompleterValues($autocomplete);
+        }
 
         return $this->helper->ask(
             self::getStreamableInput(),
             Termwind::getRenderer(),
-            new SymfonyQuestion($html)
+            $question,
         );
     }
 }
