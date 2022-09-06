@@ -1,8 +1,11 @@
 <?php
 
 use Symfony\Component\Console\Formatter\NullOutputFormatter;
+use Symfony\Component\Console\Helper\SymfonyQuestionHelper;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\StreamableInputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question as SymfonyQuestion;
 use Symfony\Component\Console\Terminal;
 use function Termwind\ask;
 use Termwind\Question;
@@ -55,3 +58,25 @@ it('renders the question with autocomplete', function () {
 
     ask('<span class="bg-red ml-1">Question</span>', ['one', 'two', 'three']);
 })->skip(! Terminal::hasSttyAvailable(), '`stty` is required to test autocomplete functionality');
+
+test('autocomplete is set to SymfonyQuestion', function () {
+    $fakeHelper = new class extends SymfonyQuestionHelper
+    {
+        public SymfonyQuestion $askedQuestion;
+
+        public function ask(InputInterface $input, OutputInterface $output, SymfonyQuestion $question): mixed
+        {
+            $this->askedQuestion = $question;
+
+            return null;
+        }
+    };
+
+    $question = new Question($fakeHelper);
+
+    $question->ask('foo?', ['bar', 'baz', 'quuz']);
+
+    expect($fakeHelper->askedQuestion)
+        ->getAutocompleterValues()
+        ->toBe(['bar', 'baz', 'quuz']);
+});
