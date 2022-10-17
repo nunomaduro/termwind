@@ -186,6 +186,28 @@ test('truncate with paddings', function () {
     expect($html)->toBe(' te… ');
 });
 
+test('truncate with w-full', function () {
+    putenv('COLUMNS=5');
+
+    $html = parse(<<<'HTML'
+        <span class="w-full truncate">texttext</span>
+    HTML);
+
+    expect($html)->toBe('text…');
+});
+
+test('truncate with w-division', function () {
+    putenv('COLUMNS=6');
+
+    $html = parse(<<<'HTML'
+        <div class="w-full">
+            <span class="w-1/2 truncate">texttext</span>
+        </div>
+    HTML);
+
+    expect($html)->toBe('te…   ');
+});
+
 test('w', function () {
     $html = parse(<<<'HTML'
         <span>

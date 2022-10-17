@@ -416,6 +416,15 @@ final class Styles
     {
         $this->textModifiers[__METHOD__] = function ($text, $styles) use ($limit, $end): string {
             $width = $styles['width'] ?? 0;
+
+            if (is_string($width)) {
+                $width = self::calcWidthFromFraction(
+                    $width,
+                    $styles,
+                    $this->properties['parentStyles'] ?? []
+                );
+            }
+
             [, $paddingRight, , $paddingLeft] = $this->getPaddings();
             $width -= $paddingRight + $paddingLeft;
 
