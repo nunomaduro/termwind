@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.14.2 (2022-10-28](https://github.com/nunomaduro/termwind/compare/v1.14.1...v1.15.0)
+### Fixed
+- Allow to use `SymfonyStyle` ask method if exists by @xiCO2k in https://github.com/nunomaduro/termwind/pull/156
+
 ## [v1.14.1 (2022-10-17](https://github.com/nunomaduro/termwind/compare/v1.14.0...v1.14.1)
 ### Fixed
 - Fix `truncate` to work well with `w-full` or `w-division`. by @xiCO2k in https://github.com/nunomaduro/termwind/pull/155
