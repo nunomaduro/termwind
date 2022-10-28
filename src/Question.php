@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Termwind;
 
-use Symfony\Component\Console\Helper\QuestionHelper as SymfonyQuestionHelper;
+use ReflectionClass;
+use Symfony\Component\Console\Helper\SymfonyQuestionHelper;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\StreamableInputInterface;
 use Symfony\Component\Console\Question\Question as SymfonyQuestion;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Termwind\Helpers\QuestionHelper;
 
 /**
@@ -52,6 +54,27 @@ final class Question
     public function ask(string $question): mixed
     {
         $html = (new HtmlRenderer)->parse($question)->toString();
+
+        $output = Termwind::getRenderer();
+
+        if ($output instanceof SymfonyStyle) {
+            $property = (new ReflectionClass(SymfonyStyle::class))
+                ->getProperty('questionHelper');
+
+            $property->setAccessible(true);
+
+            $currentHelper = $property->isInitialized($output)
+                ? $property->getValue($output)
+                : new SymfonyQuestionHelper();
+
+            $property->setValue($output, new QuestionHelper);
+
+            try {
+                return $output->ask($html);
+            } finally {
+                $property->setValue($output, $currentHelper);
+            }
+        }
 
         return $this->helper->ask(
             self::getStreamableInput(),
