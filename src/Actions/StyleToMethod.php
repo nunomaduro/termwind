@@ -136,9 +136,10 @@ final class StyleToMethod
      */
     private function applyMediaQuery(string $method): string
     {
+        $matches = [];
         preg_match(self::MEDIA_QUERIES_REGEX, $method, $matches);
 
-        if (count($matches ?? []) < 1) {
+        if (count($matches) < 1) {
             return $method;
         }
 
