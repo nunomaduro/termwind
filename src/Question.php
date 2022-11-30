@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Termwind;
 
 use ReflectionClass;
-use Symfony\Component\Console\Helper\QuestionHelper as SymfonyQuestionHelper;
+use Symfony\Component\Console\Helper\SymfonyQuestionHelper;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\StreamableInputInterface;
 use Symfony\Component\Console\Question\Question as SymfonyQuestion;
@@ -57,11 +57,13 @@ final class Question
     {
         $html = (new HtmlRenderer)->parse($question)->toString();
 
+
         $question = new SymfonyQuestion($html);
 
         if ($autocomplete !== null) {
             $question->setAutocompleterValues($autocomplete);
         }
+
 
         $output = Termwind::getRenderer();
 
@@ -73,11 +75,13 @@ final class Question
 
             $currentHelper = $property->isInitialized($output)
                 ? $property->getValue($output)
-                : new \Symfony\Component\Console\Helper\SymfonyQuestionHelper();
+                : new SymfonyQuestionHelper();
+
 
             $property->setValue($output, new QuestionHelper);
 
             try {
+
                 return $output->askQuestion($question);
             } finally {
                 $property->setValue($output, $currentHelper);
