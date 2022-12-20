@@ -4,7 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [v1.14.2 (2022-10-28](https://github.com/nunomaduro/termwind/compare/v1.14.1...v1.15.0)
+## [v1.15.0 (2022-12-20](https://github.com/nunomaduro/termwind/compare/v1.14.2...v1.15.0)
+### Added
+- Autocomplete for `ask` method by @fabio-ivona in https://github.com/nunomaduro/termwind/pull/153
+
+### Fixed
+- Fix types by @fabio-ivona in https://github.com/nunomaduro/termwind/pull/158
+
+## [v1.14.2 (2022-10-28](https://github.com/nunomaduro/termwind/compare/v1.14.1...v1.14.2)
 ### Fixed
 - Allow to use `SymfonyStyle` ask method if exists by @xiCO2k in https://github.com/nunomaduro/termwind/pull/156
 
