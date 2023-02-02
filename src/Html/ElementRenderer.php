@@ -21,7 +21,7 @@ final class ElementRenderer
     ];
 
     /**
-     * @return array
+     * @return array<string, string>
      */
     public static function renderers(): array
     {
