@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Termwind\Html;
 
 use Termwind\Components\Element;
+use Termwind\Contracts\Renderer;
 use Termwind\Termwind;
 use Termwind\ValueObjects\Node;
 
 /**
  * @internal
  */
-final class PreRenderer
+final class PreRenderer implements Renderer
 {
     /**
      * Gets HTML content from a given node and converts to the content element.
