@@ -45,3 +45,32 @@ Unit tests:
 ```bash
 composer test:unit
 ```
+
+## Docker Setup
+
+Clone your fork, then install the dev dependencies:
+```bash
+make composer ARGS="install"
+```
+## Lint
+
+Lint your code:
+```bash
+make lint
+```
+## Tests
+
+Run all tests:
+```bash
+make test
+```
+
+Check types:
+```bash
+make test-types
+```
+
+Unit tests:
+```bash
+make test-unit
+```
