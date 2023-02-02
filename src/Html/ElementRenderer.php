@@ -21,6 +21,14 @@ final class ElementRenderer
     ];
 
     /**
+     * @return array
+     */
+    public static function renderers(): array
+    {
+        return self::$renderers;
+    }
+
+    /**
      * Checks if there is any renderer registered for the node name
      *
      * @param  string  $name
@@ -47,7 +55,7 @@ final class ElementRenderer
             throw new InvalidRenderer();
         }
 
-        self::$renderers[] = [$name => $renderer];
+        self::$renderers[$name] = $renderer;
     }
 
     /**
