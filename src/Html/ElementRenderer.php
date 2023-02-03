@@ -12,7 +12,7 @@ use Termwind\ValueObjects\Node;
 final class ElementRenderer
 {
     /**
-     * @var array<string, string>
+     * @var array<string, class-string<Renderer>>
      */
     private static array $renderers = [
         'table' => TableRenderer::class,
@@ -21,7 +21,7 @@ final class ElementRenderer
     ];
 
     /**
-     * @return array<string, string>
+     * @return array<string, class-string<Renderer>>
      */
     public static function renderers(): array
     {
@@ -50,8 +50,7 @@ final class ElementRenderer
      */
     public static function register(string $name, string $renderer): void
     {
-        $rendererObject = new $renderer();
-        if (! ($rendererObject instanceof Renderer)) {
+        if (! is_a($renderer, Renderer::class, true)) {
             throw new InvalidRenderer();
         }
 

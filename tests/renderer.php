@@ -2,6 +2,7 @@
 
 use Termwind\Components\Element;
 use Termwind\Contracts\Renderer;
+use Termwind\Exceptions\InvalidRenderer;
 use Termwind\Html\ElementRenderer;
 use Termwind\Termwind;
 use Termwind\ValueObjects\Node;
@@ -11,7 +12,7 @@ it('checks that default renderers are registered', function ($name) {
         ->toBeTrue();
 })->with(['code', 'pre', 'table']);
 
-it('adds custom renderer', function () {
+it('adds valid custom renderer', function () {
     expect(ElementRenderer::hasRenderer('custom'))
         ->toBeFalse();
 
@@ -19,6 +20,12 @@ it('adds custom renderer', function () {
 
     expect(ElementRenderer::hasRenderer('custom'))
         ->toBeTrue();
+});
+
+it('throws exception when adding invalid custom renderer', function () {
+    $this->expectException(InvalidRenderer::class);
+
+    ElementRenderer::register('foo', 'bar');
 });
 
 final class CustomRenderer implements Renderer
