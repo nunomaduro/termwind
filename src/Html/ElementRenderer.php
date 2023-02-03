@@ -9,6 +9,9 @@ use Termwind\Contracts\Renderer;
 use Termwind\Exceptions\InvalidRenderer;
 use Termwind\ValueObjects\Node;
 
+/**
+ * @interal
+ */
 final class ElementRenderer
 {
     /**
