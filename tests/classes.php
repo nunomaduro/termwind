@@ -539,6 +539,24 @@ test('justify-between inherit with parent without classes', function () {
     expect($html)->toBe(' A   B   C ');
 });
 
+test('justify-between with only one child', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-2 justify-between">
+            <span>A</span>
+        </div>
+    HTML);
+
+    expect($html)->toBe('A ');
+});
+
+test('justify-between with no childs', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-10 justify-between"></div>
+    HTML);
+
+    expect($html)->toBe('          ');
+});
+
 test('justify-evenly', function () {
     $html = parse(<<<'HTML'
         <div class="w-11 justify-evenly">
@@ -587,6 +605,14 @@ test('justify-around with no space available to add', function () {
     expect($html)->toBe('ABC');
 });
 
+test('justify-around with no childs', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-10 justify-around"></div>
+    HTML);
+
+    expect($html)->toBe('          ');
+});
+
 test('justify-center', function () {
     $html = parse(<<<'HTML'
         <div class="w-11 justify-center">
@@ -609,6 +635,16 @@ test('justify-centr with no space available to add', function () {
     HTML);
 
     expect($html)->toBe('ABC');
+});
+
+test('justify-center with only one child', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-11 justify-center">
+            <span>A</span>
+        </div>
+    HTML);
+
+    expect($html)->toBe('     A     ');
 });
 
 test('flex', function () {

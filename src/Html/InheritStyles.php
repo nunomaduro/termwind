@@ -89,6 +89,10 @@ final class InheritStyles
      */
     private function applyJustifyBetween(array $elements): array
     {
+        if (count($elements) <= 1) {
+            return $elements;
+        }
+
         [$totalWidth, $parentWidth] = $this->getWidthFromElements($elements);
         $space = ($parentWidth - $totalWidth) / (count($elements) - 1);
 
@@ -146,6 +150,10 @@ final class InheritStyles
      */
     private function applyJustifyAround(array $elements): array
     {
+        if (count($elements) === 0) {
+            return $elements;
+        }
+
         [$totalWidth, $parentWidth] = $this->getWidthFromElements($elements);
         $space = ($parentWidth - $totalWidth) / count($elements);
 
