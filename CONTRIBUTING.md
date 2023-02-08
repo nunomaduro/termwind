@@ -50,7 +50,7 @@ composer test:unit
 
 Clone your fork, then install the dev dependencies:
 ```bash
-make composer ARGS="install"
+make install
 ```
 ## Lint
 
