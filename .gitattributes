@@ -1,4 +1,5 @@
 /art                    export-ignore
+/docker                 export-ignore
 /docs                   export-ignore
 /tests                  export-ignore
 /scripts                export-ignore
