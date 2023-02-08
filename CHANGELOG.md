@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.15.1 (2023-02-08](https://github.com/nunomaduro/termwind/compare/v1.15.0...v1.15.1)
+
+### Fixed
+- Fix `justify-*` classes with only one child by @xiCO2k in https://github.com/nunomaduro/termwind/pull/165
+
 ## [v1.15.0 (2022-12-20](https://github.com/nunomaduro/termwind/compare/v1.14.2...v1.15.0)
 ### Added
 - Autocomplete for `ask` method by @fabio-ivona in https://github.com/nunomaduro/termwind/pull/153
