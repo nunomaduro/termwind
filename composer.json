@@ -16,8 +16,8 @@
     },
     "require-dev": {
         "ergebnis/phpstan-rules": "^1.0.",
-        "illuminate/console": "^8.0|^9.0",
-        "illuminate/support": "^8.0|^9.0",
+        "illuminate/console": "^8.0|^9.0|^10.0",
+        "illuminate/support": "^8.0|^9.0|^10.0",
         "laravel/pint": "^1.0.0",
         "pestphp/pest": "^1.21.0",
         "pestphp/pest-plugin-mock": "^1.0",
