@@ -53,7 +53,6 @@ final class Styles
     }
 
     /**
-     * @param  Element  $element
      * @return $this
      */
     public function setElement(Element $element): self

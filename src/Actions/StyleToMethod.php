@@ -59,8 +59,6 @@ final class StyleToMethod
 
     /**
      * Converts the given style to a method name.
-     *
-     * @return Styles
      */
     public function __invoke(string|int ...$arguments): Styles
     {
