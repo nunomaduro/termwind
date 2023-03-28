@@ -53,7 +53,7 @@ final class Question
      *
      * @param  iterable<array-key, string>|null  $autocomplete
      */
-    public function ask(string $question, iterable $autocomplete = null): mixed
+    public function ask(string $question, iterable $autocomplete = null, bool $setHidden = false): mixed
     {
         $html = (new HtmlRenderer)->parse($question)->toString();
 
@@ -61,6 +61,10 @@ final class Question
 
         if ($autocomplete !== null) {
             $question->setAutocompleterValues($autocomplete);
+        }
+
+        if($setHidden){
+            $question->setHidden($setHidden);
         }
 
         $output = Termwind::getRenderer();

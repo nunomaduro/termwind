@@ -58,8 +58,8 @@ if (! function_exists('Termwind\ask')) {
      *
      * @param  iterable<array-key, string>|null  $autocomplete
      */
-    function ask(string $question, iterable $autocomplete = null): mixed
+    function ask(string $question, iterable $autocomplete = null, bool $setHidden = false): mixed
     {
-        return (new Question)->ask($question, $autocomplete);
+        return (new Question)->ask($question, $autocomplete, $setHidden);
     }
 }
