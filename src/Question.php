@@ -63,7 +63,7 @@ final class Question
             $question->setAutocompleterValues($autocomplete);
         }
 
-        if($setHidden){
+        if ($setHidden) {
             $question->setHidden($setHidden);
         }
 

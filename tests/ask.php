@@ -67,6 +67,5 @@ it('renders the question with hidden input', function () {
 
     $output->shouldReceive('write')->once()->with(' <bg=red>Password</>');
     $output->shouldReceive('writeln')->once()->with('');
-    $answer = ask('<span class="bg-red ml-1">Password</span>',null,true);
-
+    $answer = ask('<span class="bg-red ml-1">Password</span>', null, true);
 });
