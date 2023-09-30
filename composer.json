@@ -12,12 +12,12 @@
     "require": {
         "php": "^8.0",
         "ext-mbstring": "*",
-        "symfony/console": "7.0.x-dev"
+        "symfony/console": "7.0.x-dev as 6.4.0"
     },
     "require-dev": {
         "ergebnis/phpstan-rules": "^1.0.",
-        "illuminate/console": "^8.0|^9.0|^10.0",
-        "illuminate/support": "^8.0|^9.0|^10.0",
+        "illuminate/console": "*",
+        "illuminate/support": "*",
         "laravel/pint": "^1.0.0",
         "pestphp/pest": "^1.21.0",
         "pestphp/pest-plugin-mock": "^1.0",
