@@ -10,22 +10,28 @@
         }
     ],
     "require": {
-        "php": "^8.0",
+        "php": "^8.2",
         "ext-mbstring": "*",
-        "symfony/console": "^5.3.0|^6.0.0"
+        "symfony/console": "^7.0.0"
     },
     "require-dev": {
         "ergebnis/phpstan-rules": "^1.0.",
-        "illuminate/console": "^8.0|^9.0|^10.0",
-        "illuminate/support": "^8.0|^9.0|^10.0",
+        "illuminate/console": "^11.0",
+        "illuminate/support": "^11.0",
         "laravel/pint": "^1.0.0",
-        "pestphp/pest": "^1.21.0",
-        "pestphp/pest-plugin-mock": "^1.0",
+        "pestphp/pest": "^2.0",
         "phpstan/phpstan": "^1.4.6",
         "phpstan/phpstan-strict-rules": "^1.1.0",
-        "symfony/var-dumper": "^5.2.7|^6.0.0",
-        "thecodingmachine/phpstan-strict-rules": "^1.0.0"
+        "symfony/var-dumper": "^7.0.0",
+        "thecodingmachine/phpstan-strict-rules": "^1.0.0",
+        "brianium/paratest": "dev-patch-1 as 7.2.9"
     },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/nunomaduro/paratest"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "Termwind\\": "src/"
@@ -64,6 +70,9 @@
             "providers": [
                 "Termwind\\Laravel\\TermwindServiceProvider"
             ]
+        },
+        "branch-alias": {
+            "dev-2.x": "2.x-dev"
         }
     }
 }
