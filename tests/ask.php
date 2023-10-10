@@ -56,3 +56,17 @@ it('renders the question with autocomplete', function () {
 
     ask('<span class="bg-red ml-1">Question</span>', ['one', 'two', 'three']);
 })->skip(! Terminal::hasSttyAvailable(), '`stty` is required to test autocomplete functionality');
+
+it('renders the question with hidden input', function () {
+    $inputStream = getInputStream('s');
+    Question::setStreamableInput($input = Mockery::mock(StreamableInputInterface::class));
+
+    $input->shouldReceive('getStream')->once()->andReturn($inputStream);
+    $input->shouldReceive('isInteractive')->once()->andReturn(true);
+
+    renderUsing($output = Mockery::mock(OutputInterface::class));
+
+    $output->shouldReceive('write')->once()->with(' <bg=red>Password</>');
+    $output->shouldReceive('writeln')->once()->with('');
+    $answer = ask('<span class="bg-red ml-1">Password</span>', null, true);
+});
