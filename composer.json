@@ -15,16 +15,15 @@
         "symfony/console": "^7.0.0"
     },
     "require-dev": {
+        "brianium/paratest": "dev-patch-1 as 7.2.9",
         "ergebnis/phpstan-rules": "^1.0.",
-        "illuminate/console": "^11.0",
-        "illuminate/support": "^11.0",
         "laravel/pint": "^1.0.0",
+        "mockery/mockery": "^1.6",
         "pestphp/pest": "^2.0",
         "phpstan/phpstan": "^1.4.6",
         "phpstan/phpstan-strict-rules": "^1.1.0",
         "symfony/var-dumper": "^7.0.0",
-        "thecodingmachine/phpstan-strict-rules": "^1.0.0",
-        "brianium/paratest": "dev-patch-1 as 7.2.9"
+        "thecodingmachine/phpstan-strict-rules": "^1.0.0"
     },
     "repositories": [
         {
