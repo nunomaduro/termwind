@@ -14,7 +14,7 @@ if (! function_exists('Termwind\renderUsing')) {
     /**
      * Sets the renderer implementation.
      */
-    function renderUsing(OutputInterface|null $renderer): void
+    function renderUsing(?OutputInterface $renderer): void
     {
         Termwind::renderUsing($renderer);
     }

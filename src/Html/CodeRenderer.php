@@ -239,7 +239,7 @@ final class CodeRenderer
         foreach ($lines as $i => $line) {
             $coloredLineNumber = $this->coloredLineNumber(self::LINE_NUMBER, $i, $lineLength);
 
-            if (0 !== $markLine) {
+            if ($markLine !== 0) {
                 $snippet .= ($markLine === $i + 1
                     ? $this->styleToken(self::ACTUAL_LINE_MARK, $mark)
                     : self::NO_MARK
