@@ -4,8 +4,9 @@ use Symfony\Component\Console\Formatter\NullOutputFormatter;
 use Symfony\Component\Console\Input\StreamableInputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Terminal;
-use function Termwind\ask;
 use Termwind\Question;
+
+use function Termwind\ask;
 use function Termwind\renderUsing;
 
 it('receives the answer given from the user', function () {

@@ -24,7 +24,7 @@ if (! function_exists('Termwind\style')) {
     /**
      * Creates a new style.
      *
-     * @param (Closure(Styles $renderable, string|int ...$arguments): Styles)|null $callback
+     * @param  (Closure(Styles $renderable, string|int ...$arguments): Styles)|null  $callback
      */
     function style(string $name, Closure $callback = null): Style
     {

@@ -1,6 +1,7 @@
 <?php
 
 use Symfony\Component\Console\Output\OutputInterface;
+
 use function Termwind\render;
 use function Termwind\renderUsing;
 

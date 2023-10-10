@@ -21,7 +21,7 @@ final class Styles
     /**
      * Creates a new style from the given arguments.
      *
-     * @param (Closure(StylesValueObject $element, string|int ...$arguments): StylesValueObject)|null $callback
+     * @param  (Closure(StylesValueObject $element, string|int ...$arguments): StylesValueObject)|null  $callback
      */
     public static function create(string $name, Closure $callback = null): Style
     {

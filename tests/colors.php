@@ -1,6 +1,7 @@
 <?php
 
 use Termwind\Exceptions\InvalidColor;
+
 use function Termwind\style;
 
 it('allows the creation of colors', function () {
