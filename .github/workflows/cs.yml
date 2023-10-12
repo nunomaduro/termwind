@@ -7,14 +7,14 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php: ['8.1']
+        php: ['8.2']
         dependency-version: [prefer-stable]
 
     name: PHP ${{ matrix.php }} - ${{ matrix.dependency-version }} - ${{ matrix.parallel }}
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
