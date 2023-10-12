@@ -15,7 +15,7 @@
         "symfony/console": "^7.0.0"
     },
     "require-dev": {
-        "ergebnis/phpstan-rules": "^1.0.",
+        "ergebnis/phpstan-rules": "^2.1.0",
         "illuminate/console": "^11.0.0",
         "laravel/pint": "^1.13.3",
         "mockery/mockery": "^1.6.6",
