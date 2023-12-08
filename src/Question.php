@@ -27,7 +27,7 @@ final class Question
      */
     private SymfonyQuestionHelper $helper;
 
-    public function __construct(SymfonyQuestionHelper $helper = null)
+    public function __construct(?SymfonyQuestionHelper $helper = null)
     {
         $this->helper = $helper ?? new QuestionHelper();
     }
@@ -53,7 +53,7 @@ final class Question
      *
      * @param  iterable<array-key, string>|null  $autocomplete
      */
-    public function ask(string $question, iterable $autocomplete = null): mixed
+    public function ask(string $question, ?iterable $autocomplete = null): mixed
     {
         $html = (new HtmlRenderer)->parse($question)->toString();
 

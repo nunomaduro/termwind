@@ -940,7 +940,7 @@ final class Styles
     /**
      * Get the length of the text provided without the styling tags.
      */
-    public function getLength(string $text = null): int
+    public function getLength(?string $text = null): int
     {
         return mb_strlen(preg_replace(
             self::STYLING_REGEX,
