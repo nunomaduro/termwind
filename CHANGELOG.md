@@ -81,7 +81,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add `justify-between` class in https://github.com/nunomaduro/termwind/pull/129
 
 ### Fixed
-- `<hr />` width not repecting parent width by @xiCO2k in https://github.com/nunomaduro/termwind/pull/130
+- `<hr />` width not respecting parent width by @xiCO2k in https://github.com/nunomaduro/termwind/pull/130
 
 ## [v1.6.2 (2022-03-18)](https://github.com/nunomaduro/termwind/compare/v1.6.1...v1.6.2)
 ### Fixed
