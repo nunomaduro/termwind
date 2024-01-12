@@ -63,6 +63,20 @@ class UsersCommand extends Command
 }
 ```
 
+### `parse()`
+
+The `parse()` function may be used to return the rendered ansi formatted string.
+
+```php
+use function Termwind\{parse};
+
+$string = parse(<<<'HTML'
+  <div class="bg-white underline uppercase">Hello world</div>
+HTML);
+
+// returns "<bg=white>\e[4mHELLO WORLD\e[0m</>"
+```
+
 ### `style()`
 
 The `style()` function may be used to add own custom styles and also update colors.
