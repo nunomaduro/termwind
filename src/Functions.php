@@ -42,6 +42,16 @@ if (! function_exists('Termwind\render')) {
     }
 }
 
+if (! function_exists('Termwind\parse')) {
+    /**
+     * Return HTML as a string.
+     */
+    function parse(string $html): string
+    {
+        return (new HtmlRenderer)->parse($html)->toString();
+    }
+}
+
 if (! function_exists('Termwind\terminal')) {
     /**
      * Returns a Terminal instance.
