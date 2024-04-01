@@ -1,7 +1,5 @@
 <?php
 
-use function Termwind\{a};
-
 it('renders the element', function () {
     $html = parse('<a>link text</a>');
 

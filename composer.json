@@ -16,11 +16,11 @@
     },
     "require-dev": {
         "ergebnis/phpstan-rules": "^2.2.0",
-        "illuminate/console": "^11.0.0",
-        "laravel/pint": "^1.14.0",
-        "mockery/mockery": "^1.6.7",
-        "pestphp/pest": "^2.34.1",
-        "phpstan/phpstan": "^1.10.59",
+        "illuminate/console": "^11.1.1",
+        "laravel/pint": "^1.15.0",
+        "mockery/mockery": "^1.6.11",
+        "pestphp/pest": "^2.34.6",
+        "phpstan/phpstan": "^1.10.66",
         "phpstan/phpstan-strict-rules": "^1.5.2",
         "symfony/var-dumper": "^7.0.4",
         "thecodingmachine/phpstan-strict-rules": "^1.0.0"
