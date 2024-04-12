@@ -1,5 +1,7 @@
 <?php
 
+use function Termwind\parse;
+
 it('renders the element', function () {
     $content = '    <h1>Introduction</h1>
 

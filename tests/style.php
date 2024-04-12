@@ -2,6 +2,7 @@
 
 use Termwind\Exceptions\StyleNotFound;
 
+use function Termwind\parse;
 use function Termwind\style;
 
 it('allows the creation of styles', function () {

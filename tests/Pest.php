@@ -14,16 +14,6 @@ uses()->beforeEach(fn () => renderUsing($this->output = new BufferedOutput()))
     })->in(__DIR__);
 
 /**
- * Parses the given html to string.
- */
-function parse(string $html): string
-{
-    $html = (new HtmlRenderer)->parse($html);
-
-    return $html->toString();
-}
-
-/**
  * Gets a input stream resource from a string.
  *
  * @return resource

@@ -1,5 +1,7 @@
 <?php
 
+use function Termwind\parse;
+
 it('can render table without thead, tbody, tfoot to a string', function () {
     $html = parse(<<<'HTML'
 <table style="box">
