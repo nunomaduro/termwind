@@ -2,6 +2,7 @@
 
 use Termwind\Exceptions\InvalidColor;
 
+use function Termwind\parse;
 use function Termwind\style;
 
 it('allows the creation of colors', function () {
