@@ -1,6 +1,7 @@
 <?php
 
 use Termwind\Exceptions\InvalidChild;
+
 use function Termwind\parse;
 
 it('renders the element', function () {

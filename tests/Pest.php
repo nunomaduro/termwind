@@ -1,7 +1,6 @@
 <?php
 
 use Symfony\Component\Console\Output\BufferedOutput;
-use Termwind\HtmlRenderer;
 use Termwind\Repositories\Styles;
 
 use function Termwind\{renderUsing};

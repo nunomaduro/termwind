@@ -2,6 +2,7 @@
 
 use Termwind\Exceptions\ColorNotFound;
 use Termwind\Exceptions\InvalidStyle;
+
 use function Termwind\parse;
 
 test('font bold', function () {

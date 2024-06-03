@@ -1,6 +1,7 @@
 <?php
 
 use Termwind\Actions\StyleToMethod;
+
 use function Termwind\parse;
 
 it('supports styling', function ($name) {

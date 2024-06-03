@@ -2,9 +2,9 @@
 
 use Symfony\Component\Console\Output\OutputInterface;
 
+use function Termwind\parse;
 use function Termwind\render;
 use function Termwind\renderUsing;
-use function Termwind\parse;
 
 it('can render complex html', function () {
     $html = parse(<<<'HTML'
