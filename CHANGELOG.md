@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v2.1.0 (2024-09-05)](https://github.com/nunomaduro/termwind/compare/v2.0.1...v2.1.0)
+
+### Added
+- Adds a `parse` function by @lukeraymonddowning in https://github.com/nunomaduro/termwind/pull/184
+
 ## [v1.15.1 (2023-02-08)](https://github.com/nunomaduro/termwind/compare/v1.15.0...v1.15.1)
 
 ### Fixed
