@@ -56,9 +56,9 @@ if (! function_exists('Termwind\asyncRender')) {
     /**
      * Returns an async render instance to the terminal.
      */
-    function asyncFunction(callable $task): AsyncHtmlRenderer
+    function asyncFunction(callable $task, int $options = OutputInterface::OUTPUT_NORMAL): AsyncHtmlRenderer
     {
-        return new AsyncHtmlRenderer($task);
+        return new AsyncHtmlRenderer($task, $options);
     }
 }
 
