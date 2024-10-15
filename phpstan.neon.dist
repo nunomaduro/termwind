@@ -1,6 +1,5 @@
 includes:
     - vendor/phpstan/phpstan-strict-rules/rules.neon
-    - vendor/ergebnis/phpstan-rules/rules.neon
     - vendor/thecodingmachine/phpstan-strict-rules/phpstan-strict-rules.neon
 
 parameters:
@@ -11,12 +10,3 @@ parameters:
     checkMissingIterableValueType: true
     checkGenericClassInNonGenericObjectType: true
     reportUnmatchedIgnoredErrors: true
-
-    ignoreErrors:
-        - '#is not allowed to extend#'
-        - '#with default value.#'
-        - '#Variable method call on#'
-        - '#as default value#'
-        - '#is not final, but since the containing class is abstract, it should be#'
-        - '#has a nullable return type declaration.#'
-        - '#with a nullable type declaration.#'

@@ -52,7 +52,7 @@ it('renders the question with autocomplete', function () {
     $output->shouldReceive('write')->once()->with($clearLineCode);
     $output->shouldReceive('write')->once()->with('<hl>ne</hl>');
     $output->shouldReceive('write')->once()->with($restorePositionCode);
-    $output->shouldReceive('getFormatter')->once()->andReturn(new NullOutputFormatter());
+    $output->shouldReceive('getFormatter')->once()->andReturn(new NullOutputFormatter);
 
     ask('<span class="bg-red ml-1">Question</span>', ['one', 'two', 'three']);
 })->skip(! Terminal::hasSttyAvailable(), '`stty` is required to test autocomplete functionality');

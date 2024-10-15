@@ -21,7 +21,7 @@ final class Terminal
      */
     public function __construct(?ConsoleTerminal $terminal = null)
     {
-        $this->terminal = $terminal ?? new ConsoleTerminal();
+        $this->terminal = $terminal ?? new ConsoleTerminal;
     }
 
     /**
