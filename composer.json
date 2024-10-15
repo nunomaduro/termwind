@@ -18,7 +18,7 @@
         "illuminate/console": "^10.48.22",
         "illuminate/support": "^10.48.22",
         "laravel/pint": "^1.18.1",
-        "pestphp/pest": "^2",
+        "pestphp/pest": "^2.36.0",
         "pestphp/pest-plugin-mock": "2.0.0",
         "phpstan/phpstan": "^1.12.6",
         "phpstan/phpstan-strict-rules": "^1.6.1",
