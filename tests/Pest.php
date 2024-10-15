@@ -4,9 +4,9 @@ use Symfony\Component\Console\Output\BufferedOutput;
 use Termwind\HtmlRenderer;
 use Termwind\Repositories\Styles;
 
-use function Termwind\{renderUsing};
+use function Termwind\renderUsing;
 
-uses()->beforeEach(fn () => renderUsing($this->output = new BufferedOutput()))
+uses()->beforeEach(fn () => renderUsing($this->output = new BufferedOutput))
     ->afterEach(function () {
         renderUsing(null);
 

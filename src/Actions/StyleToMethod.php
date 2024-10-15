@@ -96,6 +96,7 @@ final class StyleToMethod
             return $this->__invoke(...$arguments);
         }
 
+        // @phpstan-ignore-next-line
         return $this->styles
             ->setStyle($this->style)
             ->$methodName(...array_reverse($arguments));

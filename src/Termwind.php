@@ -25,7 +25,7 @@ final class Termwind
      */
     public static function renderUsing(OutputInterface|null $renderer): void
     {
-        self::$renderer = $renderer ?? new ConsoleOutput();
+        self::$renderer = $renderer ?? new ConsoleOutput;
     }
 
     /**
@@ -278,7 +278,7 @@ final class Termwind
      */
     public static function getRenderer(): OutputInterface
     {
-        return self::$renderer ??= new ConsoleOutput();
+        return self::$renderer ??= new ConsoleOutput;
     }
 
     /**

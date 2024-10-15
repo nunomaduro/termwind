@@ -14,9 +14,7 @@ final class Node
     /**
      * A value object with helper methods for working with DOM node.
      */
-    public function __construct(private \DOMNode $node)
-    {
-    }
+    public function __construct(private \DOMNode $node) {}
 
     /**
      * Gets the value of the node.

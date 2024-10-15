@@ -25,7 +25,7 @@ it('it should return bar for dom element', function () {
 });
 
 it('gets next sibling node with empty text', function () {
-    $dom = new DOMDocument();
+    $dom = new DOMDocument;
 
     $html = '<?xml encoding="UTF-8"><body><div></div>     <div></div></body>';
     $dom->loadHTML($html, LIBXML_COMPACT | LIBXML_HTML_NODEFDTD | LIBXML_NOBLANKS | LIBXML_NOXMLDECL);
@@ -37,7 +37,7 @@ it('gets next sibling node with empty text', function () {
 });
 
 it('gets next sibling node with empty line', function () {
-    $dom = new DOMDocument();
+    $dom = new DOMDocument;
 
     $html = "<?xml encoding=\"UTF-8\"><body><div></div>\n<div></div></body>";
     $dom->loadHTML($html, LIBXML_COMPACT | LIBXML_HTML_NODEFDTD | LIBXML_NOBLANKS | LIBXML_NOXMLDECL);
@@ -49,7 +49,7 @@ it('gets next sibling node with empty line', function () {
 });
 
 it('gets next sibling node with comment', function () {
-    $dom = new DOMDocument();
+    $dom = new DOMDocument;
 
     $html = '<?xml encoding="UTF-8"><body><div></div><!-- Hello world --><div></div></body>';
     $dom->loadHTML($html, LIBXML_COMPACT | LIBXML_HTML_NODEFDTD | LIBXML_NOBLANKS | LIBXML_NOXMLDECL);
