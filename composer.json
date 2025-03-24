@@ -11,6 +11,7 @@
     ],
     "require": {
         "php": "^8.1",
+        "ext-dom": "*",
         "ext-mbstring": "*",
         "symfony/console": "^6.4.15"
     },
