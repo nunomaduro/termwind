@@ -35,6 +35,11 @@ final class HtmlRenderer
             return Termwind::span($html);
         }
 
+        // Wrap content in body tag if it doesn't exist
+        if (strpos($html, '<body') === false) {
+            $html = '<body>'.$html.'</body>';
+        }
+
         $html = '<?xml encoding="UTF-8">'.trim($html);
         $dom->loadHTML($html, LIBXML_NOERROR | LIBXML_COMPACT | LIBXML_HTML_NODEFDTD | LIBXML_NOBLANKS | LIBXML_NOXMLDECL);
 
