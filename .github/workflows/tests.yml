@@ -8,6 +8,7 @@ jobs:
     strategy:
       matrix:
         php: ['8.2', '8.3', '8.4']
+        pest: ['2', '3']
         dependency-version: [prefer-lowest, prefer-stable]
 
     name: PHP ${{ matrix.php }} - ${{ matrix.dependency-version }} - ${{ matrix.parallel }}
@@ -27,6 +28,9 @@ jobs:
         run: |
           echo "::add-matcher::${{ runner.tool_cache }}/php.json"
           echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+      - name: Install Pest
+        run: composer require pestphp/pest:${{ matrix.pest }} --dev --no-update --with-all-dependencies
 
       - name: Install PHP dependencies
         run: composer update --${{ matrix.dependency-version }} --no-interaction --no-progress
