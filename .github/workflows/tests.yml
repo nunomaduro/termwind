@@ -11,7 +11,7 @@ jobs:
         pest: ['2', '3']
         dependency-version: [prefer-lowest, prefer-stable]
 
-    name: PHP ${{ matrix.php }} - ${{ matrix.dependency-version }} - ${{ matrix.parallel }}
+    name: PHP ${{ matrix.php }} - PHP ${{ matrix.pest }} - ${{ matrix.dependency-version }} - ${{ matrix.parallel }}
 
     steps:
       - name: Checkout
