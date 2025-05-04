@@ -30,7 +30,7 @@ jobs:
           echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
       - name: Install Pest
-        run: composer require pestphp/pest:${{ matrix.pest }} --dev --no-update --with-all-dependencies
+        run: composer require pestphp/pest:^${{ matrix.pest }} --dev --no-update --with-all-dependencies
 
       - name: Install PHP dependencies
         run: composer update --${{ matrix.dependency-version }} --no-interaction --no-progress
