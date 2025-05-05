@@ -32,6 +32,9 @@ jobs:
       - name: Install Pest
         run: composer require pestphp/pest:^${{ matrix.pest }} --dev --no-update --with-all-dependencies
 
+      - name: Set Version
+        run: composer config version "2.x-dev"
+
       - name: Install PHP dependencies
         run: composer update --${{ matrix.dependency-version }} --no-interaction --no-progress
 
