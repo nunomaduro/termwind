@@ -69,8 +69,6 @@ final class Question
             $property = (new ReflectionClass(SymfonyStyle::class))
                 ->getProperty('questionHelper');
 
-            $property->setAccessible(true);
-
             $currentHelper = $property->isInitialized($output)
                 ? $property->getValue($output)
                 : new SymfonyQuestionHelper;
