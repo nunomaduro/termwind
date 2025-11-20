@@ -10,7 +10,7 @@ jobs:
         php: ['8.2', '8.3', '8.4', '8.5']
         dependency-version: [prefer-lowest, prefer-stable]
 
-    name: PHP ${{ matrix.php }} - Pest ${{ matrix.pest }} - ${{ matrix.dependency-version }} - ${{ matrix.parallel }}
+    name: PHP ${{ matrix.php }} - ${{ matrix.dependency-version }} - ${{ matrix.parallel }}
 
     steps:
       - name: Checkout
@@ -27,9 +27,6 @@ jobs:
         run: |
           echo "::add-matcher::${{ runner.tool_cache }}/php.json"
           echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
-
-      - name: Install Pest
-        run: composer require pestphp/pest:^${{ matrix.pest }} --dev --no-update --with-all-dependencies
 
       - name: Set Version
         run: composer config version "2.x-dev"
