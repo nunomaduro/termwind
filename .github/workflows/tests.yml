@@ -7,8 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php: ['8.2', '8.3', '8.4']
-        pest: ['2', '3']
+        php: ['8.2', '8.3', '8.4', '8.5']
         dependency-version: [prefer-lowest, prefer-stable]
 
     name: PHP ${{ matrix.php }} - Pest ${{ matrix.pest }} - ${{ matrix.dependency-version }} - ${{ matrix.parallel }}
