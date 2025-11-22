@@ -23,9 +23,6 @@ jobs:
           tools: composer:v2
           coverage: none
 
-      - name: Set Version
-        run: composer config version "2.x-dev"
-
       - name: Install PHP dependencies
         run: composer update --${{ matrix.dependency-version }} --no-interaction --no-progress
 
