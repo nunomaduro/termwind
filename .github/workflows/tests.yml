@@ -9,10 +9,6 @@ jobs:
       matrix:
         php: ['8.2', '8.3', '8.4', '8.5']
         dependency-version: [prefer-lowest, prefer-stable]
-        include:
-          # temp
-          - php: 8.5
-            dependency-version: 'no-suggest'
 
     name: PHP ${{ matrix.php }} - ${{ matrix.dependency-version }} - ${{ matrix.parallel }}
 
