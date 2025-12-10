@@ -37,8 +37,8 @@
             "Tests\\": "tests/"
         }
     },
-    "minimum-stability": "RC",
-    "prefer-stable": false,
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "config": {
         "sort-packages": true,
         "preferred-install": "dist",
