@@ -855,7 +855,7 @@ final class Styles
 
         // @phpstan-ignore-next-line
         $width *= count($matches[0] ?? []) + 1;
-        $width += mb_strwidth($matches[0][0] ?? '', 'UTF-8');
+        $width += mb_strwidth(implode('', $matches[0]), 'UTF-8');
 
         if ($length <= $width) {
             $space = $width - $length;
