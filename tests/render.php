@@ -90,7 +90,7 @@ it('can inherit styles', function () {
     HTML
     );
 
-    expect($html)->toBe("<bg=#fca5a5;fg=white>          <bg=#fca5a5;fg=white>Hello</> <fg=blue;bg=#fca5a5>\e[1mworld\e[0m</>          </>");
+    expect($html)->toBe("<bg=#ffa2a2;fg=white>          <bg=#ffa2a2;fg=white>Hello</> <fg=blue;bg=#ffa2a2>\e[1mworld\e[0m</>          </>");
 });
 
 it('can extend colors', function () {
@@ -101,7 +101,7 @@ it('can extend colors', function () {
     HTML
     );
 
-    expect($html)->toBe("\n   <bg=#86efac;fg=black>  🍃 Termwind now have the capability to <bg=#86efac;fg=black;options=bold>extend</> colors!  </>\n");
+    expect($html)->toBe("\n   <bg=#7bf1a8;fg=black>  🍃 Termwind now have the capability to <bg=#7bf1a8;fg=black;options=bold>extend</> colors!  </>\n");
 });
 
 it('can extend with multiple childs and colors', function () {
@@ -112,7 +112,7 @@ it('can extend with multiple childs and colors', function () {
     HTML
     );
 
-    expect($html)->toBe("\n   <bg=#86efac;fg=black>  Termwind <fg=#ef4444;bg=#86efac><fg=#93c5fd;bg=#86efac>now <fg=#6366f1;bg=#86efac>have</> the</> capability</> to extend colors!  </>\n");
+    expect($html)->toBe("\n   <bg=#7bf1a8;fg=black>  Termwind <fg=#fb2c36;bg=#7bf1a8><fg=#8ec5ff;bg=#7bf1a8>now <fg=#615fff;bg=#7bf1a8>have</> the</> capability</> to extend colors!  </>\n");
 });
 
 it('can inherit styles within multiple levels', function () {
@@ -127,7 +127,7 @@ it('can inherit styles within multiple levels', function () {
     HTML
     );
 
-    expect($html)->toBe("\n  <bg=#b91c1c>       <fg=#93c5fd;bg=#b91c1c><bg=#b91c1c;fg=#93c5fd><bg=#b91c1c;fg=#93c5fd><bg=#b91c1c;fg=#93c5fd;options=bold>Termwind</> is great!</></></>     </>  \n");
+    expect($html)->toBe("\n  <bg=#c10007>       <fg=#8ec5ff;bg=#c10007><bg=#c10007;fg=#8ec5ff><bg=#c10007;fg=#8ec5ff><bg=#c10007;fg=#8ec5ff;options=bold>Termwind</> is great!</></></>     </>  \n");
 });
 
 it('trims the text properly when having bg and text colors', function () {
@@ -138,7 +138,7 @@ it('trims the text properly when having bg and text colors', function () {
         </div>
     HTML);
 
-    expect($html)->toBe('<bg=#22c55e>P<bg=#22c55e;options=bold>a</>ss</><fg=#e5e7eb>A</>');
+    expect($html)->toBe('<bg=#00c950>P<bg=#00c950;options=bold>a</>ss</><fg=#e5e7eb>A</>');
 });
 
 it('trims the text properly when having escape codes', function () {
@@ -229,7 +229,7 @@ it('can inherit font-bold', function () {
         </div>
     HTML);
 
-    expect($html)->toBe("<fg=#ef4444;options=bold><fg=#ef4444;options=bold>A</>\n<fg=#ef4444;options=bold>B</></>");
+    expect($html)->toBe("<fg=#fb2c36;options=bold><fg=#fb2c36;options=bold>A</>\n<fg=#fb2c36;options=bold>B</></>");
 });
 
 it('renders a div and table', function () {
@@ -259,7 +259,7 @@ it('renders an emoji correctly with line-breaks correctly', function () {
         </div>
     HTML);
 
-    expect($html)->toBe("        \n\n<fg=#ef4444> ⚽️ </> A ");
+    expect($html)->toBe("        \n\n<fg=#fb2c36> ⚽️ </> A ");
 });
 
 it('renders CJK characters chains of text-center with spaces correctly', function () {
