@@ -9,6 +9,7 @@
 .gitattributes          export-ignore
 .gitignore              export-ignore
 docker-compose.yml      export-ignore
+playground.php          export-ignore
 Makefile                export-ignore
 phpstan.neon.dist       export-ignore
 phpunit.xml.dist        export-ignore
