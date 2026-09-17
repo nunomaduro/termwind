@@ -12,6 +12,7 @@ docker-compose.yml      export-ignore
 Makefile                export-ignore
 phpstan.neon.dist       export-ignore
 phpunit.xml.dist        export-ignore
+playground.php          export-ignore
 CHANGELOG.md            export-ignore
 CONTRIBUTING.md         export-ignore
 README.md               export-ignore
