@@ -4,7 +4,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use function Termwind\parse;
 use function Termwind\render;
-use function Termwind\renderUsing;
 
 it('can render complex html', function () {
     $html = parse(<<<'HTML'
@@ -304,27 +303,21 @@ it('renders multiple chains of w-full with margins and text-alignment', function
 });
 
 it('defaults to VERBOSITY_NORMAL', function () {
-    $output = Mockery::mock(OutputInterface::class);
-
-    $output->shouldReceive('writeln')
-        ->once()
-        ->with('Foo Bar', OutputInterface::OUTPUT_NORMAL);
-
-    renderUsing($output);
-
     render('Foo Bar');
+
+    expect($this->output->fetch())->toBe("Foo Bar\n");
 });
 
 it('allows to use custom verbosities', function () {
-    $output = Mockery::mock(OutputInterface::class);
+    render('Foo Bar', OutputInterface::VERBOSITY_DEBUG);
 
-    $output->shouldReceive('writeln')
-        ->once()
-        ->with('Foo Bar', OutputInterface::VERBOSITY_DEBUG);
+    expect($this->output->fetch())->toBe('');
 
-    renderUsing($output);
+    $this->output->setVerbosity(OutputInterface::VERBOSITY_DEBUG);
 
     render('Foo Bar', OutputInterface::VERBOSITY_DEBUG);
+
+    expect($this->output->fetch())->toBe("Foo Bar\n");
 });
 
 it('do not display debug messages when verbosity is normal', function () {
