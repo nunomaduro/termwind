@@ -118,7 +118,7 @@ test('bg-bright', function () {
 test('bg-color', function () {
     $html = parse('<div class="bg-red-400">text</div>');
 
-    expect($html)->toBe('<bg=#f87171>text</>');
+    expect($html)->toBe('<bg=#ff6467>text</>');
 });
 
 test('text-color', function () {
@@ -360,13 +360,13 @@ test('line-through', function () {
 test('bg-color-number', function () {
     $html = parse('<div class="bg-green-300">text</div>');
 
-    expect($html)->toBe('<bg=#86efac>text</>');
+    expect($html)->toBe('<bg=#7bf1a8>text</>');
 });
 
 test('text-color-number', function () {
     $html = parse('<div class="text-green-300">text</div>');
 
-    expect($html)->toBe('<fg=#86efac>text</>');
+    expect($html)->toBe('<fg=#7bf1a8>text</>');
 });
 
 test('invalid text-color-number', function () {
@@ -468,7 +468,7 @@ test('width, bg, text-right', function () {
         </div>
     HTML);
 
-    expect($html)->toBe('  <bg=#22c55e>Pass</><fg=#e5e7eb>Some Text</>');
+    expect($html)->toBe('  <bg=#00c950>Pass</><fg=#e5e7eb>Some Text</>');
 });
 
 test('max-w with fraction childs', function () {
@@ -492,7 +492,7 @@ test('w-full, bg, margin, text-color, text-right and font-bold', function () {
         </div>
     HTML);
 
-    expect($html)->toBe('     <bg=#22c55e;fg=gray;options=bold>Pass</>Some Text  ');
+    expect($html)->toBe('     <bg=#00c950;fg=gray;options=bold>Pass</>Some Text  ');
 });
 
 test('append-text', function () {
