@@ -37,8 +37,9 @@ it('can render table without thead, tbody, tfoot to a string', function () {
 HTML
     );
 
-    expect($html)->toBe(<<<OUT
-├─────────────────────┼──────────────────────────┼─────────────────────┤
+    $expected = tableSeparatorsAlign()
+        ? <<<OUT
+┌─────────────────────┬──────────────────────────┬─────────────────────┐
 │       \e[1m99921-58-10-7\e[0m │ Divine Comedy            │     Dante Alighieri │
 │    \e[1m9971-5-0210-0\e[0m    │ A Tale of Two Cities     │     Charles Dickens │
 ├─────────────────────┼──────────────────────────┼─────────────────────┤
@@ -47,7 +48,18 @@ HTML
 │       \e[1m978-052156781\e[0m │ De Monarchia             │ spans multiple rows │
 └─────────────────────┴──────────────────────────┴─────────────────────┘
 OUT
-    );
+        : <<<OUT
+├─────────────────────┼──────────────────────────┼─────────────────────┤
+│       \e[1m99921-58-10-7\e[0m │ Divine Comedy            │     Dante Alighieri │
+│    \e[1m9971-5-0210-0\e[0m    │ A Tale of Two Cities     │     Charles Dickens │
+├─────────────────────┼──────────────────────────┼─────────────────────┤
+│       \e[1m960-425-059-0\e[0m │ The Lord of the Rings    │    J. R. R. Tolkien │
+\e[39;49m│       \e[1m80-902734-1-6\e[0m │ And Then There Were None │     Dante Alighieri │\e[39;49m
+│       \e[1m978-052156781\e[0m │ De Monarchia             │ spans multiple rows │
+└─────────────────────┴──────────────────────────┴─────────────────────┘
+OUT;
+
+    expect($html)->toBe($expected);
 });
 
 it('can render table with thead to a string', function () {
@@ -197,7 +209,20 @@ it('can render table with tfoot to a string', function () {
 HTML
     );
 
-    expect($html)->toBe(<<<OUT
+    $expected = tableSeparatorsAlign()
+        ? <<<OUT
++---------------+--------------------------+---------------------+
+| \e[1m99921-58-10-7\e[0m | Divine Comedy            |     Dante Alighieri |
+| \e[31;44m\e[1m9971-5-0210-0\e[0m\e[39;49m | A Tale of Two Cities     |     Charles Dickens |
++---------------+--------------------------+---------------------+
+| \e[1m960-425-059-0\e[0m | The Lord of the Rings    |    J. R. R. Tolkien |
+\e[39;49m| \e[1m80-902734-1-6\e[0m | And Then There Were None |     Dante Alighieri |\e[39;49m
+| \e[1m978-052156781\e[0m | De Monarchia             | spans multiple rows |
++---------------+--------------------------+---------------------+
+| \e[1mThis value spans 3 columns.\e[0m                                    |
++----------------------     \e[44m Page 1/2 \e[49m     ----------------------+
+OUT
+        : <<<OUT
 +---------------+--------------------------+---------------------+
 | \e[1m99921-58-10-7\e[0m | Divine Comedy            |     Dante Alighieri |
 | \e[31;44m\e[1m9971-5-0210-0\e[0m\e[39;49m | A Tale of Two Cities     |     Charles Dickens |
@@ -208,8 +233,9 @@ HTML
 +---------------+--------------------------+---------------------+
 | \e[1mThis value spans 3 columns.\e[0m                                    |
 +---------------+------     \e[44m Page 1/2 \e[49m     +---------------------+
-OUT
-    );
+OUT;
+
+    expect($html)->toBe($expected);
 });
 
 it('can render table with tbody to a string', function () {
@@ -303,7 +329,22 @@ it('can render table with thead, tbody, tfoot to a string', function () {
 HTML
     );
 
-    expect($html)->toBe(<<<OUT
+    $expected = tableSeparatorsAlign()
+        ? <<<OUT
+╔═══════════════╤══\e[37;41m           Books           \e[39;49m═══════════════════╗
+║          \e[1mISBN\e[0m │ \e[1mTitle\e[0m                    │ \e[1mAuthor\e[0m              ║
+╠═══════════════╪══════════════════════════╪═════════════════════╣
+║ \e[1m99921-58-10-7\e[0m │ Divine Comedy            │     Dante Alighieri ║
+║ \e[31;44m\e[1m9971-5-0210-0\e[0m\e[39;49m │ A Tale of Two Cities     │     Charles Dickens ║
+╟───────────────┼──────────────────────────┼─────────────────────╢
+║ \e[1m960-425-059-0\e[0m │ The Lord of the Rings    │    J. R. R. Tolkien ║
+\e[39;49m║ \e[1m80-902734-1-6\e[0m │ And Then There Were None │     Dante Alighieri ║\e[39;49m
+║ \e[1m978-052156781\e[0m │ De Monarchia             │ spans multiple rows ║
+╟───────────────╧──────────────────────────╧─────────────────────╢
+║ \e[1mThis value spans 3 columns.\e[0m                                    ║
+╚══════════════════════     \e[44m Page 1/2 \e[49m     ══════════════════════╝
+OUT
+        : <<<OUT
 ╔═══════════════╤══\e[37;41m           Books           \e[39;49m═══════════════════╗
 ║          \e[1mISBN\e[0m │ \e[1mTitle\e[0m                    │ \e[1mAuthor\e[0m              ║
 ╠═══════════════╪══════════════════════════╪═════════════════════╣
@@ -316,8 +357,9 @@ HTML
 ╟───────────────┼──────────────────────────┼─────────────────────╢
 ║ \e[1mThis value spans 3 columns.\e[0m                                    ║
 ╚═══════════════╧══════     \e[44m Page 1/2 \e[49m     ╧═════════════════════╝
-OUT
-    );
+OUT;
+
+    expect($html)->toBe($expected);
 });
 
 it('can render an <a> inside of a table', function () {
