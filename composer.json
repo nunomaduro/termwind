@@ -17,7 +17,6 @@
     "require-dev": {
         "illuminate/console": "^11.51.0",
         "laravel/pint": "^1.29.1",
-        "mockery/mockery": "^1.6.12",
         "pestphp/pest": "^2.36.0 || ^3.8.4 || ^4.7.0",
         "phpstan/phpstan": "^1.12.33",
         "phpstan/phpstan-strict-rules": "^1.6.2",
