@@ -249,6 +249,30 @@ test('w-auto', function () {
     expect($html)->toBe('text');
 });
 
+test('w-* does not truncate multiline content', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-10">
+            <div>0123456789</div>
+            <div>0123456789</div>
+            <div>0123456789</div>
+        </div>
+    HTML);
+
+    expect($html)->toBe("0123456789\n0123456789\n0123456789");
+});
+
+test('w-* with justify-between keeps every line intact', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-20">
+            <div class="flex justify-between"><span>a</span><span>1</span></div>
+            <div class="flex justify-between"><span>b</span><span>2</span></div>
+            <div class="flex justify-between"><span>c</span><span>3</span></div>
+        </div>
+    HTML);
+
+    expect($html)->toBe("a                  1\nb                  2\nc                  3");
+});
+
 test('invalid w-division', function () {
     expect(fn () => parse('<span class="w-invalid">text</span>'))
         ->toThrow(InvalidStyle::class);
