@@ -303,6 +303,29 @@ it('renders multiple chains of w-full with margins and text-alignment', function
     expect($html)->toBe("Test      \n\n\n    Test 2");
 });
 
+it('renders multiline content inside fixed width without truncating subsequent lines', function () {
+    $html = parse(<<<'HTML'
+        <div class="w-30">
+            <div class="flex justify-between">
+                <span>Left</span>
+                <span>Right</span>
+            </div>
+            <div class="w-full">Row 1 123456789012345678901234</div>
+            <div class="w-full">Row 2 123456789012345678901234</div>
+            <div class="w-full">Row 3 123456789012345678901234</div>
+            <div class="w-full">Row 4 123456789012345678901234</div>
+        </div>
+    HTML);
+
+    expect($html)->toBe(
+        "Left                     Right\n".
+        "Row 1 123456789012345678901234\n".
+        "Row 2 123456789012345678901234\n".
+        "Row 3 123456789012345678901234\n".
+        'Row 4 123456789012345678901234'
+    );
+});
+
 it('defaults to VERBOSITY_NORMAL', function () {
     $output = Mockery::mock(OutputInterface::class);
 
