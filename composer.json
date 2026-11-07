@@ -12,16 +12,16 @@
     "require": {
         "php": "^8.2",
         "ext-mbstring": "*",
-        "symfony/console": "^7.4.11 || ^8.0.4"
+        "symfony/console": "^7.4.23 || ^8.0.4"
     },
     "require-dev": {
         "illuminate/console": "^11.51.0",
-        "laravel/pint": "^1.29.1",
-        "mockery/mockery": "^1.6.12",
-        "pestphp/pest": "^2.36.0 || ^3.8.4 || ^4.7.0",
-        "phpstan/phpstan": "^1.12.33",
+        "laravel/pint": "^1.30.4",
+        "mockery/mockery": "^1.6.15",
+        "pestphp/pest": "^2.36.0 || ^3.8.4 || ^4.7.8",
+        "phpstan/phpstan": "^1.12.34",
         "phpstan/phpstan-strict-rules": "^1.6.2",
-        "symfony/var-dumper": "^7.3.5 || ^8.0.8",
+        "symfony/var-dumper": "^7.3.5 || ^8.1.10",
         "thecodingmachine/phpstan-strict-rules": "^1.0.0"
     },
     "autoload": {
