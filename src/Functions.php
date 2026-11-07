@@ -35,6 +35,8 @@ if (! function_exists('Termwind\style')) {
 if (! function_exists('Termwind\render')) {
     /**
      * Render HTML to the terminal.
+     *
+     * @param  int<0, 511>  $options
      */
     function render(string $html, int $options = OutputInterface::OUTPUT_NORMAL): void
     {

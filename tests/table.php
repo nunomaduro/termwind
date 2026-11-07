@@ -38,12 +38,12 @@ HTML
     );
 
     expect($html)->toBe(<<<OUT
-├─────────────────────┼──────────────────────────┼─────────────────────┤
+┌─────────────────────┬──────────────────────────┬─────────────────────┐
 │       \e[1m99921-58-10-7\e[0m │ Divine Comedy            │     Dante Alighieri │
 │    \e[1m9971-5-0210-0\e[0m    │ A Tale of Two Cities     │     Charles Dickens │
 ├─────────────────────┼──────────────────────────┼─────────────────────┤
 │       \e[1m960-425-059-0\e[0m │ The Lord of the Rings    │    J. R. R. Tolkien │
-\e[39;49m│       \e[1m80-902734-1-6\e[0m │ And Then There Were None │     Dante Alighieri │\e[39;49m
+│       \e[1m80-902734-1-6\e[0m │ And Then There Were None │     Dante Alighieri │
 │       \e[1m978-052156781\e[0m │ De Monarchia             │ spans multiple rows │
 └─────────────────────┴──────────────────────────┴─────────────────────┘
 OUT
@@ -96,7 +96,7 @@ HTML
 | \e[31;44m\e[1m9971-5-0210-0\e[0m\e[39;49m | A Tale of Two Cities     |     Charles Dickens |
 +---------------+--------------------------+---------------------+
 | \e[1m960-425-059-0\e[0m | The Lord of the Rings    |    J. R. R. Tolkien |
-\e[39;49m| \e[1m80-902734-1-6\e[0m | And Then There Were None |     Dante Alighieri |\e[39;49m
+| \e[1m80-902734-1-6\e[0m | And Then There Were None |     Dante Alighieri |
 | \e[1m978-052156781\e[0m | De Monarchia             | spans multiple rows |
 +---------------+--------------------------+---------------------+
 OUT
@@ -154,7 +154,7 @@ HTML
 | \e[31;44m\e[1m9971-5-0210-0\e[0m\e[39;49m | A Tale of Two Cities     |     Charles Dickens |
 +---------------+--------------------------+---------------------+
 | \e[1m960-425-059-0\e[0m | The Lord of the Rings    |    J. R. R. Tolkien |
-\e[39;49m| \e[1m80-902734-1-6\e[0m | And Then There Were None |     Dante Alighieri |\e[39;49m
+| \e[1m80-902734-1-6\e[0m | And Then There Were None |     Dante Alighieri |
 | \e[1m978-052156781\e[0m | De Monarchia             | spans multiple rows |
 +---------------+--------------------------+---------------------+
 OUT
@@ -203,11 +203,11 @@ HTML
 | \e[31;44m\e[1m9971-5-0210-0\e[0m\e[39;49m | A Tale of Two Cities     |     Charles Dickens |
 +---------------+--------------------------+---------------------+
 | \e[1m960-425-059-0\e[0m | The Lord of the Rings    |    J. R. R. Tolkien |
-\e[39;49m| \e[1m80-902734-1-6\e[0m | And Then There Were None |     Dante Alighieri |\e[39;49m
+| \e[1m80-902734-1-6\e[0m | And Then There Were None |     Dante Alighieri |
 | \e[1m978-052156781\e[0m | De Monarchia             | spans multiple rows |
 +---------------+--------------------------+---------------------+
 | \e[1mThis value spans 3 columns.\e[0m                                    |
-+---------------+------     \e[44m Page 1/2 \e[49m     +---------------------+
++----------------------     \e[44m Page 1/2 \e[49m     ----------------------+
 OUT
     );
 });
@@ -251,7 +251,7 @@ HTML
 | \e[31;44m\e[1m9971-5-0210-0\e[0m\e[39;49m | A Tale of Two Cities     |     Charles Dickens |
 +---------------+--------------------------+---------------------+
 | \e[1m960-425-059-0\e[0m | The Lord of the Rings    |    J. R. R. Tolkien |
-\e[39;49m| \e[1m80-902734-1-6\e[0m | And Then There Were None |     Dante Alighieri |\e[39;49m
+| \e[1m80-902734-1-6\e[0m | And Then There Were None |     Dante Alighieri |
 | \e[1m978-052156781\e[0m | De Monarchia             | spans multiple rows |
 +---------------+--------------------------+---------------------+
 OUT
@@ -311,11 +311,11 @@ HTML
 ║ \e[31;44m\e[1m9971-5-0210-0\e[0m\e[39;49m │ A Tale of Two Cities     │     Charles Dickens ║
 ╟───────────────┼──────────────────────────┼─────────────────────╢
 ║ \e[1m960-425-059-0\e[0m │ The Lord of the Rings    │    J. R. R. Tolkien ║
-\e[39;49m║ \e[1m80-902734-1-6\e[0m │ And Then There Were None │     Dante Alighieri ║\e[39;49m
+║ \e[1m80-902734-1-6\e[0m │ And Then There Were None │     Dante Alighieri ║
 ║ \e[1m978-052156781\e[0m │ De Monarchia             │ spans multiple rows ║
-╟───────────────┼──────────────────────────┼─────────────────────╢
+╟───────────────╧──────────────────────────╧─────────────────────╢
 ║ \e[1mThis value spans 3 columns.\e[0m                                    ║
-╚═══════════════╧══════     \e[44m Page 1/2 \e[49m     ╧═════════════════════╝
+╚══════════════════════     \e[44m Page 1/2 \e[49m     ══════════════════════╝
 OUT
     );
 });

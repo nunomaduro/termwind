@@ -18,6 +18,8 @@ final class HtmlRenderer
 {
     /**
      * Renders the given html.
+     *
+     * @param  int<0, 511>  $options
      */
     public function render(string $html, int $options): void
     {
